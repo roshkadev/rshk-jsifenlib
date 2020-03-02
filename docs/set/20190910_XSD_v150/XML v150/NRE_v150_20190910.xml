@@ -1,0 +1,137 @@
+<rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd">
+	<dVerFor>150</dVerFor>
+	<DE Id="07800044649001001900018322019031217200146403">
+		<dDVId>3</dDVId>
+		<dFecFirma>2019-02-21T07:47:47</dFecFirma>
+		<dSisFact>1</dSisFact>
+		<gOpeDE>
+			<iTipEmi>1</iTipEmi>
+			<dDesTipEmi>Normal</dDesTipEmi>
+			<dCodSeg>720014640</dCodSeg>
+			<dInfoFisc>Información de interés del Fisco respecto al DE</dInfoFisc>
+		</gOpeDE>
+		<gTimb>
+			<iTiDE>7</iTiDE>
+	        <dDesTiDE>Nota de remisión electrónica</dDesTiDE>
+	        <dNumTim>12557213</dNumTim>
+			<dEst>001</dEst>
+			<dPunExp>001</dPunExp>
+			<dNumDoc>9000183</dNumDoc>
+			<dSerieNum>AN</dSerieNum>
+			<dFeIniT>2018-10-12</dFeIniT>
+		</gTimb>
+		<gDatGralOpe>
+			<dFeEmiDE>2019-03-12T08:26:00</dFeEmiDE>			
+			<gEmis>
+				<dRucEm>80004464</dRucEm>
+				<dDVEmi>9</dDVEmi>
+				<iTipCont>2</iTipCont>
+				<dNomEmi>BANCARD S.A.</dNomEmi>
+				<dNomFanEmi>BANCARD</dNomFanEmi>
+				<dDirEmi>AVENIDA BRASILIA N° 765</dDirEmi>
+				<dNumCas>1</dNumCas>
+				<cDepEmi>1</cDepEmi>
+				<dDesDepEmi>CAPITAL</dDesDepEmi>
+				<cDisEmi>1</cDisEmi>
+				<dDesDisEmi>ASUNCION (DISTRITO)</dDesDisEmi>
+				<cCiuEmi>1</cCiuEmi>
+				<dDesCiuEmi>ASUNCION (DISTRITO)</dDesCiuEmi>
+				<dTelEmi>214161000</dTelEmi>
+				<dEmailE>contabilidad@bancard.com.py</dEmailE>
+				<gActEco>
+					<cActEco>64990</cActEco>
+					<dDesActEco>OTRAS ACTIVIDADES DE SERVICIOS FINANCIEROS, EXCEPTO LA FINANCIACIÓN DE PLANES DE SEGUROS Y DE PENSIONES</dDesActEco>
+				</gActEco>
+			</gEmis>
+			<gDatRec>
+				<iNatRec>1</iNatRec>
+				<iTiOpe>1</iTiOpe>
+				<cPaisRec>PRY</cPaisRec>
+				<dDesPaisRe>Paraguay</dDesPaisRe>
+				<iTiContRec>2</iTiContRec>
+				<dRucRec>80002201</dRucRec>
+				<dDVRec>7</dDVRec>				
+				<dNomRec>BANCO DEL PARAGUAY S.A.</dNomRec>
+				<dDirRec>YEGROS Y MCAL. LÓPEZ</dDirRec>
+				<dNumCasRec>123</dNumCasRec>
+				<cDepRec>1</cDepRec>
+				<dDesDepRec>CAPITAL</dDesDepRec>
+				<cCiuRec>1</cCiuRec>
+				<dDesCiuRec>ASUNCION</dDesCiuRec>
+			</gDatRec>
+		</gDatGralOpe>
+		<gDtipDE>
+			<gCamNRE>
+	              <iMotEmiNR>2</iMotEmiNR>
+	              <dDesMotEmiNR>Traslado por consignación</dDesMotEmiNR>
+	              <iRespEmiNR>1</iRespEmiNR>
+	              <dDesRespEmiNR>Emisor de la factura</dDesRespEmiNR>
+	              <dKmR>15</dKmR>
+	              <dFecEm>2019-02-18</dFecEm>
+	           </gCamNRE>
+			<gCamItem>
+				<dCodInt>1</dCodInt>
+				<dDesProSer>DE generado en ambiente de prueba - sin valor comercial ni fiscal</dDesProSer>
+				<cUniMed>77</cUniMed>
+				<dDesUniMed>UNI</dDesUniMed>
+				<dCantProSer>1</dCantProSer>			
+			</gCamItem>
+			<gTransp>
+				<iTipTrans>1</iTipTrans>
+	            <dDesTipTrans>Propio</dDesTipTrans>
+				<iModTrans>1</iModTrans>
+				<dDesModTrans>Terrestre</dDesModTrans>
+				<iRespFlete>2</iRespFlete>
+				<dIniTras>2019-01-30</dIniTras>
+            	<dFinTras>2019-01-30</dFinTras>
+            	<gCamSal>
+	              <dDirLocSal>Rca. Argentina</dDirLocSal>
+	              <dNumCasSal>2960</dNumCasSal>
+	              <dComp1Sal>Avda. Fndo de la Mora</dComp1Sal>
+	              <cDepSal>1</cDepSal>
+	              <dDesDepSal>CAPITAL</dDesDepSal>	              
+	              <cCiuSal>1</cCiuSal>
+	              <dDesCiuSal>ASUNCION</dDesCiuSal>
+            	</gCamSal>
+            	<gCamEnt>
+		            <dDirLocEnt>Mcal. Lopez</dDirLocEnt>
+		            <dNumCasEnt>1960</dNumCasEnt>
+		            <dComp1Ent>Yegros</dComp1Ent>
+		            <cDepEnt>1</cDepEnt>
+		          	<dDesDepEnt>CAPITAL</dDesDepEnt>		         	
+		         	<cCiuEnt>1</cCiuEnt>
+			        <dDesCiuEnt>ASUNCION (DISTRITO)</dDesCiuEnt>
+			        <dTelEnt>595985876303</dTelEnt>
+              	</gCamEnt>
+              	<gVehTras>
+		          	<dTiVehTras>Terrestre</dTiVehTras>
+				    <dMarVeh>Suzuki</dMarVeh>
+				    <dTipIdenVeh>1</dTipIdenVeh>
+				    <dNroIDVeh>76303</dNroIDVeh>
+	        	</gVehTras>
+	        	<gCamTrans>
+		          <iNatTrans>1</iNatTrans>
+		          <dNomTrans>Mauro Caceres</dNomTrans>
+		          <dRucTrans>80002577</dRucTrans>
+		          <dDVTrans>6</dDVTrans>
+		          <dNumIDChof>1206798</dNumIDChof>
+		          <dNomChof>Margarita Fernández</dNomChof>
+	        	</gCamTrans>
+			</gTransp>
+		</gDtipDE>
+		<gCamDEAsoc> 
+	        <iTipDocAso>2</iTipDocAso> 
+	        <dDesTipDocAso>Impreso</dDesTipDocAso> 
+	        <dNTimDI>12557217</dNTimDI>
+	        <dEstDocAso>001</dEstDocAso> 
+	        <dPExpDocAso>001</dPExpDocAso> 
+	        <dNumDocAso>9000032</dNumDocAso>
+	        <iTipoDocAso>1</iTipoDocAso>
+	        <dDTipoDocAso>Factura</dDTipoDocAso>  
+	        <dFecEmiDI>2018-10-31</dFecEmiDI>
+        </gCamDEAsoc>		
+	</DE>
+   <gCamFuFD>
+  		<dCarQR></dCarQR>
+	</gCamFuFD>
+</rDE>

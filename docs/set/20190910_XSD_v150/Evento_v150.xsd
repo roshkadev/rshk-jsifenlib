@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        elementFormDefault="qualified"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+       	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+    <xs:include schemaLocation="Evento_Types_v150.xsd"/>
+    
+    <xs:complexType name="trGeVeCan">
+    	<xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al evento de Cancelación del DTE
+	    	</xs:documentation>
+	    </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="tId"/>
+            <xs:element name="mOtEve" type="tmotEve"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeInu" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al evento de Inutilización de numero de un DE
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="dNumTim" type="tdNumTim"/>
+	    	<xs:element name="dEst" type="tdEst"/>
+	    	<xs:element name="dPunExp" type="tdPunExp"/>
+	    	<xs:element name="dNumIn" type="tdNumDE"/>
+	    	<xs:element name="dNumFin" type="tdNumDE"/>
+	    	<xs:element name="iTiDE" type="tiTiDE"/>
+	    	<xs:element name="mOtEve" type="tmotEve"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeNotRec" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al evento receptor Notificación - Recepción de un DE/DTE
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="dFecEmi" type="fecHhmmss"/>
+	    	<xs:element name="dFecRecep" type="fecHhmmss"/>
+	    	<xs:element name="iTipRec" type="tiTipEve"/>
+	    	<xs:element name="dNomRec" type="tdNomRec"/>
+	    	<xs:element name="dRucRec" type="tRuc" minOccurs="0"/>
+	    	<xs:element name="dDVRec" type="tDVer" minOccurs="0"/>
+	    	<xs:element name="dTipIDRec" type="tiTipDoc" minOccurs="0"/>
+	    	<xs:element name="dNumID" type="tdNumDocId" minOccurs="0"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeConf" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al evento receptor Conformidad
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="iTipConf" type="tiTipEve"/>
+	    	<xs:element name="dFecRecep" type="fecHhmmss" minOccurs="0"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeDisconf" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al evento receptor Disconformidad
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="mOtEve" type="tmotEve"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeDescon" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al evento receptor Desconocimiento
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="dFecEmi" type="fecHhmmss"/>
+	    	<xs:element name="dFecRecep" type="fecHhmmss"/>
+	    	<xs:element name="iTipRec" type="tiTipEve"/>
+	    	<xs:element name="dNomRec" type="tdNomRec"/>
+	    	<xs:element name="dRucRec" type="tRuc" minOccurs="0"/>
+	    	<xs:element name="dDVRec" type="tDVer" minOccurs="0"/>
+	    	<xs:element name="dTipIDRec" type="tiTipDoc" minOccurs="0"/>
+	    	<xs:element name="dNumID" type="tdNumDocId" minOccurs="0"/>
+	    	<xs:element name="mOtEve" type="tmotEve"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeRetAce" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al Evento de retención 
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="dRuc" type="tRuc"/>
+	    	<xs:element name="dNumTimRet" type="tdNumTim"/>
+	    	<xs:element name="dEstRet" type="tdEst"/>
+	    	<xs:element name="dPunExpRet" type="tdPunExp"/>
+	    	<xs:element name="dNumDocRet" type="tdNumDoc"/>
+	    	<xs:element name="dCodConRet" type="tdCodConRet"/>
+	    	<xs:element name="dFeEmiRet" type="fecHhmmss"/>
+	    	<xs:element name="dMonRet" type="tMontoBase"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeRetAnu" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al Evento de retención anulación 
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="dRuc" type="tRuc"/>
+	    	<xs:element name="dNumTimRet" type="tdNumTim"/>
+	    	<xs:element name="dEstRet" type="tdEst"/>
+	    	<xs:element name="dPunExpRet" type="tdPunExp"/>
+	    	<xs:element name="dNumDocRet" type="tdNumDoc"/>
+	    	<xs:element name="dCodConRet" type="tdCodConRet"/>
+	    	<xs:element name="dFeEmiRet" type="fecHhmmss"/>
+	    	<xs:element name="dFecAnRet" type="fecHhmmss"/>
+	    	<xs:element name="dMonRet" type="tMontoBase"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeVeCCFF" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al Evento de créditos fiscales 
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="dNumTraCCFF" type="tdNumTra"/>
+	    	<xs:element name="dFeAceTraCCFF" type="fecHhmmss"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="rGeEvenAntRem" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al Evento anticipo ó remision
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeDevCCFF" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al Evento de devolución de créditos fiscales - Cuestionado ó Devuelto
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId"/>
+	    	<xs:element name="dNumDevSol" type="tdNumTra"/>
+	    	<xs:element name="dNumDevInf" type="tdNumTra"/>
+	    	<xs:element name="dNumDevRes" type="tdNumTra"/>
+	    	<xs:element name="dFeEmiSol" type="fecHhmmss"/>
+	    	<xs:element name="dFeEmiInf" type="fecHhmmss"/>
+	    	<xs:element name="dFeEmiRes" type="fecHhmmss"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="trGeDeVTr" >
+        <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al Evento por actualización de datos del transporte
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="Id" type="tId" minOccurs="0"/>
+	    	<xs:element name="dMotEv" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="cDepEnt" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dDesDepEnt" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="cDisEnt" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dDesDisEnt" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="cCiuEnt" type="tId" minOccurs="0"/>
+	    	<xs:element name="dDesCiuEnt" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dDirEnt" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dNumCas" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dCompDir1" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dNomChof" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dNumIDChof" type="tId" minOccurs="0"/>
+	    	<xs:element name="iNatTrans" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dRucTrans" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dDVTrans" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dNomTrans" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="iTipIDTrans" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dDTipIDTrans" type="tId" minOccurs="0"/>
+	    	<xs:element name="dNumIDTrans" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="iTipTrans" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dDesTipTrans" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="iModTrans" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dDesModTrans" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dTiVehTras" type="tId" minOccurs="0"/>
+	    	<xs:element name="dMarVeh" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dTipIdenVeh" type="tdNumTra" minOccurs="0"/>
+	    	<xs:element name="dNroIDVeh" type="fecHhmmss" minOccurs="0"/>
+	    	<xs:element name="dNroMatVeh" type="fecHhmmss" minOccurs="0"/>
+	    </xs:sequence>
+    </xs:complexType>
+                    
+    <xs:complexType name="tgGroupEvt">
+	    <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo del evento
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:choice>
+	    	<xs:element name="rGeVeCan" type="trGeVeCan"/>
+			<xs:element name="rGeVeInu" type="trGeVeInu"/>
+			<xs:element name="rGeVeNotRec" type="trGeVeNotRec"/>
+			<xs:element name="rGeVeConf" type="trGeVeConf"/>
+			<xs:element name="rGeVeDisconf" type="trGeVeDisconf"/>
+			<xs:element name="rGeVeDescon" type="trGeVeDescon"/>
+	    </xs:choice>
+    </xs:complexType>
+    
+    <xs:complexType name="tgGroupEvtRecep">
+	    <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo del evento Receptores
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:choice>
+	    	<xs:element name="rGeVeNotRec" type="trGeVeNotRec"/>
+			<xs:element name="rGeVeConf" type="trGeVeConf"/>
+			<xs:element name="rGeVeDisconf" type="trGeVeDisconf"/>
+			<xs:element name="rGeVeDescon" type="trGeVeDescon"/>
+	    </xs:choice>
+    </xs:complexType>
+    
+    <xs:complexType name="tgGroupEvtEmi">
+	    <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo del evento Emisores
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:choice>
+	    	<xs:element name="rGeVeRetAce" type="trGeVeRetAce"/>
+			<xs:element name="rGeVeRetAnu" type="trGeVeRetAnu"/>
+			<xs:element name="rGeVeCCFF" type="trGeVeCCFF"/>
+			<xs:element name="rGeDevCCFFCue" type="trGeDevCCFF"/>
+			<xs:element name="rGeDevCCFFDev" type="trGeDevCCFF"/>
+			<xs:element name="rGeVeAnt" type="rGeEvenAntRem"/>
+			<xs:element name="rGeVeRem" type="rGeEvenAntRem"/>
+	    </xs:choice>
+    </xs:complexType>
+    
+    <!-- Cuerpo principal de Eventos -->
+    <!-- GDE002 -->
+    <xs:complexType name="trEve">
+        <xs:sequence>
+        	<xs:element name="dFecFirma" type="fecHhmmss"/>
+            <xs:element name="dVerFor" type="tVerFor"/>
+            <xs:element name="gGroupTiEvt" type="tgGroupEvt"/>
+        </xs:sequence>
+        <!--ID pasa a ser atributo del rEve-->
+        <xs:attribute name="Id" type="tdIdEve" use="required"/>
+    </xs:complexType>
+    
+    <!-- Cuerpo principal de Eventos Receptor -->
+    <!-- GDE002 -->
+    <xs:complexType name="trEveRecep">
+        <xs:sequence>
+            <xs:element name="dFecFirma" type="fecHhmmss"/>
+            <xs:element name="dVerFor" type="tVerFor"/>
+            <xs:element name="gGroupTiEvt" type="tgGroupEvtRecep"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Cuerpo principal de Eventos Receptor -->
+    <!-- GDE002 -->
+    <xs:complexType name="trEveEmi">
+        <xs:sequence>
+            <xs:element name="dFecFirma" type="fecHhmmss"/>
+            <xs:element name="dVerFor" type="tVerFor"/>
+            <xs:element name="gGroupTiEvt" type="tgGroupEvtEmi"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Cuerpo principal de Eventos Emisor-->
+    <!-- GDE001 -->
+    <xs:complexType name="trGesEveRecep">
+        <xs:sequence>
+        	<xs:element name="rEve" type="trEveRecep"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+     <!-- Cuerpo principal de Eventos Emisor-->
+    <!-- GDE001 -->
+    <xs:complexType name="trGesEveEmi">
+        <xs:sequence>
+        	<xs:element name="rEve" type="trEveEmi"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Cuerpo principal de Eventos Emisor-->
+    <!-- GDE001 -->
+    <xs:complexType name="trGesEve">
+        <xs:sequence>
+        	<xs:element name="rEve" type="trEve"/>
+            <xs:element ref="ds:Signature">
+                <xs:annotation>
+                    <xs:documentation>
+                        Firma Digital del DE
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Elemento de entrada para los eventos -->
+    <!-- GDE000 -->
+    <xs:complexType name="tgGroupGesEve">
+    	<xs:sequence>
+    		<xs:element name="rGesEve" type="trGesEve" maxOccurs="15" />
+    	</xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

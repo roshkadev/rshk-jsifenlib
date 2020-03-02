@@ -1,0 +1,2239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified"
+	xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+	<xs:simpleType name="tEmail">
+		<xs:restriction base="xs:string">
+			<xs:pattern
+				value="([0-9a-zA-Z#$%]([-.\w]*[0-9a-zA-Z#$%'\\.\\-_])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="tDesPais">
+		<xs:restriction base="noEmptyString">
+			<xs:whiteSpace value="preserve"/>
+			<xs:minLength value="4"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- CDC -->
+	<xs:simpleType name="tCDC">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de Control del Documento Electronico
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{2}([0-9]{7}[0-9A-D])[0-9]{34}"/>
+			<xs:length value="44"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de Emision -->
+	<xs:simpleType name="tiTipEmi">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de Emision: 1(Normal), 2(Contingencia)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:pattern value="[1-2]"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del tipo de emision -->
+	<xs:simpleType name="tdDesTipEmi">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de emision: 1(Normal). 2(Contingencia)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="6"/>
+			<xs:maxLength value="12"/>
+			<xs:enumeration value="Normal"/>
+			<xs:enumeration value="Contingencia"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Codigo Aleatoria generado por el emisor -->
+	<xs:simpleType name="tiCodSe">
+		<xs:annotation>
+			<xs:documentation>
+				La generacion de este codigo es responsabilidad del emisor, segun los
+				delineamientos
+				establecidos en el
+				Manual Tecnico, no debe ser un numero secuencial, sino aleatorio, tampoco
+				debe
+				contener solo ceros
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[0-9]{9}"/>
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de Indicador de presencia -->
+	<xs:simpleType name="tiIndPres">
+		<xs:annotation>
+			<xs:documentation>
+				Indicador de presencia
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-6]|9"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del Indicador de presencia -->
+	<xs:simpleType name="tdDesIndPres">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del indicador de presencia
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Operación presencial"/>
+					<xs:enumeration value="Operación electrónica"/>
+					<xs:enumeration value="Operación telemarketing"/>
+					<xs:enumeration value="Venta a domicilio"/>
+					<xs:enumeration value="Operación bancaria"/>
+					<xs:enumeration value="Operación cíclica"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="noEmptyString">
+					<xs:minLength value="10"/>
+					<xs:maxLength value="30"/>
+					<xs:pattern value=".+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!-- Tipo de transaccion -->
+	<xs:simpleType name="tiTipTra">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de transaccion
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">			
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="13"/>			
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del tipo de transaccion -->
+	<xs:simpleType name="tdDesTiTran">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de transaccion
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Venta de mercadería"/>
+			<xs:enumeration value="Prestación de servicios"/>
+			<xs:enumeration
+				value="Mixto (Venta de mercadería y servicios)"/>
+			<xs:enumeration value="Venta de activo fijo" />
+			<xs:enumeration value="Venta de divisas"/>
+			<xs:enumeration value="Compra de divisas"/>
+			<xs:enumeration
+				value="Promoción o entrega de muestras"/>
+			<xs:enumeration value="Donación"/>
+			<xs:enumeration value="Anticipo"/>
+			<xs:enumeration value="Compra de productos"/>
+			<xs:enumeration value="Compra de servicios"/>
+			<xs:enumeration value="Venta de crédito fiscal"/>
+			<xs:enumeration value="Muestras médicas (Art. 3 RG 24/2014)"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Informacion del Emisor -->
+	<xs:simpleType name="tdInfoEmi">
+		<xs:annotation>
+			<xs:documentation>
+				Informacion de interes del emisor respecto al DE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="3000"/>
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Informaciona del Fisco -->
+	<xs:simpleType name="tdInfoFisc">
+		<xs:annotation>
+			<xs:documentation>
+				Informacion de interes del Fisco respecto al DE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="3000"/>
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de documento electronico -->
+	<xs:simpleType name="tiTiDE">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de documento electronico
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="1|[4-7]"/> 			
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del tipo de documento electronico -->
+	<xs:simpleType name="tdDesTiDE">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de documento electronico
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+				<xs:enumeration value="Factura electrónica"/>
+<!-- 			<xs:enumeration -->
+<!-- 				value="Factura electrónica de exportación"/> -->
+<!-- 			<xs:enumeration -->
+<!-- 				value="Factura electrónica de importación"/> -->
+				<xs:enumeration value="Autofactura electrónica"/>
+				<xs:enumeration value="Nota de crédito electrónica"/>
+				<xs:enumeration value="Nota de débito electrónica"/>
+				<xs:enumeration value="Nota de remisión electrónica"/>
+<!-- 			<xs:enumeration -->
+<!-- 				value="Comprobante de retención electrónico"/> -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+	<!-- Numero de timbrado -->
+	<xs:simpleType name="tdNumTim">
+		<xs:annotation>
+			<xs:documentation>
+				Numero de timbrado del documento electronico.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="8"/>
+					<xs:maxLength value="8"/>
+					<xs:pattern value="0+[1-9][0-9]*|[1-9]+[0-9]+"/>
+				</xs:restriction>			
+			</xs:simpleType> 
+		</xs:union>
+	</xs:simpleType>
+
+	<!-- Codigo de establecimiento proveido por el Sistema de timbrado -->
+	<xs:simpleType name="tdEst">
+		<xs:annotation>
+			<xs:documentation>Codigo de establecimiento proveido por el Sistema
+				de timbrado
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:pattern value="[0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Codigo de Punto de Exp. proveido por el Sist.Timbrado -->
+	<xs:simpleType name="tdPunExp">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de Punto de Exp. proveido por el Sist.Timbrado
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:pattern value="[0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Numero de documento -->
+	<xs:simpleType name="tdNumDoc">
+		<xs:annotation>
+			<xs:documentation>
+				Numero de documento del DE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="7"/>
+			<xs:maxLength value="7"/>
+			<xs:pattern value="0+[1-9][0-9]*|[1-9]+[0-9]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+	<xs:simpleType name="tdSerieNum">
+		<xs:annotation>
+			<xs:documentation>
+				Serie del número de timbrado
+			</xs:documentation>
+		</xs:annotation>		
+		<xs:restriction base="noEmptyString">
+			<xs:pattern value="[A-Z]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<!--Numero documento identidad -->
+	<xs:simpleType name="tdNumDocId">
+		<xs:annotation>
+			<xs:documentation>
+				Numero de documento de identidad
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9A-Za-z\-]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="dNomRazSocial">
+    	<xs:annotation>
+        	<xs:documentation>
+            	Nombre o razón social
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="noEmptyString">
+            	<xs:maxLength value="60"/>
+            	<xs:minLength value="4"/>
+            </xs:restriction>
+     </xs:simpleType>
+
+	<!-- Fecha inicio de vigencia del Timbrado -->
+	<xs:simpleType name="tdFeIniT">
+		<xs:annotation>
+			<xs:documentation>
+				Fecha inicio de vigencia del Timbrado
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date">
+			<xs:minInclusive value="2018-05-01"/>
+			<xs:pattern
+				value="[2-9][0-9]{3}-([0][1-9]|[1][0-2])-([0][0-9]|[1-2][0-9]|[3][0-1])"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Fecha desde implementacion vigencia de SIFEN -->
+	<xs:simpleType name="tdFeIniS">
+		<xs:annotation>
+			<xs:documentation>
+				Fecha inicio de vigencia de SIFEN
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:date">
+			<xs:minInclusive value="2018-05-01"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Normalizador de Fecha y Hora -->
+	<xs:simpleType name="fecHhmmss">
+		<xs:annotation>
+			<xs:documentation>
+				Normalizador de Fecha y Hora AAAA-MM-DDThh:mm:ss
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime">
+			<xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo impuesto al consumo afectado -->
+	<xs:simpleType name="tiTImp">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de impuesto afectado
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"> <!-- Cambio temporal, solo se aceptará IVA -->
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del tipo de impuesto -->
+	<xs:simpleType name="tdDesTImp">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción del tipo de impuesto afectado
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IVA">
+				<xs:annotation>
+					<xs:documentation>
+						Corresponde al codigo 1 del campo dDesTimp
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ISC">
+				<xs:annotation>
+					<xs:documentation>
+						Corresponde al codigo 2 del campo dDesTimp
+					</xs:documentation>
+				</xs:annotation> 
+			</xs:enumeration>
+			<xs:enumeration value="Renta">
+				<xs:annotation>
+					<xs:documentation>
+						Corresponde al codigo 3 del campo dDesTimp
+					</xs:documentation>
+				</xs:annotation> 
+			</xs:enumeration>
+			<xs:enumeration value="Ninguno">
+				<xs:annotation>
+					<xs:documentation>
+						Corresponde al codigo 4 del campo dDesTimp
+					</xs:documentation>
+				</xs:annotation> 
+			</xs:enumeration>
+			<xs:enumeration value="IVA – Renta">
+				<xs:annotation>
+					<xs:documentation>
+						Corresponde al codigo 5 del campo dDesTimp
+					</xs:documentation>
+				</xs:annotation> 
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- RUC -->
+	<xs:simpleType name="tRuc">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[1-9][0-9]*[0-9A-D]?"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Digito Verificador -->
+	<xs:simpleType name="tDVer">
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[0-9]"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- Tipo de contribuyente -->
+	<xs:simpleType name="tiTipCont">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de contribuyente. 1(Persona Fisica), 2(Persona Juridica)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>			
+			<xs:pattern value="[1-2]"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de Regimen -->
+	<xs:simpleType name="tcTipReg">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de Régimen
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[1-8]"/>
+		</xs:restriction>
+
+	</xs:simpleType>
+
+	<!--Regimenes Aduaneros -->
+	<!--TODO Enumerar los regimenes aduaneros -->
+	<xs:simpleType name="tcTipRegAdu">
+		<xs:annotation>
+			<xs:documentation>
+				Regimenes Aduaneros
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[0-9]{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Ciudad de Emision del DE -->
+	<xs:simpleType name="tcCiuEmi">
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[0-9]{1,5}"/>
+			<xs:minInclusive value="1" />
+			<xs:maxInclusive value="99999"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion de la ciudad de emision -->
+	<xs:simpleType name="tdDesCiuEmi">
+		<xs:restriction base="noEmptyString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Distrito -->
+	<xs:simpleType name="tcDisEmi">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de distrito
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:pattern value="[0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion distrito -->
+	<xs:simpleType name="tdDesDisEmi">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion de distrito
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- teléfono con 6 a 15 caracteres-->
+	<xs:simpleType name="tdTel">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:minLength value="6"/>
+			<xs:maxLength value="15"/>			
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Celular del emisor -->
+	<xs:simpleType name="tdCel">
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:minLength value="10"/>
+			<xs:maxLength value="20"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Codigo de actividad economica -->
+	<xs:simpleType name="tcActEco">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de actividad economica del emisor segun la lista de maragantu
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[0-9A-Z]{1,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion de actividad economica -->
+	<xs:simpleType name="tdDesActEco">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion de actividad economica
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="300"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Naturaleza del receptor -->
+	<xs:simpleType name="tiNatRec">
+		<xs:annotation>
+			<xs:documentation>
+				Naturaleza del receptor: 1(Contribuyente), 2(No Contribuyente)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-2]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Naturaleza del vendedor -->
+	<xs:simpleType name="tiNatVen">
+		<xs:annotation>
+			<xs:documentation>
+				Naturaleza del vendedor: 1(No Contribuyente), 2(Extranjero)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-2]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Descripcion del vendedor -->
+	<xs:simpleType name="tdDesNatVen">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del vendedor: 1(No contribuyente). 2(Extranjero)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="16"/>
+			<xs:enumeration value="No contribuyente"/>
+			<xs:enumeration value="Extranjero"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de Operacion -->
+	<xs:simpleType name="tiTiOpe">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de operacion: 1(B2B), 2(B2C), 3(B2G), 4(B2F)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-4]"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo documento -->
+	<xs:simpleType name="tiTipDoc">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de documento de identidad del vendedor
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-4]"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo documento -->
+	<xs:simpleType name="tiTipDocRec">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de documento de identidad del receptor
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-6]|9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Tipo documento -->
+	<xs:simpleType name="tiTipIDRespDE">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de documento de identidad del responsable de la generación del DE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-4]|9"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion de tipo de documento -->
+	<xs:simpleType name="tdDtipDoc">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de documento de identidad
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Cédula paraguaya"/>
+			<xs:enumeration value="Pasaporte"/>
+			<xs:enumeration value="Cédula extranjera"/>
+			<xs:enumeration value="Carnet de residencia"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion de tipo de documento -->
+	<xs:simpleType name="tdDtipDocRec">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de documento de identidad del receptor
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Cédula paraguaya"/>
+					<xs:enumeration value="Pasaporte"/>
+					<xs:enumeration value="Cédula extranjera"/>
+					<xs:enumeration value="Carnet de residencia"/>
+					<xs:enumeration value="Innominado"/>
+					<xs:enumeration value="Tarjeta Diplomática de exoneración fiscal"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="noEmptyString">
+					<xs:minLength value="9"/>
+					<xs:maxLength value="41"/>
+					<xs:pattern value=".+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	
+	<!-- Descripcion de tipo de documento -->
+	<xs:simpleType name="tdDTipIDRespDE">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de documento de identidad del responsable de la generación del DE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Cédula paraguaya"/>
+					<xs:enumeration value="Pasaporte"/>
+					<xs:enumeration value="Cédula extranjera"/>
+					<xs:enumeration value="Carnet de residencia"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="noEmptyString">
+					<xs:minLength value="9"/>
+					<xs:maxLength value="41"/>
+					<xs:pattern value=".+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!-- Condicion de operacion -->
+	<xs:simpleType name="tiCondOpe">
+		<xs:annotation>
+			<xs:documentation>Condicion de la operacion</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[1-2]"/>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Contado</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Crédito</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion de Condicion de Operacion -->
+	<xs:simpleType name="tdDCondOpe">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion de condicion de operacion
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Contado"/>
+			<xs:enumeration value="Crédito"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de Pago -->
+	<xs:simpleType name="tiTiPago">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de tipo de pago
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="2"/>
+			<!--Efectivo -->
+			<xs:enumeration value="1"/>
+			<!--Cheque -->
+			<xs:enumeration value="2"/>
+			<!--Tarjeta de Credito -->
+			<xs:enumeration value="3"/>
+			<!--Tarjeta de Debito -->
+			<xs:enumeration value="4"/>
+			<!--Transferencia -->
+			<xs:enumeration value="5"/>
+			<!--Giro -->
+			<xs:enumeration value="6"/>
+			<!--Billetera Electronica -->
+			<xs:enumeration value="7"/>
+			<!--Tarjeta Empresarial -->
+			<xs:enumeration value="8"/>
+			<!-- Vales -->
+			<xs:enumeration value="9"/>
+			<!-- Retención -->
+			<xs:enumeration value="10"/>
+			<!-- Pago por Anticipo -->
+			<xs:enumeration value="11"/>
+			<!-- Valores Fiscales -->
+			<xs:enumeration value="12"/>
+			<!-- Valores Comerciales -->
+			<xs:enumeration value="13"/>
+			<!-- Compensaciones -->
+			<xs:enumeration value="14"/>
+			<!-- Permuta -->
+			<xs:enumeration value="15"/>
+			<!-- Pago bancario -->
+			<xs:enumeration value="16"/>
+			<!-- Pago Móvil -->
+			<xs:enumeration value="17"/>
+			<!-- Donación -->
+			<xs:enumeration value="18"/>
+			<!-- Promoción -->
+			<xs:enumeration value="19"/>
+			<!-- Consumo Interno -->
+			<xs:enumeration value="20"/>
+			<!-- Pago Electrónico -->
+			<xs:enumeration value="21"/>
+			<!-- Otro -->
+			<xs:enumeration value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del tipo de pago -->
+	<xs:simpleType name="tdDesTiPag">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de pago
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Efectivo" />
+					<xs:enumeration value="Cheque" />
+					<xs:enumeration value="Tarjeta de crédito" />
+					<xs:enumeration value="Tarjeta de débito" />
+					<xs:enumeration value="Transferencia" />
+					<xs:enumeration value="Giro" />
+					<xs:enumeration value="Billetera electrónica" />
+					<xs:enumeration value="Tarjeta empresarial" />
+					<xs:enumeration value="Vale" />
+					<xs:enumeration value="Retención" />
+					<xs:enumeration value="Pago por anticipo" />
+					<xs:enumeration value="Valor fiscal" />
+					<xs:enumeration value="Valor comercial" />
+					<xs:enumeration value="Compensación" />
+					<xs:enumeration value="Permuta" />
+					<xs:enumeration value="Pago bancario" />
+					<xs:enumeration value="Pago Móvil" />
+					<xs:enumeration value="Donación" />
+					<xs:enumeration value="Promoción" />
+					<xs:enumeration value="Consumo Interno" />
+					<xs:enumeration value="Pago Electrónico" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="noEmptyString">
+					<xs:minLength value="4"/>
+					<xs:maxLength value="30"/>
+					<xs:pattern value=".+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	
+	<xs:simpleType name="tdDMoneTiPag">
+                <xs:annotation>
+                    <xs:documentation>
+                        Descripcion de la moneda
+                    </xs:documentation>
+                </xs:annotation>
+                    <xs:restriction base="noEmptyString">
+                    	<xs:whiteSpace value="collapse"/>
+                        <xs:minLength value="3"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+     </xs:simpleType>
+
+	<!-- Codigo de tipo de tarjeta -->
+	<xs:simpleType name="tiDenTarj">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de tipo de tarjeta
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="1"/>
+			<!-- VISA -->
+			<xs:enumeration value="1"/>
+			<!--MASTERCARD -->
+			<xs:enumeration value="2"/>
+			<!--AMERICAN EXPRESS -->
+			<xs:enumeration value="3"/>
+			<!-- MAESTRO -->
+			<xs:enumeration value="4"/>
+			<!--PANAL -->
+			<xs:enumeration value="5"/>
+			<!--CABAL -->
+			<xs:enumeration value="6"/>
+			<!-- OTRO -->
+			<xs:enumeration value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion de tipo de tarjeta -->
+	<xs:simpleType name="tdDesDenTarj">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción de denominación de la tarjeta
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="4" />
+					<xs:maxLength value="20" />
+					<xs:enumeration value="Visa" />
+					<xs:enumeration value="Mastercard" />
+					<xs:enumeration value="American Express" />
+					<xs:enumeration value="Maestro" />
+					<xs:enumeration value="Panal" />
+					<xs:enumeration value="Cabal" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<!--INFORMAR SI EN EL CAMPO iDenTarj se informo el codigo 9 -->
+				<xs:restriction base="noEmptyString">
+					<xs:minLength value="4"/>
+					<xs:maxLength value="20" />
+					<xs:pattern value=".+" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!-- Forma de procesamiento de pago -->
+	<!--<xs:element name="iForProPa"> -->
+	<xs:simpleType name="tiForProPa">
+		<xs:annotation>
+			<xs:documentation>
+				Forma de procesamiento del pago. 1(POS), 2(Pago Electronico)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:short">
+			<xs:totalDigits value="1"/>
+			<xs:enumeration value="1"/>
+			<!-- POS -->
+			<xs:enumeration value="2"/>
+			<!-- Pago Electronico (Ej. Compras por Internet) -->
+			<xs:enumeration value="9"/>
+			<!-- Otro -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Numero de aprobacion de la operacion -->
+	<!--<xs:element name="dNunapOpe"> -->
+	<xs:simpleType name="tdNunApOpe">
+		<xs:annotation>
+			<xs:documentation>
+				Código de autorización de la operación
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="10" />
+			<xs:minInclusive value="100000"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Numero de cheque -->
+	<xs:simpleType name="tNumCheq">
+		<xs:annotation>
+			<xs:documentation>
+				Numero de cheque
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="8" />
+			<xs:maxLength value="8" />
+			<xs:pattern value="[0-9]{8}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripción de la condición de la operación a crédito -->
+	<xs:simpleType name="tdDCondCred">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción de la condición de la operación a crédito
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Plazo" />
+			<!-- Corresponde al Codigo 1 -->
+			<xs:enumeration value="Cuota" />
+			<!--Corresponde al Codigo 2 -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Fecha: Formato AAAAMMDD -->
+	<xs:simpleType name="tFecAAAAMMDD">
+		<xs:restriction base="xs:string">
+			<xs:pattern
+				value="[2-9][0-9]{3}([0][1-9]|[1][0-2])([0][0-9]|[1-2][0-9]|[3][0-1])" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Fecha: Formato AAAA-MM-DD -->
+	<xs:simpleType name="tFecAAAAMMDDguion">
+		<xs:restriction base="xs:string">
+			<xs:pattern
+				value="[2-9][0-9]{3}-([0][1-9]|[1][0-2])-([0][0-9]|[1-2][0-9]|[3][0-1])" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Modalidad - Codigo de contratacion emitido por la DNCP -->
+	<xs:simpleType name="tdModCont">
+		<xs:annotation>
+			<xs:documentation>
+				Modalidad - Codigo emitido por la DNCP
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:length value="2" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Entidad - Codigo de contratacion emitido por la DNCP -->
+	<xs:simpleType name="tdEntCont">
+		<xs:annotation>
+			<xs:documentation>
+				Entidad - Codigo de contratacion emitido por la DNCP
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:pattern value="[0-9]{5}" />
+			<xs:minInclusive value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Anho - Codigo de contratacion emitido por la DNCP -->
+	<xs:simpleType name="tdAnoCont">
+		<xs:annotation>
+			<xs:documentation>
+				Anho - Codigo de contratacion emitido por la DNCP
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="2" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Secuencia - Codigo de contratacion emitido por la DNCP -->
+	<xs:simpleType name="tdSecCont">
+		<xs:annotation>
+			<xs:documentation>
+				Secuencia - Codigo de contratacion emitido por la DNCP
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:pattern value="[0-9]{7}" />
+			<xs:minInclusive value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Condición del tipo de cambio -->
+	<xs:simpleType name="tdCondTiCam">
+		<xs:annotation>
+			<xs:documentation>
+				Condición del tipo de cambio 1(Global), 2(Por ítem)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:short">
+			<xs:totalDigits value="1" />
+			<xs:enumeration value="1" />
+			<!-- GLOBAL -->
+			<xs:enumeration value="2" />
+			<!-- POR ITEM -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Condición del anticipo-->
+	<xs:simpleType name="tiCondAnt">
+		<xs:annotation>
+			<xs:documentation>
+				Condición del Anticipo 1(Global), 2(Por ítem)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:short">
+			<xs:totalDigits value="1" />
+			<xs:enumeration value="1" />
+			<!-- GLOBAL -->
+			<xs:enumeration value="2" />
+			<!-- POR ITEM -->
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Descripción de la condición del Anticipo -->
+	<xs:simpleType name="tdDesCondAnt">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción de la condición del Anticipo
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Anticipo Global">
+				<xs:annotation>
+					<xs:documentation>
+						Corresponde al codigo 1 del campo iCondAnt
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Anticipo por Ítem">
+				<xs:annotation>
+					<xs:documentation>
+						Corresponde al codigo 2 del campo iCondAnt
+					</xs:documentation>
+				</xs:annotation> 
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Codigo Interno de Mercaderia -->
+	<xs:simpleType name="tdCodInt">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo interno de mercaderia
+			</xs:documentation>
+		</xs:annotation>		
+			<xs:restriction base="noEmptyString">
+				<xs:minLength value="1" />
+				<xs:maxLength value="20" />
+			</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Partida arancelaria -->
+	<xs:simpleType name="tdParAranc">
+		<xs:annotation>
+			<xs:documentation>
+				Partida arancelaria
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:pattern value="[0-9]{4}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Nomenclatura comun del MERCOSUR -->
+	<xs:simpleType name="tdNCM">
+		<xs:annotation>
+			<xs:documentation>
+				Nomenclatura comun del MERCOSUR (NCM)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:pattern value="[0-9]{6,8}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Codigo DNCP Nivel General -->
+	<xs:simpleType name="tdDncpG">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo DNCP - Nivel General
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{8}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Codigo DNCP Nivel Especifico -->
+	<xs:simpleType name="tdDncpE">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo DNCP - Nivel Especifico
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{3,4}" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Codigo GTIN (Producto) -->
+	<xs:simpleType name="tdGtin">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo GTIN por Producto y por Paquete
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:pattern value="[0-9]{8,14}" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--Cantidad de producto y/o servicio -->
+	<xs:simpleType name="tdCantProSer">
+		<xs:annotation>
+			<xs:documentation>
+				Cantidad del producto/servicio
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="14"/>
+			<xs:fractionDigits value="4"/>
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999999999.9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Código de datos de relevancia de las mercaderías -->
+	<xs:simpleType name="tcRelMerc">
+		<xs:annotation>
+			<xs:documentation>
+				Código de datos de relevancia de las mercaderías : 1(Tolerancia de quiebra), 
+				2(Tolerancia de merma)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[1-2]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Descripción del código de datos de relevancia de las mercaderías -->
+	<xs:simpleType name="tdDesRelMerc">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del Código de datos de relevancia de las mercaderías : 
+				1(Tolerancia de quiebra), 2(Tolerancia de merma)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="19"/>
+			<xs:maxLength value="21"/>
+			<xs:enumeration value="Tolerancia de quiebra"/>
+			<xs:enumeration value="Tolerancia de merma"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Representacion de los monto (base) 15 dígitos enteros y 8 decimales -->
+	<xs:simpleType name="tMontoBase">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo base para los atributos de monto
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="23"/>
+			<xs:fractionDigits value="8"/>
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999999999999.99999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<!--Representacion de los montos con 15 dígitos enteros y 4 decimales -->
+	<xs:simpleType name="tMontoBase4">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo base para los atributos de monto
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="19"/>
+			<xs:fractionDigits value="4"/>
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999999999999.9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--Representacion de los montos con 6 dígitos enteros y 4 decimales -->
+	<xs:simpleType name="tMontoBase6">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo base para montos 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="10"/>
+            <xs:fractionDigits value="4"/>                     
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999.9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--Representacion de los montos con 5 dígitos enteros y 4 decimales -->
+	<xs:simpleType name="tTipoCambioBase">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo base para los tipos de cambio
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="9" />
+			<xs:fractionDigits value="4" />
+			<xs:minInclusive value="1" />
+			<xs:maxExclusive value="99999.9999" />
+		</xs:restriction>
+</xs:simpleType>
+	
+	<!--Representacion de los porcentajes con hasta 3 dígitos enteros o con 2 dígitos enteros y 8 decimales -->
+	<xs:simpleType name="tPorcDesc8" > 
+                <xs:annotation>
+                    <xs:documentation>
+                        Tipo de dato base para representar porcentajes
+                    </xs:documentation>
+                </xs:annotation>               
+                <xs:restriction base="xs:decimal">
+                    <xs:totalDigits value="11"/>
+                    <xs:fractionDigits value="8"/>                        
+                    <xs:minInclusive value="0"/>
+					<xs:maxInclusive value="100"/>
+                </xs:restriction>   
+    </xs:simpleType>
+
+	<!--Forma de afectacion del IVA -->
+	<xs:simpleType name="tiAfecIVA">
+		<xs:annotation>
+			<xs:documentation>
+				Forma de afectacion del IVA 1(Gravado), 2(Exonerado), 3(Exento),
+				4(Gravado parcial)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+			<xs:enumeration value="3" />
+			<xs:enumeration value="4" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion de IVA -->
+	<xs:simpleType name="tdDesAfecIVA">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion de la afectacion del IVA
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Gravado IVA" />
+			<!-- Corresponde al Codigo 1 del campo iAfecIVA -->
+			<xs:enumeration
+				value="Exonerado (Art. 83- Ley 125/91)" />
+			<!--Corresponde al Codigo 2 del campo iAfecIVA -->
+			<xs:enumeration value="Exento" />
+			<!--Corresponde al Codigo 3 del campo iAfecIVA -->
+			<xs:enumeration value="Gravado parcial (Grav- Exento)" />
+			<!--Corresponde al Codigo 4 del campo iAfecIVA -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Distincion de la tasa de IVA -->
+	<xs:simpleType name="tdTasaIVA">
+		<xs:annotation>
+			<xs:documentation>
+				Tasa del IVA
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="2" />
+			<xs:minInclusive value="0" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Categoria de ISC -->
+	<xs:simpleType name="tcCatISC">
+		<xs:annotation>
+			<xs:documentation>
+				Categoria de ISC
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+			<xs:enumeration value="3" />
+			<xs:enumeration value="4" />
+			<xs:enumeration value="5" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion de categoria de ISC -->
+	<xs:simpleType name="tdDesCatISC">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion de categoria de ISC
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration
+				value="SECCION I-(Cigarrillos,Tabacos,Esencias y Otros derivados del Tabaco)" />
+			<xs:enumeration
+				value="SECCION II - (Bebidas con y sin alcohol)" />
+			<xs:enumeration
+				value="SECCION III - (Alcoholes y Derivados del alcohol)" />
+			<xs:enumeration value="SECCION IV - (Combustibles)" />
+			<xs:enumeration
+				value="SECCION V - (Artículos considerados de lujo)" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Tasa del ISC -->
+	<xs:simpleType name="tcTasaISC">
+		<xs:annotation>
+			<xs:documentation>
+				Tasa del ISC
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1" />
+			<!-- Corresponde al 1% -->
+			<xs:enumeration value="2" />
+			<!-- Corresponde al 5% -->
+			<xs:enumeration value="3" />
+			<!-- Corresponde al 9% -->
+			<xs:enumeration value="4" />
+			<!-- Corresponde al 10% -->
+			<xs:enumeration value="5" />
+			<!-- Corresponde al 11% -->
+			<xs:enumeration value="6" />
+			<!-- Corresponde al 13% -->
+			<xs:enumeration value="7" />
+			<!-- Corresponde al 16% -->
+			<xs:enumeration value="8" />
+			<!-- Corresponde al 18% -->
+			<xs:enumeration value="9" />
+			<!-- Corresponde al 20% -->
+			<xs:enumeration value="10" />
+			<!-- Corresponde al 24% -->
+			<xs:enumeration value="11" />
+			<!-- Corresponde al 34% -->
+			<xs:enumeration value="12" />
+			<!-- Corresponde al 38% -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Tipo de operacion de venta de vehiculos -->
+	<xs:simpleType name="tiTipOpVN">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de operacion de venta de vehiculos
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:short">
+			<!-- Venta a representante -->
+			<xs:enumeration value="1"/>
+			<!-- Venta al Consumidor Final -->
+			<xs:enumeration value="2"/>
+			<!-- Venta al Gobierno -->
+			<xs:enumeration value="3"/>
+			<!-- Venta a Flota de Vehiculos -->
+			<xs:enumeration value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion del tipo de venta de vehiculos -->
+	<xs:simpleType name="tdDesTipOpVN">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de venta de vehiculos
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Venta a representante" />
+					<!-- Codigo 1 del campo iTipOpVN -->
+					<xs:enumeration value="Venta al Consumidor final"/>
+					<!-- Codigo 2 del campo iTipOpVN -->
+					<xs:enumeration value="Venta a gobierno"/>
+					<!-- Codigo 3 del campo iTipOpVN -->
+					<xs:enumeration value="Venta a flota de vehículos"/>
+					<!-- Codigo 4 del campo iTipOpVN -->
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!--Chasis -->
+	<xs:simpleType name="tdChasis">
+		<xs:annotation>
+			<xs:documentation>
+				Chasis
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9A-Za-z]{17}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de combustible -->
+	<xs:simpleType name="tiTipCom">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de combustible
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<!-- Gasolina -->
+			<xs:enumeration value="1"/>
+			<!-- Diesel -->
+			<xs:enumeration value="2"/>
+			<!-- Etanol -->
+			<xs:enumeration value="3"/>
+			<!-- GNV -->
+			<xs:enumeration value="4"/>
+			<!--Flex -->
+			<xs:enumeration value="5"/>
+			<!--OTRO -->
+			<xs:enumeration value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion del tipo de combustible -->
+	<xs:simpleType name="tdDesTipCom">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de combustible
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Gasolina"/>
+					<xs:enumeration value="Diésel"/>
+					<xs:enumeration value="Etanol"/>
+					<xs:enumeration value="GNV"/>
+					<xs:enumeration value="Flex"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="noEmptyString">
+					<xs:minLength value="3"/>
+					<xs:maxLength value="20"/>
+					<xs:pattern value=".+"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!--Tipo de pintura -->
+	<!--<xs:element name="iTipoPint"> -->
+	<xs:simpleType name="tiTipoPint">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de pintura del vehiculo
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="1" />
+			<!-- Solida -->
+			<xs:enumeration value="2" />
+			<!-- Metalica -->
+			<xs:enumeration value="3" />
+			<!-- Perla -->
+			<xs:enumeration value="4" />
+			<!-- Fosca -->
+			<xs:enumeration value="9" />
+			<!-- Otro -->
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion de tipo de pintura -->
+	<!--<xs:element name="dDesTP"> -->
+	<xs:simpleType name="tdDesTP">
+		<xs:annotation>
+			<xs:documentation>
+				Description del tipo de pintura
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Solida"/>
+					<!-- Corresponde al codigo 1 del campo iTipoPint -->
+					<xs:enumeration value="Metalica" />
+					<!-- Corresponde al codigo 2 del campo iTipoPint -->
+					<xs:enumeration value="Perla"/>
+					<!-- Corresponde al codigo 3 del campo iTipoPint -->
+					<xs:enumeration value="Fosca"/>
+					<!-- Corresponde al codigo 4 del campo iTipoPint -->
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="4"/>
+					<xs:maxLength value="10"/>
+					<xs:pattern value="[A-Za-z0-9]" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!--Tipo de vehiculo -->
+	<!--TODO: Codificar de acuerdo al departamento de registro vehicular -->
+	<!--<xs:element name="cTipVeh"> -->
+	<xs:simpleType name="tcTipVeh">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de vehículo
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	
+
+	<!--Condicion del vehiculo -->
+	<xs:simpleType name="tiCondVeh">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de condicion del vehiculo
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:short">
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+			<xs:enumeration value="3" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion del tipo de vehiculo -->
+	<xs:simpleType name="tdDesCondVeh">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Acabado" />
+			<xs:enumeration value="Semi-acabado" />
+			<xs:enumeration value="Inacabado" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="tLectura">
+		<xs:annotation>
+			<xs:documentation>
+				Lectura energía
+			</xs:documentation>
+		</xs:annotation>
+			<xs:restriction base="xs:decimal">
+				<xs:totalDigits value="13" />
+				<xs:fractionDigits value="2" />
+				<xs:minInclusive value="0" />
+				<xs:maxInclusive value="99999999999.99"/>
+			</xs:restriction>
+	</xs:simpleType>
+
+	<!--Codigo de poliza -->
+	<xs:simpleType name="tdPoliza">
+		<xs:annotation>
+			<xs:documentation>
+				Codigo de poliza
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+	        <xs:whiteSpace value="collapse"/>
+	        <xs:maxLength value="20"/>
+        </xs:restriction>
+	</xs:simpleType>
+
+	<!-- Vigencia de poliza -->
+	<xs:simpleType name="tdVigPol">
+		<xs:annotation>
+			<xs:documentation>
+				Vigencia de póliza de seguro
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">			
+			<xs:totalDigits value="6"/>
+			<xs:fractionDigits value="1"/>
+			<xs:minExclusive value="0"/>
+			<xs:maxInclusive value="99999.9"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Campo de redondeo -->
+	<xs:simpleType name="tdCRed">
+		<xs:annotation>
+			<xs:documentation>
+				Campo de redondeo
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="8"/>
+			<xs:fractionDigits value="4"/>			
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999.9999"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Cadena no vacia -->
+	<xs:simpleType name="noEmptyString">
+		<xs:annotation>
+			<xs:documentation>
+				Cadena no vacia
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve" />
+			<xs:pattern value=".*[^\s].*" />
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="tdTipCons">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de constancia de autofactura electronica
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripción del tipo de constancia -->
+	<xs:simpleType name="tdDesTipCons">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción del tipo de constancia
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Constancia de no ser contribuyente" />
+			<xs:enumeration value="Constancia de microproductores" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Ciudades -->
+	<!--TODO modelar de acuerdo a la tabla de ciudades -->
+	<xs:simpleType name="tCiudad">
+		<xs:annotation>
+			<xs:documentation>
+				Código de la ciudad donde se realiza la transacción
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="5" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion de ciudades -->
+	<xs:simpleType name="tDesCiudad">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción de la ciudad donde se realiza la transacción
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="30" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Distritos -->
+	<!--TODO Modelar de acuerdo a la tabla de distritos -->
+	<xs:simpleType name="tDistrito">
+		<xs:annotation>
+			<xs:documentation>
+				Código del distrito donde se realiza la transacción
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="4" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion distritos -->
+	<xs:simpleType name="tDesDistrito">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción del distrito donde se realiza la transacción
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:minLength value="1" />
+			<xs:maxLength value="30" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Tipo de documento asociado -->
+	<xs:simpleType name="tiTipDocAso">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de documento asociado
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<!-- 1= Electrónico -->
+			<xs:enumeration value="1" />
+			<!-- 2= Impreso -->
+			<xs:enumeration value="2" />
+			<!-- 3= Constancia Electrónica -->
+			<xs:enumeration value="3" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del tipo de documento asociado -->
+	<xs:simpleType name="tdDesTipDocAso">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de documento asociado
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Electrónico"/>
+			<xs:enumeration value="Impreso"/>
+			<xs:enumeration value="Constancia Electrónica"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Tipo de documento impreso -->
+	<xs:simpleType name="tiTIpoDoc">
+		<xs:annotation>
+			<xs:documentation>
+				Tipos de documentos impresos
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+			<xs:enumeration value="3" />
+			<xs:enumeration value="4" />
+			<xs:enumeration value="5" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Descripcion del tipo de documento impreso -->
+	<xs:simpleType name="tdDesTIpoDoc">
+		<xs:annotation>
+			<xs:documentation>
+				Tipos de documentos impresos
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Factura" />
+			<xs:enumeration value="Nota de crédito" />
+			<xs:enumeration value="Nota de débito" />
+			<xs:enumeration value="Nota de remisión" />
+			<xs:enumeration value="Comprobante de retención" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Motivo de emision de nota de credito/debito -->
+	<xs:simpleType name="tiMotEmi">
+		<xs:annotation>
+			<xs:documentation>
+				Motivo de emision de la nota de credito/debito electronica
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:pattern value="[1-8]"/>
+		</xs:restriction>		
+	</xs:simpleType>
+	
+
+	<!--Descripcion del motivo de la emision -->
+	<xs:simpleType name="tdDesMotEmi">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del motivo de la emision de la nota de credito/debito
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Devolución y Ajuste de precios" />
+			<xs:enumeration value="Devolución" />
+			<xs:enumeration value="Descuento" />
+			<xs:enumeration value="Bonificación" />
+			<xs:enumeration value="Crédito incobrable" />
+			<xs:enumeration value="Recupero de costo" />
+			<xs:enumeration value="Recupero de gasto" />
+			<xs:enumeration value="Ajuste de precio" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Motivo de translado (Nota de remision) -->
+	<xs:simpleType name="tiMotivTras">
+		<xs:annotation>
+			<xs:documentation>
+				Motivo de emisión
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="10"/>
+			<xs:enumeration value="11"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="13"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="99"/>			
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--Descripcion del motivo del traslado (Nota de remision) -->
+	<xs:simpleType name="tdDMotivTras">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del motivo de emisión
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Traslado por ventas" />
+					<xs:enumeration value="Traslado por consignación" />
+					<xs:enumeration value="Exportación" />
+					<xs:enumeration value="Traslado por compra" />
+					<xs:enumeration value="Importación" />
+					<xs:enumeration value="Traslado por devolución" />
+					<xs:enumeration
+						value="Traslado entre locales de la empresa" />
+					<xs:enumeration
+						value="Traslado de bienes por transformación" />
+					<xs:enumeration
+						value="Traslado de bienes para reparación" />
+					<xs:enumeration value="Traslado por emisor móvil" />
+					<xs:enumeration value="Exhibición o Demostración" />
+					<xs:enumeration value="Participación en ferias" />
+					<xs:enumeration value="Traslado de encomienda" />
+					<xs:enumeration value="Decomiso" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<xs:restriction base="noEmptyString">
+					<xs:maxLength value="60" />
+					<xs:minLength value="5" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!--Responsable de la emision de la Nota de remision electronica -->
+	<xs:simpleType name="tiRespEmiNR">
+		<xs:annotation>
+			<xs:documentation>
+				Responsable por la emisión de la Nota de Remisión Electrónica
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>
+						Emisor de la factura
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>
+						Poseedor de la factura y bienes
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>
+						Empresa Transportista
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>
+						Despachante de Aduanas
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>
+						Agente de transporte o intermediario
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!--Descripción del Responsable de la emisión de la Nota de Remisión Electrónica -->
+	<xs:simpleType name="tdDesRespEmiNR">
+		<xs:annotation>
+			<xs:documentation>
+				Descripción del Responsable de la emisión de la Nota de Remisión Electrónica
+			</xs:documentation>
+		</xs:annotation>
+		<xs:union>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="20"/>
+					<xs:maxLength value="36"/>
+					<xs:enumeration value="Emisor de la factura" />
+					<xs:enumeration value="Poseedor de la factura y bienes" />
+					<xs:enumeration value="Empresa transportista" />
+					<xs:enumeration value="Despachante de Aduanas" />
+					<xs:enumeration value="Agente de transporte o intermediario" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!--Tipo de transporte -->
+	<xs:simpleType name="tiTTrans">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de transporte
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1" />
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion de Tipo de transporte -->
+	<xs:simpleType name="tdDesTTrans">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion del tipo de transporte
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Propio" />
+			<xs:enumeration value="Tercero" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Modalidad del transporte -->
+	<xs:simpleType name="tiModTrans">
+		<xs:annotation>
+			<xs:documentation>
+				Modalidad del transporte
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1" />
+			<xs:enumeration value="2" />
+			<xs:enumeration value="3" />
+			<xs:enumeration value="4" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Descripcion de la Modalidad de transporte -->
+	<xs:simpleType name="tdDesModTrans">
+		<xs:annotation>
+			<xs:documentation>
+				Descripcion de la Modalidad de transporte
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Terrestre" />
+			<xs:enumeration value="Fluvial" />
+			<xs:enumeration value="Aéreo" />
+			<xs:enumeration value="Multimodal" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Responsable por el costo del flete -->
+	<xs:simpleType name="tiRespFlete">
+		<xs:annotation>
+			<xs:documentation>
+				Responsable por el costo del flete
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+
+			<!-- 1= Emisor de la Factura Electrónica -->
+			<xs:enumeration value="1"/>
+			<!-- 2= Receptor de la Factura Electrónica -->
+			<xs:enumeration value="2"/>
+			<!-- 3= Tercero -->
+			<xs:enumeration value="3"/>
+			<!-- 4=Agente intermediario del transporte (cuando intervenga) -->
+			<xs:enumeration value="4"/>
+			<!-- 5= Transporte propio -->
+			<xs:enumeration value="5"/>			
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--Condicion de la negociacion -->
+	<xs:simpleType name="tcCondNeg">
+		<xs:annotation>
+			<xs:documentation>
+				Condicion de la negociacion
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CFR">
+				<xs:annotation>
+					<xs:documentation>
+						Costo y flete
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CIF">
+				<xs:annotation>
+					<xs:documentation>
+						Costo, seguro y flete
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CIP">
+				<xs:annotation>
+					<xs:documentation>
+						Transporte y seguros pagados hasta
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CPT">
+				<xs:annotation>
+					<xs:documentation>
+						Transporte pagado hasta
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DAP">
+				<xs:annotation>
+					<xs:documentation>
+						Entregada en el lugar convenido
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DAT">
+				<xs:annotation>
+					<xs:documentation>
+						Entregada en terminal
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DDP">
+				<xs:annotation>
+					<xs:documentation>
+						Entregada derechos pagados
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EXW">
+				<xs:annotation>
+					<xs:documentation>
+						En fabrica
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FAS">
+				<xs:annotation>
+					<xs:documentation>
+						Franco al costado del buque
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FCA">
+				<xs:annotation>
+					<xs:documentation>
+						Franco transportista
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FOB">
+				<xs:annotation>
+					<xs:documentation>
+						Franco a bordo
+					</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Dirección de hasta 255 caracteres -->
+	<xs:simpleType name="tdDirec">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de dato para dirección de 255 caracteres
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="tdNumCas">
+            <xs:annotation>
+                <xs:documentation>
+                        Numero de casa
+                </xs:documentation>
+            </xs:annotation>
+                <xs:restriction base="xs:integer">
+                <xs:minInclusive value="0"/>
+                <xs:totalDigits value="6"/>
+            </xs:restriction>
+     </xs:simpleType>
+
+	<!-- Dirección de hasta 15 caracteres -->
+	<xs:simpleType name="tdDirec2">
+		<xs:annotation>
+			<xs:documentation>
+				Direccion de longitud maxima 15 caracteres
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="15" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Nombre o razón social -->
+	<xs:simpleType name="tdNombre">
+		<xs:annotation>
+			<xs:documentation>
+				Nombre o razon social
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="255"/>
+			<xs:minLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
+	<!-- Cargo del responsable -->
+	<xs:simpleType name="tdCargo">
+		<xs:annotation>
+			<xs:documentation>
+				Cargo del responsable de la generación del DE
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="100"/>
+			<xs:minLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<!-- Cargo del responsable -->
+	<xs:simpleType name="tdCadenaBase">
+		<xs:annotation>
+			<xs:documentation>
+				Tipo de dato alfanumérico de 20 caracteres
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="noEmptyString">
+			<xs:maxLength value="20"/>
+			<xs:minLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+</xs:schema>

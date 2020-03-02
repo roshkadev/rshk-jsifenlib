@@ -1,0 +1,137 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+   <soap:Header/>
+   <soap:Body>
+      <rEnviDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">
+         <dId>100</dId>
+         <iAmb>1</iAmb>
+         <xDE>
+         <rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd">
+	<dVerFor>150</dVerFor>
+	<DE Id="06009290230001001000002612019040917819792232">
+		<dDVId>2</dDVId>
+        <dFecFirma>2019-04-09T15:00:02</dFecFirma>
+		<dSisFact>1</dSisFact>
+		<gOpeDE>
+			<iTipEmi>1</iTipEmi>
+			<dDesTipEmi>Normal</dDesTipEmi>
+			<dCodSeg>781979223</dCodSeg>
+		</gOpeDE>
+		<gTimb>
+			<iTiDE>6</iTiDE>
+        	<dDesTiDE>Nota de débito electrónica</dDesTiDE>
+        	<dNumTim>12557335</dNumTim>
+       		<dEst>001</dEst>
+        	<dPunExp>001</dPunExp>
+        	<dNumDoc>0000026</dNumDoc>
+        	<dFeIniT>2018-09-19</dFeIniT>
+           <dFeFinT>2019-09-30</dFeFinT>           
+		</gTimb>
+		<gDatGralOpe>
+			<dFeEmiDE>2019-04-09T12:57:17</dFeEmiDE>
+			<gOpeCom>
+				<iTImp>1</iTImp>
+				<dDesTImp>IVA</dDesTImp>
+				<cMoneOpe>PYG</cMoneOpe>
+				<dDesMoneOpe>Guarani</dDesMoneOpe>
+			</gOpeCom>
+			<gEmis>
+				<dRucEm>929023</dRucEm>
+            	<dDVEmi>0</dDVEmi>
+          		<iTipCont>1</iTipCont>
+				<dNomEmi>BANCARD S.A.</dNomEmi>
+				<dNomFanEmi>BANCARD</dNomFanEmi>
+				<dDirEmi>AVENIDA BRASILIA N° 765</dDirEmi>
+				<dNumCas>1</dNumCas>
+				<cDepEmi>1</cDepEmi>
+				<dDesDepEmi>CAPITAL</dDesDepEmi>
+				<cDisEmi>1</cDisEmi>
+				<dDesDisEmi>ASUNCION (DISTRITO)</dDesDisEmi>
+				<cCiuEmi>1</cCiuEmi>
+				<dDesCiuEmi>ASUNCION (DISTRITO)</dDesCiuEmi>
+				<dTelEmi>214161000</dTelEmi>
+				<dEmailE>contabilidad@bancard.com.py</dEmailE>
+				<gActEco>
+					<cActEco>64990</cActEco>
+					<dDesActEco>OTRAS ACTIVIDADES DE SERVICIOS FINANCIEROS, EXCEPTO LA FINANCIACIÓN DE PLANES DE SEGUROS Y DE PENSIONES</dDesActEco>
+				</gActEco>
+			</gEmis>
+			<gDatRec>
+				<iNatRec>1</iNatRec>
+				<iTiOpe>1</iTiOpe>
+				<cPaisRec>PRY</cPaisRec>
+				<dDesPaisRe>Paraguay</dDesPaisRe>
+				<iTiContRec>2</iTiContRec>
+				<dRucRec>80081294</dRucRec>
+				<dDVRec>8</dDVRec>
+				<dNomRec>BANCO DEL PARAGUAY S.A.</dNomRec>
+				<dDirRec>YEGROS Y MCAL. LÓPEZ</dDirRec>
+				<dNumCasRec>123</dNumCasRec>
+				<dTelRec>21494992</dTelRec>
+			</gDatRec>
+		</gDatGralOpe>
+		<gDtipDE>
+			<gCamNCDE>
+            	<iMotEmi>3</iMotEmi>
+            	<dDesMotEmi>Descuento</dDesMotEmi>
+        	</gCamNCDE>			
+			<gCamItem>
+				<dCodInt>465</dCodInt>
+            	<dDesProSer>Para prueba de operación de nota de dédito Doc Asociado Impreso</dDesProSer>
+            	<cUniMed>77</cUniMed>
+           		<dDesUniMed>UNI</dDesUniMed>
+            	<dCantProSer>2.000</dCantProSer>
+				<gValorItem>
+					<dPUniProSer>1000000.00</dPUniProSer>
+					<dTotBruOpeItem>0</dTotBruOpeItem>
+					<gValorRestaItem>
+						<dDescItem>0</dDescItem>
+						<dPorcDesIt>0</dPorcDesIt>
+						<dTotOpeItem>0</dTotOpeItem>
+					</gValorRestaItem>					
+				</gValorItem>
+				<gCamIVA>
+					<iAfecIVA>1</iAfecIVA>
+					<dDesAfecIVA>Gravado IVA</dDesAfecIVA>
+					<dPropIVA>100</dPropIVA>
+					<dTasaIVA>10</dTasaIVA>
+					<dBasGravIVA>48473447</dBasGravIVA>
+					<dLiqIVAItem>4847345</dLiqIVAItem>
+				</gCamIVA>
+			</gCamItem> 
+		</gDtipDE>
+		<gTotSub>
+			<dSubExe>0</dSubExe>
+			<dSubExo>0</dSubExo>
+			<dSub5>0</dSub5>
+			<dSub10>69117205.30</dSub10>
+			<dTotOpe>69117205.3</dTotOpe>
+			<dTotDesc>0</dTotDesc>
+			<dTotDescGlotem>0</dTotDescGlotem>
+			<dTotAntItem>0</dTotAntItem>
+			<dTotAnt>0</dTotAnt>
+			<dPorcDescTotal>100</dPorcDescTotal>
+			<dDescTotal>0.0</dDescTotal>
+			<dAnticipo>0</dAnticipo>
+			<dRedon>0.0</dRedon>
+			<dTotGralOpe>2000000</dTotGralOpe>
+			<dIVA5>0</dIVA5>
+			<dIVA10>6283383</dIVA10>
+			<dTotIVA>6283383</dTotIVA>
+			<dBaseGrav5>0</dBaseGrav5>
+			<dBaseGrav10>62833823</dBaseGrav10>
+			<dTBasGraIVA>62833823</dTBasGraIVA>
+		</gTotSub>
+		<gCamDEAsoc>
+       		<iTipDocAso>1</iTipDocAso>
+        	<dDesTipDocAso>Electrónico</dDesTipDocAso>
+        	<dCdCDERef>01800138848001001123456412018121817819792239</dCdCDERef>  
+    	</gCamDEAsoc>
+	</DE>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI="#06009290230001001000002612019040910000000127"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>5tI+2uneQ4wlAFLmci296XCBEt9lNMbpz41GjvpstdA=</DigestValue></Reference></SignedInfo><SignatureValue>FgEEcLBr/ZGQx/aNmF3GYhlBw0vufzYT8YC3P0lDpjzgv0Bb6PY7VUhmlUh4mxCqUOoKRSnD82lxlo4SSl3ty96mHcp4jiE9sxEb7fZNJW7Zrg7zrUX/E22XSeQfpco3UpVCV+d3OemClrouOurwTmjuXEkViJBKoaAdOowV4HHn/asoKXz3i6pI8V6tuMeUrX1Qz3Lb9gQtCj8lI++2WYFTUAuxhkUq25G3cUMTxQNuUKD01XjG7XXgoNVcB6Zf7pJmHKrK3s8NjoKeYksUu1EdH3XAkcZUnlMstqo/fNW4Kleusa+7ARn9cngkIHOzdwTaSv9OWkU1kokc6bkvzw==</SignatureValue><KeyInfo><X509Data><X509Certificate>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</X509Certificate><X509IssuerSerial><X509IssuerName>C=PY,O=DOCUMENTA S.A.,CN=CA-DOCUMENTA S.A.,2.5.4.5=#130e5255432038303035303137322d31</X509IssuerName><X509SerialNumber>3146570728025588774</X509SerialNumber></X509IssuerSerial></X509Data></KeyInfo></Signature>
+	<gCamFuFD>
+  		<dCarQR>https://ekuatia.set.gov.py/consultas-test/qr?nVersion=150&amp;Id=06009290230001001000002612019040910000000127&amp;dFeEmiDE=323031392d30342d30395431323a35373a3137&amp;dRucRec=80081294&amp;dTotGralOpe=2000000&amp;dTotIVA=6283383&amp;cItems=1&amp;DigestValue=3574492b32756e655134776c41464c6d63693239365843424574396c4e4d62707a3431476a7670737464413d&amp;IdCSC=0001&amp;cHashQR=54d9722e988602011916b949a6d92f270124d6e14c5b16294f485828f6765df7</dCarQR>
+	</gCamFuFD></rDE>
+         </xDE>
+      </rEnviDe>
+   </soap:Body>
+</soap:Envelope>
