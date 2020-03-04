@@ -20,4 +20,5 @@ public class RResBase {
     public void setdMsgRes(String dMsgRes) {
         this.dMsgRes = dMsgRes;
     }
+
 }
