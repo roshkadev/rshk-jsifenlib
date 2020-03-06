@@ -1,12 +1,15 @@
 package com.roshka.sifen.context;
 
-import com.roshka.sifen.cert.SifenCert;
 import com.roshka.sifen.config.SifenConfig;
 
 public class SifenCtx {
 
+    private long currentdId;
     private SifenConfig sifenConfig;
-    private SifenCert sifenCert;
+
+    public SifenCtx(SifenConfig sifenConfig) {
+        this.sifenConfig = sifenConfig;
+    }
 
     public SifenConfig getSifenConfig() {
         return sifenConfig;
@@ -16,11 +19,10 @@ public class SifenCtx {
         this.sifenConfig = sifenConfig;
     }
 
-    public SifenCert getSifenCert() {
-        return sifenCert;
+    // synchronized, just in case
+    public synchronized long nextdId()
+    {
+        return ++currentdId;
     }
 
-    public void setSifenCert(SifenCert sifenCert) {
-        this.sifenCert = sifenCert;
-    }
 }
