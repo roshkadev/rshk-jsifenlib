@@ -4,20 +4,11 @@ public class SifenException extends Exception {
 
     private String code;
 
-    public SifenException(int code) {
-
+    public SifenException(String code, String message) {
+        this(code, message, null);
     }
 
-    public SifenException(int code, Throwable cause) {
-
-    }
-
-
-    public SifenException(String message, String code) {
-        this(message, code, null);
-    }
-
-    public SifenException(String message, String code, Throwable cause) {
+    public SifenException(String code, String message, Throwable cause) {
         super(message, cause);
         this.code = code;
     }
