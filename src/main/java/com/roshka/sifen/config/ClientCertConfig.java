@@ -64,7 +64,7 @@ public class ClientCertConfig {
         }
         clientCertConfig.setClientCertFileType(clientCertFileType);
         clientCertConfig.setClientCertificateFile(properties.getProperty(CFG_CLIENT_CERT_FILE_NAME_KEY));
-        clientCertConfig.setClientCertificatePassword(CFG_CLIENT_CERT_PASSWORD_KEY);
+        clientCertConfig.setClientCertificatePassword(properties.getProperty(CFG_CLIENT_CERT_PASSWORD_KEY));
 
         return clientCertConfig;
     }
