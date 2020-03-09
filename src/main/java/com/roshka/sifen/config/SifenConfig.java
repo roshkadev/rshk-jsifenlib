@@ -2,6 +2,7 @@ package com.roshka.sifen.config;
 
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.exceptions.SifenExceptionUtil;
+import com.roshka.sifen.util.PropertiesUtil;
 
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -39,6 +40,14 @@ public class SifenConfig {
     private boolean useClientCertificate;
     private ClientCertConfig clientCertConfig;
 
+    public static final String CFG_HTTP_CONNECT_TIMEOUT_KEY = "sifen.http.connect_timeout";
+    public static final String CFG_HTTP_READ_TIMEOUT_KEY = "sifen.http.read_timeout";
+
+    public static final int HTTP_CONNECT_TIMEOUT_DEFAULT = 15;
+    public static final int HTTP_READ_TIMEOUT_DEFAULT = 45;
+
+    private int httpConnectTimeout;
+    private int httpReadTimeout;
 
 
     public String getUrlBase() {
@@ -166,8 +175,27 @@ public class SifenConfig {
                 sifenConfig.urlOrDefault(properties, CFG_URL_EVENTO_KEY, URL_EVENTO_DEFAULT_PATH)
         );
 
+        // Propiedades de las conexiones HTTP
+        sifenConfig.setHttpConnectTimeout(PropertiesUtil.getIntOrDefault(properties, CFG_HTTP_CONNECT_TIMEOUT_KEY, HTTP_CONNECT_TIMEOUT_DEFAULT));
+        sifenConfig.setHttpReadTimeout(PropertiesUtil.getIntOrDefault(properties, CFG_HTTP_READ_TIMEOUT_KEY, HTTP_READ_TIMEOUT_DEFAULT));
+
         sifenConfig.setClientCertConfig(ClientCertConfig.loadFromProperties(properties));
         return sifenConfig;
     }
 
+    public int getHttpConnectTimeout() {
+        return httpConnectTimeout;
+    }
+
+    public void setHttpConnectTimeout(int httpConnectTimeout) {
+        this.httpConnectTimeout = httpConnectTimeout;
+    }
+
+    public int getHttpReadTimeout() {
+        return httpReadTimeout;
+    }
+
+    public void setHttpReadTimeout(int httpReadTimeout) {
+        this.httpReadTimeout = httpReadTimeout;
+    }
 }
