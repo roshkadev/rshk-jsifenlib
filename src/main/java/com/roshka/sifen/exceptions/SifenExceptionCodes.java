@@ -11,6 +11,10 @@ public class SifenExceptionCodes {
     public static final String ERRMESS_ERROR_INESPERADO = "Error Inesperado";
     public static final String ERRCODE_CONFIGURACION_INVALIDA = "i101";
     public static final String ERRMESS_CONFIGURACION_INVALIDA = "Configuración inválida";
+    public static final String ERRCODE_CONTEXTO_SSL_INVALIDO = "i200";
+    public static final String ERRMESS_CONTEXTO_SSL_INVALIDO = "Contexto SSL Inválido";
+    public static final String ERRCODE_LLAMADA_SOAP_INVALIDA = "i300";
+    public static final String ERRMESS_LLAMADA_SOAP_INVALIDA = "Llamada SOAP inválida";
 
 
     private static final Map<String, String> errorMessages;
@@ -21,6 +25,8 @@ public class SifenExceptionCodes {
         errorMessages = new HashMap<>();
         errorMessages.put(ERRCODE_ERROR_INESPERADO, ERRMESS_ERROR_INESPERADO);
         errorMessages.put(ERRCODE_CONFIGURACION_INVALIDA, ERRMESS_CONFIGURACION_INVALIDA);
+        errorMessages.put(ERRCODE_CONTEXTO_SSL_INVALIDO, ERRMESS_CONTEXTO_SSL_INVALIDO);
+        errorMessages.put(ERRCODE_LLAMADA_SOAP_INVALIDA, ERRMESS_LLAMADA_SOAP_INVALIDA);
     }
 
     //

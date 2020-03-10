@@ -46,8 +46,10 @@ public class SifenConfig {
     public static final String CFG_HTTP_READ_TIMEOUT_KEY = "sifen.http.read_timeout";
     public static final String CFG_HTTP_USER_AGENT_KEY = "sifen.http.user_agent";
 
-    public static final int HTTP_CONNECT_TIMEOUT_DEFAULT = 15;
-    public static final int HTTP_READ_TIMEOUT_DEFAULT = 45;
+    // 15 segundos
+    public static final int HTTP_CONNECT_TIMEOUT_DEFAULT = 15 * 1000;
+    // 45 segundos
+    public static final int HTTP_READ_TIMEOUT_DEFAULT = 45 * 1000;
     public static final String HTTP_USER_AGENT_DEFAULT = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
 
     private int httpConnectTimeout;

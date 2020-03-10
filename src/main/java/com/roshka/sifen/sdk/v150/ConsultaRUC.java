@@ -9,6 +9,12 @@ import com.roshka.sifen.soap.MessageHelper;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.logging.Logger;
 
 public class ConsultaRUC extends ConsultaBase {
@@ -23,15 +29,19 @@ public class ConsultaRUC extends ConsultaBase {
     public RResEnviConsRUC consultaRUC(REnviConsRUC rEnviConsRUC)
         throws SifenException
     {
+        SOAPMessage message = null;
         try {
-            SOAPMessage message = MessageHelper.createMessage();
+            message = MessageHelper.createMessage();
             rEnviConsRUC.setupSOAPBody(message.getSOAPBody());
-            SOAPMessage message1 = SOAPHelper.performSOAPRequest(message, getUrl());
-            logger.info(message1.getContentDescription());
+            SOAPMessage message1 = SOAPHelper.performSOAPRequest(getSifenCtx(), message, getUrl());
+            if (message1 != null) {
+                logger.info(message1.getContentDescription());
+            } else {
+                logger.info("NULL");
+            }
         } catch (SOAPException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
