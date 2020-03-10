@@ -7,6 +7,7 @@ import com.roshka.sifen.util.PropertiesUtil;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import static com.roshka.sifen.sdk.Constants.SDK_CURRENT_VERSION;
 import static java.util.logging.Logger.getLogger;
 
 public class SifenConfig {
@@ -22,6 +23,7 @@ public class SifenConfig {
     public static final String CFG_URL_CONSULTA_LOTE_KEY = "sifen.url.consulta-lote";
     public static final String CFG_URL_CONSULTA_RUC_KEY = "sifen.url.consulta-ruc";
     public static final String CFG_URL_CONSULTA_KEY = "sifen.url.consulta";
+
 
     public static final String URL_RECIBE_DEFAULT_PATH = "/de/ws/sync/recibe.wsdl";
     public static final String URL_RECIBE_LOTE_DEFAULT_PATH = "/de/ws/async/recibe-lote.wsdl";
@@ -42,12 +44,15 @@ public class SifenConfig {
 
     public static final String CFG_HTTP_CONNECT_TIMEOUT_KEY = "sifen.http.connect_timeout";
     public static final String CFG_HTTP_READ_TIMEOUT_KEY = "sifen.http.read_timeout";
+    public static final String CFG_HTTP_USER_AGENT_KEY = "sifen.http.user_agent";
 
     public static final int HTTP_CONNECT_TIMEOUT_DEFAULT = 15;
     public static final int HTTP_READ_TIMEOUT_DEFAULT = 45;
+    public static final String HTTP_USER_AGENT_DEFAULT = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
 
     private int httpConnectTimeout;
     private int httpReadTimeout;
+    private String userAgent;
 
 
     public String getUrlBase() {
@@ -178,6 +183,7 @@ public class SifenConfig {
         // Propiedades de las conexiones HTTP
         sifenConfig.setHttpConnectTimeout(PropertiesUtil.getIntOrDefault(properties, CFG_HTTP_CONNECT_TIMEOUT_KEY, HTTP_CONNECT_TIMEOUT_DEFAULT));
         sifenConfig.setHttpReadTimeout(PropertiesUtil.getIntOrDefault(properties, CFG_HTTP_READ_TIMEOUT_KEY, HTTP_READ_TIMEOUT_DEFAULT));
+        sifenConfig.setUserAgent(properties.getProperty(CFG_HTTP_USER_AGENT_KEY, HTTP_USER_AGENT_DEFAULT));
 
         sifenConfig.setClientCertConfig(ClientCertConfig.loadFromProperties(properties));
         return sifenConfig;
@@ -197,5 +203,13 @@ public class SifenConfig {
 
     public void setHttpReadTimeout(int httpReadTimeout) {
         this.httpReadTimeout = httpReadTimeout;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 }
