@@ -4,16 +4,18 @@ import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.context.SifenCtx;
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.exceptions.SifenExceptionUtil;
+import com.roshka.sifen.soap.MessageHelper;
+import com.roshka.sifen.soap.MimeHeadersHelper;
 import com.roshka.sifen.ssl.SSLContextHelper;
+import com.roshka.sifen.util.IOUtil;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,12 +39,20 @@ public class SOAPHelper {
         mimeHeaders.addHeader("User-Agent", sifenConfig.getUserAgent());
     }
 
+    private static final int[] _httpSuccessStatuses = new int[] {
+            HttpURLConnection.HTTP_ACCEPTED,
+            HttpURLConnection.HTTP_OK
+    };
+
     //
-    public static SOAPMessage performSOAPRequest(SifenCtx sifenCtx, SOAPMessage soapMessage, String urlString)
+    public static RespuestaSifen performSOAPRequest(SifenCtx sifenCtx, SOAPMessage soapMessage, String urlString)
         throws SifenException
     {
 
         SifenConfig sifenConfig = sifenCtx.getSifenConfig();
+
+        RespuestaSifen respuestaSifen = new RespuestaSifen();
+
         URL url;
         SSLContext sslContext = null;
         try {
@@ -80,22 +90,51 @@ public class SOAPHelper {
 
             // enviar mensaje SOAP
             logger.info("Enviando mensaje SOAP");
-            soapMessage.writeTo(httpURLConnection.getOutputStream());
+            //soapMessage.writeTo(httpURLConnection.getOutputStream());
+            PrintWriter pw = new PrintWriter(httpURLConnection.getOutputStream());
+            pw.write("HOLA");
+            pw.flush();
 
-            DataInputStream in = new DataInputStream(httpURLConnection.getInputStream());
-            byte[] buff = new byte[1024];
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            // respuesta
+            respuestaSifen.setStatus(httpURLConnection.getResponseCode());
+            respuestaSifen.setContentType(httpURLConnection.getContentType());
 
-            int count;
-            while ((count = in.read(buff)) != -1) {
-                baos.write(buff, 0, count);
+            if (!respuestaSifen.llamadaCorrecta()) {
+                // hubo un error en la petición
+                logger.severe("El servidor devolvió un estado HTTP de fallo: " + respuestaSifen.getStatus());
+
+                try {
+
+                    SOAPMessage errorSOAPMessage = MessageHelper.parseMessage(
+                            MimeHeadersHelper.getFromHttpURLConnection(httpURLConnection),
+                            httpURLConnection.getErrorStream()
+                    );
+
+                    respuestaSifen.procesarDatosError(errorSOAPMessage);
+
+
+                } catch (SOAPException se) {
+                    logger.severe("SOAPException -> No se puede convertir el error obtenido en un mensaje SOAP: " + se.getLocalizedMessage());
+                    respuestaSifen.procesarDatosError(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
+                } catch (IOException ioe) {
+                    logger.severe("IOException -> No se puede convertir el error obtenido en un mensaje SOAP: " + ioe.getLocalizedMessage());
+                    respuestaSifen.procesarDatosError(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
+                }
+
+                return respuestaSifen;
+
             }
 
-            String out = new String(baos.toByteArray());
+            // la respuesta fue correcta
 
-            logger.info("Respuesta: " + out);
+            SOAPMessage respuestaSOAPMessage = MessageHelper.parseMessage(
+                    MimeHeadersHelper.getFromHttpURLConnection(httpURLConnection),
+                    httpURLConnection.getInputStream()
+            );
 
-            return null;
+            respuestaSifen.procesarDatos(respuestaSOAPMessage);
+
+            return respuestaSifen;
 
         } catch (MalformedURLException e) {
             throw SifenExceptionUtil.llamadaSOAPInvalida("El URL " + urlString + " es inválido: " + e.getLocalizedMessage(), e);

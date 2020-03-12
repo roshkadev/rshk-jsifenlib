@@ -2,6 +2,7 @@ package com.roshka.sifen.sdk.v150;
 
 import com.roshka.sifen.context.SifenCtx;
 import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.http.RespuestaSifen;
 import com.roshka.sifen.http.SOAPHelper;
 import com.roshka.sifen.model.envi.REnviConsRUC;
 import com.roshka.sifen.model.res.RResEnviConsRUC;
@@ -33,11 +34,11 @@ public class ConsultaRUC extends ConsultaBase {
         try {
             message = MessageHelper.createMessage();
             rEnviConsRUC.setupSOAPBody(message.getSOAPBody());
-            SOAPMessage message1 = SOAPHelper.performSOAPRequest(getSifenCtx(), message, getUrl());
-            if (message1 != null) {
-                logger.info(message1.getContentDescription());
+            RespuestaSifen respuestaSifen = SOAPHelper.performSOAPRequest(getSifenCtx(), message, getUrl());
+            if (respuestaSifen.llamadaCorrecta()) {
+                logger.info("Llamada Correcta!");
             } else {
-                logger.info("NULL");
+                logger.info("Llamada Incorrecta!");
             }
         } catch (SOAPException e) {
             e.printStackTrace();

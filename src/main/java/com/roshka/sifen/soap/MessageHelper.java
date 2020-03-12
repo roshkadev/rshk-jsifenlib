@@ -1,9 +1,8 @@
 package com.roshka.sifen.soap;
 
-import javax.xml.soap.MessageFactory;
-import javax.xml.soap.SOAPConstants;
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
+import javax.xml.soap.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MessageHelper {
 
@@ -15,6 +14,13 @@ public class MessageHelper {
         EnvelopeHelper.setupEnvelope(message);
         HeaderHelper.setupHeader(message);
         return message;
+    }
+
+    public static SOAPMessage parseMessage(MimeHeaders mimeHeaders, InputStream is)
+            throws SOAPException, IOException
+    {
+        MessageFactory mf12 = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
+        return mf12.createMessage(mimeHeaders, is);
     }
 
 }
