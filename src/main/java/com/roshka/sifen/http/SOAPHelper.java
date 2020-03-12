@@ -90,10 +90,7 @@ public class SOAPHelper {
 
             // enviar mensaje SOAP
             logger.info("Enviando mensaje SOAP");
-            //soapMessage.writeTo(httpURLConnection.getOutputStream());
-            PrintWriter pw = new PrintWriter(httpURLConnection.getOutputStream());
-            pw.write("HOLA");
-            pw.flush();
+            soapMessage.writeTo(httpURLConnection.getOutputStream());
 
             // respuesta
             respuestaSifen.setStatus(httpURLConnection.getResponseCode());
