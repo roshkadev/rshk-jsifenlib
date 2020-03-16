@@ -1,9 +1,11 @@
 package com.roshka.sifen.model.envi;
 
+import com.roshka.sifen.model.SifenObjectBase;
+
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPException;
 
-public abstract class REnviBase {
+public abstract class REnviBase extends SifenObjectBase {
 
     private long dId;
 

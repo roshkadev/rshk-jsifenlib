@@ -25,11 +25,30 @@ public class SifenExceptionUtil {
     public static SifenException llamadaSOAPInvalida(String message, Throwable t)
     {
         return new SifenException(
-                SifenExceptionCodes.ERRCODE_ERROR_INESPERADO,
+                SifenExceptionCodes.ERRCODE_LLAMADA_SOAP_INVALIDA,
                 message,
                 t
         );
     }
 
+    public static SifenException respuestaSOAPInvalida(String message)
+    {
+        return respuestaSOAPInvalida(message, null);
+    }
 
+    public static SifenException respuestaSOAPInvalida(String message, Throwable t) {
+        return new SifenException(
+                SifenExceptionCodes.ERRCODE_RESPUESTA_SOAP_INVALIDA,
+                message,
+                t
+        );
+    }
+
+    public static SifenException errorInesperado(String message, Throwable t) {
+        return new SifenException(
+                SifenExceptionCodes.ERRCODE_ERROR_INESPERADO,
+                message,
+                t
+        );
+    }
 }

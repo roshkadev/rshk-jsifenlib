@@ -3,7 +3,9 @@ package com.roshka.sifen.test.soap;
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.context.SifenCtx;
 import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.http.RespuestaSifen;
 import com.roshka.sifen.model.envi.REnviConsRUC;
+import com.roshka.sifen.model.res.RResEnviConsRUC;
 import com.roshka.sifen.sdk.v150.ConsultaRUC;
 import com.roshka.sifen.soap.MessageHelper;
 import org.junit.BeforeClass;
@@ -40,6 +42,7 @@ public class SOAPTests {
             throws SOAPException, IOException, SifenException {
 
         ConsultaRUC consultaRUC = new ConsultaRUC(_sifenContext);
-        consultaRUC.consultaRUC("980527");
+        RespuestaSifen<REnviConsRUC, RResEnviConsRUC> ret = consultaRUC.consultaRUC("980527");
+        assert(ret.llamadaCorrecta());
     }
 }

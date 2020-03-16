@@ -15,6 +15,8 @@ public class SifenExceptionCodes {
     public static final String ERRMESS_CONTEXTO_SSL_INVALIDO = "Contexto SSL Inválido";
     public static final String ERRCODE_LLAMADA_SOAP_INVALIDA = "i300";
     public static final String ERRMESS_LLAMADA_SOAP_INVALIDA = "Llamada SOAP inválida";
+    public static final String ERRCODE_RESPUESTA_SOAP_INVALIDA = "i301";
+    public static final String ERRMESS_RESPUESTA_SOAP_INVALIDA = "Respuesta SOAP inválida";
 
 
     private static final Map<String, String> errorMessages;

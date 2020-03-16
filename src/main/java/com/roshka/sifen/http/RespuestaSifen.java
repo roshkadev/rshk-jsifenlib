@@ -1,62 +1,40 @@
 package com.roshka.sifen.http;
 
-import javax.xml.soap.SOAPMessage;
-import java.net.HttpURLConnection;
+import com.roshka.sifen.model.envi.REnviBase;
+import com.roshka.sifen.model.res.RResBase;
 
-public class RespuestaSifen {
+public class RespuestaSifen<T extends REnviBase, U extends RResBase> {
 
-    private int status;
-    private String contentType;
-    private byte[] datosError;
+    private RespuestaSOAP respuestaSOAP;
 
-    private SOAPMessage errorSOAPMessage;
-    private SOAPMessage respuestaSOAPMessage;
-
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
+    private T peticion;
+    private U respuesta;
 
     public boolean llamadaCorrecta() {
-        return
-                status == HttpURLConnection.HTTP_ACCEPTED ||
-                status == HttpURLConnection.HTTP_OK;
+        return respuestaSOAP != null && respuestaSOAP.llamadaCorrecta();
     }
 
-    public void procesarDatos(SOAPMessage soapMessage) {
-        this.respuestaSOAPMessage = soapMessage;
+    public RespuestaSOAP getRespuestaSOAP() {
+        return respuestaSOAP;
     }
 
-    public void procesarDatosError(SOAPMessage soapMessage) {
-        this.errorSOAPMessage = soapMessage;
+    public void setRespuestaSOAP(RespuestaSOAP respuestaSOAP) {
+        this.respuestaSOAP = respuestaSOAP;
     }
 
-    public void procesarDatosError(byte[] datosError)
-    {
-        this.datosError = datosError;
-        if (contentType != null && contentType.startsWith("application/soap")) {
-            //
-
-        }
+    public T getPeticion() {
+        return peticion;
     }
 
-    public byte[] getDatosError() {
-        return datosError;
+    public void setPeticion(T peticion) {
+        this.peticion = peticion;
     }
 
-    public void setDatosError(byte[] datosError) {
-        this.datosError = datosError;
+    public U getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(U respuesta) {
+        this.respuesta = respuesta;
     }
 }

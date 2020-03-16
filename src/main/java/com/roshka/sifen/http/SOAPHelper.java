@@ -15,7 +15,6 @@ import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,13 +44,13 @@ public class SOAPHelper {
     };
 
     //
-    public static RespuestaSifen performSOAPRequest(SifenCtx sifenCtx, SOAPMessage soapMessage, String urlString)
+    public static RespuestaSOAP performSOAPRequest(SifenCtx sifenCtx, SOAPMessage soapMessage, String urlString)
         throws SifenException
     {
 
         SifenConfig sifenConfig = sifenCtx.getSifenConfig();
 
-        RespuestaSifen respuestaSifen = new RespuestaSifen();
+        RespuestaSOAP respuestaSOAP = new RespuestaSOAP();
 
         URL url;
         SSLContext sslContext = null;
@@ -93,12 +92,12 @@ public class SOAPHelper {
             soapMessage.writeTo(httpURLConnection.getOutputStream());
 
             // respuesta
-            respuestaSifen.setStatus(httpURLConnection.getResponseCode());
-            respuestaSifen.setContentType(httpURLConnection.getContentType());
+            respuestaSOAP.setStatus(httpURLConnection.getResponseCode());
+            respuestaSOAP.setContentType(httpURLConnection.getContentType());
 
-            if (!respuestaSifen.llamadaCorrecta()) {
+            if (!respuestaSOAP.llamadaCorrecta()) {
                 // hubo un error en la petición
-                logger.severe("El servidor devolvió un estado HTTP de fallo: " + respuestaSifen.getStatus());
+                logger.severe("El servidor devolvió un estado HTTP de fallo: " + respuestaSOAP.getStatus());
 
                 try {
 
@@ -107,18 +106,17 @@ public class SOAPHelper {
                             httpURLConnection.getErrorStream()
                     );
 
-                    respuestaSifen.procesarDatosError(errorSOAPMessage);
-
+                    respuestaSOAP.setErrorSOAP(errorSOAPMessage);
 
                 } catch (SOAPException se) {
                     logger.severe("SOAPException -> No se puede convertir el error obtenido en un mensaje SOAP: " + se.getLocalizedMessage());
-                    respuestaSifen.procesarDatosError(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
+                    respuestaSOAP.setDatosErrorCrudo(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
                 } catch (IOException ioe) {
                     logger.severe("IOException -> No se puede convertir el error obtenido en un mensaje SOAP: " + ioe.getLocalizedMessage());
-                    respuestaSifen.procesarDatosError(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
+                    respuestaSOAP.setDatosErrorCrudo(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
                 }
 
-                return respuestaSifen;
+                return respuestaSOAP;
 
             }
 
@@ -129,9 +127,9 @@ public class SOAPHelper {
                     httpURLConnection.getInputStream()
             );
 
-            respuestaSifen.procesarDatos(respuestaSOAPMessage);
+            respuestaSOAP.setRespuestaSOAP(respuestaSOAPMessage);
 
-            return respuestaSifen;
+            return respuestaSOAP;
 
         } catch (MalformedURLException e) {
             throw SifenExceptionUtil.llamadaSOAPInvalida("El URL " + urlString + " es inválido: " + e.getLocalizedMessage(), e);
