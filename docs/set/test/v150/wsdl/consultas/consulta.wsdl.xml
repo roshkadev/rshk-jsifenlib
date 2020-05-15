@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://ekuatia.set.gov.py/sifen/xsd" xmlns:ns0="http://ekuatia.set.gov.py/sifen/xsd" xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema>
+<xsd:import schemaLocation="consulta.wsdl.xsd1.xsd" namespace="http://ekuatia.set.gov.py/sifen/xsd"/></xsd:schema></wsdl:types>
+<wsdl:message name="rEnviConsDeRequest">
+<wsdl:part name="rEnviConsDeRequest" element="xsns:rEnviConsDeRequest" xmlns:xsns="http://ekuatia.set.gov.py/sifen/xsd"/></wsdl:message>
+<wsdl:message name="rEnviConsDeResponse">
+<wsdl:part name="rEnviConsDeResponse" element="xsns:rEnviConsDeResponse" xmlns:xsns="http://ekuatia.set.gov.py/sifen/xsd"/></wsdl:message>
+<wsdl:portType name="de-ws-consultas-consulta">
+<wsdl:operation name="rEnviConsDe">
+<wsdl:input name="rEnviConsDeRequest" message="ns0:rEnviConsDeRequest"/>
+<wsdl:output name="rEnviConsDeResponse" message="ns0:rEnviConsDeResponse"/></wsdl:operation></wsdl:portType>
+<wsdl:binding name="de-ws-consultas-consultaSoap12" type="ns0:de-ws-consultas-consulta">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="rEnviConsDe">
+<soap12:operation soapAction="" soapActionRequired="false" style="document"/>
+<wsdl:input name="rEnviConsDeRequest">
+<soap12:body use="literal"/></wsdl:input>
+<wsdl:output name="rEnviConsDeResponse">
+<soap12:body use="literal"/></wsdl:output></wsdl:operation></wsdl:binding>
+<wsdl:service name="de-ws-consultas-consultaService">
+<wsdl:port name="de-ws-consultas-consultaSoap12" binding="ns0:de-ws-consultas-consultaSoap12">
+<soap12:address location="https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl"/></wsdl:port>
+<wsdl:port name="de-ws-consultas-consultaSoap12.0" binding="ns0:de-ws-consultas-consultaSoap12">
+<soap12:address location="https://sifen-test.set.gov.py/de/ws/consultas/consulta.wsdl"/></wsdl:port></wsdl:service></wsdl:definitions>

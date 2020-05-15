@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://ekuatia.set.gov.py/sifen/xsd" xmlns:ns0="http://ekuatia.set.gov.py/sifen/xsd" xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema>
+<xsd:import schemaLocation="evento.wsdl.xsd1.xsd" namespace="http://ekuatia.set.gov.py/sifen/xsd"/></xsd:schema></wsdl:types>
+<wsdl:message name="rEnviEventoDe">
+<wsdl:part name="rEnviEventoDe" element="xsns:rEnviEventoDe" xmlns:xsns="http://ekuatia.set.gov.py/sifen/xsd"/></wsdl:message>
+<wsdl:message name="rRetEnviEventoDe">
+<wsdl:part name="rRetEnviEventoDe" element="xsns:rRetEnviEventoDe" xmlns:xsns="http://ekuatia.set.gov.py/sifen/xsd"/></wsdl:message>
+<wsdl:portType name="de-ws-eventos-evento">
+<wsdl:operation name="rEnviEventoDe">
+<wsdl:input name="rEnviEventoDe" message="ns0:rEnviEventoDe"/>
+<wsdl:output name="rRetEnviEventoDe" message="ns0:rRetEnviEventoDe"/></wsdl:operation></wsdl:portType>
+<wsdl:binding name="de-ws-eventos-eventoSoap12" type="ns0:de-ws-eventos-evento">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="rEnviEventoDe">
+<soap12:operation soapAction="" soapActionRequired="false" style="document"/>
+<wsdl:input name="rEnviEventoDe">
+<soap12:body use="literal"/></wsdl:input>
+<wsdl:output name="rRetEnviEventoDe">
+<soap12:body use="literal"/></wsdl:output></wsdl:operation></wsdl:binding>
+<wsdl:service name="de-ws-eventos-eventoService">
+<wsdl:port name="de-ws-eventos-eventoSoap12" binding="ns0:de-ws-eventos-eventoSoap12">
+<soap12:address location="https://sifen-test.set.gov.py/de/ws/eventos/evento.wsdl"/></wsdl:port></wsdl:service></wsdl:definitions>

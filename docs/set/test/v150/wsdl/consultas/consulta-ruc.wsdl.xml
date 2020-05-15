@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://ekuatia.set.gov.py/sifen/xsd" xmlns:ns0="http://ekuatia.set.gov.py/sifen/xsd" xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:schema>
+<xsd:import schemaLocation="consulta-ruc.wsdl.xsd1.xsd" namespace="http://ekuatia.set.gov.py/sifen/xsd"/></xsd:schema></wsdl:types>
+<wsdl:message name="rEnviConsRUC">
+<wsdl:part name="rEnviConsRUC" element="xsns:rEnviConsRUC" xmlns:xsns="http://ekuatia.set.gov.py/sifen/xsd"/></wsdl:message>
+<wsdl:message name="rResEnviConsRUC">
+<wsdl:part name="rResEnviConsRUC" element="xsns:rResEnviConsRUC" xmlns:xsns="http://ekuatia.set.gov.py/sifen/xsd"/></wsdl:message>
+<wsdl:portType name="de-ws-consultas-consulta-ruc">
+<wsdl:operation name="rEnviConsRUC">
+<wsdl:input name="rEnviConsRUC" message="ns0:rEnviConsRUC"/>
+<wsdl:output name="rResEnviConsRUC" message="ns0:rResEnviConsRUC"/></wsdl:operation></wsdl:portType>
+<wsdl:binding name="de-ws-consultas-consulta-rucSoap12" type="ns0:de-ws-consultas-consulta-ruc">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<wsdl:operation name="rEnviConsRUC">
+<soap12:operation soapAction="" soapActionRequired="false" style="document"/>
+<wsdl:input name="rEnviConsRUC">
+<soap12:body use="literal"/></wsdl:input>
+<wsdl:output name="rResEnviConsRUC">
+<soap12:body use="literal"/></wsdl:output></wsdl:operation></wsdl:binding>
+<wsdl:service name="de-ws-consultas-consulta-rucService">
+<wsdl:port name="de-ws-consultas-consulta-rucSoap12" binding="ns0:de-ws-consultas-consulta-rucSoap12">
+<soap12:address location="https://sifen-test.set.gov.py/de/ws/consultas/consulta-ruc.wsdl"/></wsdl:port></wsdl:service></wsdl:definitions>
