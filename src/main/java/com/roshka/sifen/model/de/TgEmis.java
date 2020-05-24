@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.de.types.TDepartamento;
+import com.roshka.sifen.model.departamentos.TDepartamento;
 
 public class TgEmis {
 

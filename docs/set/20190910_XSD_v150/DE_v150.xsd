@@ -117,7 +117,7 @@
 			<xs:element name="dCarRespDE" type="tdCargo"/>
 		</xs:sequence>
 	</xs:complexType>
-	
+
     <xs:complexType name="tgDatRec">
     	<xs:annotation>
             <xs:documentation>
@@ -140,11 +140,11 @@
             <xs:element name="dDirRec" minOccurs="0" type="tdDirec"/>
             <xs:element name="dNumCasRec" type="tdNumCas" minOccurs="0"/>
             <xs:element name="cDepRec" type="tDepartamentos" minOccurs="0"/>
-            <xs:element name="dDesDepRec" type="tDesDepartamento" minOccurs="0"/>            
+            <xs:element name="dDesDepRec" type="tDesDepartamento" minOccurs="0"/>
             <xs:element name="cDisRec" minOccurs="0" type="tDistrito"/>
             <xs:element name="dDesDisRec" minOccurs="0" type="tDesDistrito"/>
             <xs:element name="cCiuRec" minOccurs="0" type="tCiudad"/>
-            <xs:element name="dDesCiuRec" minOccurs="0" type="tDesCiudad"/>                        
+            <xs:element name="dDesCiuRec" minOccurs="0" type="tDesCiudad"/>
             <xs:element name="dTelRec" minOccurs="0" type="tdTel"/>
             <xs:element name="dCelRec" minOccurs="0" type="tdCel"/>
             <xs:element name="dEmailRec" minOccurs="0" type="tEmail"/>
@@ -178,7 +178,7 @@
             <xs:element name="gDatRec" type="tgDatRec"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <xs:complexType name="tgOpeCom">
         <xs:annotation>
             <xs:documentation>
@@ -191,9 +191,9 @@
             <xs:element name="iTImp" type="tiTImp"/>
             <xs:element name="dDesTImp" type="tdDesTImp"/>
             <xs:element name="cMoneOpe" type="cMondT"/>
-            <xs:element name="dDesMoneOpe" type="tdDMoneTiPag"/>                
+            <xs:element name="dDesMoneOpe" type="tdDMoneTiPag"/>
             <xs:element name="dCondTiCam" minOccurs="0" type="tdCondTiCam"/>
-            <xs:element name="dTiCam" minOccurs="0" type="tTipoCambioBase"/>            
+            <xs:element name="dTiCam" minOccurs="0" type="tTipoCambioBase"/>
             <xs:element name="iCondAnt" minOccurs="0" type="tiCondAnt"/>
             <xs:element name="dDesCondAnt" minOccurs="0" type="tdDesCondAnt"/>
         </xs:sequence>
@@ -209,7 +209,7 @@
         <xs:sequence>
             <xs:element name="iDenTarj" type="tiDenTarj"/>
             <xs:element name="dDesDenTarj" type="tdDesDenTarj"/>
-            <xs:element name="dRSProTar" type="dNomRazSocial" minOccurs="0"/>                
+            <xs:element name="dRSProTar" type="dNomRazSocial" minOccurs="0"/>
             <xs:element name="dRUCProTar" type="tRuc" minOccurs="0"/>
             <xs:element name="dDVProTar" type="tDVer" minOccurs="0"/>
             <xs:element name="iForProPa" type="tiForProPa"/>
@@ -271,14 +271,14 @@
                 Campos que describen las cuotas
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>            
-        	<xs:element name="cMoneCuo" type="cMondT"/>  
-        	<xs:element name="dDMoneCuo" type="tdDMoneTiPag"/>   
-            <xs:element name="dMonCuota" type="tMontoBase4"/>               
+        <xs:sequence>
+        	<xs:element name="cMoneCuo" type="cMondT"/>
+        	<xs:element name="dDMoneCuo" type="tdDMoneTiPag"/>
+            <xs:element name="dMonCuota" type="tMontoBase4"/>
             <xs:element name="dVencCuo" minOccurs="0" type="tFecAAAAMMDDguion"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <!--Campos que describen las informaciones de compras publicas-->
     <xs:complexType name="tgCompPub">
         <xs:annotation>
@@ -294,14 +294,14 @@
             <xs:element name="dFeCodCont" type="tFecAAAAMMDDguion"/>
         </xs:sequence>
     </xs:complexType>
-        
+
     <!--Campos que componen la factura electronica FE-->
     <xs:complexType name="tgCamFE">
         <xs:annotation>
             <xs:documentation>
                 Campos que componen la factura electronica
             </xs:documentation>
-        </xs:annotation>        
+        </xs:annotation>
         <xs:sequence>
         	<xs:element name="iIndPres" type="tiIndPres"/>
         	 <xs:element name="dDesIndPres" type="tdDesIndPres"/>
@@ -309,10 +309,10 @@
             <xs:element name="gCompPub" minOccurs="0" type="tgCompPub"/>
         </xs:sequence>
     </xs:complexType>
-    
-    
-	
-	
+
+
+
+
 
     <!--Campos de Precio descuentos por item-->
     <xs:complexType name="tgValorItem">
@@ -322,13 +322,13 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="dPUniProSer" type="tMontoBase"/> 
-            <xs:element name="dTiCamIt" minOccurs="0" type="tTipoCambioBase"/>               
-            <xs:element name="dTotBruOpeItem" type="tMontoBase"/> 
-            <xs:element name="gValorRestaItem" type="tgValorRestaItem"/>  
+            <xs:element name="dPUniProSer" type="tMontoBase"/>
+            <xs:element name="dTiCamIt" minOccurs="0" type="tTipoCambioBase"/>
+            <xs:element name="dTotBruOpeItem" type="tMontoBase"/>
+            <xs:element name="gValorRestaItem" type="tgValorRestaItem"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <!--Campos que describen los descuentos, anticipos y valor total por item-->
     <xs:complexType name="tgValorRestaItem">
         <xs:annotation>
@@ -336,14 +336,14 @@
                 Campos que describen los descuentos, anticipos y valor total por item
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>               
+        <xs:sequence>
             <xs:element name="dDescItem" type="tMontoBase" minOccurs="0"/>
-            <xs:element name="dPorcDesIt" type="tPorcDesc8" minOccurs="0"/>                 
-            <xs:element name="dDescGloItem" type="tMontoBase" minOccurs="0"/>            
+            <xs:element name="dPorcDesIt" type="tPorcDesc8" minOccurs="0"/>
+            <xs:element name="dDescGloItem" type="tMontoBase" minOccurs="0"/>
             <xs:element name="dAntPreUniIt" type="tMontoBase" minOccurs="0"/>
             <xs:element name="dAntGloPreUniIt" type="tMontoBase" minOccurs="0"/>
             <xs:element name="dTotOpeItem" type="tMontoBase"/>
-            <xs:element name="dTotOpeGs" type="tMontoBase" minOccurs="0"/>             
+            <xs:element name="dTotOpeGs" type="tMontoBase" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -359,7 +359,7 @@
             <xs:element name="dDesAfecIVA" type="tdDesAfecIVA"/>
             <xs:element name="dPropIVA" type="tPorcDesc8"/>
             <xs:element name="dTasaIVA" type="tdTasaIVA"/>
-            <xs:element name="dBasGravIVA" type="tMontoBase"/>                
+            <xs:element name="dBasGravIVA" type="tMontoBase"/>
             <xs:element name="dLiqIVAItem" type="tMontoBase"/>
         </xs:sequence>
     </xs:complexType>
@@ -375,8 +375,8 @@
             <xs:element name="cCatISC" type="tcCatISC"/>
             <xs:element name="dDesCatISC" type="tdDesCatISC"/>
             <xs:element name="cTasaISC" type="tcTasaISC"/>
-            <xs:element name="dBaseGravISC" type="tMontoBase"/>               
-            <xs:element name="dLiqISCItem" type="tMontoBase"/>	                
+            <xs:element name="dBaseGravISC" type="tMontoBase"/>
+            <xs:element name="dLiqISCItem" type="tMontoBase"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -440,7 +440,7 @@
             <xs:element name="dDirImp" type="tdDirec" minOccurs="0"/>
             <xs:element name="dNumFir" minOccurs="0" type="tdCadenaBase"/>
             <xs:element name="dNumReg" minOccurs="0" type="tdCadenaBase"/>
-            <xs:element name="dNumRegEntCom" minOccurs="0" type="tdCadenaBase"/>          	
+            <xs:element name="dNumRegEntCom" minOccurs="0" type="tdCadenaBase"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -488,7 +488,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="dPNet" minOccurs="0" type="tMontoBase6"/>
-            <xs:element name="dPBruto" minOccurs="0" type="tMontoBase6"/>                
+            <xs:element name="dPBruto" minOccurs="0" type="tMontoBase6"/>
             <xs:element name="iTipCom" type="tiTipCom" minOccurs="0"/>
             <xs:element name="dDesTipCom" type="tdDesTipCom" minOccurs="0"/>
             <xs:element name="dNroMotor" minOccurs="0">
@@ -504,7 +504,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="dCapTracc" minOccurs="0" type="tMontoBase6"/>               
+            <xs:element name="dCapTracc" minOccurs="0" type="tMontoBase6"/>
             <xs:element name="dAnoFab" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>
@@ -595,7 +595,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="dLecAnt" minOccurs="0" type="tLectura"/>
-            <xs:element name="dLecAct" minOccurs="0" type="tLectura"/>                
+            <xs:element name="dLecAct" minOccurs="0" type="tLectura"/>
             <xs:element name="dConKwh" minOccurs="0" type="tLectura">
             </xs:element>
         </xs:sequence>
@@ -622,9 +622,9 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="dEfectivo" minOccurs="0" type="tMontoBase4"/>                
+            <xs:element name="dEfectivo" minOccurs="0" type="tMontoBase4"/>
             <xs:element name="dVuelto" minOccurs="0" type="tMontoBase6"/>
-            <xs:element name="dDonac" minOccurs="0" type="tMontoBase6"/>                
+            <xs:element name="dDonac" minOccurs="0" type="tMontoBase6"/>
             <xs:element name="dDesDonac" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>
@@ -663,11 +663,11 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="gGrupPolSeg" type="tgGrupPolSeg" maxOccurs="999"/>            
+            <xs:element name="gGrupPolSeg" type="tgGrupPolSeg" maxOccurs="999"/>
         </xs:sequence>
     </xs:complexType>
-    
-    
+
+
     <!-- 	Póliza de seguros  -->
     <xs:complexType name="tgGrupPolSeg">
         <xs:annotation>
@@ -704,10 +704,10 @@
 		            	<xs:maxLength value="25"/>
 		        	</xs:restriction>
 		        </xs:simpleType>
-		      </xs:element>		      
+		      </xs:element>
 		      <xs:element name="dFecIniVig" type="fecHhmmss" minOccurs="0"/>
 		      <xs:element name="dFecFinVig" type="fecHhmmss" minOccurs="0"/>
-		      
+
 		       <xs:element name="dCodInt" minOccurs="0">
 		     	<xs:annotation>
 		        	<xs:documentation>
@@ -722,9 +722,9 @@
 		        	</xs:restriction>
 		        </xs:simpleType>
 		      </xs:element>
-	      </xs:sequence>	      
-     </xs:complexType> 
-      
+	      </xs:sequence>
+     </xs:complexType>
+
 
     <!--Campos complementarios de uso especifico-->
     <xs:complexType name="tgCamEsp">
@@ -734,7 +734,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-                       
+
             <xs:element minOccurs="0" name="gGrupEner" type="tgGrupEner"/>
             <xs:element minOccurs="0" name="gGrupSeg" type="tgGrupSeg"/>
             <xs:element minOccurs="0" name="gGrupSup" type="tgGrupSup"/>
@@ -804,8 +804,8 @@
             <xs:element name="cUniMed" type="tcUniMed"/>
             <xs:element name="dDesUniMed" type="tdDesUniMed"/>
             <xs:element name="dCantProSer" type="tdCantProSer"/>
-            <xs:element name="cPaisOrig" minOccurs="0" type="paisType"/> 
-            <xs:element name="dDesPaisOrig" minOccurs="0" type="tDesPais"/>            
+            <xs:element name="cPaisOrig" minOccurs="0" type="paisType"/>
+            <xs:element name="dDesPaisOrig" minOccurs="0" type="tDesPais"/>
             <xs:element name="dInfItem" minOccurs="0" >
                 <xs:simpleType>
                     <xs:restriction base="noEmptyString">
@@ -813,22 +813,22 @@
                         <xs:maxLength value="500"/>
                     </xs:restriction>
                 </xs:simpleType>
-            </xs:element>   
+            </xs:element>
             <xs:element name="cRelMerc" type="tcRelMerc" minOccurs="0"/>
             <xs:element name="dDesRelMerc" type="tdDesRelMerc" minOccurs="0"/>
-            <xs:element name="dCanQuiMer" minOccurs="0">            
-	            <xs:simpleType>				
+            <xs:element name="dCanQuiMer" minOccurs="0">
+	            <xs:simpleType>
 					<xs:restriction base="xs:decimal">
 						<xs:totalDigits value="14"/>
 						<xs:fractionDigits value="4"/>
 						<xs:minInclusive value="0"/>
 						<xs:maxInclusive value="9999999999.9999"/>
 					</xs:restriction>
-				</xs:simpleType>	
+				</xs:simpleType>
 			</xs:element>
             <xs:element name="dPorQuiMer" type="tPorcDesc8" minOccurs="0"/>
-            <xs:element name="dCDCAnticipo" type="tCDC" minOccurs="0"/>            
-                        
+            <xs:element name="dCDCAnticipo" type="tCDC" minOccurs="0"/>
+
             <xs:element name="gValorItem" type="tgValorItem" minOccurs="0"/>
             <xs:element minOccurs="0" name="gCamIVA" type="tgCamIVA"/>
 <!--             <xs:element minOccurs="0" name="gCamISC" type="tgCamISC"/> -->
@@ -851,7 +851,7 @@
             <xs:element name="gCamNCDE" type="tgCamNCDE" minOccurs="0"/>
             <xs:element name="gCamNRE" type="tgCamNRE" minOccurs="0"/>
             <xs:element name="gCamCond" minOccurs="0" type="tgCamCond"/>
-            <xs:element name="gCamItem" maxOccurs="999" type="tgCamItem"/>           
+            <xs:element name="gCamItem" maxOccurs="999" type="tgCamItem"/>
             <xs:element minOccurs="0" name="gCamEsp" type="tgCamEsp"/>
             <xs:element name="gTransp" minOccurs="0" type="tgTransp"/>
         </xs:sequence>
@@ -861,12 +861,12 @@
     <xs:complexType name="tgCamTrans">
         <xs:annotation>
             <xs:documentation>
-                Campos que identifican al transportista (persona física o jurídica) 
+                Campos que identifican al transportista (persona física o jurídica)
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="iNatTrans" type="tiNatRec"/>
-            <xs:element name="dNomTrans" type="dNomRazSocial"/>            
+            <xs:element name="dNomTrans" type="dNomRazSocial"/>
             <xs:element name="dRucTrans" minOccurs="0" type="tRuc"/>
             <xs:element name="dDVTrans" minOccurs="0" type="tDVer"/>
 			<xs:element name="iTipIDTrans" minOccurs="0" type="tiTipDoc"/>
@@ -874,7 +874,7 @@
             <xs:element name="dNumIDTrans" minOccurs="0" type="tdNumDocId"/>
             <xs:element name="cNacTrans" minOccurs="0" type="paisType"/>
 			<xs:element name="dDesNacTrans" minOccurs="0" type="tDesPais"/>
-			<xs:element name="dNumIDChof" type="tdNumDocId"/>			
+			<xs:element name="dNumIDChof" type="tdNumDocId"/>
             <xs:element name="dNomChof" type="dNomRazSocial"/>
             <xs:element name="dDomFisc" minOccurs="0">
                 <xs:simpleType>
@@ -890,10 +890,10 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="dDirChof" type="tdDirec" minOccurs="0"/>
-            <xs:element name="dNombAg" type="dNomRazSocial" minOccurs="0"/>              
+            <xs:element name="dNombAg" type="dNomRazSocial" minOccurs="0"/>
             <xs:element name="dRucAg" type="tRuc" minOccurs="0"/>
             <xs:element name="dDVAg" type="tDVer" minOccurs="0"/>
-            <xs:element name="dDirAge" type="tdDirec" minOccurs="0"/>             
+            <xs:element name="dDirAge" type="tdDirec" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -956,7 +956,7 @@
             <xs:element name="dNuManif" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>
-                        Número de manifiesto o conocimiento de carga/ declaración de tránsito aduanero/ Carta de porte internacional 
+                        Número de manifiesto o conocimiento de carga/ declaración de tránsito aduanero/ Carta de porte internacional
                     </xs:documentation>
                 </xs:annotation>
                 <xs:simpleType>
@@ -965,7 +965,7 @@
                         <xs:maxLength value="15"/>
                     </xs:restriction>
                 </xs:simpleType>
-            </xs:element>            
+            </xs:element>
             <xs:element name="dNuDespImp" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>
@@ -980,11 +980,11 @@
             </xs:element>
             <xs:element name="dIniTras" minOccurs="0" type="tdFeIniS"/>
             <xs:element name="dFinTras" minOccurs="0" type="tFecAAAAMMDDguion"/>
-           <xs:element name="cPaisDest" minOccurs="0" type="paisType"/> 
+           <xs:element name="cPaisDest" minOccurs="0" type="paisType"/>
            <xs:element name="dDesPaisDest" minOccurs="0" type="tDesPais"/>
             <xs:element name="gCamSal" minOccurs="0" type="tgCamSal"/>
             <xs:element name="gCamEnt" minOccurs="0" maxOccurs="99" type="tgCamEnt"/>
-            <xs:element name="gVehTras" minOccurs="0" maxOccurs="4" type="tgVehTras"/>            
+            <xs:element name="gVehTras" minOccurs="0" maxOccurs="4" type="tgVehTras"/>
             <xs:element name="gCamTrans" minOccurs="0" type="tgCamTrans"/>
         </xs:sequence>
     </xs:complexType>
@@ -997,11 +997,11 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-        
+
             <xs:element name="dTiVehTras">
             	<xs:annotation>
                     <xs:documentation>
-                        Tipo de vehículo dentro de la clasificación mencionada en el campo "Modalidad del transporte" 
+                        Tipo de vehículo dentro de la clasificación mencionada en el campo "Modalidad del transporte"
                     </xs:documentation>
                 </xs:annotation>
             	<xs:simpleType>
@@ -1009,7 +1009,7 @@
                         <xs:minLength value="4"/>
                         <xs:maxLength value="10"/>
                     </xs:restriction>
-                </xs:simpleType>            
+                </xs:simpleType>
             </xs:element>
             <xs:element name="dMarVeh">
                 <xs:annotation>
@@ -1036,7 +1036,7 @@
 						<xs:whiteSpace value="collapse"/>
 					</xs:restriction>
                 </xs:simpleType>
-            </xs:element>   
+            </xs:element>
             <xs:element name="dNroIDVeh" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>
@@ -1120,16 +1120,16 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="dDirLocSal" type="tdDirec"/>                
-            <xs:element name="dNumCasSal" type="tdNumCas"/>                
-            <xs:element name="dComp1Sal" minOccurs="0" type="tdDirec"/>                
+            <xs:element name="dDirLocSal" type="tdDirec"/>
+            <xs:element name="dNumCasSal" type="tdNumCas"/>
+            <xs:element name="dComp1Sal" minOccurs="0" type="tdDirec"/>
             <xs:element name="dComp2Sal" minOccurs="0" type="tdDirec"/>
             <xs:element name="cDepSal" type="tDepartamentos"/>
             <xs:element name="dDesDepSal" type="tDesDepartamento"/>
             <xs:element name="cDisSal" minOccurs="0" type="tDistrito"/>
             <xs:element name="dDesDisSal" minOccurs="0" type="tDesDistrito"/>
             <xs:element name="cCiuSal" type="tCiudad"/>
-            <xs:element name="dDesCiuSal" type="tDesCiudad"/> 
+            <xs:element name="dDesCiuSal" type="tDesCiudad"/>
             <xs:element name="dTelSal" minOccurs="0" type="tdTel"/>
         </xs:sequence>
     </xs:complexType>
@@ -1145,31 +1145,31 @@
             <xs:element name="iCondOpe" type="tiCondOpe"/>
             <xs:element name="dDCondOpe" type="tdDCondOpe"/>
             <xs:element name="gPaConEIni" minOccurs="0" maxOccurs="999" type="tgPagCont"/>
-            <xs:element name="gPagCred" minOccurs="0" type="tgPagCred"/>              
+            <xs:element name="gPagCred" minOccurs="0" type="tgPagCred"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <!--Campos que describen la forma de pago al contado-->
-    <xs:complexType name="tgPagCont">    
+    <xs:complexType name="tgPagCont">
         <xs:annotation>
             <xs:documentation>
                 Campos que describen la forma de pago al contado
             </xs:documentation>
         </xs:annotation>
-    
+
         <xs:sequence>
             <xs:element name="iTiPago" type="tiTiPago"/>
             <xs:element name="dDesTiPag" type="tdDesTiPag"/>
             <xs:element name="dMonTiPag" type="tMontoBase4"/>
             <xs:element name="cMoneTiPag" type="cMondT"/>
             <xs:element name="dDMoneTiPag" type="tdDMoneTiPag"/>
-            <xs:element name="dTiCamTiPag" minOccurs="0" type="tTipoCambioBase"/>                
+            <xs:element name="dTiCamTiPag" minOccurs="0" type="tTipoCambioBase"/>
             <xs:element name="gPagTarCD" minOccurs="0" maxOccurs="1" type="tgPagTarCD"/>
             <xs:element name="gPagCheq" minOccurs="0" maxOccurs="1" type="tgPagCheq"/>
-        </xs:sequence>      
-        
+        </xs:sequence>
+
     </xs:complexType>
-    
+
     <!-- Campos que describen la operación a crédito-->
     <xs:complexType name="tgPagCred">
         <xs:annotation>
@@ -1177,7 +1177,7 @@
                 Campos que describen la operación a crédito
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>        
+        <xs:sequence>
             <xs:element name="iCondCred">
                 <xs:annotation>
                     <xs:documentation>
@@ -1195,7 +1195,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="dDCondCred" type="tdDCondCred"/>
-          
+
             <!--TODO Ver para mejorar la descripcion del plazo de credito o normalizarlo a una unidad
             estandar para mayor facilidad de evaluacion-->
             <xs:element name="dPlazoCre" minOccurs="0">
@@ -1212,7 +1212,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            
+
             <xs:element name="dCuotas" minOccurs="0">
             	<xs:annotation>
                     <xs:documentation>
@@ -1225,12 +1225,12 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            
-            <xs:element name="dMonEnt" minOccurs="0" type="tMontoBase4"/>                
+
+            <xs:element name="dMonEnt" minOccurs="0" type="tMontoBase4"/>
             <xs:element name="gCuotas" minOccurs="0" maxOccurs="999" type="tgCuotas"/>
         </xs:sequence>
     </xs:complexType>
-    
+
     <!--Campos que componen la Autofatura electronica-->
     <xs:complexType name="tgCamAE">
         <xs:annotation>
@@ -1242,8 +1242,8 @@
         	<xs:element name="iNatVen" type="tiNatVen"/>
         	<xs:element name="dDesNatVen" type="tdDesNatVen"/>
             <xs:element name="iTipIDVen" type="tiTipDoc"/>
-            <xs:element name="dDTipIDVen" type="tdDtipDoc"/> 
-            <xs:element name="dNumIDVen" type="tdNumDocId"/>                
+            <xs:element name="dDTipIDVen" type="tdDtipDoc"/>
+            <xs:element name="dNumIDVen" type="tdNumDocId"/>
             <xs:element name="dNomVen" type="dNomRazSocial"/>
             <xs:element name="dDirVen" type="tdDirec"/>
             <xs:element name="dNumCasVen" type="tdNumCas"/>

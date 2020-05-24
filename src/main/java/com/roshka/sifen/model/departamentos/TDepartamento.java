@@ -1,7 +1,7 @@
-package com.roshka.sifen.model.de.types;
+package com.roshka.sifen.model.departamentos;
 
 /**
- * Esta clase engloba los datos/tipos tiTiDE y tdDesTiDE
+ * Este enumerado contiene los códigos de departamento y sus descripciones oficiales para la SET
  */
 public enum TDepartamento {
 

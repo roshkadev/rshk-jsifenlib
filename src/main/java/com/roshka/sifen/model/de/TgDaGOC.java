@@ -6,6 +6,8 @@ public class TgDaGOC {
 
     private LocalDateTime dFeEmiDE;
     private TGOpeCom gOpeCom;
+    private TgEmis gEmis;
+
 
 
 
