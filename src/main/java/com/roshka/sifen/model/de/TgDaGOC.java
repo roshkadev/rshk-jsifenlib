@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 public class TgDaGOC {
 
     private LocalDateTime dFeEmiDE;
+    private TGOpeCom gOpeCom;
+
+
 
 
 }

@@ -1,14 +1,14 @@
 package com.roshka.sifen.model.de.types;
 
-public enum TdCondTiCam {
+public enum TiTipCont {
 
-    GLOBAL((short)1, "Global"),
-    POR_ITEM((short)2, "Por ítem");
+    PERSONA_FISICA((short)1, "Persona Física"),
+    PERSONA_JURIDICA((short)2, "Persona Jurídica");
 
     private short val;
     private String descripcion;
 
-    TdCondTiCam(short val, String descripcion) {
+    TiTipCont(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
     }

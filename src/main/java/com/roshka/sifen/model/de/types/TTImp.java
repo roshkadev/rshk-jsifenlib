@@ -23,15 +23,8 @@ public enum TTImp {
         return val;
     }
 
-    public void setVal(short val) {
-        this.val = val;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 }

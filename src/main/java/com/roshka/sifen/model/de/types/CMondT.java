@@ -213,8 +213,4 @@ public enum CMondT {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
 }

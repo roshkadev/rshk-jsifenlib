@@ -16,4 +16,12 @@ public enum TiCondAnt {
         this.descripcion = descripcion;
     }
 
+    public short getVal() {
+        return val;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
 }
