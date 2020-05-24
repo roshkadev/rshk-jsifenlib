@@ -1,4 +1,4 @@
-package com.roshka.sifen.model.de.types;
+package com.roshka.sifen.model.monedas;
 
 public enum CMondT {
 

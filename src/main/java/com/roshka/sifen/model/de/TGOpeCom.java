@@ -1,6 +1,7 @@
 package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.model.de.types.*;
+import com.roshka.sifen.model.monedas.CMondT;
 
 import java.math.BigDecimal;
 
