@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+       	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+    <!-- Tipo version del formato del documento electronico -->
+    <xs:simpleType name="dVerFormType">
+        <xs:annotation>
+            <xs:documentation>Version del formato del documento electronico</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value="[0-9]{4,5}[.][0-9]{2}"/>
+            <xs:fractionDigits value="2"/>
+            <xs:totalDigits value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Tipo Ambiente de destino -->
+    <xs:simpleType name="iAmbType">
+        <xs:annotation>
+            <xs:documentation>Ambiente de destino: 1:Produccion, 2:Prueba</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:short">
+            <xs:enumeration value="1"/>
+            <!-- 1.PRODUCCION -->
+            <xs:enumeration value="2"/>
+            <!-- 2.PRUEBA -->
+            <xs:totalDigits value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Version de formato de DE-->
+    <!--<xs:element name="dVerFor">-->
+    <xs:simpleType name="tVerFor">
+        <xs:annotation>
+            <xs:documentation>
+                Version del Formato del documento electronico
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="[1][4][1]"/>
+            <xs:totalDigits value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	<!-- Tipo de Evento -->
+	<!--<xs:element name="teVenT">-->
+	<xs:simpleType name="tEvent">
+        <xs:annotation>
+            <xs:documentation>
+                Tipo de Evento
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:totalDigits value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	<!-- Código de control (CDC) precedido de las siglas "DE" -->
+    <!--<xs:element name="Id">-->
+    <xs:simpleType name="tId">
+        <xs:annotation>
+            <xs:documentation>
+                Codigo de Control del Documento Electronico
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <!--Los dos primeros caracteres son DE luego son digitos del 0 al 9 que se repiten 44 veces-->
+            <xs:pattern value="[0-9]{2}([0-9]{7}[0-9A-D]?)[0-9]{34}"/>
+            <xs:length value="44"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Justificación del evento -->
+    <!--<xs:element name="mOtEve">-->
+    <xs:simpleType name="tmotEve">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Motivo del Evento
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:restriction base="xs:string">
+    		<xs:minLength value="5"></xs:minLength>
+    		<xs:maxLength value="150"></xs:maxLength>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Normalizador de Fecha y Hora en Formato UTC -->
+    <xs:simpleType name="tDateTimeUTC">
+        <xs:annotation>
+            <xs:documentation>
+                Normalizador de Fecha y Hora en Formato UTC
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+            <xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+|-]\d\d:\d\d"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Normalizador de Fecha y Hora -->
+    <xs:simpleType name="fecHhmmss">
+        <xs:annotation>
+            <xs:documentation>
+                Normalizador de Fecha y Hora AAAA-MM-DDThh:mm:ss
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+            <xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Numero de timbrado -->
+    <!--<xs:element name="dNumTim">-->
+    <xs:simpleType name="tdNumTim">
+        <xs:annotation>
+            <xs:documentation>
+                Numero de timbrado
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="8"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="0+[1-9][0-9]*|[1-9]+[0-9]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Codigo de establecimiento proveido por el Sistema de timbrado-->
+    <!--<xs:element name="dEst">-->
+    <xs:simpleType name="tdEst">
+        <xs:annotation>
+            <xs:documentation>
+            	Código de establecimiento proveído por el Sistema de timbrado
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:pattern value="[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Codigo de Punto de Exp. proveido por el Sist.Timbrado -->
+    <!--<xs:element name="dPunExp">-->
+    <xs:simpleType name="tdPunExp">
+        <xs:annotation>
+            <xs:documentation>
+                Código de Punto de Expedición proveído por el Sistema de Timbrado
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="3"/>            
+            <xs:pattern value="[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Numero de documento -->
+    <!--<xs:element name="dNumDoc">-->
+    <xs:simpleType name="tdNumDoc">
+        <xs:annotation>
+            <xs:documentation>
+                Número del Documento de Identidad
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:minLength value="7"/>
+			<xs:maxLength value="7"/>
+			<xs:pattern value="0+[1-9][0-9]*|[1-9]+[0-9]+"/>
+		</xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Tipo de documento electronico -->
+    <!--<xs:element name="iTiDE">-->
+    <xs:simpleType name="tiTiDE">
+        <xs:annotation>
+            <xs:documentation>
+                Tipo de documento electronico
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:short">
+            <xs:totalDigits value="2"/>
+            <xs:enumeration value="1"/><!-- 1.Factura Electrónica -->
+            <xs:enumeration value="2"/><!-- 2.Factura electrónica de exportación -->
+            <xs:enumeration value="3"/><!-- 3.Factura electrónica de importación -->
+            <xs:enumeration value="4"/><!-- 4.Autofactura electrónica -->
+            <xs:enumeration value="5"/><!-- 5.Nota de crédito electrónica -->
+            <xs:enumeration value="6"/><!-- 6.Nota de débito electrónica -->
+            <xs:enumeration value="7"/><!-- 7.Nota de remisión electrónica -->
+            <xs:enumeration value="8"/><!-- 8.Comprobante de retención electrónico -->
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Tipo de Evento -->
+    <!--<xs:element name="dTiGDE">-->
+    <xs:simpleType name="tdTiGDE">
+        <xs:annotation>
+            <xs:documentation>
+                Tipo de Evento 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:short">
+            <xs:totalDigits value="2"/>
+            <!-- Eventos del Emisor -->
+            <xs:enumeration value="1"/><!-- 1.Cancelación -->
+            <xs:enumeration value="2"/><!-- 2.Inutilización -->
+            <xs:enumeration value="3"/><!-- 3.Endoso -->
+            <!-- Eventos del Comprador -->
+            <xs:enumeration value="10"/><!-- 10.Acuse del DE -->
+            <xs:enumeration value="11"/><!-- 11.Conformidad del DE -->
+            <xs:enumeration value="12"/><!-- 12.Disconformidad del DE -->
+            <xs:enumeration value="13"/><!-- 13.Desconocimiento del DE -->
+        </xs:restriction>
+    </xs:simpleType>
+    
+    
+    <xs:simpleType name="tdNumDE">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Número Inicio del rango del Documento
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:restriction base="xs:string">
+    		<xs:minLength value="7"/>
+    		<xs:pattern value="0+[1-9][0-9]*|[1-9]+[0-9]+"/>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="tdIdEve">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Número Identificador del Evento
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:restriction base="xs:integer">
+    		<xs:pattern value="[0-9]+"/>
+        	<xs:minInclusive value="1"/>
+            <xs:maxInclusive value="9999999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+   
+</xs:schema>

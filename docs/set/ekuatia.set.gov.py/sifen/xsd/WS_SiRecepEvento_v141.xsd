@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        targetNamespace="http://ekuatia.set.gov.py/sifen/xsd"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd">
+
+	<xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/protProcesEventos_v141.xsd"/>
+	<xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/Evento_v141.xsd"/>
+    <xs:element name="rEnviEventoDe">
+        <xs:annotation>
+            <xs:documentation>Recepcion de Eventos de Documentos Electronicos</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Identificador de control de envio-->
+                <xs:element name="dId">
+                    <xs:annotation>
+                        <xs:documentation>Identificador de control de envio</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:totalDigits value="15"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <!-- Documento Electronico -->
+                <xs:element name="dEvReg">
+                    <xs:annotation>
+                        <xs:documentation>Evento a ser registrado
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                           <xs:element name="gGroupGesEve" type="tgGroupGesEve"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="rRetEnviEventoDe">
+    	<xs:annotation>
+            <xs:documentation>Respuesta de Eventos</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+        	<xs:sequence>
+        		<!-- Fecha y Hora del procesamiento del el/los Evento/s -->
+        		<xs:element name="dFecProc" type="fecUTC"/>        		
+        		<!-- Protocolo de procesamiento de DE -->
+                <xs:element name="gResProcEVe" type="tgResProcEVe" minOccurs="1" maxOccurs="15">
+                    <xs:annotation>
+                        <xs:documentation>Grupo Resultado de Procesamiento del Evento
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+ 
+</xs:schema>

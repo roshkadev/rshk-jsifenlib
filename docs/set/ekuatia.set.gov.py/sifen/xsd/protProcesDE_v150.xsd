@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        elementFormDefault="qualified"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+        targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/DE_Types_v150.xsd"/>
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/SIFEN_Types_v141.xsd"/>
+
+    <xs:simpleType name="tdId">
+        <xs:annotation>
+            <xs:documentation>
+                Numero de protocolo de autorizacion precedido por el literar ID
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="tdProtAut">
+        <xs:annotation>
+            <xs:documentation>
+                Numero del protocolo de autorizacion
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+
+    <!--Grupo de resultado de procesamiento-->
+    <xs:complexType name="tgResProc">
+        <xs:annotation>
+            <xs:documentation>
+                Grupo de resultado de procesamiento
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dCodRes" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Codigo de resultado de procesamiento
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dMsgRes" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Mensaje del resultado de procesamiento
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="rProtDe">
+        <xs:annotation>
+            <xs:documentation>
+                Respuesta del protocolo de procesamiento del DE
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        cdc resultado
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="dFecProc" type="fecUTC"/>
+            
+            <xs:element name="dDigVal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Valor hash del DE procesado
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:base64Binary"/>
+                </xs:simpleType>
+            </xs:element>
+            
+            <xs:element name="dEstRes" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Estado del resultado
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+            
+            <xs:element name="dProtAut" minOccurs="0" type="tdProtAut"/>
+            
+            <xs:element name="gResProc" type="tgResProc" minOccurs="0" maxOccurs="100"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

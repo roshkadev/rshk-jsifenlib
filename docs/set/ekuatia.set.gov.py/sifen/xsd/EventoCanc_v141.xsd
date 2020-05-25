@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        elementFormDefault="qualified"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+       	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/Evento_Types_v141.xsd"/>
+    
+    <xs:simpleType name="tdTiGDECanc">
+        <xs:annotation>
+            <xs:documentation>
+                Tipo de Evento 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:short">
+            <xs:totalDigits value="1"/>
+            <!-- Eventos del Emisor -->
+            <xs:enumeration value="1"/><!-- 1.Cancelación -->
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="trGeVeCan">
+    	<xs:annotation>
+	    	<xs:documentation>
+	    		Grupo de Datos que identifican al evento de Cancelación del DTE
+	    	</xs:documentation>
+	    </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Id" type="tId"/>
+            <xs:element name="mOtEve" type="tmotEve"/>
+        </xs:sequence>
+    </xs:complexType>
+        
+    <xs:complexType name="tgGroupEvt">
+	    <xs:annotation>
+	    	<xs:documentation>
+	    		Grupo del evento
+	    	</xs:documentation>
+	    </xs:annotation>
+	    <xs:sequence>
+	    	<xs:element name="rGeVeCan" type="trGeVeCan"/>
+	    </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Cuerpo principal de Eventos -->
+    <!-- GDE002 -->
+    <xs:complexType name="trEve">
+        <xs:sequence>
+            <xs:element name="dFecFirma" type="fecHhmmss"/>
+            <xs:element name="dVerFor" type="tVerFor"/>
+            <xs:element name="dTiGDE" type="tdTiGDECanc"/>
+            <xs:element name="gGroupTiEvt" type="tgGroupEvt"/>
+        </xs:sequence>
+        <!--ID pasa a ser atributo del rEve-->
+        <xs:attribute name="Id" type="tdIdEve" use="required"/>
+    </xs:complexType>
+    
+    
+    <!-- Cuerpo principal de Eventos -->
+    <!-- GDE001 -->
+    <xs:complexType name="trGesEve">
+        <xs:sequence>
+            <xs:element name="rEve" type="trEve"/>
+            <xs:element ref="ds:Signature">
+                <xs:annotation>
+                    <xs:documentation>
+                        Firma Digital del DE
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

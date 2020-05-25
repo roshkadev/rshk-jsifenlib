@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Monedas -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+           elementFormDefault="qualified"
+           targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+
+    <xs:annotation>
+        <xs:documentation>
+            CODIFICACION DE MONEDAS
+            Estandar Internacional ISO 4217
+        </xs:documentation>
+    </xs:annotation>
+
+
+    <xs:simpleType name="cMondT">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="AED">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dirham</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AFN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Afghani</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ALL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lek</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dram</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ANG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Netherlands Antillian Guilder</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AOA">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kwanza</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ARS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Argentine Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AUD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Australian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AWG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Aruban Guilder</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AZM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Azerbaijanian Manat</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BAM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Convertible Mark</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BBD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Barbados Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BDT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Taka</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BGN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bulgarian Lev</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BHD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bahraini Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BIF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Burundi Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bermudian Dollar (customarily: Bermuda Dollar)</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BND">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Brunei Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BOB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Boliviano</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BRL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Brazilian Real</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BSD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bahamian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BTN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ngultrum</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BWP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pula</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BYR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Belarussian Ruble</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BZD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Belize Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CAD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Canadian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CDF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Franc Congolais</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Swiss Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CLP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Chilean Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CNY">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Yuan Renminbi</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="COP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Colombian Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CRC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Costa Rican Colon</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CUP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cuban Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVE">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cape Verde Escudo</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CYP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cyprus Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CZK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Czech Koruna</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DJF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Djibouti Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DKK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Danish Krone</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DOP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dominican Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DZD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Algerian Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EEK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kroon</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EGP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Egyptian Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ERN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Nakfa</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ETB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ethopian Birr</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EUR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Euro</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FJD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Fiji Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FKP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Falkland Islands Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GBP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pound Sterling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GEL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lari</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GHC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cedi</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GIP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Gibraltar Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dalasi</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GNF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Guinea Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GTQ">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Quetzal</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GYD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Guyana Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HKD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Honk Kong Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HNL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lempira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HRK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kuna</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HTG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Gourde</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HUF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Forint</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IDR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rupiah</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ILS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Israeli Sheqel</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="INR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Indian Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IQD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Iraqi Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IRR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Iranian Rial</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ISK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Iceland Krona</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="JMD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Jamaican Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="JOD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Jordanian Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="JPY">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Yen</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KES">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kenyan Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KGS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Som</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KHR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Riel</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KMF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Comoro Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KPW">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>North Korean Won</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KRW">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Won</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KWD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kuwaiti Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KYD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cayman Islands Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KZT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tenge</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LAK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kip</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LBP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lebanese Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LKR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Sri Lanka Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LRD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Liberian Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LSL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Loti</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LTL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lithuanian Litas</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LVL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Latvian Lats</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LYD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Libyan Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MAD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Morrocan Dirham</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MDL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Moldovan Leu</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Malagasy Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MKD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Denar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kyat</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MNT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tugrik</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MOP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pataca</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MRO">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Ouguiya</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MTL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Maltese Lira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MUR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Mauritius Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MVR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rufiyaa</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MWK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kwacha</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MXN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Mexican Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MYR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Malaysian Ringgit</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MZM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Metical</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NAD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Namibia Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NGN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Naira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NIO">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Cordoba Oro</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NOK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Norwegian Krone</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NPR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Nepalese Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NZD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Zealand Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OMR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rial Omani</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Balboa</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PEN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Nuevo Sol</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PGK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kina</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Philippine Peso</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PKR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pakistan Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLN">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Zloty</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PYG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Guarani</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="QAR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Qatari Rial</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ROL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Leu</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RUB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Russian Ruble</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RWF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rwanda Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SAR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Saudi Riyal</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SBD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Solomon Islands Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Seychelles Rupee</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SDD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Sudanese Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SEK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Swedish Krona</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SGD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Singapore Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SHP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>St. Helena Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SIT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tolar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SKK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Slovak Koruna</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SLL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Leone</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SOS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Somali Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SRG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Suriname Guilder</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="STD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dobra</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SVC">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>El Salvador Colon</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SYP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Syrian Pound</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SZL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Lilangeni</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="THB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Baht</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TJS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Somoni</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TMM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Manat</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TND">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tunisian Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TOP">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Pa&apos;anga</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TRL">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Turkish Lira</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TTD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Trinidad and Tobago Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TWD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Taiwan Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TZS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tanzanian Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UAH">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Hryvnia</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UGX">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Uganda Shilling</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="USD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>US Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UYU">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Peso Uruguayo</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UZS">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Uzbekistan Sum</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VEB">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Bolivar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VND">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Dong</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VUV">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Vatu</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WST">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Tala</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XAF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>CFA Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XAG">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Silver</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XAU">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Gold</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XCD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>East Carribean Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XDR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>SDR</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XOF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>CFA Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XPD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Palladium</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XPF">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>CFP Franc</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="XPT">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Platinum</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="YER">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Yemeni Rial</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="YUM">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>New Dinar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZAR">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Rand</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZMK">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Kwacha</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZWD">
+                <xs:annotation>
+                    <xs:documentation>
+                        <CodeName>Zimbabwe Dollar</CodeName>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="CurrencyCodeType">
+        <xs:annotation>
+            <xs:documentation>ISO 4217 Alpha</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="cMondT">
+                <xs:attribute name="codeListID" type="xs:normalizedString" fixed="ISO 4217 Alpha"
+                              use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>

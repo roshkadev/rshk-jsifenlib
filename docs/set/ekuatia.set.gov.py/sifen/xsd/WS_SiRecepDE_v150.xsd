@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://ekuatia.set.gov.py/sifen/xsd"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+        elementFormDefault="qualified">
+
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/protProcesDE_v150.xsd"/>
+
+    <xs:element name="rEnviDe">
+        <xs:annotation>
+            <xs:documentation>Recepcion de Documentos Electronicos</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Identificador de control de envio-->
+                <xs:element name="dId">
+                    <xs:annotation>
+                        <xs:documentation>Identificador de control de envio</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Identificador de control de envio</xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:integer">
+                            <xs:totalDigits value="15"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+              <!-- Documento Electronico -->
+                <xs:element name="xDE">
+                    <xs:annotation>
+                        <xs:documentation>XML del Documento Electronico Transferido
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:any namespace="http://ekuatia.set.gov.py/sifen/xsd" processContents="skip"/>
+                        </xs:sequence>
+                    </xs:complexType>
+            </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rRetEnviDe">
+        <xs:annotation>
+            <xs:documentation>Respuesta de la recepcion de Documentos Electronicos
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Protocolo de procesamiento de DE -->
+                <xs:element name="rProtDe" type="rProtDe">
+                    <xs:annotation>
+                        <xs:documentation>Protocolo de procesamiento de DE
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

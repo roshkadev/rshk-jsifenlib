@@ -1,0 +1,177 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/FE_Types_v141.xsd"/>
+	<xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/SIFEN_Types_v141.xsd"/>
+
+    <xs:element name="rEnviConsLoteDe">
+        <xs:annotation>
+            <xs:documentation>Recepcion de Documentos Para Consulta de Lote</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+				<xs:element name="dId" type="dIdType" />
+				
+                <xs:element name="dProtConsLote" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Número de Lote</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Número de Lote
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+                
+				<xs:element name="dCDC" minOccurs="0">
+					<xs:simpleType>
+						<xs:annotation>
+							<xs:documentation>
+								CDC contenido en un lote
+							</xs:documentation>
+						</xs:annotation>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="50" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rResEnviConsLoteDe">
+        <xs:annotation>
+            <xs:documentation>Respuesta de la Consulta de Documentos Electronicos por Lote
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Identificador de control de envio-->
+                <xs:element name="dFecProc" type="fecUTC"/>
+                
+                <!-- Código de resultado de procesamiento del lote -->
+                <xs:element name="dCodResLot">
+                    <xs:annotation>
+                        <xs:documentation>Código de resultado de procesamiento del lote</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                        	<xs:minLength value="1"></xs:minLength>
+                            <xs:maxLength value="4"></xs:maxLength>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                
+                <!-- Mensaje de resultado de procesamiento del lote -->
+                <xs:element name="dMsgResLot">
+                    <xs:annotation>
+                        <xs:documentation>Mensaje del resultado de recepción</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"></xs:minLength>
+                            <xs:maxLength value="255"></xs:maxLength>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                
+                <!-- Grupo Resultado de Procesamiento-->
+                <xs:element name="gResProcLote" type="tgResProcLote" minOccurs="0" maxOccurs="50"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!--Grupo de resultado de procesamiento-->
+    <xs:complexType name="tgResProcLote">
+        <xs:annotation>
+            <xs:documentation>
+                Grupo de resultado de procesamiento
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+        	<!-- CDC del DE procesado -->
+            <xs:element name="id">
+                <xs:annotation>
+                    <xs:documentation>CDC del DE procesado</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                    	<xs:minLength value="1"></xs:minLength>
+                        <xs:maxLength value="47"></xs:maxLength>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <!--Estado del resultado-->
+            <xs:element name="dEstRes">
+                <xs:annotation>
+                    <xs:documentation>Estado del resultado</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="8"></xs:minLength>
+                        <xs:maxLength value="30"></xs:maxLength>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <!--Número de transacción-->
+            <xs:element name="dProtAut" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Número de transacción
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+			            <xs:pattern value="[0-9]{1,10}"/>
+			        </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            
+            
+            <!--Grupo de resultado de procesamiento-->
+            <xs:element name="gResProc" type="tgResProc" maxOccurs="5"/>
+            
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--Grupo de resultado de procesamiento-->
+    <xs:complexType name="tgResProc">
+        <xs:annotation>
+            <xs:documentation>
+                Grupo de resultado de procesamiento
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dCodRes">
+                <xs:annotation>
+                    <xs:documentation>
+                        Codigo de resultado de procesamiento
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9]{4}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dMsgRes">
+                <xs:annotation>
+                    <xs:documentation>
+                        Mensaje del resultado de procesamiento
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="255"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+</xs:schema>

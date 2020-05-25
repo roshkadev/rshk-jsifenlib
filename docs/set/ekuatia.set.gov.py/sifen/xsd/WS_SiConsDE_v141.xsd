@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+	<xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/FE_Types_v141.xsd"/>
+	<xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/SIFEN_Types_v141.xsd"/>
+
+	<xs:element name="rEnviConsDeRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dId" type="dIdType" />
+				<xs:element name="dCDC" type="tCDC" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="rEnviConsDeResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dFecProc" type="fecUTC" />
+				<xs:element name="dCodRes">
+					<xs:simpleType>
+						<xs:annotation>
+							<xs:documentation>
+								Código del resultado de procesamiento
+							</xs:documentation>
+						</xs:annotation>
+						<xs:restriction base="xs:string">
+							<xs:length value="4" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+
+				<xs:element name="dMsgRes">
+					<xs:annotation>
+						<xs:documentation>
+							Mensaje del resultado de procesamiento
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1" />
+							<xs:maxLength value="255" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+
+				<xs:element name="xContenDE" minOccurs="0" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Contenedor del DE</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

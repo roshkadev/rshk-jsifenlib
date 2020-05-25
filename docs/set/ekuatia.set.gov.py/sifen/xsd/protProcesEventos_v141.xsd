@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        elementFormDefault="qualified"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+        targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+    <xs:simpleType name="tdCodRes">
+        <xs:annotation>
+            <xs:documentation>
+                Codigo de resultado de procesamiento
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="tdMsgRes">
+        <xs:annotation>
+            <xs:documentation>
+                Mensaje del resultado de procesamiento
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="tdEstRes">
+        <xs:annotation>
+            <xs:documentation>
+                Estado del resultado
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="8"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="tdProtAut">
+        <xs:annotation>
+            <xs:documentation>
+                Número de transacción
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:long"/>
+    </xs:simpleType>
+    
+    <xs:simpleType name="tid">
+    	<xs:annotation>
+    		<xs:documentation>
+    			Número Identificador del Evento
+    		</xs:documentation>
+    	</xs:annotation>
+    	<xs:restriction base="xs:integer">
+    		<xs:pattern value="[0-9]{1,10}"/>
+        	<xs:minInclusive value="0"/>
+            <xs:maxInclusive value="9999999999"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- Normalizador de Fecha y Hora en Formato UTC -->
+    <xs:simpleType name="fecUTC">
+        <xs:annotation>
+            <xs:documentation>
+                Normalizador de Fecha y Hora en Formato UTC {AAAA-MM-DDThh:mm:ss-ss:ss}
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+            <xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+|-]\d\d:\d\d"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="tgResProc">
+    	<xs:annotation>
+	    	<xs:documentation>
+	    		Grupo Resultado de Procesamiento
+	    	</xs:documentation>
+	    </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dCodRes" type="tdCodRes"/>
+            <xs:element name="dMsgRes" type="tdMsgRes"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--Grupo de resultado de procesamiento-->
+    <xs:complexType name="tgResProcEVe">
+        <xs:annotation>
+            <xs:documentation>
+                Grupo de resultado de procesamiento
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+        	<xs:element name="dEstRes" type="tdEstRes"/>
+            <xs:element name="dProtAut" type="tdProtAut" minOccurs="0"/>
+            <xs:element name="id" type="tid"/>
+            <xs:element name="gResProc" type="tgResProc" minOccurs="1" maxOccurs="100"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

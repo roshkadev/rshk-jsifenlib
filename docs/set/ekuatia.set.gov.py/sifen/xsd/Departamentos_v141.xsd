@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+           targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+    <xs:annotation>
+        <xs:documentation>
+            CODIFICACION DE DEPARTAMENTOS
+        </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="tDepartamentos">
+    	<xs:annotation>
+			<xs:documentation>
+				Código del departamento donde se realiza la transacción
+			</xs:documentation>
+		</xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>CAPITAL</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>CONCEPCION</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>SAN PEDRO</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>CORDILLERA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+                <xs:annotation>
+                    <xs:documentation>GUAIRA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+                <xs:annotation>
+                    <xs:documentation>CAAGUAZU</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+                <xs:annotation>
+                    <xs:documentation>CAAZAPA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+                <xs:annotation>
+                    <xs:documentation>ITAPUA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+                <xs:annotation>
+                    <xs:documentation>MISIONES</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+                <xs:annotation>
+                    <xs:documentation>PARAGUARI</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+                <xs:annotation>
+                    <xs:documentation>ALTO PARANA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+                <xs:annotation>
+                    <xs:documentation>CENTRAL</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13">
+                <xs:annotation>
+                    <xs:documentation>NEEMBUCU</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="14">
+                <xs:annotation>
+                    <xs:documentation>AMAMBAY</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="15">
+                <xs:annotation>
+                    <xs:documentation>PTE. HAYES</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="16">
+                <xs:annotation>
+                    <xs:documentation>BOQUERON</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="17">
+                <xs:annotation>
+                    <xs:documentation>ALTO PARAGUAY</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="18">
+                <xs:annotation>
+                    <xs:documentation>CANINDEYU</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="19">
+                <xs:annotation>
+                    <xs:documentation>CHACO</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="20">
+                <xs:annotation>
+                    <xs:documentation>NUEVA ASUNCION</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>            
+        </xs:restriction>
+    </xs:simpleType>   
+    
+    <xs:simpleType name="tDesDepartamento">
+    	<xs:annotation>
+			<xs:documentation>
+				Descripción del departamento donde se realiza la transacción
+			</xs:documentation>
+		</xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CAPITAL"/>
+            <xs:enumeration value="CONCEPCION"/>
+            <xs:enumeration value="SAN PEDRO"/>
+            <xs:enumeration value="CORDILLERA"/>
+            <xs:enumeration value="GUAIRA"/>
+            <xs:enumeration value="CAAGUAZU"/>
+            <xs:enumeration value="CAAZAPA"/>
+            <xs:enumeration value="ITAPUA"/>
+            <xs:enumeration value="MISIONES"/>
+            <xs:enumeration value="PARAGUARI"/>
+            <xs:enumeration value="ALTO PARANA"/>
+            <xs:enumeration value="CENTRAL"/>                
+            <xs:enumeration value="NEEMBUCU"/>                
+            <xs:enumeration value="AMAMBAY"/>                
+            <xs:enumeration value="PTE. HAYES"/>
+            <xs:enumeration value="BOQUERON"/>
+            <xs:enumeration value="ALTO PARAGUAY"/>                
+            <xs:enumeration value="CANINDEYU"/>
+            <xs:enumeration value="CHACO"/>                
+            <xs:enumeration value="NUEVA ASUNCION"/>           
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

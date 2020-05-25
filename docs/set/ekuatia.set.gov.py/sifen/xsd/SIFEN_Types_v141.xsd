@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified"
+	xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+	<!-- Tipo Identificador de control de envio -->
+	<xs:simpleType name="dIdType">
+		<xs:annotation>
+			<xs:documentation>Identificador de control de envio
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <!-- Normalizador de Fecha y Hora en Formato UTC -->
+    <xs:simpleType name="fecUTC">
+        <xs:annotation>
+            <xs:documentation>
+                Normalizador de Fecha y Hora en Formato UTC {AAAA-MM-DDThh:mm:ss-ss:ss}
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+            <xs:pattern value="\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d[+|-]\d\d:\d\d"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+
+</xs:schema>

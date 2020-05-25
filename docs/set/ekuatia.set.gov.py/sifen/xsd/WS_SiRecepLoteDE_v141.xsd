@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://ekuatia.set.gov.py/sifen/xsd"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+        elementFormDefault="qualified"
+        xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/FE_Types_v141.xsd"/>
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/SIFEN_Types_v141.xsd"/>
+
+    <xs:element name="rEnvioLote">
+        <xs:annotation>
+            <xs:documentation>Recepcion de Documentos Electronicos por Lote</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Identificador de control de envio-->
+                <xs:element name="dId">
+                    <xs:annotation>
+                        <xs:documentation>Identificador de control de envio</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Identificador de control de envio</xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:integer"/>
+                    </xs:simpleType>
+                </xs:element>
+
+                <!-- Documento Electronico -->
+                <xs:element name="xDE" type="xs:base64Binary" xmime:expectedContentTypes="application/zip">
+                    <xs:annotation>
+                        <xs:documentation>XML del Documento Electronico Transferido
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rResEnviLoteDe">
+        <xs:annotation>
+            <xs:documentation>Respuesta de la recepcion de Documentos Electronicos por Lote
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Identificador de control de envio-->
+                <xs:element name="dFecProc" type="fecUTC" minOccurs="0"/>
+
+                <!-- Código del resultado de recepción -->
+                <xs:element name="dCodRes" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Código del resultado de recepción</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Código del resultado de recepción
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:string">
+                        	<xs:minLength value="1"></xs:minLength>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                
+                <xs:element name="dMsgRes" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Mensaje del resultado de recepción</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Mensaje del resultado de recepción
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+                
+                <xs:element name="dProtConsLote" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Número de Lote</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Número de Lote
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="dTpoProces" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Tiempo medio de procesamiento en segundos</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Tiempo medio de procesamiento en segundos
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:integer"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

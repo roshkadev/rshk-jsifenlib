@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        elementFormDefault="qualified"
+        targetNamespace="http://ekuatia.set.gov.py/sifen/xsd"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd">
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/EventoCanc_v141.xsd"/>
+
+	<xs:element name="rGesEve" type="trGesEve"/>
+	
+</xs:schema>

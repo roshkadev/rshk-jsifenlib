@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd"
+	xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+
+	<xs:include schemaLocation="siConsultaDTE.xsd"/>
+
+	<xs:element name="rConsDteRequest">
+		<xs:complexType>
+        	<xs:sequence>
+				<xs:element name="rConsultaDTE" type="rConsultaDTE"/>
+			</xs:sequence>
+		</xs:complexType>	
+	</xs:element>
+
+	<xs:element name="rConsDteResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dFecProc" type="fecHhmmss" />
+				<xs:element name="dMsgRes">
+					<xs:annotation>
+						<xs:documentation>
+							Mensaje del resultado de la consulta
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1" />
+							<xs:maxLength value="255" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				 <xs:element name="rConsDte" type="xs:base64Binary" xmime:expectedContentTypes="application/zip" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Archivo zip generado en la consulta de mis DTEs
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

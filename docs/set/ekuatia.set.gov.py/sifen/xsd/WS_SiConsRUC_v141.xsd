@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+	targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+
+    <xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/FE_Types_v141.xsd"/>
+	<xs:include schemaLocation="https://ekuatia.set.gov.py/sifen/xsd/SIFEN_Types_v141.xsd"/>
+    
+	<xs:element name="rEnviConsRUC">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dId" type="dIdType" />
+				<xs:element name="dRUCCons" type="tRuc" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="rResEnviConsRUC">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="dCodRes">
+					<xs:simpleType>
+						<xs:annotation>
+							<xs:documentation>
+								Código del resultado de procesamiento
+							</xs:documentation>
+						</xs:annotation>
+						<xs:restriction base="xs:string">
+							<xs:length value="4" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+
+				<xs:element name="dMsgRes">
+					<xs:annotation>
+						<xs:documentation>
+							Mensaje del resultado de procesamiento
+						</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1" />
+							<xs:maxLength value="255" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+
+				<xs:element name="xContRUC" minOccurs="0" type="tContenedorRuc">
+					<xs:annotation>
+						<xs:documentation>Contenedor del RUC</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	
+    <xs:complexType name="tContenedorRuc">
+        <xs:annotation>
+            <xs:documentation>
+                Respuesta del protocolo de procesamiento del DE
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dRUCCons" type="tRuc"/>
+            <xs:element name="dRazCons">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:whiteSpace value="preserve"/>
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="250"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dCodEstCons">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dDesEstCons">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="25"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            
+            <xs:element name="dRUCFactElec">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+        </xs:sequence>
+    </xs:complexType>
+    
+
+</xs:schema>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        elementFormDefault="qualified"
+        xmlns="http://ekuatia.set.gov.py/sifen/xsd"
+        targetNamespace="http://ekuatia.set.gov.py/sifen/xsd">
+
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+
+    <xs:include schemaLocation="DE_Types_v150.xsd"/>
+	<xs:include schemaLocation="SIFEN_Types_v141.xsd"/>
+
+    <xs:element name="rConsultaDTE" type="rConsultaDTE"/>
+
+    <xs:complexType name="rConsultaDTE">
+        <xs:sequence>
+            <xs:element name="ConsultaDTE">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="dRuc" type="tRuc" />
+                        <xs:element name="dProtConsDTEA" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="Id" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="ds:Signature">
+                <xs:annotation>
+                    <xs:documentation>
+                        Firma Digital de la ConsultaDTE
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+	</xs:complexType>
+</xs:schema>
