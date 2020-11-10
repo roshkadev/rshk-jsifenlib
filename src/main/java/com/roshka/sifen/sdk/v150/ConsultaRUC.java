@@ -26,26 +26,21 @@ public class ConsultaRUC extends ConsultaBase<REnviConsRUC, RResEnviConsRUC> {
 
     @Override
     public RResEnviConsRUC procesarRespuesta(SOAPMessage soapMessage)
-            throws SifenException, SOAPException
-    {
+            throws SifenException, SOAPException {
         SOAPBody soapBody = soapMessage.getSOAPBody();
         final Node nodeRResEnviConsRuc = getMainNode(soapBody, NOMBRE_NODO);
         return SifenObjectFactory.getFromNode(nodeRResEnviConsRuc, RResEnviConsRUC.class);
     }
 
-    public RespuestaSifen<REnviConsRUC, RResEnviConsRUC> consultaRUC(REnviConsRUC rEnviConsRUC)
-        throws SifenException
-    {
-        return ejecutarConsulta(rEnviConsRUC);
-    }
-
-    public RespuestaSifen<REnviConsRUC, RResEnviConsRUC> consultaRUC(String ruc)
-        throws SifenException
-    {
+    public RespuestaSifen<REnviConsRUC, RResEnviConsRUC> consultaRUC(String ruc) throws SifenException {
         REnviConsRUC rEnviConsRUC = new REnviConsRUC();
-        rEnviConsRUC.setdId(getSifenCtx().nextdId());
+        rEnviConsRUC.setdId(this.getSifenCtx().nextdId());
         rEnviConsRUC.setdRUCCons(ruc);
-        return consultaRUC(rEnviConsRUC);
+        return this.consultaRUC(rEnviConsRUC);
     }
 
+    public RespuestaSifen<REnviConsRUC, RResEnviConsRUC> consultaRUC(REnviConsRUC rEnviConsRUC)
+            throws SifenException {
+        return this.ejecutarConsulta(rEnviConsRUC);
+    }
 }

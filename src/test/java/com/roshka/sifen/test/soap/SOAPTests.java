@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -25,22 +24,19 @@ public class SOAPTests {
     @BeforeClass
     public static void setupSifenCtx() throws IOException, SifenException {
         Properties properties = new Properties();
-        properties.load(new FileReader("conf/roshka.properties"));
+        properties.load(new FileReader("conf/taxare.properties"));
         SifenConfig sifenConfig = SifenConfig.loadFromProperties(properties);
         _sifenContext = new SifenCtx(sifenConfig);
     }
 
     @Test
-    public void testBasicMessage()
-            throws SOAPException, IOException {
+    public void testBasicMessage() throws SOAPException, IOException {
         SOAPMessage soapMessage = MessageHelper.createMessage();
         soapMessage.writeTo(System.out);
     }
 
     @Test
-    public void testConsultaRUC()
-            throws SOAPException, IOException, SifenException {
-
+    public void testConsultaRUC() throws SifenException {
         ConsultaRUC consultaRUC = new ConsultaRUC(_sifenContext);
         RespuestaSifen<REnviConsRUC, RResEnviConsRUC> ret = consultaRUC.consultaRUC("980527");
         assert(ret.llamadaCorrecta());

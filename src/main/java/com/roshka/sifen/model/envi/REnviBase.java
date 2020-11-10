@@ -17,6 +17,5 @@ public abstract class REnviBase extends SifenObjectBase {
         this.dId = dId;
     }
 
-    public abstract void setupSOAPBody(SOAPBody soapBody)
-        throws SOAPException;
+    public abstract void setupSOAPBody(SOAPBody soapBody) throws SOAPException;
 }

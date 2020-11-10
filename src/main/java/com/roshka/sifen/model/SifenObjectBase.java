@@ -9,15 +9,14 @@ public abstract class SifenObjectBase {
 
     private final static Logger logger = Logger.getLogger(SifenObjectBase.class.toString());
 
-    public void setValueFromChildNode(Node value)
-        throws SifenException
-    {
+    public void setValueFromChildNode(Node value) throws SifenException {
         // do nothing
     }
 
     public String getTextValue(Node node) {
         if (node == null)
             return null;
+
         Node firstChild = node.getFirstChild();
         if (firstChild == null) {
             logger.warning("Node " + node.getNodeName() + " has no children. Returning null for Text Value");
@@ -32,5 +31,4 @@ public abstract class SifenObjectBase {
         return firstChild.getTextContent();
 
     }
-
 }

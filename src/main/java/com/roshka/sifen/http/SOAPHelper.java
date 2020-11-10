@@ -44,16 +44,14 @@ public class SOAPHelper {
     };
 
     //
-    public static RespuestaSOAP performSOAPRequest(SifenCtx sifenCtx, SOAPMessage soapMessage, String urlString)
-        throws SifenException
+    public static RespuestaSOAP performSOAPRequest(SifenCtx sifenCtx, SOAPMessage soapMessage, String urlString) throws SifenException
     {
-
         SifenConfig sifenConfig = sifenCtx.getSifenConfig();
 
         RespuestaSOAP respuestaSOAP = new RespuestaSOAP();
 
         URL url;
-        SSLContext sslContext = null;
+        SSLContext sslContext;
         try {
             url = new URL(urlString);
             URLConnection urlConnection = url.openConnection();
@@ -70,6 +68,7 @@ public class SOAPHelper {
                 // protocolo inválido
                 throw SifenExceptionUtil.llamadaSOAPInvalida("El protocolo " + url.getProtocol() + " es inválido");
             }
+
             if (!(urlConnection instanceof HttpURLConnection)) {
                 throw SifenExceptionUtil.llamadaSOAPInvalida("Se esperaba una instancia de HttpURLConnection o derivados. Se obtuvo: " + urlConnection.getClass().getCanonicalName());
             }

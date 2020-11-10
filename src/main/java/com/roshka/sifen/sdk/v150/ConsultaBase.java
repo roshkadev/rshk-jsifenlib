@@ -43,16 +43,14 @@ public abstract class ConsultaBase<T extends REnviBase, U extends RResBase> {
         this.url = url;
     }
 
-    public RespuestaSifen<T, U> ejecutarConsulta(T peticion)
-            throws SifenException
-    {
+    public RespuestaSifen<T, U> ejecutarConsulta(T peticion) throws SifenException {
         SOAPMessage message;
         RespuestaSifen<T, U> respuestaSifen = new RespuestaSifen<>();
         respuestaSifen.setPeticion(peticion);
         try {
             message = MessageHelper.createMessage();
             peticion.setupSOAPBody(message.getSOAPBody());
-            RespuestaSOAP respuestaSOAP = SOAPHelper.performSOAPRequest(getSifenCtx(), message, getUrl());
+            RespuestaSOAP respuestaSOAP = SOAPHelper.performSOAPRequest(this.getSifenCtx(), message, this.getUrl());
             respuestaSifen.setRespuestaSOAP(respuestaSOAP);
             if (respuestaSOAP.llamadaCorrecta()) {
                 logger.info("Llamada Sifen Correcta en FORMA");
@@ -62,15 +60,14 @@ public abstract class ConsultaBase<T extends REnviBase, U extends RResBase> {
             }
             return respuestaSifen;
         } catch (SOAPException e) {
-            String msg= "Hubo un SOAPException al ejecutar la llamada a: " + getUrl() + ". Mensage: " + e.getLocalizedMessage();
+            String msg = "Hubo un SOAPException al ejecutar la llamada a: " + getUrl() + ". Mensaje: " + e.getLocalizedMessage();
             logger.severe(msg);
             throw SifenExceptionUtil.llamadaSOAPInvalida(msg, e);
         }
     }
 
     protected Node getMainNode(SOAPBody soapBody, String nombreNodo)
-            throws SifenException
-    {
+            throws SifenException {
         if (soapBody == null)
             throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje soap es nulo. No se puede obtener el nodo principal");
 
@@ -88,7 +85,5 @@ public abstract class ConsultaBase<T extends REnviBase, U extends RResBase> {
 
     }
 
-    public abstract U procesarRespuesta(SOAPMessage soapMessage)
-        throws SOAPException, SifenException;
-
+    public abstract U procesarRespuesta(SOAPMessage soapMessage) throws SOAPException, SifenException;
 }

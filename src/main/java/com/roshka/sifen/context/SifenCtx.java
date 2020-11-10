@@ -20,9 +20,7 @@ public class SifenCtx {
     }
 
     // synchronized, just in case
-    public synchronized long nextdId()
-    {
+    public synchronized long nextdId() {
         return ++currentdId;
     }
-
 }

@@ -17,15 +17,13 @@ import java.util.Map;
 
 public class HTTPHelper {
 
-    public static void request(SSLSocketFactory sslSocketFactory, String url)
-        throws SifenException
-    {
+    public static void request(SSLSocketFactory sslSocketFactory, String url) throws SifenException {
         try {
             URL actualURL = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) actualURL.openConnection();
             connection.setInstanceFollowRedirects(false);
             if (connection instanceof HttpsURLConnection) {
-                ((HttpsURLConnection)connection).setSSLSocketFactory(sslSocketFactory);
+                ((HttpsURLConnection) connection).setSSLSocketFactory(sslSocketFactory);
             }
             connection.setRequestMethod("GET");
             //connection.setDoOutput(true);
@@ -52,16 +50,10 @@ public class HTTPHelper {
             }
 
             System.out.println(new String(baos.toByteArray()));
-
-
-
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
-
 }

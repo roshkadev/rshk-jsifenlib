@@ -7,6 +7,7 @@ import com.roshka.sifen.exceptions.SifenExceptionUtil;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class SSLContextHelper {
         logger.info("Archivo de certificado cliente: " + sifenConfig.getClientCertConfig());
 
         // obtenemos una instancia de KeyStore
-        KeyStore keyStore = null;
+        KeyStore keyStore;
         try {
             keyStore = KeyStore.getInstance("PKCS12");
         } catch (KeyStoreException e) {
@@ -55,15 +56,14 @@ public class SSLContextHelper {
 
         try {
             keyStore.load(
-                    new FileInputStream(
-                        clientCertConfig.getClientCertificateFile()),
-                        clientCertConfig.getClientCertificatePassword().toCharArray()
+                    new FileInputStream(clientCertConfig.getClientCertificateFile()),
+                    clientCertConfig.getClientCertificatePassword().toCharArray()
             );
         } catch (IOException | NoSuchAlgorithmException | CertificateException e) {
             throw SifenExceptionUtil.contextoSSLInvalido("No se puede cargar archivo del certificado de cliente: " + e.getLocalizedMessage(), e);
         }
 
-        KeyManagerFactory keyManagerFactory = null;
+        KeyManagerFactory keyManagerFactory;
         try {
             keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         } catch (NoSuchAlgorithmException e) {

@@ -2,4 +2,5 @@
 build/
 gradle/
 .idea/
-conf/roshka.properties
+conf/
+!conf/empresa.properties
