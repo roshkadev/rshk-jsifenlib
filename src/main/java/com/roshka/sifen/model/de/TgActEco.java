@@ -1,7 +1,6 @@
 package com.roshka.sifen.model.de;
 
 public class TgActEco {
-
     private String cActEco;
     private String dDesActEco;
 

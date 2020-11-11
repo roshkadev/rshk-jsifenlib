@@ -1,9 +1,8 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TiTipCont {
-
-    PERSONA_FISICA((short)1, "Persona Física"),
-    PERSONA_JURIDICA((short)2, "Persona Jurídica");
+    PERSONA_FISICA((short) 1, "Persona Física"),
+    PERSONA_JURIDICA((short) 2, "Persona Jurídica");
 
     private short val;
     private String descripcion;
@@ -20,5 +19,4 @@ public enum TiTipCont {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

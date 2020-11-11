@@ -1,190 +1,194 @@
 <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-   <soap:Header/>
-   <soap:Body>
-      <rEnviDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">
-         <dId>100</dId>
-         <iAmb>1</iAmb>
-         <xDE>
-         <rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd">
-	<dVerFor>150</dVerFor>
-	<DE Id="04800044649001001900018722019090117200146404">
-		<dDVId>4</dDVId>
-      	<dFecFirma>2019-09-04T07:47:47</dFecFirma>
-		<dSisFact>1</dSisFact>
-		<gOpeDE>
-			<iTipEmi>1</iTipEmi>
-			<dDesTipEmi>Normal</dDesTipEmi>
-			<dCodSeg>720014640</dCodSeg>
-			<dInfoFisc>Información de interés del Fisco respecto al DE</dInfoFisc>
-		</gOpeDE>
-		<gTimb>	
-			<iTiDE>4</iTiDE>
-	         <dDesTiDE>Autofactura electrónica</dDesTiDE>
-	         <dNumTim>12557213</dNumTim>
-	         <dEst>001</dEst>
-	         <dPunExp>001</dPunExp>
-	         <dNumDoc>9000187</dNumDoc>
-	         <!--<dSerieNum></dSerieNum>!-->
-	         <dFeIniT>2018-10-12</dFeIniT>
-		</gTimb>
-		<gDatGralOpe>
-			<dFeEmiDE>2019-09-01T08:26:00</dFeEmiDE>
-			<gOpeCom>
-				<iTipTra>2</iTipTra>
-				<dDesTipTra>Prestación de servicios</dDesTipTra>
-				<iTImp>1</iTImp>
-				<dDesTImp>IVA</dDesTImp>
-				<cMoneOpe>PYG</cMoneOpe>
-				<dDesMoneOpe>Guarani</dDesMoneOpe>
-			</gOpeCom>
-			<gEmis>
-				<dRucEm>80004464</dRucEm>
-				<dDVEmi>9</dDVEmi>
-				<iTipCont>1</iTipCont>
-				<dNomEmi>BANCARD S.A.</dNomEmi>
-				<dNomFanEmi>BANCARD</dNomFanEmi>
-				<dDirEmi>AVENIDA BRASILIA</dDirEmi>
-				<dNumCas>765</dNumCas>
-				<cDepEmi>1</cDepEmi>
-				<dDesDepEmi>CAPITAL</dDesDepEmi>
-				<cDisEmi>1</cDisEmi>
-				<dDesDisEmi>ASUNCION (DISTRITO)</dDesDisEmi>
-				<cCiuEmi>1</cCiuEmi>
-				<dDesCiuEmi>ASUNCION (DISTRITO)</dDesCiuEmi>
-				<dTelEmi>214161000</dTelEmi>
-				<dEmailE>contabilidad@bancard.com.py</dEmailE>
-				<gActEco>
-					<cActEco>64990</cActEco>
-					<dDesActEco>OTRAS ACTIVIDADES DE SERVICIOS FINANCIEROS, EXCEPTO LA FINANCIACIÓN DE PLANES DE SEGUROS Y DE PENSIONES</dDesActEco>
-				</gActEco>
-			</gEmis>
-			<gDatRec>
-				<iNatRec>1</iNatRec>
-				<iTiOpe>1</iTiOpe>
-				<cPaisRec>PRY</cPaisRec>
-				<dDesPaisRe>Paraguay</dDesPaisRe>
-				<iTiContRec>2</iTiContRec>				
-				<dRucRec>80013884</dRucRec>
-				<dDVRec>8</dDVRec>				
-				<dNomRec>BANCARD S.A.</dNomRec>
-				<dDirRec>AVENIDA BRASILIA</dDirRec>
-				<dNumCasRec>765</dNumCasRec>				
-				<cDepRec>1</cDepRec>
-				<dDesDepRec>CAPITAL</dDesDepRec>
-				<cDisRec>1</cDisRec>
-				<dDesDisRec>ASUNCION (DISTRITO)</dDesDisRec>
-				<cCiuRec>1</cCiuRec>
-				<dDesCiuRec>ASUNCION (DISTRITO)</dDesCiuRec>				
-				<dTelRec>214161000</dTelRec>
-			</gDatRec>
-		</gDatGralOpe>
-		<gDtipDE>
-			<gCamAE>
-				<iNatVen>1</iNatVen>
-				<dDesNatVen>No contribuyente</dDesNatVen>
-				<iTipIDVen>1</iTipIDVen>
-				<dDTipIDVen>Cédula paraguaya</dDTipIDVen>
-				<dNumIDVen>1111111</dNumIDVen>
-				<dNomVen>Belén Bosco</dNomVen>
-				<dDirVen>Pilar y Taruma</dDirVen>
-				<dNumCasVen>1964</dNumCasVen>
-				<cDepVen>1</cDepVen>
-				<dDesDepVen>CAPITAL</dDesDepVen>
-				<cDisVen>1</cDisVen>
-				<dDesDisVen>ASUNCION (DISTRITO)</dDesDisVen>
-				<cCiuVen>1</cCiuVen>
-				<dDesCiuVen>ASUNCION (DISTRITO)</dDesCiuVen>
-				<dDirProv>Pilar y Taruma</dDirProv>
-				<cDepProv>1</cDepProv>
-				<dDesDepProv>CAPITAL</dDesDepProv>
-				<cDisProv>1</cDisProv>
-				<dDesDisProv>ASUNCION (DISTRITO)</dDesDisProv>
-				<cCiuProv>1</cCiuProv>
-				<dDesCiuProv>ASUNCION (DISTRITO)</dDesCiuProv>
-			</gCamAE>                			
-			<gCamCond>
-				<iCondOpe>1</iCondOpe>
-                	<dDCondOpe>Contado</dDCondOpe>
-				<gPaConEIni>
-		                <iTiPago>1</iTiPago>
-		                <dDesTiPag>Efectivo</dDesTiPag>
-		                <dMonTiPag>10.0000</dMonTiPag>
-		                <cMoneTiPag>PYG</cMoneTiPag>
-		                <dDMoneTiPag>Guarani</dDMoneTiPag>
-	            </gPaConEIni>				
-			</gCamCond>
-			<gCamItem>
-				<dCodInt>1</dCodInt>
-				<dDesProSer>DE generado en ambiente de prueba - sin valor comercial ni fiscal</dDesProSer>
-				<cUniMed>77</cUniMed>
-				<dDesUniMed>UNI</dDesUniMed>
-				<dCantProSer>1.0</dCantProSer>
-				<gValorItem>
-					<dPUniProSer>1.0</dPUniProSer>
-					<dTotBruOpeItem>0</dTotBruOpeItem>
-					<gValorRestaItem>
-						<dDescItem>0</dDescItem>
-						<dPorcDesIt>100</dPorcDesIt>
-						<dTotOpeItem>0</dTotOpeItem>
-					</gValorRestaItem>					
-				</gValorItem>
-				<gCamIVA>
-					<iAfecIVA>1</iAfecIVA>
-					<dDesAfecIVA>Gravado IVA</dDesAfecIVA>
-					<dPropIVA>100</dPropIVA>
-					<dTasaIVA>10</dTasaIVA>
-					<dBasGravIVA>0</dBasGravIVA>
-					<dLiqIVAItem>0</dLiqIVAItem>
-				</gCamIVA>
-			</gCamItem>         
-		</gDtipDE>
-		<gTotSub>		
-			<dTotOpe>0</dTotOpe>
-			<dTotDesc>0</dTotDesc>
-			<dTotDescGlotem>0</dTotDescGlotem>
-			<dTotAntItem>0</dTotAntItem>
-			<dTotAnt>0</dTotAnt>
-			<dPorcDescTotal>100</dPorcDescTotal>
-			<dDescTotal>0.0</dDescTotal>
-			<dAnticipo>0.00000000</dAnticipo>			
-			<dRedon>0.0</dRedon>
-			<dTotGralOpe>0</dTotGralOpe>			
-			<dTotIVA>0</dTotIVA>			
-		</gTotSub>
-		<gCamDEAsoc> 
-            <iTipDocAso>3</iTipDocAso> 
-            <dDesTipDocAso>Constancia Electrónica</dDesTipDocAso> 
-             <iTipCons>1</iTipCons>
-            <dDesTipCons>Constancia de no ser contribuyente</dDesTipCons>
-            <dNumCons>01236563890</dNumCons>
-            <dNumControl>06563890</dNumControl>
-         </gCamDEAsoc>
-	</DE>
-	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-      <SignedInfo>
-         <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
-         <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
-         <Reference URI="#01800025776001001900018322018111317200146406">
-            <Transforms>
-               <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
-               <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
-            </Transforms>
-            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
-            <DigestValue>Nt2UmpjUHuu2DT6CJc2mtKhhqbq94LHSak1IsEOtuWk=</DigestValue>
-         </Reference>
-      </SignedInfo>
-      <SignatureValue>DWN1my9sH4FI7ygPT3KF1cebr</SignatureValue>
-      <KeyInfo>
-         <X509Data>
-            <X509Certificate>MIIIxzCCBq+gAwIBAgITXAA</X509Certificate>
-         </X509Data>
-      </KeyInfo>
-   </Signature>
-   <gCamFuFD>
-  		<dCarQR>https://ekuatia.set.gov.py/consultas-test/qr?nVersion=150&amp;Id=05009290230001001000005212019040910000000345&amp;dFeEmiDE=323031392d30342d30395431323a35373a3137&amp;dRucRec=80013884&amp;dTotGralOpe=0&amp;dTotIVA=0&amp;cItems=1&amp;DigestValue=5368453774502b6a74766a39662f4952734f7077694f366b574146346458366c487559547775556b304b4d3d&amp;IdCSC=0001&amp;cHashQR=3e4431dc88ee9c9c2b4037f40db15091c468bcc4a591c74c5d6a3e0b3a72aa40</dCarQR>
-	</gCamFuFD>
-</rDE>
-         </xDE>
-      </rEnviDe>
-   </soap:Body>
+    <soap:Header/>
+    <soap:Body>
+        <rEnviDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">
+            <dId>100</dId>
+            <iAmb>1</iAmb>
+            <xDE>
+                <rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd">
+                    <dVerFor>150</dVerFor>
+                    <DE Id="04800044649001001900018722019090117200146404">
+                        <dDVId>4</dDVId>
+                        <dFecFirma>2019-09-04T07:47:47</dFecFirma>
+                        <dSisFact>1</dSisFact>
+                        <gOpeDE>
+                            <iTipEmi>1</iTipEmi>
+                            <dDesTipEmi>Normal</dDesTipEmi>
+                            <dCodSeg>720014640</dCodSeg>
+                            <dInfoFisc>Información de interés del Fisco respecto al DE</dInfoFisc>
+                        </gOpeDE>
+                        <gTimb>
+                            <iTiDE>4</iTiDE>
+                            <dDesTiDE>Autofactura electrónica</dDesTiDE>
+                            <dNumTim>12557213</dNumTim>
+                            <dEst>001</dEst>
+                            <dPunExp>001</dPunExp>
+                            <dNumDoc>9000187</dNumDoc>
+                            <!--<dSerieNum></dSerieNum>!-->
+                            <dFeIniT>2018-10-12</dFeIniT>
+                        </gTimb>
+                        <gDatGralOpe>
+                            <dFeEmiDE>2019-09-01T08:26:00</dFeEmiDE>
+                            <gOpeCom>
+                                <iTipTra>2</iTipTra>
+                                <dDesTipTra>Prestación de servicios</dDesTipTra>
+                                <iTImp>1</iTImp>
+                                <dDesTImp>IVA</dDesTImp>
+                                <cMoneOpe>PYG</cMoneOpe>
+                                <dDesMoneOpe>Guarani</dDesMoneOpe>
+                            </gOpeCom>
+                            <gEmis>
+                                <dRucEm>80004464</dRucEm>
+                                <dDVEmi>9</dDVEmi>
+                                <iTipCont>1</iTipCont>
+                                <dNomEmi>BANCARD S.A.</dNomEmi>
+                                <dNomFanEmi>BANCARD</dNomFanEmi>
+                                <dDirEmi>AVENIDA BRASILIA</dDirEmi>
+                                <dNumCas>765</dNumCas>
+                                <cDepEmi>1</cDepEmi>
+                                <dDesDepEmi>CAPITAL</dDesDepEmi>
+                                <cDisEmi>1</cDisEmi>
+                                <dDesDisEmi>ASUNCION (DISTRITO)</dDesDisEmi>
+                                <cCiuEmi>1</cCiuEmi>
+                                <dDesCiuEmi>ASUNCION (DISTRITO)</dDesCiuEmi>
+                                <dTelEmi>214161000</dTelEmi>
+                                <dEmailE>contabilidad@bancard.com.py</dEmailE>
+                                <gActEco>
+                                    <cActEco>64990</cActEco>
+                                    <dDesActEco>OTRAS ACTIVIDADES DE SERVICIOS FINANCIEROS, EXCEPTO LA FINANCIACIÓN DE
+                                        PLANES DE SEGUROS Y DE PENSIONES
+                                    </dDesActEco>
+                                </gActEco>
+                            </gEmis>
+                            <gDatRec>
+                                <iNatRec>1</iNatRec>
+                                <iTiOpe>1</iTiOpe>
+                                <cPaisRec>PRY</cPaisRec>
+                                <dDesPaisRe>Paraguay</dDesPaisRe>
+                                <iTiContRec>2</iTiContRec>
+                                <dRucRec>80013884</dRucRec>
+                                <dDVRec>8</dDVRec>
+                                <dNomRec>BANCARD S.A.</dNomRec>
+                                <dDirRec>AVENIDA BRASILIA</dDirRec>
+                                <dNumCasRec>765</dNumCasRec>
+                                <cDepRec>1</cDepRec>
+                                <dDesDepRec>CAPITAL</dDesDepRec>
+                                <cDisRec>1</cDisRec>
+                                <dDesDisRec>ASUNCION (DISTRITO)</dDesDisRec>
+                                <cCiuRec>1</cCiuRec>
+                                <dDesCiuRec>ASUNCION (DISTRITO)</dDesCiuRec>
+                                <dTelRec>214161000</dTelRec>
+                            </gDatRec>
+                        </gDatGralOpe>
+                        <gDtipDE>
+                            <gCamAE>
+                                <iNatVen>1</iNatVen>
+                                <dDesNatVen>No contribuyente</dDesNatVen>
+                                <iTipIDVen>1</iTipIDVen>
+                                <dDTipIDVen>Cédula paraguaya</dDTipIDVen>
+                                <dNumIDVen>1111111</dNumIDVen>
+                                <dNomVen>Belén Bosco</dNomVen>
+                                <dDirVen>Pilar y Taruma</dDirVen>
+                                <dNumCasVen>1964</dNumCasVen>
+                                <cDepVen>1</cDepVen>
+                                <dDesDepVen>CAPITAL</dDesDepVen>
+                                <cDisVen>1</cDisVen>
+                                <dDesDisVen>ASUNCION (DISTRITO)</dDesDisVen>
+                                <cCiuVen>1</cCiuVen>
+                                <dDesCiuVen>ASUNCION (DISTRITO)</dDesCiuVen>
+                                <dDirProv>Pilar y Taruma</dDirProv>
+                                <cDepProv>1</cDepProv>
+                                <dDesDepProv>CAPITAL</dDesDepProv>
+                                <cDisProv>1</cDisProv>
+                                <dDesDisProv>ASUNCION (DISTRITO)</dDesDisProv>
+                                <cCiuProv>1</cCiuProv>
+                                <dDesCiuProv>ASUNCION (DISTRITO)</dDesCiuProv>
+                            </gCamAE>
+                            <gCamCond>
+                                <iCondOpe>1</iCondOpe>
+                                <dDCondOpe>Contado</dDCondOpe>
+                                <gPaConEIni>
+                                    <iTiPago>1</iTiPago>
+                                    <dDesTiPag>Efectivo</dDesTiPag>
+                                    <dMonTiPag>10.0000</dMonTiPag>
+                                    <cMoneTiPag>PYG</cMoneTiPag>
+                                    <dDMoneTiPag>Guarani</dDMoneTiPag>
+                                </gPaConEIni>
+                            </gCamCond>
+                            <gCamItem>
+                                <dCodInt>1</dCodInt>
+                                <dDesProSer>DE generado en ambiente de prueba - sin valor comercial ni fiscal
+                                </dDesProSer>
+                                <cUniMed>77</cUniMed>
+                                <dDesUniMed>UNI</dDesUniMed>
+                                <dCantProSer>1.0</dCantProSer>
+                                <gValorItem>
+                                    <dPUniProSer>1.0</dPUniProSer>
+                                    <dTotBruOpeItem>0</dTotBruOpeItem>
+                                    <gValorRestaItem>
+                                        <dDescItem>0</dDescItem>
+                                        <dPorcDesIt>100</dPorcDesIt>
+                                        <dTotOpeItem>0</dTotOpeItem>
+                                    </gValorRestaItem>
+                                </gValorItem>
+                                <gCamIVA>
+                                    <iAfecIVA>1</iAfecIVA>
+                                    <dDesAfecIVA>Gravado IVA</dDesAfecIVA>
+                                    <dPropIVA>100</dPropIVA>
+                                    <dTasaIVA>10</dTasaIVA>
+                                    <dBasGravIVA>0</dBasGravIVA>
+                                    <dLiqIVAItem>0</dLiqIVAItem>
+                                </gCamIVA>
+                            </gCamItem>
+                        </gDtipDE>
+                        <gTotSub>
+                            <dTotOpe>0</dTotOpe>
+                            <dTotDesc>0</dTotDesc>
+                            <dTotDescGlotem>0</dTotDescGlotem>
+                            <dTotAntItem>0</dTotAntItem>
+                            <dTotAnt>0</dTotAnt>
+                            <dPorcDescTotal>100</dPorcDescTotal>
+                            <dDescTotal>0.0</dDescTotal>
+                            <dAnticipo>0.00000000</dAnticipo>
+                            <dRedon>0.0</dRedon>
+                            <dTotGralOpe>0</dTotGralOpe>
+                            <dTotIVA>0</dTotIVA>
+                        </gTotSub>
+                        <gCamDEAsoc>
+                            <iTipDocAso>3</iTipDocAso>
+                            <dDesTipDocAso>Constancia Electrónica</dDesTipDocAso>
+                            <iTipCons>1</iTipCons>
+                            <dDesTipCons>Constancia de no ser contribuyente</dDesTipCons>
+                            <dNumCons>01236563890</dNumCons>
+                            <dNumControl>06563890</dNumControl>
+                        </gCamDEAsoc>
+                    </DE>
+                    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                        <SignedInfo>
+                            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+                            <Reference URI="#01800025776001001900018322018111317200146406">
+                                <Transforms>
+                                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                                    <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                                </Transforms>
+                                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                                <DigestValue>Nt2UmpjUHuu2DT6CJc2mtKhhqbq94LHSak1IsEOtuWk=</DigestValue>
+                            </Reference>
+                        </SignedInfo>
+                        <SignatureValue>DWN1my9sH4FI7ygPT3KF1cebr</SignatureValue>
+                        <KeyInfo>
+                            <X509Data>
+                                <X509Certificate>MIIIxzCCBq+gAwIBAgITXAA</X509Certificate>
+                            </X509Data>
+                        </KeyInfo>
+                    </Signature>
+                    <gCamFuFD>
+                        <dCarQR>https://ekuatia.set.gov.py/consultas-test/qr?nVersion=150&amp;Id=05009290230001001000005212019040910000000345&amp;dFeEmiDE=323031392d30342d30395431323a35373a3137&amp;dRucRec=80013884&amp;dTotGralOpe=0&amp;dTotIVA=0&amp;cItems=1&amp;DigestValue=5368453774502b6a74766a39662f4952734f7077694f366b574146346458366c487559547775556b304b4d3d&amp;IdCSC=0001&amp;cHashQR=3e4431dc88ee9c9c2b4037f40db15091c468bcc4a591c74c5d6a3e0b3a72aa40</dCarQR>
+                    </gCamFuFD>
+                </rDE>
+            </xDE>
+        </rEnviDe>
+    </soap:Body>
 </soap:Envelope>

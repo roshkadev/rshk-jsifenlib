@@ -1,9 +1,8 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TdCondTiCam {
-
-    GLOBAL((short)1, "Global"),
-    POR_ITEM((short)2, "Por ítem");
+    GLOBAL((short) 1, "Global"),
+    POR_ITEM((short) 2, "Por ítem");
 
     private short val;
     private String descripcion;
@@ -20,5 +19,4 @@ public enum TdCondTiCam {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

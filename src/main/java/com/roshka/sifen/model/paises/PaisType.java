@@ -5,7 +5,6 @@ package com.roshka.sifen.model.paises;
  * además de sus descripiones
  */
 public enum PaisType {
-
     DZA("Argelia"),
     EGY("Egipto"),
     LBY("Libia"),

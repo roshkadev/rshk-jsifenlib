@@ -4,12 +4,11 @@ package com.roshka.sifen.model.de.types;
  * Esta clase engloba los datos/tipos tiTiDE y tdDesTiDE
  */
 public enum TTiDE {
-
-    FACTURA_ELECTRONICA((short)1, "Factura electrónica"),
-    AUTOFACTURA_ELECTRONICA((short)4, "Autofactura electrónica"),
-    NOTA_DE_CREDITO_ELECTRONICA((short)5, "Nota de crédito electrónica"),
-    NOTA_DE_DEBITO_ELECTRONICA((short)6, "Nota de débito electrónica"),
-    NOTA_DE_REMISION_ELECTRONICA((short)7, "Nota de remisión electrónica");
+    FACTURA_ELECTRONICA((short) 1, "Factura electrónica"),
+    AUTOFACTURA_ELECTRONICA((short) 4, "Autofactura electrónica"),
+    NOTA_DE_CREDITO_ELECTRONICA((short) 5, "Nota de crédito electrónica"),
+    NOTA_DE_DEBITO_ELECTRONICA((short) 6, "Nota de débito electrónica"),
+    NOTA_DE_REMISION_ELECTRONICA((short) 7, "Nota de remisión electrónica");
 
     private short val;
     private String descripcion;
@@ -26,6 +25,4 @@ public enum TTiDE {
     public String getDescripcion() {
         return descripcion;
     }
-
-
 }

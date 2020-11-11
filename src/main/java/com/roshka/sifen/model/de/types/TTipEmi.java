@@ -4,9 +4,8 @@ package com.roshka.sifen.model.de.types;
  * Esta clase engloba los datos/tipos tiTipEmi y tdDesTipEmi
  */
 public enum TTipEmi {
-
-    NORMAL((short)1, "Normal"),
-    CONTINGENCIA((short)2, "Contingencia");
+    NORMAL((short) 1, "Normal"),
+    CONTINGENCIA((short) 2, "Contingencia");
 
     private short val;
     private String descripcion;
@@ -23,5 +22,4 @@ public enum TTipEmi {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

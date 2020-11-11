@@ -4,9 +4,8 @@ package com.roshka.sifen.model.de.types;
  * Esta clase engloba los datos/tipos tiCondAnt y tdDesCondAnt
  */
 public enum TiCondAnt {
-
-    ANTICIPO_GLOBAL((short)1, "Anticipo Global"),
-    ANTICIPO_POR_ITEM((short)2, "Anticipo por Ítem");
+    ANTICIPO_GLOBAL((short) 1, "Anticipo Global"),
+    ANTICIPO_POR_ITEM((short) 2, "Anticipo por Ítem");
 
     private short val;
     private String descripcion;
@@ -23,5 +22,4 @@ public enum TiCondAnt {
     public String getDescripcion() {
         return descripcion;
     }
-
 }
