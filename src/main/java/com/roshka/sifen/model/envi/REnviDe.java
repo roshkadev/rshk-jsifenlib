@@ -42,33 +42,8 @@ public class REnviDe extends REnviBase {
         this.DE.getgOpeDE().setupSOAPElements(DE, this.DE.getgTimb().getTiDE());
         this.DE.getgTimb().setupSOAPElements(DE);
         this.DE.getdDatGralOpe().setupSOAPElements(DE, this.DE.getgTimb().getTiDE());
+        this.DE.getgDtipDE().setupSOAPElements(DE, this.DE.getgTimb().getTiDE(), this.DE.getdDatGralOpe());
     }
-
-    // Campos Receptor
-    private String iNatRec;
-    private String iTiOpe;
-    private String cPaisRec;
-    private String dDesPaisRe;
-    private String iTiContRec;
-    private String dRucRec;
-    private String dDVRec;
-    private String iTipIDRec;
-    private String dDTipIDRec;
-    private String dNumIDRec;
-    private String dNomRec;
-    private String dNomFanRec;
-    private String dDirRec;
-    private String dNumCasRec;
-    private String cDepRec;
-    private String dDesDepRec;
-    private String dDisRec;
-    private String dDesDisRec;
-    private String cCiuRec;
-    private String dDesCiuRec;
-    private String dTelRec;
-    private String dCelRec;
-    private String dEmailRec;
-    private String dCodCliente;
 
     // E1. Campos Factura Electrónica
     private String iIndPres;

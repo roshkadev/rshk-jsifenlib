@@ -1,9 +1,8 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TiNatRec {
-
-    CONTRIBUYENTE((short)1, "Contribuyente"),
-    NO_CONTRIBUYENTE((short)2, "No Contribuyente");
+    CONTRIBUYENTE((short) 1, "Contribuyente"),
+    NO_CONTRIBUYENTE((short) 2, "No Contribuyente");
 
     private short val;
     private String descripcion;
@@ -20,5 +19,4 @@ public enum TiNatRec {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

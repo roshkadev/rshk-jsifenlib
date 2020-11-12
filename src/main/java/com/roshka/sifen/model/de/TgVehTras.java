@@ -1,7 +1,12 @@
 package com.roshka.sifen.model.de;
 
-public class TgVehTras {
+import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.de.types.TiModTrans;
 
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
+
+public class TgVehTras {
     private String dTiVehTras;
     private String dMarVeh;
     private short dTipIdenVeh;
@@ -9,6 +14,25 @@ public class TgVehTras {
     private String dAdicVeh;
     private String dNroMatVeh;
     private String dNroVuelo;
+
+    public void setupSOAPElements(SOAPElement gTransp, TiModTrans iModTrans) throws SOAPException {
+        SOAPElement gVehTras = gTransp.addChildElement("gVehTras", NamespacesConstants.SIFEN_NS_PREFIX);
+        gVehTras.addChildElement("dTiVehTras", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dTiVehTras);
+        gVehTras.addChildElement("dMarVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dMarVeh);
+        gVehTras.addChildElement("dTipIdenVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTipIdenVeh));
+
+        if (this.dTipIdenVeh == 1)
+            gVehTras.addChildElement("dNroIDVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroIDVeh);
+
+        if (this.dAdicVeh != null)
+            gVehTras.addChildElement("dAdicVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dAdicVeh);
+
+        if (this.dTipIdenVeh == 2)
+            gVehTras.addChildElement("dNroMatVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroMatVeh);
+
+        if (iModTrans.getVal() == 3)
+            gVehTras.addChildElement("dNroVuelo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroVuelo);
+    }
 
     public String getdTiVehTras() {
         return dTiVehTras;

@@ -16,8 +16,8 @@ public class TDE {
     private TgCOpeDE gOpeDE;          // campos de operación del documento electrónico
     private TgDTim gTimb;             // campos del timbrado del documento
     private TgDaGOC dDatGralOpe;      // datos generales de la operación
-
     private TgDtipDE gDtipDE;
+
     private TgTotSub gTotSub;
     private TgCamGen gCamGen;
     private TgCamDEAsoc gCamDEAsoc;

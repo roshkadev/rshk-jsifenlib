@@ -1,17 +1,17 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.de.types.TiIndPres;
+import com.roshka.sifen.model.NamespacesConstants;
 import com.roshka.sifen.model.de.types.TiNatVen;
 import com.roshka.sifen.model.de.types.TiTipDoc;
 import com.roshka.sifen.model.departamentos.TDepartamento;
 
-import java.time.LocalDate;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 
 /**
  * AUTOFACTURA ELECTRÓNICA
  */
 public class TgCamAE {
-
     private TiNatVen iNatVen;
     private TiTipDoc iTipIDVen;
     private String dNumIDVen;
@@ -19,15 +19,49 @@ public class TgCamAE {
     private String dDirVen;
     private int dNumCasVen;
     private TDepartamento cDepVen;
-    private Short cDisVen;
+    private short cDisVen;
     private String dDesDisVen;
-    private Integer cCiuVen;
-    private String dDesCiuven;
+    private int cCiuVen;
+    private String dDesCiuVen;
     private String dDirProv;
     private TDepartamento cDepProv;
-    private Short cDisProv;
-    private Integer cCiuProv;
+    private short cDisProv;
+    private String dDesDisProv;
+    private int cCiuProv;
     private String dDesCiuProv;
+
+    public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
+        SOAPElement gCamAE = gDtipDE.addChildElement("gCamAE", NamespacesConstants.SIFEN_NS_PREFIX);
+        gCamAE.addChildElement("iNatVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatVen.getVal()));
+        gCamAE.addChildElement("dDesNatVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iNatVen.getDescripcion());
+        gCamAE.addChildElement("iTipIDVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDVen.getVal()));
+        gCamAE.addChildElement("dDTipIDVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipIDVen.getDescripcion());
+        gCamAE.addChildElement("dNumIDVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDVen);
+        gCamAE.addChildElement("dNomVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomVen);
+        gCamAE.addChildElement("dDirVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirVen);
+        gCamAE.addChildElement("dNumCasVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasVen));
+        gCamAE.addChildElement("cDepVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepVen.getVal()));
+        gCamAE.addChildElement("dDesDepVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cDepVen.getDescripcion());
+
+        if (this.cDisVen != 0) {
+            gCamAE.addChildElement("cDisVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisVen));
+            gCamAE.addChildElement("dDesDisVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisVen);
+        }
+
+        gCamAE.addChildElement("cCiuVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuVen));
+        gCamAE.addChildElement("dDesCiuVen", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuVen);
+        gCamAE.addChildElement("dDirProv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirProv);
+        gCamAE.addChildElement("cDepProv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepProv.getVal()));
+        gCamAE.addChildElement("dDesDepProv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cDepProv.getDescripcion());
+
+        if (this.cDisProv != 0) {
+            gCamAE.addChildElement("cDisProv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisProv));
+            gCamAE.addChildElement("dDesDisProv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisProv);
+        }
+
+        gCamAE.addChildElement("cCiuProv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuProv));
+        gCamAE.addChildElement("dDesCiuProv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuProv);
+    }
 
     public TiNatVen getiNatVen() {
         return iNatVen;
@@ -85,11 +119,11 @@ public class TgCamAE {
         this.cDepVen = cDepVen;
     }
 
-    public Short getcDisVen() {
+    public short getcDisVen() {
         return cDisVen;
     }
 
-    public void setcDisVen(Short cDisVen) {
+    public void setcDisVen(short cDisVen) {
         this.cDisVen = cDisVen;
     }
 
@@ -101,20 +135,20 @@ public class TgCamAE {
         this.dDesDisVen = dDesDisVen;
     }
 
-    public Integer getcCiuVen() {
+    public int getcCiuVen() {
         return cCiuVen;
     }
 
-    public void setcCiuVen(Integer cCiuVen) {
+    public void setcCiuVen(int cCiuVen) {
         this.cCiuVen = cCiuVen;
     }
 
-    public String getdDesCiuven() {
-        return dDesCiuven;
+    public String getdDesCiuVen() {
+        return dDesCiuVen;
     }
 
-    public void setdDesCiuven(String dDesCiuven) {
-        this.dDesCiuven = dDesCiuven;
+    public void setdDesCiuVen(String dDesCiuVen) {
+        this.dDesCiuVen = dDesCiuVen;
     }
 
     public String getdDirProv() {
@@ -133,19 +167,19 @@ public class TgCamAE {
         this.cDepProv = cDepProv;
     }
 
-    public Short getcDisProv() {
+    public short getcDisProv() {
         return cDisProv;
     }
 
-    public void setcDisProv(Short cDisProv) {
+    public void setcDisProv(short cDisProv) {
         this.cDisProv = cDisProv;
     }
 
-    public Integer getcCiuProv() {
+    public int getcCiuProv() {
         return cCiuProv;
     }
 
-    public void setcCiuProv(Integer cCiuProv) {
+    public void setcCiuProv(int cCiuProv) {
         this.cCiuProv = cCiuProv;
     }
 
@@ -155,5 +189,13 @@ public class TgCamAE {
 
     public void setdDesCiuProv(String dDesCiuProv) {
         this.dDesCiuProv = dDesCiuProv;
+    }
+
+    public String getdDesDisProv() {
+        return dDesDisProv;
+    }
+
+    public void setdDesDisProv(String dDesDisProv) {
+        this.dDesDisProv = dDesDisProv;
     }
 }

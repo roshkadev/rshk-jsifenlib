@@ -1,20 +1,22 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.de.types.TcRelMerc;
+import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.paises.PaisType;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
 
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
 public class TgCamItem {
-
     private String dCodInt;
-    private Short dParAranc;
-    private Integer dNCM;
+    private short dParAranc;
+    private int dNCM;
     private String dDncpG;
     private String dDncpE;
-    private Integer dGtin;
-    private Integer dGtinPq;
+    private int dGtin;
+    private int dGtinPq;
     private String dDesProSer;
     private TcUniMed cUniMed;
     private BigDecimal dCantProSer;
@@ -29,6 +31,73 @@ public class TgCamItem {
     private TgRasMerc gRasMerc;
     private TgVehNuevo gVehNuevo;
 
+    public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TgDaGOC gDatGralOpe) throws SOAPException {
+        TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
+        TTipTra iTipTra = gDatGralOpe.getgOpeCom().getTipTra();
+        TdCondTiCam dCondTiCam = gDatGralOpe.getgOpeCom().getdCondTiCam();
+        TTImp iTImp = gDatGralOpe.getgOpeCom().getiTImp();
+
+        SOAPElement gCamItem = gDtipDE.addChildElement("gCamItem", NamespacesConstants.SIFEN_NS_PREFIX);
+        gCamItem.addChildElement("dCodInt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCodInt);
+
+        if (this.dParAranc != 0)
+            gCamItem.addChildElement("dParAranc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dParAranc));
+
+        if (this.dNCM != 0)
+            gCamItem.addChildElement("dNCM", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNCM));
+
+        if (this.dDncpG != null || iTiOpe.getVal() == 3) {
+            gCamItem.addChildElement("dDncpG", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDncpG);
+            gCamItem.addChildElement("dDncpE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDncpE);
+        }
+
+        if (this.dGtin != 0)
+            gCamItem.addChildElement("dGtin", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtin));
+
+        if (this.dGtinPq != 0)
+            gCamItem.addChildElement("dGtinPq", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtinPq));
+
+        gCamItem.addChildElement("dDesProSer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesProSer);
+        gCamItem.addChildElement("cUniMed", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMed.getVal()));
+        gCamItem.addChildElement("dDesUniMed", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cUniMed.getDescripcion());
+        gCamItem.addChildElement("dCantProSer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCantProSer));
+
+        if (this.cPaisOrig != null) {
+            gCamItem.addChildElement("cPaisOrig", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.toString());
+            gCamItem.addChildElement("dDesPaisOrig", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.getNombre());
+        }
+
+        if (this.dInfItem != null)
+            gCamItem.addChildElement("dInfItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dInfItem);
+
+        if (iTiDE.getVal() != 7 || this.tcRelMerc != null) {
+            gCamItem.addChildElement("cRelMerc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tcRelMerc.getVal()));
+            gCamItem.addChildElement("dDesRelMerc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.tcRelMerc.getDescripcion());
+
+        }
+
+        if ((iTiDE.getVal() != 7 || this.tcRelMerc != null) || this.dCanQuiMer != null)
+            gCamItem.addChildElement("dCanQuiMer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCanQuiMer));
+
+        if ((iTiDE.getVal() != 7 || this.tcRelMerc != null) || this.dPorQuiMer != null)
+            gCamItem.addChildElement("dPorQuiMer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorQuiMer));
+
+        if (iTipTra.getVal() == 9 || this.dCDCAnticipo != null)
+            gCamItem.addChildElement("dCDCAnticipo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCDCAnticipo);
+
+        if (iTiDE.getVal() != 7)
+            this.gValorItem.setupSOAPElements(gCamItem, dCondTiCam);
+
+        if (((iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) && (iTiDE.getVal() != 4 && iTiDE.getVal() != 7)) || iTImp.getVal() != 2)
+            this.gCamIVA.setupSOAPElements(gCamItem);
+
+        if (this.gRasMerc != null)
+            this.gRasMerc.setupSOAPElements(gCamItem);
+
+        if (this.gVehNuevo != null)
+            this.gVehNuevo.setupSOAPElements(gCamItem);
+    }
+
     public String getdCodInt() {
         return dCodInt;
     }
@@ -37,19 +106,19 @@ public class TgCamItem {
         this.dCodInt = dCodInt;
     }
 
-    public Short getdParAranc() {
+    public short getdParAranc() {
         return dParAranc;
     }
 
-    public void setdParAranc(Short dParAranc) {
+    public void setdParAranc(short dParAranc) {
         this.dParAranc = dParAranc;
     }
 
-    public Integer getdNCM() {
+    public int getdNCM() {
         return dNCM;
     }
 
-    public void setdNCM(Integer dNCM) {
+    public void setdNCM(int dNCM) {
         this.dNCM = dNCM;
     }
 
@@ -69,19 +138,19 @@ public class TgCamItem {
         this.dDncpE = dDncpE;
     }
 
-    public Integer getdGtin() {
+    public int getdGtin() {
         return dGtin;
     }
 
-    public void setdGtin(Integer dGtin) {
+    public void setdGtin(int dGtin) {
         this.dGtin = dGtin;
     }
 
-    public Integer getdGtinPq() {
+    public int getdGtinPq() {
         return dGtinPq;
     }
 
-    public void setdGtinPq(Integer dGtinPq) {
+    public void setdGtinPq(int dGtinPq) {
         this.dGtinPq = dGtinPq;
     }
 
@@ -188,5 +257,4 @@ public class TgCamItem {
     public void setgVehNuevo(TgVehNuevo gVehNuevo) {
         this.gVehNuevo = gVehNuevo;
     }
-
 }

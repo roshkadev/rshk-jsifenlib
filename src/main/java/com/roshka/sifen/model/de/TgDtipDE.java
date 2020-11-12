@@ -1,17 +1,48 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.de.types.*;
+
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.util.List;
 
 public class TgDtipDE {
-
     private TgCamFE gCamFE;
     private TgCamAE gCamAE;
     private TgCamNCDE gCamNCDE;
     private TgCamNRE gCamNRE;
     private TgCamCond gCamCond;
-    private List<TgCamItem> gCamItem;
+    private List<TgCamItem> gCamItemList;
     private TgCamEsp gCamEsp;
     private TgTransp gTransp;
+
+    public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TgDaGOC gDatGralOpe) throws SOAPException {
+        TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
+
+        SOAPElement gDtipDE = DE.addChildElement("gDtipDE", NamespacesConstants.SIFEN_NS_PREFIX);
+        if (iTiDE.getVal() == 1)
+            this.gCamFE.setupSOAPElements(gDtipDE, iTiOpe);
+        else if (iTiDE.getVal() == 4)
+            this.gCamAE.setupSOAPElements(gDtipDE);
+        else if (iTiDE.getVal() == 5 || iTiDE.getVal() == 6)
+            this.gCamNCDE.setupSOAPElements(gDtipDE);
+        else if (iTiDE.getVal() == 7)
+            this.gCamNRE.setupSOAPElements(gDtipDE);
+
+        if (iTiDE.getVal() == 1 || iTiDE.getVal() == 4)
+            this.gCamCond.setupSOAPElements(gDtipDE);
+
+        for (TgCamItem gCamItem : gCamItemList) {
+            gCamItem.setupSOAPElements(gDtipDE, iTiDE, gDatGralOpe);
+        }
+
+        if (this.gCamEsp != null)
+            this.gCamEsp.setupSOAPElements(gDtipDE);
+
+        if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.gTransp != null))
+            this.gTransp.setupSOAPElements(gDtipDE, iTiDE, this.gCamNRE.getiMotEmiNR());
+    }
 
     public TgCamFE getgCamFE() {
         return gCamFE;
@@ -53,12 +84,12 @@ public class TgDtipDE {
         this.gCamCond = gCamCond;
     }
 
-    public List<TgCamItem> getgCamItem() {
-        return gCamItem;
+    public List<TgCamItem> getgCamItemList() {
+        return gCamItemList;
     }
 
-    public void setgCamItem(List<TgCamItem> gCamItem) {
-        this.gCamItem = gCamItem;
+    public void setgCamItemList(List<TgCamItem> gCamItemList) {
+        this.gCamItemList = gCamItemList;
     }
 
     public TgCamEsp getgCamEsp() {

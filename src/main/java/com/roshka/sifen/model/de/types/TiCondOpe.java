@@ -1,9 +1,8 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TiCondOpe {
-
-    CONTADO((short)1, "Contado"),
-    CREDITO((short)2, "Crédito");
+    CONTADO((short) 1, "Contado"),
+    CREDITO((short) 2, "Crédito");
 
     private short val;
     private String descripcion;
@@ -20,5 +19,4 @@ public enum TiCondOpe {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

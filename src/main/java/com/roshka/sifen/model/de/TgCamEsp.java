@@ -1,11 +1,30 @@
 package com.roshka.sifen.model.de;
 
-public class TgCamEsp {
+import com.roshka.sifen.model.NamespacesConstants;
 
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
+
+public class TgCamEsp {
     private TgGrupEner gGrupEner;
     private TgGrupSeg gGrupSeg;
     private TgGrupSup gGrupSup;
     private TgGrupAdi gGrupAdi;
+
+    public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
+        SOAPElement gCamEsp = gDtipDE.addChildElement("gCamEsp", NamespacesConstants.SIFEN_NS_PREFIX);
+        if (this.gGrupEner != null)
+            this.gGrupEner.setupSOAPElements(gCamEsp);
+
+        if (this.gGrupSeg != null)
+            this.gGrupSeg.setupSOAPElements(gCamEsp);
+
+        if (this.gGrupSup != null)
+            this.gGrupSup.setupSOAPElements(gCamEsp);
+
+        if (this.gGrupAdi != null)
+            this.gGrupAdi.setupSOAPElements(gCamEsp);
+    }
 
     public TgGrupEner getgGrupEner() {
         return gGrupEner;

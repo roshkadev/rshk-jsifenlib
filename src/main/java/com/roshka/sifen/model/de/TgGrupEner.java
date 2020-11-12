@@ -1,15 +1,39 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
+
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
 public class TgGrupEner {
-
     private String dNroMed;
-    private Short dActiv;
+    private short dActiv;
     private String dCateg;
     private BigDecimal dLecAnt;
     private BigDecimal dLecAct;
     private BigDecimal dConKwh;
+
+    public void setupSOAPElements(SOAPElement gCamEsp) throws SOAPException {
+        SOAPElement gGrupEner = gCamEsp.addChildElement("gGrupEner", NamespacesConstants.SIFEN_NS_PREFIX);
+        if (this.dNroMed != null)
+            gGrupEner.addChildElement("dNroMed", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroMed);
+
+        if (this.dActiv != 0)
+            gGrupEner.addChildElement("dActiv", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dActiv));
+
+        if (this.dCateg != null)
+            gGrupEner.addChildElement("dCateg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCateg);
+
+        if (this.dLecAnt != null)
+            gGrupEner.addChildElement("dLecAnt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dLecAnt));
+
+        if (this.dLecAct != null)
+            gGrupEner.addChildElement("dLecAct", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dLecAct));
+
+        if (this.dConKwh != null)
+            gGrupEner.addChildElement("dConKwh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dConKwh));
+    }
 
     public String getdNroMed() {
         return dNroMed;
@@ -19,11 +43,11 @@ public class TgGrupEner {
         this.dNroMed = dNroMed;
     }
 
-    public Short getdActiv() {
+    public short getdActiv() {
         return dActiv;
     }
 
-    public void setdActiv(Short dActiv) {
+    public void setdActiv(short dActiv) {
         this.dActiv = dActiv;
     }
 

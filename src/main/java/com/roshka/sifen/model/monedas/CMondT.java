@@ -1,7 +1,6 @@
 package com.roshka.sifen.model.monedas;
 
 public enum CMondT {
-
     AED("Dirham"),
     AFN("Afghani"),
     ALL("Lek"),
@@ -161,7 +160,7 @@ public enum CMondT {
     TND("Tunisian Dinar"),
     TRY("Turkish Lira"),
     TMT("Turkmenistan New Manat"),
-    TOP ("Pa&apos;anga"),
+    TOP("Pa&apos;anga"),
     TRL("Turkish Lira"),
     TTD("Trinidad and Tobago Dollar"),
     TWD("New Taiwan Dollar"),

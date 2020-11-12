@@ -1,8 +1,8 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TiTTrans {
-    PROPIO((short)1, "Propio"),
-    TERCERO((short)2, "Tercero");
+    PROPIO((short) 1, "Propio"),
+    TERCERO((short) 2, "Tercero");
 
     private short val;
     private String descripcion;
@@ -19,6 +19,4 @@ public enum TiTTrans {
     public String getDescripcion() {
         return descripcion;
     }
-
-
 }

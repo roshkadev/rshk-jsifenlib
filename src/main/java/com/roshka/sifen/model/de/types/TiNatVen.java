@@ -1,9 +1,8 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TiNatVen {
-
-    NO_CONTRIBUYENTE((short)1, "No Contribuyente"),
-    EXRANJERO((short)2, "Extranjero");
+    NO_CONTRIBUYENTE((short) 1, "No Contribuyente"),
+    EXRANJERO((short) 2, "Extranjero");
 
     private short val;
     private String descripcion;
@@ -20,5 +19,4 @@ public enum TiNatVen {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

@@ -1,15 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
 import com.roshka.sifen.model.de.types.TiNatRec;
 import com.roshka.sifen.model.de.types.TiTipDoc;
 import com.roshka.sifen.model.paises.PaisType;
 
-public class TgCamTrans {
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 
+public class TgCamTrans {
     private TiNatRec iNatTrans;
     private String dNomTrans;
     private String dRucTrans;
-    private Short dDVTrans;
+    private short dDVTrans;
     private TiTipDoc iTipIDTrans;
     private String dNumIDTrans;
     private PaisType cNacTrans;
@@ -19,8 +22,48 @@ public class TgCamTrans {
     private String dDirChof;
     private String dNombAg;
     private String dRucAg;
-    private Short dDVAg;
+    private short dDVAg;
     private String dDirAge;
+
+    public void setupSOAPElements(SOAPElement gTransp) throws SOAPException {
+        SOAPElement gCamTrans = gTransp.addChildElement("gCamTrans", NamespacesConstants.SIFEN_NS_PREFIX);
+        gCamTrans.addChildElement("iNatTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatTrans.getVal()));
+        gCamTrans.addChildElement("dNomTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomTrans);
+
+        if (this.iNatTrans.getVal() == 1) {
+            gCamTrans.addChildElement("dRucTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dRucTrans);
+            gCamTrans.addChildElement("dDVTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVTrans));
+        } else if (this.iNatTrans.getVal() == 2) {
+            gCamTrans.addChildElement("iTipIDTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDTrans.getVal()));
+            gCamTrans.addChildElement("dDTipIDTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipIDTrans.getDescripcion());
+            gCamTrans.addChildElement("dNumIDTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDTrans);
+        }
+
+        if (this.cNacTrans != null) {
+            gCamTrans.addChildElement("cNacTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.toString());
+            gCamTrans.addChildElement("dDesNacTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.getNombre());
+        }
+
+        gCamTrans.addChildElement("dNumIDChof", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDChof);
+        gCamTrans.addChildElement("dNomChof", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomChof);
+
+        if (this.dDomFisc != null)
+            gCamTrans.addChildElement("dDomFisc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDomFisc);
+
+        if (this.dDirChof != null)
+            gCamTrans.addChildElement("dDirChof", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirChof);
+
+        if (this.dNombAg != null)
+            gCamTrans.addChildElement("dNombAg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNombAg);
+
+        if (this.dRucAg != null) {
+            gCamTrans.addChildElement("dRucAg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dRucAg);
+            gCamTrans.addChildElement("dDVAg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVAg));
+        }
+
+        if (this.dNombAg != null)
+            gCamTrans.addChildElement("dDirAge", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirAge);
+    }
 
     public TiNatRec getiNatTrans() {
         return iNatTrans;
@@ -46,11 +89,11 @@ public class TgCamTrans {
         this.dRucTrans = dRucTrans;
     }
 
-    public Short getdDVTrans() {
+    public short getdDVTrans() {
         return dDVTrans;
     }
 
-    public void setdDVTrans(Short dDVTrans) {
+    public void setdDVTrans(short dDVTrans) {
         this.dDVTrans = dDVTrans;
     }
 
@@ -126,11 +169,11 @@ public class TgCamTrans {
         this.dRucAg = dRucAg;
     }
 
-    public Short getdDVAg() {
+    public short getdDVAg() {
         return dDVAg;
     }
 
-    public void setdDVAg(Short dDVAg) {
+    public void setdDVAg(short dDVAg) {
         this.dDVAg = dDVAg;
     }
 

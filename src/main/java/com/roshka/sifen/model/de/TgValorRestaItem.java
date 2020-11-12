@@ -1,9 +1,12 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
+
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
 public class TgValorRestaItem {
-
     private BigDecimal dDescItem;
     private BigDecimal dPorcDesIt;
     private BigDecimal dDescGloItem;
@@ -11,6 +14,31 @@ public class TgValorRestaItem {
     private BigDecimal dAntGloPreUniIt;
     private BigDecimal dTotOpeItem;
     private BigDecimal dTotOpeGs;
+
+    public void setupSOAPElements(SOAPElement gValorItem, BigDecimal dTiCamIt) throws SOAPException {
+        SOAPElement gValorRestaItem = gValorItem.addChildElement("gValorRestaItem", NamespacesConstants.SIFEN_NS_PREFIX);
+
+        if (this.dDescItem != null) {
+            gValorRestaItem.addChildElement("dDescItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescItem));
+            gValorRestaItem.addChildElement("dPorcDesIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorcDesIt));
+        }
+
+        if (this.dDescGloItem != null)
+            gValorRestaItem.addChildElement("dDescGloItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescGloItem));
+
+        gValorRestaItem.addChildElement("dAntPreUniIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+                this.dAntPreUniIt != null ? String.valueOf(this.dAntPreUniIt) : "0"
+        );
+
+        gValorRestaItem.addChildElement("dAntGloPreUniIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+                this.dAntGloPreUniIt != null ? String.valueOf(this.dAntGloPreUniIt) : "0"
+        );
+
+        gValorRestaItem.addChildElement("dTotOpeItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeItem));
+
+        if (dTiCamIt != null)
+            gValorRestaItem.addChildElement("dTotOpeGs", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeGs));
+    }
 
     public BigDecimal getdDescItem() {
         return dDescItem;

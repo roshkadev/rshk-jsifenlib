@@ -1,27 +1,80 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
 import com.roshka.sifen.model.de.types.TiTipCom;
 import com.roshka.sifen.model.de.types.TiTipOpVN;
 
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
 public class TgVehNuevo {
-
     private TiTipOpVN iTipOpVN;
     private String dChasis;
     private String dColor;
-    private Short dPotencia;
-    private Short dCapMot;
-    private BigDecimal dpNet;
-    private BigDecimal dpBruto;
+    private short dPotencia;
+    private short dCapMot;
+    private BigDecimal dPNet;
+    private BigDecimal dPBruto;
     private TiTipCom iTipCom;
     private String dDesTipCom;
     private String dNroMotor;
     private BigDecimal dCapTracc;
-    private Short dAnoFab;
+    private short dAnoFab;
     private String cTipVeh;
-    private Short dCapac;
+    private short dCapac;
     private String dCilin;
+
+    public void setupSOAPElements(SOAPElement gCamItem) throws SOAPException {
+        SOAPElement gVehNuevo = gCamItem.addChildElement("gVehNuevo", NamespacesConstants.SIFEN_NS_PREFIX);
+        if (this.iTipOpVN != null) {
+            gVehNuevo.addChildElement("iTipOpVN", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipOpVN.getVal()));
+            gVehNuevo.addChildElement("dDesTipOpVN", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipOpVN.getDescripcion());
+        }
+
+        if (this.dChasis != null)
+            gVehNuevo.addChildElement("dChasis", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dChasis);
+
+        if (this.dColor != null)
+            gVehNuevo.addChildElement("dColor", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dColor);
+
+        if (this.dPotencia != 0)
+            gVehNuevo.addChildElement("dPotencia", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPotencia));
+
+        if (this.dCapMot != 0)
+            gVehNuevo.addChildElement("dCapMot", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapMot));
+
+        if (this.dPNet != null)
+            gVehNuevo.addChildElement("dPNet", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPNet));
+
+        if (this.dPBruto != null)
+            gVehNuevo.addChildElement("dPBruto", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPBruto));
+
+        if (this.iTipOpVN != null) {
+            gVehNuevo.addChildElement("iTipCom", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipCom.getVal()));
+            gVehNuevo.addChildElement("dDesTipCom", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+                    this.iTipCom.getDescripcion() != null ? this.iTipCom.getDescripcion() : this.dDesTipCom
+            );
+        }
+
+        if (this.dNroMotor != null)
+            gVehNuevo.addChildElement("dNroMotor", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroMotor);
+
+        if (this.dCapTracc != null)
+            gVehNuevo.addChildElement("dCapTracc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapTracc));
+
+        if (this.dAnoFab != 0)
+            gVehNuevo.addChildElement("dAnoFab", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dAnoFab));
+
+        if (this.cTipVeh != null)
+            gVehNuevo.addChildElement("cTipVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cTipVeh);
+
+        if (this.dCapac != 0)
+            gVehNuevo.addChildElement("dCapac", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapac));
+
+        if (this.dCilin != null)
+            gVehNuevo.addChildElement("dCilin", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCilin);
+    }
 
     public TiTipOpVN getiTipOpVN() {
         return iTipOpVN;
@@ -47,36 +100,36 @@ public class TgVehNuevo {
         this.dColor = dColor;
     }
 
-    public Short getdPotencia() {
+    public short getdPotencia() {
         return dPotencia;
     }
 
-    public void setdPotencia(Short dPotencia) {
+    public void setdPotencia(short dPotencia) {
         this.dPotencia = dPotencia;
     }
 
-    public Short getdCapMot() {
+    public short getdCapMot() {
         return dCapMot;
     }
 
-    public void setdCapMot(Short dCapMot) {
+    public void setdCapMot(short dCapMot) {
         this.dCapMot = dCapMot;
     }
 
-    public BigDecimal getDpNet() {
-        return dpNet;
+    public BigDecimal getdPNet() {
+        return dPNet;
     }
 
-    public void setDpNet(BigDecimal dpNet) {
-        this.dpNet = dpNet;
+    public void setdPNet(BigDecimal dPNet) {
+        this.dPNet = dPNet;
     }
 
-    public BigDecimal getDpBruto() {
-        return dpBruto;
+    public BigDecimal getdPBruto() {
+        return dPBruto;
     }
 
-    public void setDpBruto(BigDecimal dpBruto) {
-        this.dpBruto = dpBruto;
+    public void setdPBruto(BigDecimal dPBruto) {
+        this.dPBruto = dPBruto;
     }
 
     public TiTipCom getiTipCom() {
@@ -111,11 +164,11 @@ public class TgVehNuevo {
         this.dCapTracc = dCapTracc;
     }
 
-    public Short getdAnoFab() {
+    public short getdAnoFab() {
         return dAnoFab;
     }
 
-    public void setdAnoFab(Short dAnoFab) {
+    public void setdAnoFab(short dAnoFab) {
         this.dAnoFab = dAnoFab;
     }
 
@@ -127,11 +180,11 @@ public class TgVehNuevo {
         this.cTipVeh = cTipVeh;
     }
 
-    public Short getdCapac() {
+    public short getdCapac() {
         return dCapac;
     }
 
-    public void setdCapac(Short dCapac) {
+    public void setdCapac(short dCapac) {
         this.dCapac = dCapac;
     }
 

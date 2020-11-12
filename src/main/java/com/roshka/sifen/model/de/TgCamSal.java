@@ -1,19 +1,48 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
 import com.roshka.sifen.model.departamentos.TDepartamento;
 
-public class TgCamSal {
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 
+public class TgCamSal {
     private String dDirLocSal;
-    private Short dNumCasSal;
+    private short dNumCasSal;
     private String dComp1Sal;
     private String dComp2Sal;
     private TDepartamento cDepSal;
-    private Short cDisSal;
-    private String cDesDisSal;
+    private short cDisSal;
+    private String dDesDisSal;
     private int cCiuSal;
     private String dDesCiuSal;
     private String dTelSal;
+
+    public void setupSOAPElements(SOAPElement gTransp) throws SOAPException {
+        SOAPElement gCamSal = gTransp.addChildElement("gCamSal", NamespacesConstants.SIFEN_NS_PREFIX);
+        gCamSal.addChildElement("dDirLocSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirLocSal);
+        gCamSal.addChildElement("dNumCasSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasSal));
+
+        if (this.dComp1Sal != null)
+            gCamSal.addChildElement("dComp1Sal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dComp1Sal);
+
+        if (this.dComp2Sal != null)
+            gCamSal.addChildElement("dComp2Sal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dComp2Sal);
+
+        gCamSal.addChildElement("cDepSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepSal.getVal()));
+        gCamSal.addChildElement("dDesDepSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cDepSal.getDescripcion());
+
+        if (this.cDisSal != 0) {
+            gCamSal.addChildElement("cDisSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisSal));
+            gCamSal.addChildElement("dDesDisSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisSal);
+        }
+
+        gCamSal.addChildElement("cCiuSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuSal));
+        gCamSal.addChildElement("dDesCiuSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuSal);
+
+        if (this.dTelSal != null)
+            gCamSal.addChildElement("dTelSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dTelSal);
+    }
 
     public String getdDirLocSal() {
         return dDirLocSal;
@@ -23,11 +52,11 @@ public class TgCamSal {
         this.dDirLocSal = dDirLocSal;
     }
 
-    public Short getdNumCasSal() {
+    public short getdNumCasSal() {
         return dNumCasSal;
     }
 
-    public void setdNumCasSal(Short dNumCasSal) {
+    public void setdNumCasSal(short dNumCasSal) {
         this.dNumCasSal = dNumCasSal;
     }
 
@@ -55,20 +84,20 @@ public class TgCamSal {
         this.cDepSal = cDepSal;
     }
 
-    public Short getcDisSal() {
+    public short getcDisSal() {
         return cDisSal;
     }
 
-    public void setcDisSal(Short cDisSal) {
+    public void setcDisSal(short cDisSal) {
         this.cDisSal = cDisSal;
     }
 
-    public String getcDesDisSal() {
-        return cDesDisSal;
+    public String getdDesDisSal() {
+        return dDesDisSal;
     }
 
-    public void setcDesDisSal(String cDesDisSal) {
-        this.cDesDisSal = cDesDisSal;
+    public void setdDesDisSal(String dDesDisSal) {
+        this.dDesDisSal = dDesDisSal;
     }
 
     public int getcCiuSal() {

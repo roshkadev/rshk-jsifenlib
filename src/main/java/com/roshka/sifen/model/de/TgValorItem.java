@@ -1,13 +1,29 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.de.types.TdCondTiCam;
+
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
 public class TgValorItem {
-
     private BigDecimal dPUniProSer;
     private BigDecimal dTiCamIt;
     private BigDecimal dTotBruOpeItem;
     private TgValorRestaItem gValorRestaItem;
+
+    public void setupSOAPElements(SOAPElement gCamItem, TdCondTiCam dCondTiCam) throws SOAPException {
+        SOAPElement gValorItem = gCamItem.addChildElement("gValorItem", NamespacesConstants.SIFEN_NS_PREFIX);
+        gValorItem.addChildElement("dPUniProSer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPUniProSer));
+
+        if (dCondTiCam.getVal() == 2)
+            gValorItem.addChildElement("dTiCamIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCamIt));
+
+        gValorItem.addChildElement("dTotBruOpeItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotBruOpeItem));
+
+        this.gValorRestaItem.setupSOAPElements(gValorItem, this.dTiCamIt);
+    }
 
     public BigDecimal getdPUniProSer() {
         return dPUniProSer;
@@ -40,5 +56,4 @@ public class TgValorItem {
     public void setgValorRestaItem(TgValorRestaItem gValorRestaItem) {
         this.gValorRestaItem = gValorRestaItem;
     }
-
 }

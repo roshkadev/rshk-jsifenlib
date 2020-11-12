@@ -1,16 +1,16 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.de.types.TcCondNeg;
-import com.roshka.sifen.model.de.types.TiModTrans;
-import com.roshka.sifen.model.de.types.TiRespFlete;
-import com.roshka.sifen.model.de.types.TiTTrans;
+import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.paises.PaisType;
 
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
 public class TgTransp {
-
     private TiTTrans iTipTrans;
     private TiModTrans iModTrans;
     private TiRespFlete iRespFlete;
@@ -21,9 +21,59 @@ public class TgTransp {
     private LocalDate dFinTras;
     private PaisType cPaisDest;
     private TgCamSal gCamSal;
-    private List<TgCamEnt> gCamEnt;
-    private List<TgVehTras> gVehTras;
+    private List<TgCamEnt> gCamEntList;
+    private List<TgVehTras> gVehTrasList;
     private TgCamTrans gCamTrans;
+
+    public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TiMotivTras iMotEmiNR) throws SOAPException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        SOAPElement gTransp = gDtipDE.addChildElement("gTransp", NamespacesConstants.SIFEN_NS_PREFIX);
+
+        if (iTiDE.getVal() == 7 || this.iTipTrans != null) {
+            gTransp.addChildElement("iTipTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipTrans.getVal()));
+            gTransp.addChildElement("dDesTipTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipTrans.getDescripcion());
+        }
+
+        gTransp.addChildElement("iModTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iModTrans.getVal()));
+        gTransp.addChildElement("dDesModTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iModTrans.getDescripcion());
+        gTransp.addChildElement("iRespFlete", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iRespFlete.getVal()));
+
+        if (this.dNuManif != null)
+            gTransp.addChildElement("dNuManif", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNuManif);
+
+        if (iMotEmiNR.getVal() == 5)
+            gTransp.addChildElement("dNuDespImp", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNuDespImp);
+
+        if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.dIniTras != null)) {
+            gTransp.addChildElement("dIniTras", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dIniTras));
+            gTransp.addChildElement("dFinTras", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFinTras));
+        }
+
+        if (this.cPaisDest != null) {
+            gTransp.addChildElement("cPaisDest", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.toString());
+            gTransp.addChildElement("dDesPaisDest", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.getNombre());
+        }
+
+        if (this.gCamSal != null)
+            this.gCamSal.setupSOAPElements(gTransp);
+
+        if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gCamEntList.size() > 0)) {
+            for (TgCamEnt gCamEnt : gCamEntList) {
+                gCamEnt.setupSOAPElements(gTransp);
+            }
+        }
+
+        if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gVehTrasList.size() > 0)) {
+            for (TgVehTras gVehTras : gVehTrasList) {
+                gVehTras.setupSOAPElements(gTransp, this.iModTrans);
+            }
+        }
+
+        if (iTiDE.getVal() == 7 || (this.iModTrans.getVal() == 1 && this.gCamTrans != null)) {
+            this.gCamTrans.setupSOAPElements(gTransp);
+        }
+    }
 
     public TiTTrans getiTipTrans() {
         return iTipTrans;
@@ -105,20 +155,20 @@ public class TgTransp {
         this.gCamSal = gCamSal;
     }
 
-    public List<TgCamEnt> getgCamEnt() {
-        return gCamEnt;
+    public List<TgCamEnt> getgCamEntList() {
+        return gCamEntList;
     }
 
-    public void setgCamEnt(List<TgCamEnt> gCamEnt) {
-        this.gCamEnt = gCamEnt;
+    public void setgCamEntList(List<TgCamEnt> gCamEntList) {
+        this.gCamEntList = gCamEntList;
     }
 
-    public List<TgVehTras> getgVehTras() {
-        return gVehTras;
+    public List<TgVehTras> getgVehTrasList() {
+        return gVehTrasList;
     }
 
-    public void setgVehTras(List<TgVehTras> gVehTras) {
-        this.gVehTras = gVehTras;
+    public void setgVehTrasList(List<TgVehTras> gVehTrasList) {
+        this.gVehTrasList = gVehTrasList;
     }
 
     public TgCamTrans getgCamTrans() {
