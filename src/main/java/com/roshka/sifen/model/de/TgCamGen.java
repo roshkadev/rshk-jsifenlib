@@ -1,11 +1,31 @@
 package com.roshka.sifen.model.de;
 
-public class TgCamGen {
+import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.de.types.TTiDE;
 
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
+
+public class TgCamGen {
     private String dOrdCompra;
-    private String dOrdVenta;
+    private String dOrdVta;
     private String dAsiento;
     private TgCamCarg gCamCarg;
+
+    public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE) throws SOAPException {
+        SOAPElement gCamGen = DE.addChildElement("gCamGen", NamespacesConstants.SIFEN_NS_PREFIX);
+        if (this.dOrdCompra != null)
+            gCamGen.addChildElement("dOrdCompra", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dOrdCompra);
+
+        if (this.dOrdVta != null)
+            gCamGen.addChildElement("dOrdVta", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dOrdVta);
+
+        if (this.dAsiento != null)
+            gCamGen.addChildElement("dAsiento", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dAsiento);
+
+        if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.gCamCarg != null)
+            this.gCamCarg.setupSOAPElements(gCamGen);
+    }
 
     public String getdOrdCompra() {
         return dOrdCompra;
@@ -15,12 +35,12 @@ public class TgCamGen {
         this.dOrdCompra = dOrdCompra;
     }
 
-    public String getdOrdVenta() {
-        return dOrdVenta;
+    public String getdOrdVta() {
+        return dOrdVta;
     }
 
-    public void setdOrdVenta(String dOrdVenta) {
-        this.dOrdVenta = dOrdVenta;
+    public void setdOrdVta(String dOrdVta) {
+        this.dOrdVta = dOrdVta;
     }
 
     public String getdAsiento() {
@@ -38,5 +58,4 @@ public class TgCamGen {
     public void setgCamCarg(TgCamCarg gCamCarg) {
         this.gCamCarg = gCamCarg;
     }
-
 }

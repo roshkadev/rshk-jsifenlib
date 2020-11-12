@@ -1,6 +1,7 @@
 package com.roshka.sifen.model.de;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Clase que representa un Documento Electrónico
@@ -17,10 +18,9 @@ public class TDE {
     private TgDTim gTimb;             // campos del timbrado del documento
     private TgDaGOC dDatGralOpe;      // datos generales de la operación
     private TgDtipDE gDtipDE;
-
     private TgTotSub gTotSub;
     private TgCamGen gCamGen;
-    private TgCamDEAsoc gCamDEAsoc;
+    private List<TgCamDEAsoc> gCamDEAsocList;
 
     public String getId() {
         return Id;
@@ -102,12 +102,11 @@ public class TDE {
         this.gCamGen = gCamGen;
     }
 
-    public TgCamDEAsoc getgCamDEAsoc() {
-        return gCamDEAsoc;
+    public List<TgCamDEAsoc> getgCamDEAsocList() {
+        return gCamDEAsocList;
     }
 
-    public void setgCamDEAsoc(TgCamDEAsoc gCamDEAsoc) {
-        this.gCamDEAsoc = gCamDEAsoc;
+    public void setgCamDEAsocList(List<TgCamDEAsoc> gCamDEAsocList) {
+        this.gCamDEAsocList = gCamDEAsocList;
     }
-
 }

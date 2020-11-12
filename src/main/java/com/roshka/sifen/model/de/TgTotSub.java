@@ -1,9 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.de.types.TTImp;
+import com.roshka.sifen.model.de.types.TTiDE;
+import com.roshka.sifen.model.monedas.CMondT;
+
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
 public class TgTotSub {
-
     private BigDecimal dSubExe;
     private BigDecimal dSubExo;
     private BigDecimal dSub5;
@@ -29,6 +35,56 @@ public class TgTotSub {
     private BigDecimal dBaseGrav10;
     private BigDecimal dTBasGraIVA;
     private BigDecimal dTotalGs;
+
+    public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TGOpeCom gOpeCom) throws SOAPException {
+        TTImp iTImp = gOpeCom.getiTImp();
+        CMondT cMoneOpe = gOpeCom.getcMoneOpe();
+
+        SOAPElement gTotSub = DE.addChildElement("gTotSub", NamespacesConstants.SIFEN_NS_PREFIX);
+        if (iTiDE.getVal() != 4) {
+            gTotSub.addChildElement("dSubExe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSubExe));
+            gTotSub.addChildElement("dSubExo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSubExo));
+
+            if (iTImp.getVal() == 1) {
+                gTotSub.addChildElement("dSub5", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSub5));
+                gTotSub.addChildElement("dSub10", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSub10));
+            }
+
+            if (iTImp.getVal() == 1 || iTImp.getVal() == 5) {
+                gTotSub.addChildElement("dIVA5", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dIVA5));
+                gTotSub.addChildElement("dIVA10", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dIVA10));
+                gTotSub.addChildElement("dTotIVA", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotIVA));
+                gTotSub.addChildElement("dBaseGrav5", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dBaseGrav5));
+                gTotSub.addChildElement("dBaseGrav10", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dBaseGrav10));
+                gTotSub.addChildElement("dTBasGraIVA", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTBasGraIVA));
+            }
+
+            if (!cMoneOpe.toString().equals("PYG"))
+                gTotSub.addChildElement("dTotalGs", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotalGs));
+
+            if (this.dComi != null)
+                gTotSub.addChildElement("dComi", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dComi));
+
+            if (this.dIVAComi != null)
+                gTotSub.addChildElement("dIVAComi", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dIVAComi));
+        }
+
+        gTotSub.addChildElement("dTotOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpe));
+        gTotSub.addChildElement("dTotDesc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotDesc));
+        gTotSub.addChildElement("dTotDescGlotem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotDescGlotem));
+        gTotSub.addChildElement("dTotAntItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotAntItem));
+        gTotSub.addChildElement("dTotAnt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotAnt));
+        gTotSub.addChildElement("dPorcDescTotal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorcDescTotal));
+        gTotSub.addChildElement("dDescTotal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescTotal));
+        gTotSub.addChildElement("dAnticipo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dAnticipo));
+        gTotSub.addChildElement("dRedon", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dRedon));
+        gTotSub.addChildElement("dTotGralOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotGralOpe));
+
+        if (iTImp.getVal() == 1 || iTImp.getVal() == 5) {
+            gTotSub.addChildElement("dLiqTotIVA5", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dLiqTotIVA5));
+            gTotSub.addChildElement("dLiqTotIVA10", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dLiqTotIVA10));
+        }
+    }
 
     public BigDecimal getdSubExe() {
         return dSubExe;

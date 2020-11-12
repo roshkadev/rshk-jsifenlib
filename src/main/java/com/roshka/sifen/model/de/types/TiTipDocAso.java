@@ -1,10 +1,9 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TiTipDocAso {
-
-    ELECTRONICO((short)1, "Electrónico"),
-    IMPRESO((short)2, "Impreso"),
-    CONSTANCIA_ELECTRONICA((short)3, "Constancia Electrónica");
+    ELECTRONICO((short) 1, "Electrónico"),
+    IMPRESO((short) 2, "Impreso"),
+    CONSTANCIA_ELECTRONICA((short) 3, "Constancia Electrónica");
 
     private short val;
     private String descripcion;
@@ -21,5 +20,4 @@ public enum TiTipDocAso {
     public String getDescripcion() {
         return descripcion;
     }
-
 }
