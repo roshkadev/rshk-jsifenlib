@@ -11,7 +11,6 @@ import static com.roshka.sifen.sdk.Constants.SDK_CURRENT_VERSION;
 import static java.util.logging.Logger.getLogger;
 
 public class SifenConfig {
-
     private final static Logger logger = getLogger(SifenConfig.class.toString());
 
     public static final String CFG_URL_BASE_KEY = "sifen.url_base";
@@ -23,7 +22,6 @@ public class SifenConfig {
     public static final String CFG_URL_CONSULTA_LOTE_KEY = "sifen.url.consulta-lote";
     public static final String CFG_URL_CONSULTA_RUC_KEY = "sifen.url.consulta-ruc";
     public static final String CFG_URL_CONSULTA_KEY = "sifen.url.consulta";
-
 
     public static final String URL_RECIBE_DEFAULT_PATH = "/de/ws/sync/recibe.wsdl";
     public static final String URL_RECIBE_LOTE_DEFAULT_PATH = "/de/ws/async/recibe-lote.wsdl";

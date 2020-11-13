@@ -17,7 +17,6 @@ import javax.xml.soap.SOAPMessage;
 import java.util.logging.Logger;
 
 public abstract class ConsultaBase<T extends REnviBase, U extends RResBase> {
-
     private final static Logger logger = Logger.getLogger(ConsultaBase.class.toString());
 
     private SifenCtx sifenCtx;
@@ -26,6 +25,49 @@ public abstract class ConsultaBase<T extends REnviBase, U extends RResBase> {
     public ConsultaBase(SifenCtx sifenCtx) {
         this.sifenCtx = sifenCtx;
     }
+
+    public RespuestaSifen<T, U> ejecutarConsulta(T peticion) throws SifenException {
+        try {
+            RespuestaSifen<T, U> respuestaSifen = new RespuestaSifen<>();
+            respuestaSifen.setPeticion(peticion);
+
+            // Preparamos el mensaje
+            SOAPMessage message = MessageHelper.createMessage();
+            peticion.setupSOAPBody(message.getSOAPBody(), this.sifenCtx.getSifenConfig());
+
+            // Realizamos la consulta
+            RespuestaSOAP respuestaSOAP = SOAPHelper.performSOAPRequest(this.getSifenCtx(), message, this.getUrl());
+            respuestaSifen.setRespuestaSOAP(respuestaSOAP);
+            if (respuestaSOAP.llamadaCorrecta()) {
+                logger.info("Llamada Sifen Correcta en FORMA");
+                respuestaSifen.setRespuesta(procesarRespuesta(respuestaSOAP.getRespuestaSOAP()));
+            } else {
+                logger.info("Llamada Incorrecta!");
+            }
+            return respuestaSifen;
+        } catch (SOAPException e) {
+            String msg = "Ocurrió un error al realizan la petición a: " + getUrl() + ". Mensaje: " + e.getLocalizedMessage();
+            throw SifenExceptionUtil.llamadaSOAPInvalida(msg, e);
+        }
+    }
+
+    protected Node getMainNode(SOAPBody soapBody, String nombreNodo) throws SifenException {
+        if (soapBody == null)
+            throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje soap es nulo. No se puede obtener el nodo principal");
+
+        Node node = soapBody.getFirstChild();
+        if (node == null)
+            throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje soap tiene el primer nodo nulo");
+
+        if (node.getNodeName() == null || !node.getLocalName().equalsIgnoreCase(nombreNodo)) {
+            throw SifenExceptionUtil.respuestaSOAPInvalida(
+                    "El nombre del nodo [" + node.getLocalName() + "] no coincide con el nombre esperado [" + nombreNodo + "]"
+            );
+        }
+        return node;
+    }
+
+    public abstract U procesarRespuesta(SOAPMessage soapMessage) throws SOAPException, SifenException;
 
     public SifenCtx getSifenCtx() {
         return sifenCtx;
@@ -42,48 +84,4 @@ public abstract class ConsultaBase<T extends REnviBase, U extends RResBase> {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public RespuestaSifen<T, U> ejecutarConsulta(T peticion) throws SifenException {
-        SOAPMessage message;
-        RespuestaSifen<T, U> respuestaSifen = new RespuestaSifen<>();
-        respuestaSifen.setPeticion(peticion);
-        try {
-            message = MessageHelper.createMessage();
-            peticion.setupSOAPBody(message.getSOAPBody());
-            RespuestaSOAP respuestaSOAP = SOAPHelper.performSOAPRequest(this.getSifenCtx(), message, this.getUrl());
-            respuestaSifen.setRespuestaSOAP(respuestaSOAP);
-            if (respuestaSOAP.llamadaCorrecta()) {
-                logger.info("Llamada Sifen Correcta en FORMA");
-                respuestaSifen.setRespuesta(procesarRespuesta(respuestaSOAP.getRespuestaSOAP()));
-            } else {
-                logger.info("Llamada Incorrecta!");
-            }
-            return respuestaSifen;
-        } catch (SOAPException e) {
-            String msg = "Hubo un SOAPException al ejecutar la llamada a: " + getUrl() + ". Mensaje: " + e.getLocalizedMessage();
-            logger.severe(msg);
-            throw SifenExceptionUtil.llamadaSOAPInvalida(msg, e);
-        }
-    }
-
-    protected Node getMainNode(SOAPBody soapBody, String nombreNodo)
-            throws SifenException {
-        if (soapBody == null)
-            throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje soap es nulo. No se puede obtener el nodo principal");
-
-        Node node = soapBody.getFirstChild();
-
-        if (node == null)
-            throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje soap tiene el primer nodo nulo");
-
-        if (node.getNodeName() == null || !node.getLocalName().equalsIgnoreCase(nombreNodo))
-            throw SifenExceptionUtil.respuestaSOAPInvalida(
-                    "El nombre del nodo [" + node.getLocalName() + "] no coincide con el nombre esperado [" + nombreNodo + "]"
-            );
-
-        return node;
-
-    }
-
-    public abstract U procesarRespuesta(SOAPMessage soapMessage) throws SOAPException, SifenException;
 }

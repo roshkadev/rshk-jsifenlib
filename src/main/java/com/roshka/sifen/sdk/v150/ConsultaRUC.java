@@ -14,7 +14,6 @@ import javax.xml.soap.SOAPMessage;
 import java.util.logging.Logger;
 
 public class ConsultaRUC extends ConsultaBase<REnviConsRUC, RResEnviConsRUC> {
-
     public static final String NOMBRE_NODO = "rResEnviConsRuc";
 
     private final static Logger logger = Logger.getLogger(ConsultaRUC.class.toString());
