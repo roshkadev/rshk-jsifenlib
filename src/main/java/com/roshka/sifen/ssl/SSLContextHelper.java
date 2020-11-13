@@ -2,7 +2,7 @@ package com.roshka.sifen.ssl;
 
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.exceptions.SifenExceptionUtil;
+import com.roshka.sifen.util.SifenExceptionUtil;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -28,7 +28,7 @@ public class SSLContextHelper {
                 logger.info("Se utilizará un contexto SSL por defecto.");
                 return SSLContext.getDefault();
             } catch (NoSuchAlgorithmException e) {
-                throw SifenExceptionUtil.contextoSSLInvalido("No se puede retornar el contexto SSL por defecto", e);
+                throw SifenExceptionUtil.invalidSSLContext("No se puede retornar el contexto SSL por defecto", e);
             }
         }
 
@@ -39,12 +39,12 @@ public class SSLContextHelper {
         try {
             keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         } catch (NoSuchAlgorithmException e) {
-            throw SifenExceptionUtil.contextoSSLInvalido("No se puede obtener una instancia de administrador de claves de algoritmo: " + KeyManagerFactory.getDefaultAlgorithm(), e);
+            throw SifenExceptionUtil.invalidSSLContext("No se puede obtener una instancia de administrador de claves de algoritmo: " + KeyManagerFactory.getDefaultAlgorithm(), e);
         }
         try {
             keyManagerFactory.init(keyStore, sifenConfig.getContrasenaCertificadoCliente().toCharArray());
         } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
-            throw SifenExceptionUtil.contextoSSLInvalido("No se puede inicializar el administrador de claves: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSSLContext("No se puede inicializar el administrador de claves: " + e.getLocalizedMessage(), e);
         }
 
         SSLContext sslContext;
@@ -57,15 +57,15 @@ public class SSLContextHelper {
             );
             return _sslContext = sslContext;
         } catch (KeyManagementException e) {
-            throw SifenExceptionUtil.contextoSSLInvalido("No se inicializar el contexto SSL: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSSLContext("No se inicializar el contexto SSL: " + e.getLocalizedMessage(), e);
         } catch (NoSuchAlgorithmException e) {
-            throw SifenExceptionUtil.contextoSSLInvalido("No se puede obtener una instancia de contexto SSL TLS: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSSLContext("No se puede obtener una instancia de contexto SSL TLS: " + e.getLocalizedMessage(), e);
         }
     }
 
     public static KeyPair getCertificateKeyPair(SifenConfig sifenConfig) throws SifenException {
         if (!isCertificateConfigurationValid(sifenConfig)) {
-            throw SifenExceptionUtil.configuracionInvalida("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
+            throw SifenExceptionUtil.invalidConfiguration("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
         }
 
         try {
@@ -77,9 +77,9 @@ public class SSLContextHelper {
 
             return new KeyPair(publicKey, privateKey);
         } catch (KeyStoreException e) {
-            throw SifenExceptionUtil.configuracionInvalida("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
+            throw SifenExceptionUtil.invalidConfiguration("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
         } catch (UnrecoverableKeyException | NoSuchAlgorithmException e) {
-            throw SifenExceptionUtil.contextoSSLInvalido("No se puede obtener una instancia de administrador de claves de algoritmo: " + KeyManagerFactory.getDefaultAlgorithm(), e);
+            throw SifenExceptionUtil.invalidSSLContext("No se puede obtener una instancia de administrador de claves de algoritmo: " + KeyManagerFactory.getDefaultAlgorithm(), e);
         }
     }
 
@@ -88,13 +88,13 @@ public class SSLContextHelper {
         try {
             keyStore = KeyStore.getInstance("PKCS12");
         } catch (KeyStoreException e) {
-            throw SifenExceptionUtil.contextoSSLInvalido("No se obtener una instancia de almacén de claves PKCS12: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSSLContext("No se obtener una instancia de almacén de claves PKCS12: " + e.getLocalizedMessage(), e);
         }
 
         try {
             keyStore.load(new FileInputStream(certificatePath), password.toCharArray());
         } catch (IOException | NoSuchAlgorithmException | CertificateException e) {
-            throw SifenExceptionUtil.contextoSSLInvalido("No se puede cargar archivo del certificado de cliente: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSSLContext("No se puede cargar archivo del certificado de cliente: " + e.getLocalizedMessage(), e);
         }
 
         return keyStore;

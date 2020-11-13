@@ -1,7 +1,6 @@
 package com.roshka.sifen.util;
 
 import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.exceptions.SifenExceptionUtil;
 import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPBody;
@@ -17,18 +16,18 @@ public class ResponseUtil {
         try {
             soapBody = soapMessage.getSOAPBody();
         } catch (SOAPException e) {
-            throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje SOAP es nulo. No se puede obtener el nodo principal.");
+            throw SifenExceptionUtil.invalidSOAPResponse("El cuerpo del mensaje SOAP es nulo. No se puede obtener el nodo principal.");
         }
 
         if (soapBody == null)
-            throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje SOAP es nulo. No se puede obtener el nodo principal.");
+            throw SifenExceptionUtil.invalidSOAPResponse("El cuerpo del mensaje SOAP es nulo. No se puede obtener el nodo principal.");
 
         Node node = soapBody.getFirstChild();
         if (node == null)
-            throw SifenExceptionUtil.respuestaSOAPInvalida("El cuerpo del mensaje SOAP tiene el primer nodo nulo.");
+            throw SifenExceptionUtil.invalidSOAPResponse("El cuerpo del mensaje SOAP tiene el primer nodo nulo.");
 
         if (node.getNodeName() == null || !node.getLocalName().equalsIgnoreCase(nodeName)) {
-            throw SifenExceptionUtil.respuestaSOAPInvalida(
+            throw SifenExceptionUtil.invalidSOAPResponse(
                     "El nombre del nodo [" + node.getLocalName() + "] no coincide con el nombre esperado [" + nodeName + "]"
             );
         }

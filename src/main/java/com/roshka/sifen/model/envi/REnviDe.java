@@ -2,7 +2,7 @@ package com.roshka.sifen.model.envi;
 
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.exceptions.SifenExceptionUtil;
+import com.roshka.sifen.util.SifenExceptionUtil;
 import com.roshka.sifen.model.de.TDE;
 import com.roshka.sifen.model.de.TgCamDEAsoc;
 import com.roshka.sifen.model.de.TgPagCont;
@@ -85,7 +85,7 @@ public class REnviDe extends REnviBase {
             // Firma Digital del XML
             this.signFields(rDe, sifenConfig);
         } catch (SOAPException e) {
-            throw SifenExceptionUtil.errorPreparacionPeticion("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
+            throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
         }
     }
 
@@ -109,7 +109,7 @@ public class REnviDe extends REnviBase {
             signatureContext.putNamespacePrefix(XMLSignature.XMLNS, Constants.SIFEN_NS_PREFIX);
             signature.sign(signatureContext);
         } catch (KeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | XMLSignatureException | MarshalException e) {
-            throw SifenExceptionUtil.errorFirmaPeticion("Ocurrió un error al firmar la petición SOAP utilizando el certificado activo", e);
+            throw SifenExceptionUtil.requestSigningError("Ocurrió un error al firmar la petición SOAP utilizando el certificado activo", e);
         }
     }
 }

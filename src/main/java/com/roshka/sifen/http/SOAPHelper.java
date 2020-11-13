@@ -2,7 +2,7 @@ package com.roshka.sifen.http;
 
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.exceptions.SifenExceptionUtil;
+import com.roshka.sifen.util.SifenExceptionUtil;
 import com.roshka.sifen.soap.MessageHelper;
 import com.roshka.sifen.soap.MimeHeadersHelper;
 import com.roshka.sifen.ssl.SSLContextHelper;
@@ -47,11 +47,11 @@ public class SOAPHelper {
                     logger.warning("Se esperaba una instancia de HttpsURLConnection. Se obtuvo una de " + urlConnection.getClass().getCanonicalName());
                 }
             } else if (!url.getProtocol().equalsIgnoreCase("http")) {
-                throw SifenExceptionUtil.llamadaSOAPInvalida("El protocolo " + url.getProtocol() + " es inválido");
+                throw SifenExceptionUtil.invalidSOAPRequest("El protocolo " + url.getProtocol() + " es inválido");
             }
 
             if (!(urlConnection instanceof HttpURLConnection)) {
-                throw SifenExceptionUtil.llamadaSOAPInvalida("Se esperaba una instancia de HttpURLConnection o derivados. Se obtuvo: " + urlConnection.getClass().getCanonicalName());
+                throw SifenExceptionUtil.invalidSOAPRequest("Se esperaba una instancia de HttpURLConnection o derivados. Se obtuvo: " + urlConnection.getClass().getCanonicalName());
             }
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
@@ -106,11 +106,11 @@ public class SOAPHelper {
 
             return soapResponse;
         } catch (MalformedURLException e) {
-            throw SifenExceptionUtil.llamadaSOAPInvalida("El URL " + urlString + " es inválido: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSOAPRequest("El URL " + urlString + " es inválido: " + e.getLocalizedMessage(), e);
         } catch (IOException e) {
-            throw SifenExceptionUtil.llamadaSOAPInvalida("Excepción de entrada/salida al realizar llamada SOAP: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSOAPRequest("Excepción de entrada/salida al realizar llamada SOAP: " + e.getLocalizedMessage(), e);
         } catch (SOAPException e) {
-            throw SifenExceptionUtil.llamadaSOAPInvalida("Excepción de mensajería SOAP: " + e.getLocalizedMessage(), e);
+            throw SifenExceptionUtil.invalidSOAPRequest("Excepción de mensajería SOAP: " + e.getLocalizedMessage(), e);
         }
     }
 }

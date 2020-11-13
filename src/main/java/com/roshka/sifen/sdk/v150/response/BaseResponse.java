@@ -5,11 +5,7 @@ import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.util.ResponseUtil;
 import org.w3c.dom.Node;
 
-import java.util.logging.Logger;
-
 public abstract class BaseResponse extends SifenObjectBase {
-    private final static Logger logger = Logger.getLogger(BaseResponse.class.toString());
-
     public static final String NOMBRE_ELEMENTO_DCODRES = "dCodRes";
     public static final String NOMBRE_ELEMENTO_DMSGRES = "dMsgRes";
 

@@ -16,6 +16,7 @@ public class ConsultaRUC extends BaseRequest {
     private final static Logger logger = Logger.getLogger(ConsultaRUC.class.toString());
 
     public static RespuestaSifen prepareRequest(SifenConfig sifenConfig, long dId, String ruc) throws SifenException {
+        logger.info("Preparando petición 'Consulta de RUC'");
         setConfig(sifenConfig, sifenConfig.getUrlConsultaRUC());
 
         REnviConsRUC rEnviConsRUC = new REnviConsRUC();
