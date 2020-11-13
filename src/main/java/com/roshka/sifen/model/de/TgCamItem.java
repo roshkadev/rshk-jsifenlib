@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.paises.PaisType;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
@@ -37,53 +37,53 @@ public class TgCamItem {
         TdCondTiCam dCondTiCam = gDatGralOpe.getgOpeCom().getdCondTiCam();
         TTImp iTImp = gDatGralOpe.getgOpeCom().getiTImp();
 
-        SOAPElement gCamItem = gDtipDE.addChildElement("gCamItem", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCamItem.addChildElement("dCodInt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCodInt);
+        SOAPElement gCamItem = gDtipDE.addChildElement("gCamItem", Constants.SIFEN_NS_PREFIX);
+        gCamItem.addChildElement("dCodInt", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCodInt);
 
         if (this.dParAranc != 0)
-            gCamItem.addChildElement("dParAranc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dParAranc));
+            gCamItem.addChildElement("dParAranc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dParAranc));
 
         if (this.dNCM != 0)
-            gCamItem.addChildElement("dNCM", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNCM));
+            gCamItem.addChildElement("dNCM", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNCM));
 
         if (this.dDncpG != null || iTiOpe.getVal() == 3) {
-            gCamItem.addChildElement("dDncpG", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDncpG);
-            gCamItem.addChildElement("dDncpE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDncpE);
+            gCamItem.addChildElement("dDncpG", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDncpG);
+            gCamItem.addChildElement("dDncpE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDncpE);
         }
 
         if (this.dGtin != 0)
-            gCamItem.addChildElement("dGtin", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtin));
+            gCamItem.addChildElement("dGtin", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtin));
 
         if (this.dGtinPq != 0)
-            gCamItem.addChildElement("dGtinPq", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtinPq));
+            gCamItem.addChildElement("dGtinPq", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtinPq));
 
-        gCamItem.addChildElement("dDesProSer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesProSer);
-        gCamItem.addChildElement("cUniMed", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMed.getVal()));
-        gCamItem.addChildElement("dDesUniMed", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cUniMed.getDescripcion());
-        gCamItem.addChildElement("dCantProSer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCantProSer));
+        gCamItem.addChildElement("dDesProSer", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesProSer);
+        gCamItem.addChildElement("cUniMed", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMed.getVal()));
+        gCamItem.addChildElement("dDesUniMed", Constants.SIFEN_NS_PREFIX).setTextContent(this.cUniMed.getDescripcion());
+        gCamItem.addChildElement("dCantProSer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCantProSer));
 
         if (this.cPaisOrig != null) {
-            gCamItem.addChildElement("cPaisOrig", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.toString());
-            gCamItem.addChildElement("dDesPaisOrig", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.getNombre());
+            gCamItem.addChildElement("cPaisOrig", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.toString());
+            gCamItem.addChildElement("dDesPaisOrig", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.getNombre());
         }
 
         if (this.dInfItem != null)
-            gCamItem.addChildElement("dInfItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dInfItem);
+            gCamItem.addChildElement("dInfItem", Constants.SIFEN_NS_PREFIX).setTextContent(this.dInfItem);
 
         if (iTiDE.getVal() != 7 || this.tcRelMerc != null) {
-            gCamItem.addChildElement("cRelMerc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tcRelMerc.getVal()));
-            gCamItem.addChildElement("dDesRelMerc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.tcRelMerc.getDescripcion());
+            gCamItem.addChildElement("cRelMerc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tcRelMerc.getVal()));
+            gCamItem.addChildElement("dDesRelMerc", Constants.SIFEN_NS_PREFIX).setTextContent(this.tcRelMerc.getDescripcion());
 
         }
 
         if ((iTiDE.getVal() != 7 || this.tcRelMerc != null) || this.dCanQuiMer != null)
-            gCamItem.addChildElement("dCanQuiMer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCanQuiMer));
+            gCamItem.addChildElement("dCanQuiMer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCanQuiMer));
 
         if ((iTiDE.getVal() != 7 || this.tcRelMerc != null) || this.dPorQuiMer != null)
-            gCamItem.addChildElement("dPorQuiMer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorQuiMer));
+            gCamItem.addChildElement("dPorQuiMer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorQuiMer));
 
         if (iTipTra.getVal() == 9 || this.dCDCAnticipo != null)
-            gCamItem.addChildElement("dCDCAnticipo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCDCAnticipo);
+            gCamItem.addChildElement("dCDCAnticipo", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCDCAnticipo);
 
         if (iTiDE.getVal() != 7)
             this.gValorItem.setupSOAPElements(gCamItem, dCondTiCam);

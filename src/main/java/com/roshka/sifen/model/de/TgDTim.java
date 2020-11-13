@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTiDE;
 
 import javax.xml.soap.SOAPElement;
@@ -21,17 +21,17 @@ public class TgDTim {
     public void setupSOAPElements(SOAPElement DE) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gTimb = DE.addChildElement("gTimb", NamespacesConstants.SIFEN_NS_PREFIX);
-        gTimb.addChildElement("iTiDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tiDE.getVal()));
-        gTimb.addChildElement("dDesTiDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.tiDE.getDescripcion());
-        gTimb.addChildElement("dNumTim", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumTim));
-        gTimb.addChildElement("dEst", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dEst));
-        gTimb.addChildElement("dPunExp", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPunExp));
-        gTimb.addChildElement("dNumDoc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumDoc));
+        SOAPElement gTimb = DE.addChildElement("gTimb", Constants.SIFEN_NS_PREFIX);
+        gTimb.addChildElement("iTiDE", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tiDE.getVal()));
+        gTimb.addChildElement("dDesTiDE", Constants.SIFEN_NS_PREFIX).setTextContent(this.tiDE.getDescripcion());
+        gTimb.addChildElement("dNumTim", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumTim));
+        gTimb.addChildElement("dEst", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dEst));
+        gTimb.addChildElement("dPunExp", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPunExp));
+        gTimb.addChildElement("dNumDoc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumDoc));
         if (this.dSerieNum != null)
-            gTimb.addChildElement("dSerieNum", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dSerieNum);
-        gTimb.addChildElement("dFeIniT", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeIniT));
-        gTimb.addChildElement("dFeFinT", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeFinT));
+            gTimb.addChildElement("dSerieNum", Constants.SIFEN_NS_PREFIX).setTextContent(this.dSerieNum);
+        gTimb.addChildElement("dFeIniT", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeIniT));
+        gTimb.addChildElement("dFeFinT", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeFinT));
     }
 
     public TTiDE getTiDE() {

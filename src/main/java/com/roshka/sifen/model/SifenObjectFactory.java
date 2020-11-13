@@ -11,14 +11,11 @@ public class SifenObjectFactory {
 
     private final static Logger logger = Logger.getLogger(SifenObjectFactory.class.toString());
 
-    public static <T extends SifenObjectBase> T getFromNode(Node mainNode, Class clazz)
-            throws SifenException
-    {
-        T ret;
+    public static <T extends SifenObjectBase> T getFromNode(Node mainNode, Class<T> sifenObjectBase) throws SifenException {
         try {
-            ret = (T) clazz.newInstance();
+            T ret = sifenObjectBase.newInstance();
             NodeList childNodes = mainNode.getChildNodes();
-            for (int i=0; i < childNodes.getLength(); i++) {
+            for (int i = 0; i < childNodes.getLength(); i++) {
                 Node node = childNodes.item(i);
                 ret.setValueFromChildNode(node);
             }
@@ -26,12 +23,12 @@ public class SifenObjectFactory {
         } catch (InstantiationException e) {
             logger.throwing(SifenObjectFactory.class.getCanonicalName(), "getFromNode", e);
             throw SifenExceptionUtil.errorInesperado(
-                    "Error de instanciación al intentar crear un objeto de clase: " + clazz.getCanonicalName() + " -> " + e.getLocalizedMessage(), e
+                    "Error de instanciación al intentar crear un objeto de clase: " + sifenObjectBase.getCanonicalName() + " -> " + e.getLocalizedMessage(), e
             );
         } catch (IllegalAccessException e) {
             logger.throwing(SifenObjectFactory.class.getCanonicalName(), "getFromNode", e);
             throw SifenExceptionUtil.errorInesperado(
-                    "Acceso ilegal al intentar crear un objeto de clase: " + clazz.getCanonicalName() + " -> " + e.getLocalizedMessage(), e
+                    "Acceso ilegal al intentar crear un objeto de clase: " + sifenObjectBase.getCanonicalName() + " -> " + e.getLocalizedMessage(), e
             );
         }
     }

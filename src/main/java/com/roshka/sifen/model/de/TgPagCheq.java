@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -10,9 +10,9 @@ public class TgPagCheq {
     private String dBcoEmi;
 
     public void setupSOAPElements(SOAPElement gPaConEIni) throws SOAPException {
-        SOAPElement gPagCheq = gPaConEIni.addChildElement("gPagCheq", NamespacesConstants.SIFEN_NS_PREFIX);
-        gPagCheq.addChildElement("dNumCheq", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumCheq);
-        gPagCheq.addChildElement("dBcoEmi", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dBcoEmi);
+        SOAPElement gPagCheq = gPaConEIni.addChildElement("gPagCheq", Constants.SIFEN_NS_PREFIX);
+        gPagCheq.addChildElement("dNumCheq", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumCheq);
+        gPagCheq.addChildElement("dBcoEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dBcoEmi);
     }
 
     public String getdNumCheq() {

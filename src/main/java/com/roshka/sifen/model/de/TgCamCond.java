@@ -1,11 +1,10 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiCondOpe;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class TgCamCond {
@@ -14,9 +13,9 @@ public class TgCamCond {
     private TgPagCred gPagCred;
 
     public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
-        SOAPElement gCamCond = gDtipDE.addChildElement("gCamCond", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCamCond.addChildElement("iCondOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCondOpe.getVal()));
-        gCamCond.addChildElement("dDCondOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iCondOpe.getDescripcion());
+        SOAPElement gCamCond = gDtipDE.addChildElement("gCamCond", Constants.SIFEN_NS_PREFIX);
+        gCamCond.addChildElement("iCondOpe", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCondOpe.getVal()));
+        gCamCond.addChildElement("dDCondOpe", Constants.SIFEN_NS_PREFIX).setTextContent(this.iCondOpe.getDescripcion());
 
         if (gPaCondEIniList.size() > 0 || this.iCondOpe.getVal() == 1 || this.gPagCred.getdMonEnt() != null) {
             for (TgPagCont gPaConEIni : gPaCondEIniList) {

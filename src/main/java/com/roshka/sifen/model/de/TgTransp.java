@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.paises.PaisType;
 
@@ -28,31 +28,31 @@ public class TgTransp {
     public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TiMotivTras iMotEmiNR) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gTransp = gDtipDE.addChildElement("gTransp", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gTransp = gDtipDE.addChildElement("gTransp", Constants.SIFEN_NS_PREFIX);
 
         if (iTiDE.getVal() == 7 || this.iTipTrans != null) {
-            gTransp.addChildElement("iTipTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipTrans.getVal()));
-            gTransp.addChildElement("dDesTipTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipTrans.getDescripcion());
+            gTransp.addChildElement("iTipTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipTrans.getVal()));
+            gTransp.addChildElement("dDesTipTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipTrans.getDescripcion());
         }
 
-        gTransp.addChildElement("iModTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iModTrans.getVal()));
-        gTransp.addChildElement("dDesModTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iModTrans.getDescripcion());
-        gTransp.addChildElement("iRespFlete", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iRespFlete.getVal()));
+        gTransp.addChildElement("iModTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iModTrans.getVal()));
+        gTransp.addChildElement("dDesModTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.iModTrans.getDescripcion());
+        gTransp.addChildElement("iRespFlete", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iRespFlete.getVal()));
 
         if (this.dNuManif != null)
-            gTransp.addChildElement("dNuManif", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNuManif);
+            gTransp.addChildElement("dNuManif", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNuManif);
 
         if (iMotEmiNR.getVal() == 5)
-            gTransp.addChildElement("dNuDespImp", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNuDespImp);
+            gTransp.addChildElement("dNuDespImp", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNuDespImp);
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.dIniTras != null)) {
-            gTransp.addChildElement("dIniTras", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dIniTras));
-            gTransp.addChildElement("dFinTras", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFinTras));
+            gTransp.addChildElement("dIniTras", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dIniTras));
+            gTransp.addChildElement("dFinTras", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFinTras));
         }
 
         if (this.cPaisDest != null) {
-            gTransp.addChildElement("cPaisDest", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.toString());
-            gTransp.addChildElement("dDesPaisDest", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.getNombre());
+            gTransp.addChildElement("cPaisDest", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.toString());
+            gTransp.addChildElement("dDesPaisDest", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.getNombre());
         }
 
         if (this.gCamSal != null)

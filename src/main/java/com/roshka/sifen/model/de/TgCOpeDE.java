@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TTipEmi;
 
@@ -14,14 +14,14 @@ public class TgCOpeDE {
     private String dInfoFisc;       // información de interés del fisco (opcional). Entre 1 y 3000 carácteres
 
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE) throws SOAPException {
-        SOAPElement gOpeDE = DE.addChildElement("gOpeDE", NamespacesConstants.SIFEN_NS_PREFIX);
-        gOpeDE.addChildElement("iTipEmi", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipEmi.getVal()));
-        gOpeDE.addChildElement("dDesTipEmi", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipEmi.getDescripcion());
-        gOpeDE.addChildElement("dCodSeg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCodSeg));
+        SOAPElement gOpeDE = DE.addChildElement("gOpeDE", Constants.SIFEN_NS_PREFIX);
+        gOpeDE.addChildElement("iTipEmi", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipEmi.getVal()));
+        gOpeDE.addChildElement("dDesTipEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipEmi.getDescripcion());
+        gOpeDE.addChildElement("dCodSeg", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCodSeg));
         if (this.dInfoEmi != null)
-            gOpeDE.addChildElement("dInfoEmi", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dInfoEmi);
+            gOpeDE.addChildElement("dInfoEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dInfoEmi);
         if (this.dInfoFisc != null || iTiDE.getVal() == 7)
-            gOpeDE.addChildElement("dInfoFisc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dInfoFisc);
+            gOpeDE.addChildElement("dInfoFisc", Constants.SIFEN_NS_PREFIX).setTextContent(this.dInfoFisc);
     }
 
     public TTipEmi getiTipEmi() {

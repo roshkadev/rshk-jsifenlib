@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -21,22 +21,22 @@ public class TgGrupAdi {
     public void setupSOAPElements(SOAPElement gCamEsp) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gGrupAdi = gCamEsp.addChildElement("gGrupAdi", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gGrupAdi = gCamEsp.addChildElement("gGrupAdi", Constants.SIFEN_NS_PREFIX);
         if (this.dCiclo != null) {
-            gGrupAdi.addChildElement("dCiclo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCiclo);
-            gGrupAdi.addChildElement("dFecIniC", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecIniC));
-            gGrupAdi.addChildElement("dFecFinC", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecFinC));
+            gGrupAdi.addChildElement("dCiclo", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCiclo);
+            gGrupAdi.addChildElement("dFecIniC", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecIniC));
+            gGrupAdi.addChildElement("dFecFinC", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecFinC));
         }
 
         for (LocalDate dVencPag : dVencPagList) {
-            gGrupAdi.addChildElement("dVencPag", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(dVencPag));
+            gGrupAdi.addChildElement("dVencPag", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(dVencPag));
         }
 
         if (this.dContrato != null)
-            gGrupAdi.addChildElement("dContrato", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dContrato);
+            gGrupAdi.addChildElement("dContrato", Constants.SIFEN_NS_PREFIX).setTextContent(this.dContrato);
 
         if (this.dSalAnt != null)
-            gGrupAdi.addChildElement("dSalAnt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSalAnt));
+            gGrupAdi.addChildElement("dSalAnt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSalAnt));
     }
 
     public String getdCiclo() {

@@ -1,10 +1,10 @@
-package com.roshka.sifen.model;
+package com.roshka.sifen.sdk.v150.response.consultaRuc;
 
-import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.util.ResponseUtil;
 import org.w3c.dom.Node;
 
-public class TContenedorRuc extends SifenObjectBase {
-
+public class ContRuc extends SifenObjectBase {
     public static final String NOMBRE_ELEMENTO_DRUCCONS = "dRUCCons";
     public static final String NOMBRE_ELEMENTO_DRAZCONS = "dRazCons";
     public static final String NOMBRE_ELEMENTO_DCODESTCONS = "dCodEstCons";
@@ -18,22 +18,18 @@ public class TContenedorRuc extends SifenObjectBase {
     private String dRUCFactElec;
 
     @Override
-    public void setValueFromChildNode(Node value) throws SifenException {
-
+    public void setValueFromChildNode(Node value) {
         if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRUCCONS)) {
-            setdRUCCons(getTextValue(value));
+            setdRUCCons(ResponseUtil.getTextValue(value));
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRAZCONS)) {
-            setdRazCons(getTextValue(value));
+            setdRazCons(ResponseUtil.getTextValue(value));
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DCODESTCONS)) {
-            setdCodEstCons(getTextValue(value));
+            setdCodEstCons(ResponseUtil.getTextValue(value));
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DDESESTCONS)) {
-            setdDesEstCons(getTextValue(value));
+            setdDesEstCons(ResponseUtil.getTextValue(value));
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRUCFACTELEC)) {
-            setdRUCFactElec(getTextValue(value));
-        } else {
-            super.setValueFromChildNode(value);
+            setdRUCFactElec(ResponseUtil.getTextValue(value));
         }
-
     }
 
     public String getdRUCCons() {

@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -12,7 +12,7 @@ public class TgCamEsp {
     private TgGrupAdi gGrupAdi;
 
     public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
-        SOAPElement gCamEsp = gDtipDE.addChildElement("gCamEsp", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gCamEsp = gDtipDE.addChildElement("gCamEsp", Constants.SIFEN_NS_PREFIX);
         if (this.gGrupEner != null)
             this.gGrupEner.setupSOAPElements(gCamEsp);
 

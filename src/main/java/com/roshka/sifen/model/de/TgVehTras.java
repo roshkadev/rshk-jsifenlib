@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiModTrans;
 
 import javax.xml.soap.SOAPElement;
@@ -16,22 +16,22 @@ public class TgVehTras {
     private String dNroVuelo;
 
     public void setupSOAPElements(SOAPElement gTransp, TiModTrans iModTrans) throws SOAPException {
-        SOAPElement gVehTras = gTransp.addChildElement("gVehTras", NamespacesConstants.SIFEN_NS_PREFIX);
-        gVehTras.addChildElement("dTiVehTras", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dTiVehTras);
-        gVehTras.addChildElement("dMarVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dMarVeh);
-        gVehTras.addChildElement("dTipIdenVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTipIdenVeh));
+        SOAPElement gVehTras = gTransp.addChildElement("gVehTras", Constants.SIFEN_NS_PREFIX);
+        gVehTras.addChildElement("dTiVehTras", Constants.SIFEN_NS_PREFIX).setTextContent(this.dTiVehTras);
+        gVehTras.addChildElement("dMarVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dMarVeh);
+        gVehTras.addChildElement("dTipIdenVeh", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTipIdenVeh));
 
         if (this.dTipIdenVeh == 1)
-            gVehTras.addChildElement("dNroIDVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroIDVeh);
+            gVehTras.addChildElement("dNroIDVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNroIDVeh);
 
         if (this.dAdicVeh != null)
-            gVehTras.addChildElement("dAdicVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dAdicVeh);
+            gVehTras.addChildElement("dAdicVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dAdicVeh);
 
         if (this.dTipIdenVeh == 2)
-            gVehTras.addChildElement("dNroMatVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroMatVeh);
+            gVehTras.addChildElement("dNroMatVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNroMatVeh);
 
         if (iModTrans.getVal() == 3)
-            gVehTras.addChildElement("dNroVuelo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroVuelo);
+            gVehTras.addChildElement("dNroVuelo", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNroVuelo);
     }
 
     public String getdTiVehTras() {

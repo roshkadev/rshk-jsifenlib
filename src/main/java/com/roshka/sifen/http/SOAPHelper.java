@@ -1,7 +1,6 @@
 package com.roshka.sifen.http;
 
 import com.roshka.sifen.config.SifenConfig;
-import com.roshka.sifen.context.SifenCtx;
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.exceptions.SifenExceptionUtil;
 import com.roshka.sifen.soap.MessageHelper;
@@ -22,34 +21,19 @@ import java.net.URLConnection;
 import java.util.logging.Logger;
 
 public class SOAPHelper {
-
     private final static Logger logger = Logger.getLogger(SOAPHelper.class.toString());
 
-    private static void setupHttpURLConnectionProperties(HttpURLConnection httpURLConnection, SifenCtx sifenCtx)
-    {
-        SifenConfig sifenConfig = sifenCtx.getSifenConfig();
+    private static void setupHttpURLConnectionProperties(HttpURLConnection httpURLConnection, SifenConfig sifenConfig) {
         httpURLConnection.setConnectTimeout(sifenConfig.getHttpConnectTimeout());
         httpURLConnection.setReadTimeout(sifenConfig.getHttpReadTimeout());
     }
 
-    private static void setupHttpURLConnectionHeaders(MimeHeaders mimeHeaders, SifenCtx sifenCtx)
-    {
-        SifenConfig sifenConfig = sifenCtx.getSifenConfig();
+    private static void setupHttpURLConnectionHeaders(MimeHeaders mimeHeaders, SifenConfig sifenConfig) {
         mimeHeaders.addHeader("User-Agent", sifenConfig.getUserAgent());
     }
 
-    private static final int[] _httpSuccessStatuses = new int[] {
-            HttpURLConnection.HTTP_ACCEPTED,
-            HttpURLConnection.HTTP_OK
-    };
-
-    //
-    public static RespuestaSOAP performSOAPRequest(SifenCtx sifenCtx, SOAPMessage soapMessage, String urlString) throws SifenException
-    {
-        SifenConfig sifenConfig = sifenCtx.getSifenConfig();
-
-        RespuestaSOAP respuestaSOAP = new RespuestaSOAP();
-
+    public static SOAPResponse makeSOAPRequest(SifenConfig sifenConfig, String urlString, SOAPMessage soapMessage) throws SifenException {
+        SOAPResponse soapResponse = new SOAPResponse();
         URL url;
         SSLContext sslContext;
         try {
@@ -57,79 +41,70 @@ public class SOAPHelper {
             URLConnection urlConnection = url.openConnection();
             if (url.getProtocol().equalsIgnoreCase("https")) {
                 sslContext = SSLContextHelper.getContextFromConfig(sifenConfig);
-                if (urlConnection instanceof  HttpsURLConnection) {
+                if (urlConnection instanceof HttpsURLConnection) {
                     ((HttpsURLConnection) urlConnection).setSSLSocketFactory(sslContext.getSocketFactory());
                 } else {
                     logger.warning("Se esperaba una instancia de HttpsURLConnection. Se obtuvo una de " + urlConnection.getClass().getCanonicalName());
                 }
-            } else if (url.getProtocol().equalsIgnoreCase("http")) {
-                // no hacer nada
-            } else {
-                // protocolo inválido
+            } else if (!url.getProtocol().equalsIgnoreCase("http")) {
                 throw SifenExceptionUtil.llamadaSOAPInvalida("El protocolo " + url.getProtocol() + " es inválido");
             }
 
             if (!(urlConnection instanceof HttpURLConnection)) {
                 throw SifenExceptionUtil.llamadaSOAPInvalida("Se esperaba una instancia de HttpURLConnection o derivados. Se obtuvo: " + urlConnection.getClass().getCanonicalName());
             }
+
             HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
-            // siempre POST
-            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestMethod("POST"); // Siempre POST
             MimeHeaders mimeHeaders = soapMessage.getMimeHeaders();
-            setupHttpURLConnectionProperties(httpURLConnection, sifenCtx);
-            setupHttpURLConnectionHeaders(mimeHeaders, sifenCtx);
+            setupHttpURLConnectionProperties(httpURLConnection, sifenConfig);
+            setupHttpURLConnectionHeaders(mimeHeaders, sifenConfig);
 
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
 
-            // connectar!
-            logger.info("Conectanto a: " + url.toString());
+            // Conexion
+            logger.info("Conectando a: " + url.toString());
             httpURLConnection.connect();
 
-            // enviar mensaje SOAP
+            // Se envía el mensaje SOAP
             logger.info("Enviando mensaje SOAP");
             soapMessage.writeTo(httpURLConnection.getOutputStream());
 
-            // respuesta
-            respuestaSOAP.setStatus(httpURLConnection.getResponseCode());
-            respuestaSOAP.setContentType(httpURLConnection.getContentType());
+            // Respuesta
+            soapResponse.setStatus(httpURLConnection.getResponseCode());
+            soapResponse.setContentType(httpURLConnection.getContentType());
 
-            if (!respuestaSOAP.llamadaCorrecta()) {
-                // hubo un error en la petición
-                logger.severe("El servidor devolvió un estado HTTP de fallo: " + respuestaSOAP.getStatus());
+            if (!soapResponse.isRequestSuccessful()) {
+                // Hubo un error en la petición
+                logger.severe("El servidor devolvió un estado HTTP de fallo: " + soapResponse.getStatus());
 
                 try {
-
                     SOAPMessage errorSOAPMessage = MessageHelper.parseMessage(
                             MimeHeadersHelper.getFromHttpURLConnection(httpURLConnection),
                             httpURLConnection.getErrorStream()
                     );
 
-                    respuestaSOAP.setErrorSOAP(errorSOAPMessage);
-
+                    soapResponse.setSoapError(errorSOAPMessage);
                 } catch (SOAPException se) {
                     logger.severe("SOAPException -> No se puede convertir el error obtenido en un mensaje SOAP: " + se.getLocalizedMessage());
-                    respuestaSOAP.setDatosErrorCrudo(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
+                    soapResponse.setRawErrorData(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
                 } catch (IOException ioe) {
                     logger.severe("IOException -> No se puede convertir el error obtenido en un mensaje SOAP: " + ioe.getLocalizedMessage());
-                    respuestaSOAP.setDatosErrorCrudo(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
+                    soapResponse.setRawErrorData(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
                 }
 
-                return respuestaSOAP;
-
+                return soapResponse;
             }
 
-            // la respuesta fue correcta
-
+            // La respuesta fue correcta
             SOAPMessage respuestaSOAPMessage = MessageHelper.parseMessage(
                     MimeHeadersHelper.getFromHttpURLConnection(httpURLConnection),
                     httpURLConnection.getInputStream()
             );
+            soapResponse.setSoapResponse(respuestaSOAPMessage);
 
-            respuestaSOAP.setRespuestaSOAP(respuestaSOAPMessage);
-
-            return respuestaSOAP;
-
+            return soapResponse;
         } catch (MalformedURLException e) {
             throw SifenExceptionUtil.llamadaSOAPInvalida("El URL " + urlString + " es inválido: " + e.getLocalizedMessage(), e);
         } catch (IOException e) {
@@ -137,7 +112,5 @@ public class SOAPHelper {
         } catch (SOAPException e) {
             throw SifenExceptionUtil.llamadaSOAPInvalida("Excepción de mensajería SOAP: " + e.getLocalizedMessage(), e);
         }
-
     }
-
 }

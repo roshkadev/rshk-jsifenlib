@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -17,12 +17,12 @@ public class TgCompPub {
     public void setupSOAPElements(SOAPElement gCamFE) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gCompPub = gCamFE.addChildElement("gCompPub", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCompPub.addChildElement("dModCont", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dModCont);
-        gCompPub.addChildElement("dEntCont", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dEntCont));
-        gCompPub.addChildElement("dAnoCont", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dAnoCont));
-        gCompPub.addChildElement("dSecCont", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSecCont));
-        gCompPub.addChildElement("dFeCodCont", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeCodCont));
+        SOAPElement gCompPub = gCamFE.addChildElement("gCompPub", Constants.SIFEN_NS_PREFIX);
+        gCompPub.addChildElement("dModCont", Constants.SIFEN_NS_PREFIX).setTextContent(this.dModCont);
+        gCompPub.addChildElement("dEntCont", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dEntCont));
+        gCompPub.addChildElement("dAnoCont", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dAnoCont));
+        gCompPub.addChildElement("dSecCont", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSecCont));
+        gCompPub.addChildElement("dFeCodCont", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeCodCont));
     }
 
     public String getdModCont() {

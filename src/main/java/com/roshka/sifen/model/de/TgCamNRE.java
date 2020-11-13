@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiMotivTras;
 import com.roshka.sifen.model.de.types.TiRespEmiNR;
 
@@ -21,17 +21,17 @@ public class TgCamNRE {
     public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gCamNRE = gDtipDE.addChildElement("gCamNRE", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCamNRE.addChildElement("iMotEmiNR", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iMotEmiNR.getVal()));
-        gCamNRE.addChildElement("dDesMotEmiNR", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iMotEmiNR.getDescripcion());
-        gCamNRE.addChildElement("iRespEmiNR", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iRespEmiNR.getVal()));
-        gCamNRE.addChildElement("dDesRespEmiNR", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iRespEmiNR.getDescripcion());
+        SOAPElement gCamNRE = gDtipDE.addChildElement("gCamNRE", Constants.SIFEN_NS_PREFIX);
+        gCamNRE.addChildElement("iMotEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iMotEmiNR.getVal()));
+        gCamNRE.addChildElement("dDesMotEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(this.iMotEmiNR.getDescripcion());
+        gCamNRE.addChildElement("iRespEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iRespEmiNR.getVal()));
+        gCamNRE.addChildElement("dDesRespEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(this.iRespEmiNR.getDescripcion());
 
         if (this.dKmR != 0)
-            gCamNRE.addChildElement("dKmR", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dKmR));
+            gCamNRE.addChildElement("dKmR", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dKmR));
 
         if (dFecEm != null)
-            gCamNRE.addChildElement("dFecEm", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEm));
+            gCamNRE.addChildElement("dFecEm", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEm));
     }
 
     public TiMotivTras getiMotEmiNR() {

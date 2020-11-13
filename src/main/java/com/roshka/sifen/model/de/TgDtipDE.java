@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 
 import javax.xml.soap.SOAPElement;
@@ -20,7 +20,7 @@ public class TgDtipDE {
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TgDaGOC gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
 
-        SOAPElement gDtipDE = DE.addChildElement("gDtipDE", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gDtipDE = DE.addChildElement("gDtipDE", Constants.SIFEN_NS_PREFIX);
         if (iTiDE.getVal() == 1)
             this.gCamFE.setupSOAPElements(gDtipDE, iTiOpe);
         else if (iTiDE.getVal() == 4)

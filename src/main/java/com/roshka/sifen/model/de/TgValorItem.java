@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TdCondTiCam;
 
 import javax.xml.soap.SOAPElement;
@@ -14,13 +14,13 @@ public class TgValorItem {
     private TgValorRestaItem gValorRestaItem;
 
     public void setupSOAPElements(SOAPElement gCamItem, TdCondTiCam dCondTiCam) throws SOAPException {
-        SOAPElement gValorItem = gCamItem.addChildElement("gValorItem", NamespacesConstants.SIFEN_NS_PREFIX);
-        gValorItem.addChildElement("dPUniProSer", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPUniProSer));
+        SOAPElement gValorItem = gCamItem.addChildElement("gValorItem", Constants.SIFEN_NS_PREFIX);
+        gValorItem.addChildElement("dPUniProSer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPUniProSer));
 
         if (dCondTiCam.getVal() == 2)
-            gValorItem.addChildElement("dTiCamIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCamIt));
+            gValorItem.addChildElement("dTiCamIt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCamIt));
 
-        gValorItem.addChildElement("dTotBruOpeItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotBruOpeItem));
+        gValorItem.addChildElement("dTotBruOpeItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotBruOpeItem));
 
         this.gValorRestaItem.setupSOAPElements(gValorItem, this.dTiCamIt);
     }

@@ -1,59 +1,77 @@
 package com.roshka.sifen.config;
 
-import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.exceptions.SifenExceptionUtil;
-import com.roshka.sifen.util.PropertiesUtil;
-
-import java.util.Properties;
-import java.util.logging.Logger;
-
-import static com.roshka.sifen.sdk.Constants.SDK_CURRENT_VERSION;
-import static java.util.logging.Logger.getLogger;
+import static com.roshka.sifen.model.Constants.SDK_CURRENT_VERSION;
 
 public class SifenConfig {
-    private final static Logger logger = getLogger(SifenConfig.class.toString());
+    // Enums
+    public enum TipoCertificadoCliente {PFX, PEM, DER}
+    public enum TipoAmbiente {DEV, PROD}
 
-    public static final String CFG_URL_BASE_KEY = "sifen.url_base";
-    public static final String CFG_USE_CLIENT_CERTIFICATE_KEY = "sifen.use_client_certificate";
-
-    public static final String CFG_URL_RECIBE_KEY = "sifen.url.recibe";
-    public static final String CFG_URL_RECIBE_LOTE_KEY = "sifen.url.recibe-lote";
-    public static final String CFG_URL_EVENTO_KEY = "sifen.url.evento";
-    public static final String CFG_URL_CONSULTA_LOTE_KEY = "sifen.url.consulta-lote";
-    public static final String CFG_URL_CONSULTA_RUC_KEY = "sifen.url.consulta-ruc";
-    public static final String CFG_URL_CONSULTA_KEY = "sifen.url.consulta";
-
-    public static final String URL_RECIBE_DEFAULT_PATH = "/de/ws/sync/recibe.wsdl";
-    public static final String URL_RECIBE_LOTE_DEFAULT_PATH = "/de/ws/async/recibe-lote.wsdl";
-    public static final String URL_EVENTO_DEFAULT_PATH = "/de/ws/eventos/evento.wsdl";
-    public static final String URL_CONSULTA_LOTE_DEFAULT_PATH = "/de/ws/consultas/consulta-lote.wsdl";
-    public static final String URL_CONSULTA_RUC_DEFAULT_PATH = "/de/ws/consultas/consulta-ruc.wsdl";
-    public static final String URL_CONSULTA_DEFAULT_PATH = "/de/ws/consultas/consulta.wsdl";
-
+    // Atributos
+    private TipoAmbiente ambiente;
     private String urlBase;
+    private String urlBaseLocal;
     private String urlRecibe;
     private String urlRecibeLote;
     private String urlEvento;
     private String urlConsultaLote;
     private String urlConsultaRUC;
     private String urlConsulta;
-    private boolean useClientCertificate;
-    private ClientCertConfig clientCertConfig;
 
-    public static final String CFG_HTTP_CONNECT_TIMEOUT_KEY = "sifen.http.connect_timeout";
-    public static final String CFG_HTTP_READ_TIMEOUT_KEY = "sifen.http.read_timeout";
-    public static final String CFG_HTTP_USER_AGENT_KEY = "sifen.http.user_agent";
+    private boolean usarCertificadoCliente;
+    private String rutaCertificadoCliente;
+    private String contrasenaCertificadoCliente;
+    private TipoCertificadoCliente tipoCertificadoCliente;
 
-    // 15 segundos
-    public static final int HTTP_CONNECT_TIMEOUT_DEFAULT = 15 * 1000;
-    // 45 segundos
-    public static final int HTTP_READ_TIMEOUT_DEFAULT = 45 * 1000;
-    public static final String HTTP_USER_AGENT_DEFAULT = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
+    private final int httpConnectTimeout;
+    private final int httpReadTimeout;
+    private final String userAgent;
 
-    private int httpConnectTimeout;
-    private int httpReadTimeout;
-    private String userAgent;
+    // Valores Finales
+    private final String urlBaseDesarrollo = "https://sifen-test.set.gov.py";
+    private final String urlBaseProduccion = "https://sifen.set.gov.py";
 
+    // Constructores
+    public SifenConfig() {
+        this.ambiente = TipoAmbiente.DEV;
+        this.urlBaseLocal = urlBaseDesarrollo;
+        this.urlRecibe = "/de/ws/sync/recibe.wsdl";
+        this.urlRecibeLote = "/de/ws/async/recibe-lote.wsdl";
+        this.urlEvento = "/de/ws/eventos/evento.wsdl";
+        this.urlConsultaLote = "/de/ws/consultas/consulta-lote.wsdl";
+        this.urlConsultaRUC = "/de/ws/consultas/consulta-ruc.wsdl";
+        this.urlConsulta = "/de/ws/consultas/consulta.wsdl";
+        this.usarCertificadoCliente = true;
+
+        this.httpConnectTimeout = 15 * 1000; // 15 Segundos
+        this.httpReadTimeout = 45 * 1000; // 45 Segundos
+        this.userAgent = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
+    }
+
+    public SifenConfig(String rutaCertificadoCliente, String contrasenaCertificadoCliente,
+                       TipoCertificadoCliente tipoCertificadoCliente) {
+        this();
+        this.usarCertificadoCliente = true;
+        this.rutaCertificadoCliente = rutaCertificadoCliente;
+        this.contrasenaCertificadoCliente = contrasenaCertificadoCliente;
+        this.tipoCertificadoCliente = tipoCertificadoCliente;
+    }
+
+    public SifenConfig(TipoAmbiente tipoAmbiente, String rutaCertificadoCliente, String contrasenaCertificadoCliente,
+                       TipoCertificadoCliente tipoCertificadoCliente) {
+        this(rutaCertificadoCliente, contrasenaCertificadoCliente, tipoCertificadoCliente);
+        this.ambiente = tipoAmbiente;
+    }
+
+    // Getters y Setters
+    public void setAmbiente(TipoAmbiente ambiente) {
+        this.ambiente = ambiente;
+
+        if (this.ambiente == TipoAmbiente.DEV)
+            this.urlBaseLocal = urlBaseDesarrollo;
+        else if (this.ambiente == TipoAmbiente.PROD)
+            this.urlBaseLocal = urlBaseProduccion;
+    }
 
     public String getUrlBase() {
         return urlBase;
@@ -63,20 +81,8 @@ public class SifenConfig {
         this.urlBase = urlBase;
     }
 
-    public boolean isUseClientCertificate() {
-        return useClientCertificate;
-    }
-
-    public void setUseClientCertificate(boolean useClientCertificate) {
-        this.useClientCertificate = useClientCertificate;
-    }
-
-    public ClientCertConfig getClientCertConfig() {
-        return clientCertConfig;
-    }
-
-    public void setClientCertConfig(ClientCertConfig clientCertConfig) {
-        this.clientCertConfig = clientCertConfig;
+    public String getUrlBaseLocal() {
+        return urlBaseLocal;
     }
 
     public String getUrlRecibe() {
@@ -127,89 +133,47 @@ public class SifenConfig {
         this.urlConsulta = urlConsulta;
     }
 
-    private String urlOrDefault(Properties properties, String key, String defaultPath) {
-        // Si el KEY está establecido, utilizarlo como valor de URL, de lo contrario, usar el URL
-        // con los valores por defecto
-        if (properties.containsKey(key)) {
-            return properties.getProperty(key);
-        } else {
-            return getUrlBase() + defaultPath;
-        }
+    public boolean isUsarCertificadoCliente() {
+        return usarCertificadoCliente;
     }
 
-    public static SifenConfig loadFromProperties(Properties properties)
-            throws SifenException
-    {
-        SifenConfig sifenConfig = new SifenConfig();
-        sifenConfig.setUrlBase(properties.getProperty(CFG_URL_BASE_KEY));
+    public void setUsarCertificadoCliente(boolean usarCertificadoCliente) {
+        this.usarCertificadoCliente = usarCertificadoCliente;
+    }
 
-        if (sifenConfig.getUrlBase() == null) {
-            String msg = "Se necesita un valor para URL BASE en el archivo. Clave: " + CFG_URL_BASE_KEY;
-            logger.severe(msg);
-            throw SifenExceptionUtil.configuracionInvalida(msg);
-        }
+    public String getRutaCertificadoCliente() {
+        return rutaCertificadoCliente;
+    }
 
-        boolean useClientCertificate = true;
-        if (properties.containsKey(CFG_USE_CLIENT_CERTIFICATE_KEY)) {
-            useClientCertificate = Boolean.parseBoolean(properties.getProperty(CFG_USE_CLIENT_CERTIFICATE_KEY));
-        }
-        sifenConfig.setUseClientCertificate(useClientCertificate);
+    public void setRutaCertificadoCliente(String rutaCertificadoCliente) {
+        this.rutaCertificadoCliente = rutaCertificadoCliente;
+    }
 
-        // URL_CONSULTA
-        sifenConfig.setUrlConsulta(
-            sifenConfig.urlOrDefault(properties, CFG_URL_CONSULTA_KEY, URL_CONSULTA_DEFAULT_PATH)
-        );
-        // URL_CONSULTA_LOTE
-        sifenConfig.setUrlConsultaLote(
-                sifenConfig.urlOrDefault(properties, CFG_URL_CONSULTA_LOTE_KEY, URL_CONSULTA_LOTE_DEFAULT_PATH)
-        );
-        // URL_CONSULTA_RUC
-        sifenConfig.setUrlConsultaRUC(
-                sifenConfig.urlOrDefault(properties, CFG_URL_CONSULTA_RUC_KEY, URL_CONSULTA_RUC_DEFAULT_PATH)
-        );
-        // URL_RECIBE
-        sifenConfig.setUrlRecibe(
-                sifenConfig.urlOrDefault(properties, CFG_URL_RECIBE_KEY, URL_RECIBE_DEFAULT_PATH)
-        );
-        // URL_RECIBE_LOTE
-        sifenConfig.setUrlRecibeLote(
-                sifenConfig.urlOrDefault(properties, CFG_URL_RECIBE_LOTE_KEY, URL_RECIBE_LOTE_DEFAULT_PATH)
-        );
-        // URL_EVENTO
-        sifenConfig.setUrlEvento(
-                sifenConfig.urlOrDefault(properties, CFG_URL_EVENTO_KEY, URL_EVENTO_DEFAULT_PATH)
-        );
+    public String getContrasenaCertificadoCliente() {
+        return contrasenaCertificadoCliente;
+    }
 
-        // Propiedades de las conexiones HTTP
-        sifenConfig.setHttpConnectTimeout(PropertiesUtil.getIntOrDefault(properties, CFG_HTTP_CONNECT_TIMEOUT_KEY, HTTP_CONNECT_TIMEOUT_DEFAULT));
-        sifenConfig.setHttpReadTimeout(PropertiesUtil.getIntOrDefault(properties, CFG_HTTP_READ_TIMEOUT_KEY, HTTP_READ_TIMEOUT_DEFAULT));
-        sifenConfig.setUserAgent(properties.getProperty(CFG_HTTP_USER_AGENT_KEY, HTTP_USER_AGENT_DEFAULT));
+    public void setContrasenaCertificadoCliente(String contrasenaCertificadoCliente) {
+        this.contrasenaCertificadoCliente = contrasenaCertificadoCliente;
+    }
 
-        sifenConfig.setClientCertConfig(ClientCertConfig.loadFromProperties(properties));
-        return sifenConfig;
+    public TipoCertificadoCliente getTipoCertificadoCliente() {
+        return tipoCertificadoCliente;
+    }
+
+    public void setTipoCertificadoCliente(TipoCertificadoCliente tipoCertificadoCliente) {
+        this.tipoCertificadoCliente = tipoCertificadoCliente;
     }
 
     public int getHttpConnectTimeout() {
         return httpConnectTimeout;
     }
 
-    public void setHttpConnectTimeout(int httpConnectTimeout) {
-        this.httpConnectTimeout = httpConnectTimeout;
-    }
-
     public int getHttpReadTimeout() {
         return httpReadTimeout;
     }
 
-    public void setHttpReadTimeout(int httpReadTimeout) {
-        this.httpReadTimeout = httpReadTimeout;
-    }
-
     public String getUserAgent() {
         return userAgent;
-    }
-
-    public void setUserAgent(String userAgent) {
-        this.userAgent = userAgent;
     }
 }

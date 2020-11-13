@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiTipCom;
 import com.roshka.sifen.model.de.types.TiTipOpVN;
 
@@ -26,54 +26,54 @@ public class TgVehNuevo {
     private String dCilin;
 
     public void setupSOAPElements(SOAPElement gCamItem) throws SOAPException {
-        SOAPElement gVehNuevo = gCamItem.addChildElement("gVehNuevo", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gVehNuevo = gCamItem.addChildElement("gVehNuevo", Constants.SIFEN_NS_PREFIX);
         if (this.iTipOpVN != null) {
-            gVehNuevo.addChildElement("iTipOpVN", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipOpVN.getVal()));
-            gVehNuevo.addChildElement("dDesTipOpVN", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipOpVN.getDescripcion());
+            gVehNuevo.addChildElement("iTipOpVN", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipOpVN.getVal()));
+            gVehNuevo.addChildElement("dDesTipOpVN", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipOpVN.getDescripcion());
         }
 
         if (this.dChasis != null)
-            gVehNuevo.addChildElement("dChasis", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dChasis);
+            gVehNuevo.addChildElement("dChasis", Constants.SIFEN_NS_PREFIX).setTextContent(this.dChasis);
 
         if (this.dColor != null)
-            gVehNuevo.addChildElement("dColor", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dColor);
+            gVehNuevo.addChildElement("dColor", Constants.SIFEN_NS_PREFIX).setTextContent(this.dColor);
 
         if (this.dPotencia != 0)
-            gVehNuevo.addChildElement("dPotencia", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPotencia));
+            gVehNuevo.addChildElement("dPotencia", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPotencia));
 
         if (this.dCapMot != 0)
-            gVehNuevo.addChildElement("dCapMot", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapMot));
+            gVehNuevo.addChildElement("dCapMot", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapMot));
 
         if (this.dPNet != null)
-            gVehNuevo.addChildElement("dPNet", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPNet));
+            gVehNuevo.addChildElement("dPNet", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPNet));
 
         if (this.dPBruto != null)
-            gVehNuevo.addChildElement("dPBruto", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPBruto));
+            gVehNuevo.addChildElement("dPBruto", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPBruto));
 
         if (this.iTipOpVN != null) {
-            gVehNuevo.addChildElement("iTipCom", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipCom.getVal()));
-            gVehNuevo.addChildElement("dDesTipCom", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+            gVehNuevo.addChildElement("iTipCom", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipCom.getVal()));
+            gVehNuevo.addChildElement("dDesTipCom", Constants.SIFEN_NS_PREFIX).setTextContent(
                     this.iTipCom.getDescripcion() != null ? this.iTipCom.getDescripcion() : this.dDesTipCom
             );
         }
 
         if (this.dNroMotor != null)
-            gVehNuevo.addChildElement("dNroMotor", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNroMotor);
+            gVehNuevo.addChildElement("dNroMotor", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNroMotor);
 
         if (this.dCapTracc != null)
-            gVehNuevo.addChildElement("dCapTracc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapTracc));
+            gVehNuevo.addChildElement("dCapTracc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapTracc));
 
         if (this.dAnoFab != 0)
-            gVehNuevo.addChildElement("dAnoFab", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dAnoFab));
+            gVehNuevo.addChildElement("dAnoFab", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dAnoFab));
 
         if (this.cTipVeh != null)
-            gVehNuevo.addChildElement("cTipVeh", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cTipVeh);
+            gVehNuevo.addChildElement("cTipVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.cTipVeh);
 
         if (this.dCapac != 0)
-            gVehNuevo.addChildElement("dCapac", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapac));
+            gVehNuevo.addChildElement("dCapac", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCapac));
 
         if (this.dCilin != null)
-            gVehNuevo.addChildElement("dCilin", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCilin);
+            gVehNuevo.addChildElement("dCilin", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCilin);
     }
 
     public TiTipOpVN getiTipOpVN() {

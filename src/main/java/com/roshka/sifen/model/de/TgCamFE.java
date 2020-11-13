@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiIndPres;
 import com.roshka.sifen.model.de.types.TiTiOpe;
 
@@ -18,14 +18,14 @@ public class TgCamFE {
     public void setupSOAPElements(SOAPElement gDtipDE, TiTiOpe iTiOpe) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gCamFE = gDtipDE.addChildElement("gCamFE", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCamFE.addChildElement("iIndPres", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iIndPres.getVal()));
-        gCamFE.addChildElement("dDesIndPres", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+        SOAPElement gCamFE = gDtipDE.addChildElement("gCamFE", Constants.SIFEN_NS_PREFIX);
+        gCamFE.addChildElement("iIndPres", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iIndPres.getVal()));
+        gCamFE.addChildElement("dDesIndPres", Constants.SIFEN_NS_PREFIX).setTextContent(
                 this.iIndPres.getDescripcion() != null ? this.iIndPres.getDescripcion() : this.dDesIndPres
         );
 
         if (this.dFecEmNR != null)
-            gCamFE.addChildElement("dFecEmNR", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEmNR));
+            gCamFE.addChildElement("dFecEmNR", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEmNR));
 
         if (iTiOpe.getVal() == 3)
             this.gCompPub.setupSOAPElements(gCamFE);

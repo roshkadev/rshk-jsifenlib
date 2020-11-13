@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiCondCred;
 
 import javax.xml.soap.SOAPElement;
@@ -16,18 +16,18 @@ public class TgPagCred {
     private List<TgCuotas> gCoutasList;
 
     public void setupSOAPElements(SOAPElement gCamCond) throws SOAPException {
-        SOAPElement gPagCred = gCamCond.addChildElement("gPagCred", NamespacesConstants.SIFEN_NS_PREFIX);
-        gPagCred.addChildElement("iCondCred", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCondCred.getVal()));
-        gPagCred.addChildElement("dDCondCred", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iCondCred.getDescripcion());
+        SOAPElement gPagCred = gCamCond.addChildElement("gPagCred", Constants.SIFEN_NS_PREFIX);
+        gPagCred.addChildElement("iCondCred", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCondCred.getVal()));
+        gPagCred.addChildElement("dDCondCred", Constants.SIFEN_NS_PREFIX).setTextContent(this.iCondCred.getDescripcion());
 
         if (this.dPlazoCre != null || this.iCondCred.getVal() == 1)
-            gPagCred.addChildElement("dPlazoCre", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dPlazoCre);
+            gPagCred.addChildElement("dPlazoCre", Constants.SIFEN_NS_PREFIX).setTextContent(this.dPlazoCre);
 
         if (this.dCuotas != 0 || this.iCondCred.getVal() == 2)
-            gPagCred.addChildElement("dCuotas", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCuotas));
+            gPagCred.addChildElement("dCuotas", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCuotas));
 
         if (this.dMonEnt != null)
-            gPagCred.addChildElement("dMonEnt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dMonEnt));
+            gPagCred.addChildElement("dMonEnt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dMonEnt));
 
         if (this.iCondCred.getVal() == 2) {
             for (TgCuotas gCuotas : gCoutasList) {

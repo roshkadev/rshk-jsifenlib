@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.departamentos.TDepartamento;
 
 import javax.xml.soap.SOAPElement;
@@ -19,29 +19,29 @@ public class TgCamSal {
     private String dTelSal;
 
     public void setupSOAPElements(SOAPElement gTransp) throws SOAPException {
-        SOAPElement gCamSal = gTransp.addChildElement("gCamSal", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCamSal.addChildElement("dDirLocSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirLocSal);
-        gCamSal.addChildElement("dNumCasSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasSal));
+        SOAPElement gCamSal = gTransp.addChildElement("gCamSal", Constants.SIFEN_NS_PREFIX);
+        gCamSal.addChildElement("dDirLocSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirLocSal);
+        gCamSal.addChildElement("dNumCasSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasSal));
 
         if (this.dComp1Sal != null)
-            gCamSal.addChildElement("dComp1Sal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dComp1Sal);
+            gCamSal.addChildElement("dComp1Sal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dComp1Sal);
 
         if (this.dComp2Sal != null)
-            gCamSal.addChildElement("dComp2Sal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dComp2Sal);
+            gCamSal.addChildElement("dComp2Sal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dComp2Sal);
 
-        gCamSal.addChildElement("cDepSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepSal.getVal()));
-        gCamSal.addChildElement("dDesDepSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cDepSal.getDescripcion());
+        gCamSal.addChildElement("cDepSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepSal.getVal()));
+        gCamSal.addChildElement("dDesDepSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.cDepSal.getDescripcion());
 
         if (this.cDisSal != 0) {
-            gCamSal.addChildElement("cDisSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisSal));
-            gCamSal.addChildElement("dDesDisSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisSal);
+            gCamSal.addChildElement("cDisSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisSal));
+            gCamSal.addChildElement("dDesDisSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisSal);
         }
 
-        gCamSal.addChildElement("cCiuSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuSal));
-        gCamSal.addChildElement("dDesCiuSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuSal);
+        gCamSal.addChildElement("cCiuSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuSal));
+        gCamSal.addChildElement("dDesCiuSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuSal);
 
         if (this.dTelSal != null)
-            gCamSal.addChildElement("dTelSal", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dTelSal);
+            gCamSal.addChildElement("dTelSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dTelSal);
     }
 
     public String getdDirLocSal() {

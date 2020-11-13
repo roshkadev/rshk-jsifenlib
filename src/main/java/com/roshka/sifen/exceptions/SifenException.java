@@ -1,7 +1,6 @@
 package com.roshka.sifen.exceptions;
 
 public class SifenException extends Exception {
-
     private String code;
 
     public SifenException(String code, String message) {

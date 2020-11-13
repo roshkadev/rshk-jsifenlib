@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiNatRec;
 import com.roshka.sifen.model.de.types.TiTipDoc;
 import com.roshka.sifen.model.paises.PaisType;
@@ -26,43 +26,43 @@ public class TgCamTrans {
     private String dDirAge;
 
     public void setupSOAPElements(SOAPElement gTransp) throws SOAPException {
-        SOAPElement gCamTrans = gTransp.addChildElement("gCamTrans", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCamTrans.addChildElement("iNatTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatTrans.getVal()));
-        gCamTrans.addChildElement("dNomTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomTrans);
+        SOAPElement gCamTrans = gTransp.addChildElement("gCamTrans", Constants.SIFEN_NS_PREFIX);
+        gCamTrans.addChildElement("iNatTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatTrans.getVal()));
+        gCamTrans.addChildElement("dNomTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomTrans);
 
         if (this.iNatTrans.getVal() == 1) {
-            gCamTrans.addChildElement("dRucTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dRucTrans);
-            gCamTrans.addChildElement("dDVTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVTrans));
+            gCamTrans.addChildElement("dRucTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRucTrans);
+            gCamTrans.addChildElement("dDVTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVTrans));
         } else if (this.iNatTrans.getVal() == 2) {
-            gCamTrans.addChildElement("iTipIDTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDTrans.getVal()));
-            gCamTrans.addChildElement("dDTipIDTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipIDTrans.getDescripcion());
-            gCamTrans.addChildElement("dNumIDTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDTrans);
+            gCamTrans.addChildElement("iTipIDTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDTrans.getVal()));
+            gCamTrans.addChildElement("dDTipIDTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipIDTrans.getDescripcion());
+            gCamTrans.addChildElement("dNumIDTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDTrans);
         }
 
         if (this.cNacTrans != null) {
-            gCamTrans.addChildElement("cNacTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.toString());
-            gCamTrans.addChildElement("dDesNacTrans", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.getNombre());
+            gCamTrans.addChildElement("cNacTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.toString());
+            gCamTrans.addChildElement("dDesNacTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.getNombre());
         }
 
-        gCamTrans.addChildElement("dNumIDChof", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDChof);
-        gCamTrans.addChildElement("dNomChof", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomChof);
+        gCamTrans.addChildElement("dNumIDChof", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDChof);
+        gCamTrans.addChildElement("dNomChof", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomChof);
 
         if (this.dDomFisc != null)
-            gCamTrans.addChildElement("dDomFisc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDomFisc);
+            gCamTrans.addChildElement("dDomFisc", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDomFisc);
 
         if (this.dDirChof != null)
-            gCamTrans.addChildElement("dDirChof", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirChof);
+            gCamTrans.addChildElement("dDirChof", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirChof);
 
         if (this.dNombAg != null)
-            gCamTrans.addChildElement("dNombAg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNombAg);
+            gCamTrans.addChildElement("dNombAg", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNombAg);
 
         if (this.dRucAg != null) {
-            gCamTrans.addChildElement("dRucAg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dRucAg);
-            gCamTrans.addChildElement("dDVAg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVAg));
+            gCamTrans.addChildElement("dRucAg", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRucAg);
+            gCamTrans.addChildElement("dDVAg", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVAg));
         }
 
         if (this.dNombAg != null)
-            gCamTrans.addChildElement("dDirAge", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirAge);
+            gCamTrans.addChildElement("dDirAge", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirAge);
     }
 
     public TiNatRec getiNatTrans() {

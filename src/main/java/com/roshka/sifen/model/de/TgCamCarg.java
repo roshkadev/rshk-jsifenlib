@@ -1,8 +1,7 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.extra.TiCarCarga;
-import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
 
 import javax.xml.soap.SOAPElement;
@@ -18,24 +17,24 @@ public class TgCamCarg {
     private String dDesCarCarga;
 
     public void setupSOAPElements(SOAPElement gCamGen) throws SOAPException {
-        SOAPElement gCamCarg = gCamGen.addChildElement("gCamCarg", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gCamCarg = gCamGen.addChildElement("gCamCarg", Constants.SIFEN_NS_PREFIX);
         if (this.cUniMedTotVol != null) {
-            gCamCarg.addChildElement("cUniMedTotVol", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMedTotVol.getVal()));
-            gCamCarg.addChildElement("dDesUniMedTotVol", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cUniMedTotVol.getDescripcion());
+            gCamCarg.addChildElement("cUniMedTotVol", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMedTotVol.getVal()));
+            gCamCarg.addChildElement("dDesUniMedTotVol", Constants.SIFEN_NS_PREFIX).setTextContent(this.cUniMedTotVol.getDescripcion());
         }
         if (this.dTotVolMerc != null)
-            gCamCarg.addChildElement("dTotVolMerc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotVolMerc));
+            gCamCarg.addChildElement("dTotVolMerc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotVolMerc));
 
         if (this.cUniMedTotPes != null) {
-            gCamCarg.addChildElement("cUniMedTotPes", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMedTotPes.getVal()));
-            gCamCarg.addChildElement("dDesUniMedTotPes", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cUniMedTotPes.getDescripcion());
+            gCamCarg.addChildElement("cUniMedTotPes", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMedTotPes.getVal()));
+            gCamCarg.addChildElement("dDesUniMedTotPes", Constants.SIFEN_NS_PREFIX).setTextContent(this.cUniMedTotPes.getDescripcion());
         }
         if (this.dTotPesMerc != null)
-            gCamCarg.addChildElement("dTotPesMerc", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotPesMerc));
+            gCamCarg.addChildElement("dTotPesMerc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotPesMerc));
 
         if (this.iCarCarga != null) {
-            gCamCarg.addChildElement("iCarCarga", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCarCarga.getVal()));
-            gCamCarg.addChildElement("dDesCarCarga", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+            gCamCarg.addChildElement("iCarCarga", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCarCarga.getVal()));
+            gCamCarg.addChildElement("dDesCarCarga", Constants.SIFEN_NS_PREFIX).setTextContent(
                     this.iCarCarga.getDescripcion() != null ? this.iCarCarga.getDescripcion() : this.dDesCarCarga
             );
         }

@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTiDE;
 
 import javax.xml.soap.SOAPElement;
@@ -13,15 +13,15 @@ public class TgCamGen {
     private TgCamCarg gCamCarg;
 
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE) throws SOAPException {
-        SOAPElement gCamGen = DE.addChildElement("gCamGen", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gCamGen = DE.addChildElement("gCamGen", Constants.SIFEN_NS_PREFIX);
         if (this.dOrdCompra != null)
-            gCamGen.addChildElement("dOrdCompra", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dOrdCompra);
+            gCamGen.addChildElement("dOrdCompra", Constants.SIFEN_NS_PREFIX).setTextContent(this.dOrdCompra);
 
         if (this.dOrdVta != null)
-            gCamGen.addChildElement("dOrdVta", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dOrdVta);
+            gCamGen.addChildElement("dOrdVta", Constants.SIFEN_NS_PREFIX).setTextContent(this.dOrdVta);
 
         if (this.dAsiento != null)
-            gCamGen.addChildElement("dAsiento", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dAsiento);
+            gCamGen.addChildElement("dAsiento", Constants.SIFEN_NS_PREFIX).setTextContent(this.dAsiento);
 
         if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.gCamCarg != null)
             this.gCamCarg.setupSOAPElements(gCamGen);

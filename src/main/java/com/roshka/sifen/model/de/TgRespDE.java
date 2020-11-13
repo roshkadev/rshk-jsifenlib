@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiTipIDRespDE;
 
 import javax.xml.soap.SOAPElement;
@@ -14,14 +14,14 @@ public class TgRespDE {
     private String dCarRespDE;
 
     public void setupSOAPElements(SOAPElement gEmis) throws SOAPException {
-        SOAPElement gRespDE = gEmis.addChildElement("gRespDE", NamespacesConstants.SIFEN_NS_PREFIX);
-        gRespDE.addChildElement("iTipIDRespDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDRespDE.getVal()));
-        gRespDE.addChildElement("dDTipIDRespDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+        SOAPElement gRespDE = gEmis.addChildElement("gRespDE", Constants.SIFEN_NS_PREFIX);
+        gRespDE.addChildElement("iTipIDRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDRespDE.getVal()));
+        gRespDE.addChildElement("dDTipIDRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(
                 this.iTipIDRespDE.getDescripcion() != null ? this.iTipIDRespDE.getDescripcion() : this.dDTipIDRespDE
         );
-        gRespDE.addChildElement("dNumIDRespDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDRespDE);
-        gRespDE.addChildElement("dNomRespDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomRespDE);
-        gRespDE.addChildElement("dCarRespDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCarRespDE);
+        gRespDE.addChildElement("dNumIDRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDRespDE);
+        gRespDE.addChildElement("dNomRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomRespDE);
+        gRespDE.addChildElement("dCarRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCarRespDE);
     }
 
     public TiTipIDRespDE getiTipIDRespDE() {

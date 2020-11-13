@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class MessageHelper {
-
-    public static SOAPMessage createMessage() throws SOAPException
-    {
+    public static SOAPMessage createMessage() throws SOAPException {
         MessageFactory mf12 = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
         SOAPMessage message = mf12.createMessage();
         EnvelopeHelper.setupEnvelope(message);
@@ -16,8 +14,7 @@ public class MessageHelper {
     }
 
     public static SOAPMessage parseMessage(MimeHeaders mimeHeaders, InputStream is)
-            throws SOAPException, IOException
-    {
+            throws SOAPException, IOException {
         MessageFactory mf12 = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL);
         return mf12.createMessage(mimeHeaders, is);
     }

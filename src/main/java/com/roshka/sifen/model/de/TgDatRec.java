@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.departamentos.TDepartamento;
 import com.roshka.sifen.model.paises.PaisType;
@@ -33,52 +33,52 @@ public class TgDatRec {
     private String dCodCliente;
 
     public void setupSOAPElements(SOAPElement gDatGralOpe, TTiDE iTiDE) throws SOAPException {
-        SOAPElement gDatRec = gDatGralOpe.addChildElement("gDatRec", NamespacesConstants.SIFEN_NS_PREFIX);
-        gDatRec.addChildElement("iNatRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatRec.getVal()));
-        gDatRec.addChildElement("iTiOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTiOpe.getVal()));
-        gDatRec.addChildElement("cPaisRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisRec.toString());
-        gDatRec.addChildElement("dDesPaisRe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cPaisRec.getNombre());
+        SOAPElement gDatRec = gDatGralOpe.addChildElement("gDatRec", Constants.SIFEN_NS_PREFIX);
+        gDatRec.addChildElement("iNatRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatRec.getVal()));
+        gDatRec.addChildElement("iTiOpe", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTiOpe.getVal()));
+        gDatRec.addChildElement("cPaisRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisRec.toString());
+        gDatRec.addChildElement("dDesPaisRe", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisRec.getNombre());
 
         if (this.iNatRec.getVal() == 1) {
-            gDatRec.addChildElement("iTiContRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTiContRec.getVal()));
-            gDatRec.addChildElement("dRucRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dRucRec);
-            gDatRec.addChildElement("dDVRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVRec));
+            gDatRec.addChildElement("iTiContRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTiContRec.getVal()));
+            gDatRec.addChildElement("dRucRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRucRec);
+            gDatRec.addChildElement("dDVRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVRec));
         }
 
         if (this.iNatRec.getVal() == 2 && this.iTiOpe.getVal() != 4) {
-            gDatRec.addChildElement("iTipIDRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDRec.getVal()));
-            gDatRec.addChildElement("dDTipIDRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+            gDatRec.addChildElement("iTipIDRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDRec.getVal()));
+            gDatRec.addChildElement("dDTipIDRec", Constants.SIFEN_NS_PREFIX).setTextContent(
                     this.iTipIDRec.getDescripcion() != null ? this.iTipIDRec.getDescripcion() : this.dDTipIDRec
             );
-            gDatRec.addChildElement("dNumIDRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDRec);
+            gDatRec.addChildElement("dNumIDRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDRec);
         }
 
-        gDatRec.addChildElement("dNomRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomRec);
+        gDatRec.addChildElement("dNomRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomRec);
         if (this.dNomFanRec != null)
-            gDatRec.addChildElement("dNomFanRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomFanRec);
+            gDatRec.addChildElement("dNomFanRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomFanRec);
         if (this.dDirRec != null || iTiDE.getVal() == 7 || this.iTiOpe.getVal() == 4) {
-            gDatRec.addChildElement("dDirRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDirRec);
-            gDatRec.addChildElement("dNumCasRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasRec));
+            gDatRec.addChildElement("dDirRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirRec);
+            gDatRec.addChildElement("dNumCasRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasRec));
 
             if (this.iTiOpe.getVal() != 4) {
-                gDatRec.addChildElement("cDepRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepRec.getVal()));
-                gDatRec.addChildElement("dDesDepRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cDepRec.getDescripcion());
-                gDatRec.addChildElement("cCiuRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuRec));
-                gDatRec.addChildElement("dDesCiuRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuRec);
+                gDatRec.addChildElement("cDepRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepRec.getVal()));
+                gDatRec.addChildElement("dDesDepRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.cDepRec.getDescripcion());
+                gDatRec.addChildElement("cCiuRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuRec));
+                gDatRec.addChildElement("dDesCiuRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuRec);
             }
         }
         if (this.cDisRec != 0) {
-            gDatRec.addChildElement("cDisRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisRec));
-            gDatRec.addChildElement("dDesDisRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisRec);
+            gDatRec.addChildElement("cDisRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisRec));
+            gDatRec.addChildElement("dDesDisRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisRec);
         }
         if (this.dTelRec != null)
-            gDatRec.addChildElement("dTelRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dTelRec);
+            gDatRec.addChildElement("dTelRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dTelRec);
         if (this.dCelRec != null)
-            gDatRec.addChildElement("dCelRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCelRec);
+            gDatRec.addChildElement("dCelRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCelRec);
         if (this.dEmailRec != null)
-            gDatRec.addChildElement("dEmailRec", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dEmailRec);
+            gDatRec.addChildElement("dEmailRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dEmailRec);
         if (this.dCodCliente != null)
-            gDatRec.addChildElement("dCodCliente", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCodCliente);
+            gDatRec.addChildElement("dCodCliente", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCodCliente);
     }
 
     public TiNatRec getiNatRec() {

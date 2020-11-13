@@ -1,6 +1,5 @@
 package com.roshka.sifen.ssl;
 
-import com.roshka.sifen.config.ClientCertConfig;
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.exceptions.SifenExceptionUtil;
@@ -23,21 +22,19 @@ public class SSLContextHelper {
         if (_sslContext != null)
             return _sslContext;
 
-        logger.info("Aun no hay contexto SSL cargado. Cargando uno...");
-
-        ClientCertConfig clientCertConfig = sifenConfig.getClientCertConfig();
-        if (clientCertConfig == null)
-        {
-            logger.warning("La configuración del certificado de cliente es nula (no está establecida). Utilizando un contexto SSL por defecto");
+        logger.info("Contexto SSL no cargado aún. Empezando carga...");
+        if (!isCertificateConfigurationValid(sifenConfig)) {
             try {
+                logger.info("Se utilizará un contexto SSL por defecto.");
                 return SSLContext.getDefault();
             } catch (NoSuchAlgorithmException e) {
                 throw SifenExceptionUtil.contextoSSLInvalido("No se puede retornar el contexto SSL por defecto", e);
             }
         }
-        logger.info("Archivo de certificado cliente: " + sifenConfig.getClientCertConfig());
 
-        KeyStore keyStore = getCertificateKeyStore(clientCertConfig.getClientCertificateFile(), clientCertConfig.getClientCertificatePassword());
+        logger.info("Archivo de certificado cliente: " + sifenConfig.getRutaCertificadoCliente());
+
+        KeyStore keyStore = getCertificateKeyStore(sifenConfig.getRutaCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
         KeyManagerFactory keyManagerFactory;
         try {
             keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
@@ -45,7 +42,7 @@ public class SSLContextHelper {
             throw SifenExceptionUtil.contextoSSLInvalido("No se puede obtener una instancia de administrador de claves de algoritmo: " + KeyManagerFactory.getDefaultAlgorithm(), e);
         }
         try {
-            keyManagerFactory.init(keyStore, clientCertConfig.getClientCertificatePassword().toCharArray());
+            keyManagerFactory.init(keyStore, sifenConfig.getContrasenaCertificadoCliente().toCharArray());
         } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
             throw SifenExceptionUtil.contextoSSLInvalido("No se puede inicializar el administrador de claves: " + e.getLocalizedMessage(), e);
         }
@@ -67,24 +64,20 @@ public class SSLContextHelper {
     }
 
     public static KeyPair getCertificateKeyPair(SifenConfig sifenConfig) throws SifenException {
-        ClientCertConfig clientCertConfig = sifenConfig.getClientCertConfig();
-        if (clientCertConfig == null) {
-            throw SifenExceptionUtil.configuracionInvalida("La configuración del certificado de cliente es nula. No se puede obtener la clave.");
+        if (!isCertificateConfigurationValid(sifenConfig)) {
+            throw SifenExceptionUtil.configuracionInvalida("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
         }
 
         try {
-            KeyStore keyStore = getCertificateKeyStore(
-                    clientCertConfig.getClientCertificateFile(),
-                    clientCertConfig.getClientCertificatePassword()
-            );
+            KeyStore keyStore = getCertificateKeyStore(sifenConfig.getRutaCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
             String alias = keyStore.aliases().nextElement();
 
             PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
-            PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, clientCertConfig.getClientCertificatePassword().toCharArray());
+            PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, sifenConfig.getContrasenaCertificadoCliente().toCharArray());
 
             return new KeyPair(publicKey, privateKey);
         } catch (KeyStoreException e) {
-            throw SifenExceptionUtil.configuracionInvalida("La configuración del certificado de cliente es nula. No se puede obtener la clave.");
+            throw SifenExceptionUtil.configuracionInvalida("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
         } catch (UnrecoverableKeyException | NoSuchAlgorithmException e) {
             throw SifenExceptionUtil.contextoSSLInvalido("No se puede obtener una instancia de administrador de claves de algoritmo: " + KeyManagerFactory.getDefaultAlgorithm(), e);
         }
@@ -105,5 +98,21 @@ public class SSLContextHelper {
         }
 
         return keyStore;
+    }
+
+    private static boolean isCertificateConfigurationValid(SifenConfig sifenConfig) {
+        if (sifenConfig.isUsarCertificadoCliente()) {
+            if (sifenConfig.getTipoCertificadoCliente() == SifenConfig.TipoCertificadoCliente.PFX) {
+                if (sifenConfig.getRutaCertificadoCliente() == null || sifenConfig.getContrasenaCertificadoCliente() == null) {
+                    logger.warning("Configuración del certificado no establecida.");
+                    return false;
+                }
+                return true;
+            } else {
+                logger.warning("Tipo de archivo aún no soportado");
+                return false;
+            }
+        }
+        return false;
     }
 }

@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.monedas.CMondT;
 
@@ -17,27 +17,27 @@ public class TGOpeCom {
     private TiCondAnt iCondAnt;
 
     public void setupSOAPElements(SOAPElement gDatGralOpe, TTiDE iTiDE) throws SOAPException {
-        SOAPElement gOpeCom = gDatGralOpe.addChildElement("gOpeCom", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gOpeCom = gDatGralOpe.addChildElement("gOpeCom", Constants.SIFEN_NS_PREFIX);
         if (iTiDE.getVal() == 1 || iTiDE.getVal() == 4) {
-            gOpeCom.addChildElement("iTipTra", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tipTra.getVal()));
-            gOpeCom.addChildElement("dDesTipTra", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.tipTra.getDescripcion());
+            gOpeCom.addChildElement("iTipTra", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tipTra.getVal()));
+            gOpeCom.addChildElement("dDesTipTra", Constants.SIFEN_NS_PREFIX).setTextContent(this.tipTra.getDescripcion());
         }
 
-        gOpeCom.addChildElement("iTImp", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTImp.getVal()));
-        gOpeCom.addChildElement("dDesTImp", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTImp.getDescripcion());
-        gOpeCom.addChildElement("cMoneOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cMoneOpe.toString());
-        gOpeCom.addChildElement("dDesMoneOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cMoneOpe.getDescripcion());
+        gOpeCom.addChildElement("iTImp", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTImp.getVal()));
+        gOpeCom.addChildElement("dDesTImp", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTImp.getDescripcion());
+        gOpeCom.addChildElement("cMoneOpe", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneOpe.toString());
+        gOpeCom.addChildElement("dDesMoneOpe", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneOpe.getDescripcion());
 
         if (!this.cMoneOpe.toString().equals("PYG")) {
-            gOpeCom.addChildElement("dCondTiCam", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCondTiCam.getVal()));
+            gOpeCom.addChildElement("dCondTiCam", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCondTiCam.getVal()));
             if (this.dCondTiCam.getVal() == 1) {
-                gOpeCom.addChildElement("dTiCam", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCam));
+                gOpeCom.addChildElement("dTiCam", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCam));
             }
         }
 
         if (this.iCondAnt != null) {
-            gOpeCom.addChildElement("iCondAnt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCondAnt.getVal()));
-            gOpeCom.addChildElement("dDesCondAnt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iCondAnt.getDescripcion());
+            gOpeCom.addChildElement("iCondAnt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCondAnt.getVal()));
+            gOpeCom.addChildElement("dDesCondAnt", Constants.SIFEN_NS_PREFIX).setTextContent(this.iCondAnt.getDescripcion());
         }
     }
 

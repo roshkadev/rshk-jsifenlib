@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 
 import javax.xml.soap.SOAPElement;
@@ -15,13 +15,13 @@ public class TgCamIVA {
     private BigDecimal dLiqIVAItem;
 
     public void setupSOAPElements(SOAPElement gCamItem) throws SOAPException {
-        SOAPElement gCamIVA = gCamItem.addChildElement("gCamIVA", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCamIVA.addChildElement("iAfecIVA", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iAfecIVA.getVal()));
-        gCamIVA.addChildElement("dDesAfecIVA", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iAfecIVA.getDescripcion());
-        gCamIVA.addChildElement("dPropIVA", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPropIVA));
-        gCamIVA.addChildElement("dTasaIVA", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTasaIVA));
-        gCamIVA.addChildElement("dBasGravIVA", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dBasGravIVA));
-        gCamIVA.addChildElement("dLiqIVAItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dLiqIVAItem));
+        SOAPElement gCamIVA = gCamItem.addChildElement("gCamIVA", Constants.SIFEN_NS_PREFIX);
+        gCamIVA.addChildElement("iAfecIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iAfecIVA.getVal()));
+        gCamIVA.addChildElement("dDesAfecIVA", Constants.SIFEN_NS_PREFIX).setTextContent(this.iAfecIVA.getDescripcion());
+        gCamIVA.addChildElement("dPropIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPropIVA));
+        gCamIVA.addChildElement("dTasaIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTasaIVA));
+        gCamIVA.addChildElement("dBasGravIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dBasGravIVA));
+        gCamIVA.addChildElement("dLiqIVAItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dLiqIVAItem));
     }
 
     public TiAfecIVA getiAfecIVA() {

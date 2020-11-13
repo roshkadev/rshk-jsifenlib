@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -11,9 +11,9 @@ public class TgGrupSeg {
     private List<TgGrupPolSeg> gGrupPolSegList;
 
     public void setupSOAPElements(SOAPElement gCamEsp) throws SOAPException {
-        SOAPElement gGrupSeg = gCamEsp.addChildElement("gGrupSeg", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gGrupSeg = gCamEsp.addChildElement("gGrupSeg", Constants.SIFEN_NS_PREFIX);
         if (this.dCodEmpSeg != null)
-            gGrupSeg.addChildElement("dCodEmpSeg", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCodEmpSeg);
+            gGrupSeg.addChildElement("dCodEmpSeg", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCodEmpSeg);
 
         for (TgGrupPolSeg gGrupPolSeg : gGrupPolSegList) {
             gGrupPolSeg.setupSOAPElements(gGrupSeg);

@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiDenTarj;
 import com.roshka.sifen.model.de.types.TiForProPa;
 
@@ -19,29 +19,29 @@ public class TgPagTarCD {
     private short dNumTarj;
 
     public void setupSOAPElements(SOAPElement gPaConEIni) throws SOAPException {
-        SOAPElement gPagTarCD = gPaConEIni.addChildElement("gPagTarCD", NamespacesConstants.SIFEN_NS_PREFIX);
-        gPagTarCD.addChildElement("iDenTarj", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iDenTarj.getVal()));
-        gPagTarCD.addChildElement("dDesDenTarj", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iDenTarj.getDescripcion());
+        SOAPElement gPagTarCD = gPaConEIni.addChildElement("gPagTarCD", Constants.SIFEN_NS_PREFIX);
+        gPagTarCD.addChildElement("iDenTarj", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iDenTarj.getVal()));
+        gPagTarCD.addChildElement("dDesDenTarj", Constants.SIFEN_NS_PREFIX).setTextContent(this.iDenTarj.getDescripcion());
 
         if (this.dRSProTar != null)
-            gPagTarCD.addChildElement("dRSProTar", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dRSProTar);
+            gPagTarCD.addChildElement("dRSProTar", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRSProTar);
 
         if (this.dRUCProTar != null)
-            gPagTarCD.addChildElement("dRUCProTar", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dRUCProTar);
+            gPagTarCD.addChildElement("dRUCProTar", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRUCProTar);
 
         if (this.dDVProTar != 0)
-            gPagTarCD.addChildElement("dDVProTar", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVProTar));
+            gPagTarCD.addChildElement("dDVProTar", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVProTar));
 
-        gPagTarCD.addChildElement("iForProPa", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iForProPa.getVal()));
+        gPagTarCD.addChildElement("iForProPa", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iForProPa.getVal()));
 
         if (this.dCodAuOpe != 0)
-            gPagTarCD.addChildElement("dCodAuOpe", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCodAuOpe));
+            gPagTarCD.addChildElement("dCodAuOpe", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCodAuOpe));
 
         if (this.dNomTit != null)
-            gPagTarCD.addChildElement("dNomTit", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNomTit);
+            gPagTarCD.addChildElement("dNomTit", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomTit);
 
         if (this.dNumTarj != 0)
-            gPagTarCD.addChildElement("dNumTarj", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumTarj));
+            gPagTarCD.addChildElement("dNumTarj", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumTarj));
     }
 
     public TiDenTarj getiDenTarj() {

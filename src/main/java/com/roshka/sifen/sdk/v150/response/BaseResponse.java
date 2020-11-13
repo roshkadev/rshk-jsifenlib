@@ -1,10 +1,14 @@
-package com.roshka.sifen.model.res;
+package com.roshka.sifen.sdk.v150.response;
 
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.util.ResponseUtil;
 import org.w3c.dom.Node;
 
-public abstract class RResBase extends SifenObjectBase {
+import java.util.logging.Logger;
+
+public abstract class BaseResponse extends SifenObjectBase {
+    private final static Logger logger = Logger.getLogger(BaseResponse.class.toString());
 
     public static final String NOMBRE_ELEMENTO_DCODRES = "dCodRes";
     public static final String NOMBRE_ELEMENTO_DMSGRES = "dMsgRes";
@@ -15,11 +19,9 @@ public abstract class RResBase extends SifenObjectBase {
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals(NOMBRE_ELEMENTO_DCODRES)) {
-            setdCodRes(getTextValue(value));
+            setdCodRes(ResponseUtil.getTextValue(value));
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DMSGRES)) {
-            setdMsgRes(getTextValue(value));
-        } else {
-            super.setValueFromChildNode(value);
+            setdMsgRes(ResponseUtil.getTextValue(value));
         }
     }
 
@@ -38,5 +40,4 @@ public abstract class RResBase extends SifenObjectBase {
     public void setdMsgRes(String dMsgRes) {
         this.dMsgRes = dMsgRes;
     }
-
 }

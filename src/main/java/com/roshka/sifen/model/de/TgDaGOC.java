@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTiDE;
 
 import javax.xml.soap.SOAPElement;
@@ -17,8 +17,8 @@ public class TgDaGOC {
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-        SOAPElement gDatGralOpe = DE.addChildElement("gDatGralOpe", NamespacesConstants.SIFEN_NS_PREFIX);
-        gDatGralOpe.addChildElement("dFeEmiDE", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeEmiDE));
+        SOAPElement gDatGralOpe = DE.addChildElement("gDatGralOpe", Constants.SIFEN_NS_PREFIX);
+        gDatGralOpe.addChildElement("dFeEmiDE", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeEmiDE));
         if (iTiDE.getVal() != 7) this.gOpeCom.setupSOAPElements(gDatGralOpe, iTiDE);
         this.gEmis.setupSOAPElements(gDatGralOpe);
         this.gDatRec.setupSOAPElements(gDatGralOpe, iTiDE);

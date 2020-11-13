@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -16,28 +16,28 @@ public class TgValorRestaItem {
     private BigDecimal dTotOpeGs;
 
     public void setupSOAPElements(SOAPElement gValorItem, BigDecimal dTiCamIt) throws SOAPException {
-        SOAPElement gValorRestaItem = gValorItem.addChildElement("gValorRestaItem", NamespacesConstants.SIFEN_NS_PREFIX);
+        SOAPElement gValorRestaItem = gValorItem.addChildElement("gValorRestaItem", Constants.SIFEN_NS_PREFIX);
 
         if (this.dDescItem != null) {
-            gValorRestaItem.addChildElement("dDescItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescItem));
-            gValorRestaItem.addChildElement("dPorcDesIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorcDesIt));
+            gValorRestaItem.addChildElement("dDescItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescItem));
+            gValorRestaItem.addChildElement("dPorcDesIt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorcDesIt));
         }
 
         if (this.dDescGloItem != null)
-            gValorRestaItem.addChildElement("dDescGloItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescGloItem));
+            gValorRestaItem.addChildElement("dDescGloItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescGloItem));
 
-        gValorRestaItem.addChildElement("dAntPreUniIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+        gValorRestaItem.addChildElement("dAntPreUniIt", Constants.SIFEN_NS_PREFIX).setTextContent(
                 this.dAntPreUniIt != null ? String.valueOf(this.dAntPreUniIt) : "0"
         );
 
-        gValorRestaItem.addChildElement("dAntGloPreUniIt", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(
+        gValorRestaItem.addChildElement("dAntGloPreUniIt", Constants.SIFEN_NS_PREFIX).setTextContent(
                 this.dAntGloPreUniIt != null ? String.valueOf(this.dAntGloPreUniIt) : "0"
         );
 
-        gValorRestaItem.addChildElement("dTotOpeItem", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeItem));
+        gValorRestaItem.addChildElement("dTotOpeItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeItem));
 
         if (dTiCamIt != null)
-            gValorRestaItem.addChildElement("dTotOpeGs", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeGs));
+            gValorRestaItem.addChildElement("dTotOpeGs", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeGs));
     }
 
     public BigDecimal getdDescItem() {

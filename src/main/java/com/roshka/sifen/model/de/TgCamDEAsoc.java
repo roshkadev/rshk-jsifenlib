@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTipTra;
 import com.roshka.sifen.model.de.types.TdTipCons;
 import com.roshka.sifen.model.de.types.TiTIpoDoc;
@@ -11,7 +11,6 @@ import javax.xml.soap.SOAPException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.List;
 
 public class TgCamDEAsoc {
     private TiTipDocAso iTipDocAso;
@@ -31,35 +30,35 @@ public class TgCamDEAsoc {
     public void setupSOAPElements(SOAPElement DE, TTipTra iTipTra, boolean retencionExists) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gOpeDE = DE.addChildElement("gOpeDE", NamespacesConstants.SIFEN_NS_PREFIX);
-        gOpeDE.addChildElement("iTipDocAso", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipDocAso.getVal()));
-        gOpeDE.addChildElement("dDesTipDocAso", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipDocAso.getDescripcion());
+        SOAPElement gOpeDE = DE.addChildElement("gOpeDE", Constants.SIFEN_NS_PREFIX);
+        gOpeDE.addChildElement("iTipDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipDocAso.getVal()));
+        gOpeDE.addChildElement("dDesTipDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipDocAso.getDescripcion());
 
         if (this.iTipDocAso.getVal() == 1)
-            gOpeDE.addChildElement("dCdCDERef", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dCdCDERef);
+            gOpeDE.addChildElement("dCdCDERef", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCdCDERef);
         else if (this.iTipDocAso.getVal() == 2) {
-            gOpeDE.addChildElement("dNTimDI", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNTimDI);
-            gOpeDE.addChildElement("dEstDocAso", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dEstDocAso);
-            gOpeDE.addChildElement("dPExpDocAso", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dPExpDocAso);
-            gOpeDE.addChildElement("dNumDocAso", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumDocAso);
-            gOpeDE.addChildElement("iTipoDocAso", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
-            gOpeDE.addChildElement("dDTipoDocAso", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipoDocAso.getDescripcion());
-            gOpeDE.addChildElement("dFecEmiDI", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEmiDI));
+            gOpeDE.addChildElement("dNTimDI", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNTimDI);
+            gOpeDE.addChildElement("dEstDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.dEstDocAso);
+            gOpeDE.addChildElement("dPExpDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.dPExpDocAso);
+            gOpeDE.addChildElement("dNumDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumDocAso);
+            gOpeDE.addChildElement("iTipoDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
+            gOpeDE.addChildElement("dDTipoDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipoDocAso.getDescripcion());
+            gOpeDE.addChildElement("dFecEmiDI", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEmiDI));
         } else if (this.iTipDocAso.getVal() == 3) {
-            gOpeDE.addChildElement("iTipCons", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipCons.getVal()));
-            gOpeDE.addChildElement("dDesTipCons", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.iTipCons.getDescripcion());
+            gOpeDE.addChildElement("iTipCons", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipCons.getVal()));
+            gOpeDE.addChildElement("dDesTipCons", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipCons.getDescripcion());
 
             if (this.iTipCons.getVal() == 2) {
-                gOpeDE.addChildElement("dNumCons", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCons));
-                gOpeDE.addChildElement("dNumControl", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumControl);
+                gOpeDE.addChildElement("dNumCons", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCons));
+                gOpeDE.addChildElement("dNumControl", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumControl);
             }
         }
 
         if (iTipTra.getVal() == 12)
-            gOpeDE.addChildElement("dNumResCF", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumResCF);
+            gOpeDE.addChildElement("dNumResCF", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumResCF);
 
         if (retencionExists)
-            gOpeDE.addChildElement("dNumComRet", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.dNumComRet);
+            gOpeDE.addChildElement("dNumComRet", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumComRet);
     }
 
     public TiTipDocAso getiTipDocAso() {

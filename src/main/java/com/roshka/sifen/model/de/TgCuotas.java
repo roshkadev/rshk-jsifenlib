@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.NamespacesConstants;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.monedas.CMondT;
 
 import javax.xml.soap.SOAPElement;
@@ -17,13 +17,13 @@ public class TgCuotas {
     public void setupSOAPElements(SOAPElement gPagCred) throws SOAPException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        SOAPElement gCuotas = gPagCred.addChildElement("gCuotas", NamespacesConstants.SIFEN_NS_PREFIX);
-        gCuotas.addChildElement("cMoneCuo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cMoneCuo.toString());
-        gCuotas.addChildElement("dDMoneCuo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(this.cMoneCuo.getDescripcion());
-        gCuotas.addChildElement("dMonCuota", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dMonCuota));
+        SOAPElement gCuotas = gPagCred.addChildElement("gCuotas", Constants.SIFEN_NS_PREFIX);
+        gCuotas.addChildElement("cMoneCuo", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneCuo.toString());
+        gCuotas.addChildElement("dDMoneCuo", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneCuo.getDescripcion());
+        gCuotas.addChildElement("dMonCuota", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dMonCuota));
 
         if (this.dVencCuo != null)
-            gCuotas.addChildElement("dVencCuo", NamespacesConstants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dVencCuo));
+            gCuotas.addChildElement("dVencCuo", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dVencCuo));
     }
 
     public CMondT getcMoneCuo() {
