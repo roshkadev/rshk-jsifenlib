@@ -2,6 +2,29 @@ package com.roshka.sifen.config;
 
 import static com.roshka.sifen.model.Constants.SDK_CURRENT_VERSION;
 
+/**
+ * Clase de configuración de las peticiones Sifen.<br>
+ * <ul>
+ *      <li>ambiente (TipoAmbiente): Tipo de ambiente a utilizar (desarrollo o producción). Dependiendo de esto se
+ *      definen las urls a utilizar.</li>
+ *
+ *      <li>urlBase (String): URL a la que se hará la petición. Hay una para cada tipo de ambiente. Se puede sobreescribir.</li>
+ *
+ *      <li>urlRecibe, urlRecibeLote, urlEvento, urlConsultaLote, urlConsultaRUC, urlConsulta (String):
+ *      URLs para las peticiones específicas. Tienen valores por defecto (obtenidos del MT), pero pueden ser sobreescritas.</li>
+ *
+ *      <li>usarCertificadoCliente (Boolean): Define si se utiliza o no el certificado proporcionado para la
+ *      autenticación y firma de las peticiones.
+ *      Se recomienda utilizar el valor por defecto (true), pero es posible sobreescribirlo en caso de estar
+ *      realizando a otro nivel la autenticación por certificado (Ej.: Forward Proxy).</li>
+ *
+ *      <li>rutaCertificadoCliente, contrasenaCertificadoCliente (String): Ruta del certificado a utilizar,
+ *      junto a la contraseña.</li>
+ *
+ *      <li>tipoCertificadoCliente (TipoCertificadoCliente): Tipo de archivo del certificado. Solo PFX es soportado
+ *      actualmente.</li>
+ * </ul>
+ */
 public class SifenConfig {
     // Enums
     public enum TipoCertificadoCliente {PFX, PEM, DER}
