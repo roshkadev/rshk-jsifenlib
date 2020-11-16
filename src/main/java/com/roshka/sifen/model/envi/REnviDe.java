@@ -2,14 +2,18 @@ package com.roshka.sifen.model.envi;
 
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.util.HttpUtil;
 import com.roshka.sifen.util.SifenExceptionUtil;
-import com.roshka.sifen.model.de.TDE;
+import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
 import com.roshka.sifen.model.de.TgCamDEAsoc;
 import com.roshka.sifen.model.de.TgPagCont;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.ssl.SSLContextHelper;
+import com.sun.deploy.net.HttpUtils;
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.*;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
@@ -19,16 +23,20 @@ import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
+import java.math.BigInteger;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.HashMap;
 
 import static com.roshka.sifen.model.Constants.SIFEN_CURRENT_VERSION;
 
 public class REnviDe extends REnviBase {
     public static final String TAG_NAME = "rEnviDe";
 
-    private TDE DE;
+    private DocumentoElectronico DE;
 
     @Override
     public void setupSOAPBody(SOAPBody soapBody, SifenConfig sifenConfig) throws SifenException {
@@ -79,17 +87,56 @@ public class REnviDe extends REnviBase {
                 }
             }
 
-            SOAPElement gCamFuFD = rDe.addChildElement("gCamFuFD", Constants.SIFEN_NS_PREFIX);
-            gCamFuFD.addChildElement("dCarQR", Constants.SIFEN_NS_PREFIX).setTextContent("");
-
             // Firma Digital del XML
-            this.signFields(rDe, sifenConfig);
-        } catch (SOAPException e) {
+            SignedInfo signedInfo = this.signFields(rDe, sifenConfig);
+
+            // Preparación de la URL del QR
+            HashMap<String, String> queryParams = new HashMap<>();
+            queryParams.put("nVersion", SIFEN_CURRENT_VERSION);
+            queryParams.put("Id", this.DE.getId());
+            queryParams.put("dFeEmiDE", HexBin.encode(dateFormat.format(this.DE.getdDatGralOpe().getdFeEmiDE()).getBytes(StandardCharsets.UTF_8)));
+
+            if (this.DE.getdDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
+                queryParams.put("dRucRec", this.DE.getdDatGralOpe().getgDatRec().getdRucRec());
+            } else if (this.DE.getdDatGralOpe().getgDatRec().getiTiOpe().getVal() != 4 && this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec() != null) {
+                queryParams.put("dNumIDRec", this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec());
+            } else {
+                queryParams.put("dNumIDRec", "0");
+            }
+
+            if (iTiDE.getVal() != 7) {
+                queryParams.put("dTotGralOpe", String.valueOf(this.DE.getgTotSub().getdTotGralOpe()));
+                queryParams.put("dTotIVA",
+                        this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 1 || this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 5
+                                ? String.valueOf(this.DE.getgTotSub().getdTotIVA())
+                                : "0"
+                );
+            } else {
+                queryParams.put("dTotGralOpe", "0");
+                queryParams.put("dTotIVA", "0");
+            }
+
+            queryParams.put("cItems", String.valueOf(this.DE.getgDtipDE().getgCamItemList().size()));
+            queryParams.put("DigestValue", HexBin.encode(((Reference) signedInfo.getReferences().get(0)).getDigestValue()));
+            queryParams.put("IdCSC", "");
+
+            String urlParamsString = HttpUtil.buildUrlParams(queryParams);
+
+            String CSC = "";
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            String hashedParams = HexBin.encode(digest.digest((urlParamsString + CSC).getBytes(StandardCharsets.UTF_8)));
+
+            String dCarQR = sifenConfig.getUrlConsultaQr() + urlParamsString + "&cHashQR=" + hashedParams;
+            dCarQR = dCarQR.replace("&", "&amp;");
+
+            SOAPElement gCamFuFD = rDe.addChildElement("gCamFuFD", Constants.SIFEN_NS_PREFIX);
+            gCamFuFD.addChildElement("dCarQR", Constants.SIFEN_NS_PREFIX).setTextContent(dCarQR);
+        } catch (SOAPException | NoSuchAlgorithmException e) {
             throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
         }
     }
 
-    private void signFields(Node nodeToSign, SifenConfig sifenConfig) throws SifenException {
+    private SignedInfo signFields(Node nodeToSign, SifenConfig sifenConfig) throws SifenException {
         try {
             XMLSignatureFactory sigFactory = XMLSignatureFactory.getInstance();
             Reference ref = sigFactory.newReference(this.DE.getId(), sigFactory.newDigestMethod(DigestMethod.SHA256, null));
@@ -108,8 +155,14 @@ public class REnviDe extends REnviBase {
             DOMSignContext signatureContext = new DOMSignContext(keyPair.getPrivate(), nodeToSign);
             signatureContext.putNamespacePrefix(XMLSignature.XMLNS, Constants.SIFEN_NS_PREFIX);
             signature.sign(signatureContext);
+
+            return signedInfo;
         } catch (KeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | XMLSignatureException | MarshalException e) {
             throw SifenExceptionUtil.requestSigningError("Ocurrió un error al firmar la petición SOAP utilizando el certificado activo", e);
         }
+    }
+
+    public void setDE(DocumentoElectronico DE) {
+        this.DE = DE;
     }
 }

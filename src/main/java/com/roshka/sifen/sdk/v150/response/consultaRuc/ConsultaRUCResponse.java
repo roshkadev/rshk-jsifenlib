@@ -20,8 +20,4 @@ public class ConsultaRUCResponse extends BaseResponse {
     public ContRuc getxContRUC() {
         return xContRUC;
     }
-
-    public void setxContRUC(ContRuc xContRUC) {
-        this.xContRUC = xContRUC;
-    }
 }

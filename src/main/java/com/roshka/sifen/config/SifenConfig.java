@@ -34,6 +34,7 @@ public class SifenConfig {
     private TipoAmbiente ambiente;
     private String urlBase;
     private String urlBaseLocal;
+    private String urlConsultaQr;
     private String urlRecibe;
     private String urlRecibeLote;
     private String urlEvento;
@@ -54,10 +55,14 @@ public class SifenConfig {
     private final String urlBaseDesarrollo = "https://sifen-test.set.gov.py";
     private final String urlBaseProduccion = "https://sifen.set.gov.py";
 
+    private final String urlConsultaQrDesarrollo = "https://ekuatia.set.gov.py/consultas-test/qr?";
+    private final String urlConsultaQrProduccion = "https://ekuatia.set.gov.py/consultas/qr?";
+
     // Constructores
     public SifenConfig() {
         this.ambiente = TipoAmbiente.DEV;
         this.urlBaseLocal = urlBaseDesarrollo;
+        this.urlConsultaQr = urlConsultaQrDesarrollo;
         this.urlRecibe = "/de/ws/sync/recibe.wsdl";
         this.urlRecibeLote = "/de/ws/async/recibe-lote.wsdl";
         this.urlEvento = "/de/ws/eventos/evento.wsdl";
@@ -90,10 +95,13 @@ public class SifenConfig {
     public void setAmbiente(TipoAmbiente ambiente) {
         this.ambiente = ambiente;
 
-        if (this.ambiente == TipoAmbiente.DEV)
+        if (this.ambiente == TipoAmbiente.DEV){
             this.urlBaseLocal = urlBaseDesarrollo;
-        else if (this.ambiente == TipoAmbiente.PROD)
+            this.urlConsultaQr = urlConsultaQrDesarrollo;
+        } else if (this.ambiente == TipoAmbiente.PROD) {
             this.urlBaseLocal = urlBaseProduccion;
+            this.urlConsultaQr = urlConsultaQrProduccion;
+        }
     }
 
     public String getUrlBase() {
@@ -106,6 +114,10 @@ public class SifenConfig {
 
     public String getUrlBaseLocal() {
         return urlBaseLocal;
+    }
+
+    public String getUrlConsultaQr() {
+        return urlConsultaQr;
     }
 
     public String getUrlRecibe() {

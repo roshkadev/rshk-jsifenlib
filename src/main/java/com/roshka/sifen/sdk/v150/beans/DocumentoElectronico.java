@@ -1,4 +1,6 @@
-package com.roshka.sifen.model.de;
+package com.roshka.sifen.sdk.v150.beans;
+
+import com.roshka.sifen.model.de.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
  * Clase que representa un Documento Electrónico
  * basado en el tipo tDE definido en DE_v150.xsd
  */
-public class TDE {
+public class DocumentoElectronico {
     private String Id;
     private short dDVId;              // dígito verificador
     private LocalDateTime dFecFirma;  // se debe serializar en el formato: yyyy-mm-ddThh:mi:ss

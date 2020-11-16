@@ -20,15 +20,15 @@ public class ContRuc extends SifenObjectBase {
     @Override
     public void setValueFromChildNode(Node value) {
         if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRUCCONS)) {
-            setdRUCCons(ResponseUtil.getTextValue(value));
+            dRUCCons = ResponseUtil.getTextValue(value);
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRAZCONS)) {
-            setdRazCons(ResponseUtil.getTextValue(value));
+            dRazCons = ResponseUtil.getTextValue(value);
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DCODESTCONS)) {
-            setdCodEstCons(ResponseUtil.getTextValue(value));
+            dCodEstCons = ResponseUtil.getTextValue(value);
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DDESESTCONS)) {
-            setdDesEstCons(ResponseUtil.getTextValue(value));
+            dDesEstCons = ResponseUtil.getTextValue(value);
         } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRUCFACTELEC)) {
-            setdRUCFactElec(ResponseUtil.getTextValue(value));
+            dRUCFactElec = ResponseUtil.getTextValue(value);
         }
     }
 
@@ -36,39 +36,19 @@ public class ContRuc extends SifenObjectBase {
         return dRUCCons;
     }
 
-    public void setdRUCCons(String dRUCCons) {
-        this.dRUCCons = dRUCCons;
-    }
-
     public String getdRazCons() {
         return dRazCons;
-    }
-
-    public void setdRazCons(String dRazCons) {
-        this.dRazCons = dRazCons;
     }
 
     public String getdCodEstCons() {
         return dCodEstCons;
     }
 
-    public void setdCodEstCons(String dCodEstCons) {
-        this.dCodEstCons = dCodEstCons;
-    }
-
     public String getdDesEstCons() {
         return dDesEstCons;
     }
 
-    public void setdDesEstCons(String dDesEstCons) {
-        this.dDesEstCons = dDesEstCons;
-    }
-
     public String getdRUCFactElec() {
         return dRUCFactElec;
-    }
-
-    public void setdRUCFactElec(String dRUCFactElec) {
-        this.dRUCFactElec = dRUCFactElec;
     }
 }

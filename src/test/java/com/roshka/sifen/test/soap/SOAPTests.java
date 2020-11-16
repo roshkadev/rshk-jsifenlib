@@ -3,6 +3,7 @@ package com.roshka.sifen.test.soap;
 import com.roshka.sifen.Sifen;
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
 import com.roshka.sifen.sdk.v150.response.RespuestaSifen;
 import com.roshka.sifen.soap.MessageHelper;
 import org.junit.BeforeClass;
@@ -25,14 +26,21 @@ public class SOAPTests {
     }
 
     @Test
+    public void testBasicMessage() throws SOAPException, IOException {
+        SOAPMessage soapMessage = MessageHelper.createMessage();
+        soapMessage.writeTo(System.out);
+    }
+
+    @Test
     public void testConsultaRUC() throws SifenException {
         RespuestaSifen ret = Sifen.consultaRUC(++currentdId, "4579993");
         logger.info(ret.toString());
     }
 
     @Test
-    public void testBasicMessage() throws SOAPException, IOException {
-        SOAPMessage soapMessage = MessageHelper.createMessage();
-        soapMessage.writeTo(System.out);
+    public void testRecepcionDE() throws SifenException {
+        DocumentoElectronico DE = new DocumentoElectronico();
+        RespuestaSifen ret = Sifen.recepcionDE(++currentdId, DE);
+        logger.info(ret.toString());
     }
 }
