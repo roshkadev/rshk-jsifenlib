@@ -2,18 +2,15 @@ package com.roshka.sifen.model.envi;
 
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.util.HttpUtil;
-import com.roshka.sifen.util.SifenExceptionUtil;
-import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
+import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.TgCamDEAsoc;
 import com.roshka.sifen.model.de.TgPagCont;
 import com.roshka.sifen.model.de.types.TTiDE;
-import com.roshka.sifen.model.Constants;
+import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
 import com.roshka.sifen.ssl.SSLContextHelper;
-import com.sun.deploy.net.HttpUtils;
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import com.roshka.sifen.util.HttpUtil;
+import com.roshka.sifen.util.SifenExceptionUtil;
 
-import javax.xml.bind.DatatypeConverter;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.*;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
@@ -23,8 +20,6 @@ import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
-import java.math.BigInteger;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.text.SimpleDateFormat;
@@ -94,7 +89,7 @@ public class REnviDe extends REnviBase {
             HashMap<String, String> queryParams = new HashMap<>();
             queryParams.put("nVersion", SIFEN_CURRENT_VERSION);
             queryParams.put("Id", this.DE.getId());
-            queryParams.put("dFeEmiDE", HexBin.encode(dateFormat.format(this.DE.getdDatGralOpe().getdFeEmiDE()).getBytes(StandardCharsets.UTF_8)));
+            queryParams.put("dFeEmiDE", bytesToHex(dateFormat.format(this.DE.getdDatGralOpe().getdFeEmiDE()).getBytes(StandardCharsets.UTF_8)));
 
             if (this.DE.getdDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
                 queryParams.put("dRucRec", this.DE.getdDatGralOpe().getgDatRec().getdRucRec());
@@ -117,17 +112,17 @@ public class REnviDe extends REnviBase {
             }
 
             queryParams.put("cItems", String.valueOf(this.DE.getgDtipDE().getgCamItemList().size()));
-            queryParams.put("DigestValue", HexBin.encode(((Reference) signedInfo.getReferences().get(0)).getDigestValue()));
+            queryParams.put("DigestValue", bytesToHex(((Reference) signedInfo.getReferences().get(0)).getDigestValue()));
             queryParams.put("IdCSC", "");
 
             String urlParamsString = HttpUtil.buildUrlParams(queryParams);
 
             String CSC = "";
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            String hashedParams = HexBin.encode(digest.digest((urlParamsString + CSC).getBytes(StandardCharsets.UTF_8)));
+            String hashedParams = bytesToHex(digest.digest((urlParamsString + CSC).getBytes(StandardCharsets.UTF_8)));
 
             String dCarQR = sifenConfig.getUrlConsultaQr() + urlParamsString + "&cHashQR=" + hashedParams;
-            dCarQR = dCarQR.replace("&", "&amp;");
+            dCarQR = dCarQR.replaceAll("&", "&amp;");
 
             SOAPElement gCamFuFD = rDe.addChildElement("gCamFuFD", Constants.SIFEN_NS_PREFIX);
             gCamFuFD.addChildElement("dCarQR", Constants.SIFEN_NS_PREFIX).setTextContent(dCarQR);
@@ -160,6 +155,17 @@ public class REnviDe extends REnviBase {
         } catch (KeyException | NoSuchAlgorithmException | InvalidAlgorithmParameterException | XMLSignatureException | MarshalException e) {
             throw SifenExceptionUtil.requestSigningError("Ocurrió un error al firmar la petición SOAP utilizando el certificado activo", e);
         }
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 
     public void setDE(DocumentoElectronico DE) {
