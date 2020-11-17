@@ -16,22 +16,22 @@ public class TgVehTras {
     private String dNroVuelo;
 
     public void setupSOAPElements(SOAPElement gTransp, TiModTrans iModTrans) throws SOAPException {
-        SOAPElement gVehTras = gTransp.addChildElement("gVehTras", Constants.SIFEN_NS_PREFIX);
-        gVehTras.addChildElement("dTiVehTras", Constants.SIFEN_NS_PREFIX).setTextContent(this.dTiVehTras);
-        gVehTras.addChildElement("dMarVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dMarVeh);
-        gVehTras.addChildElement("dTipIdenVeh", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTipIdenVeh));
+        SOAPElement gVehTras = gTransp.addChildElement("gVehTras");
+        gVehTras.addChildElement("dTiVehTras").setTextContent(this.dTiVehTras);
+        gVehTras.addChildElement("dMarVeh").setTextContent(this.dMarVeh);
+        gVehTras.addChildElement("dTipIdenVeh").setTextContent(String.valueOf(this.dTipIdenVeh));
 
         if (this.dTipIdenVeh == 1)
-            gVehTras.addChildElement("dNroIDVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNroIDVeh);
+            gVehTras.addChildElement("dNroIDVeh").setTextContent(this.dNroIDVeh);
 
         if (this.dAdicVeh != null)
-            gVehTras.addChildElement("dAdicVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dAdicVeh);
+            gVehTras.addChildElement("dAdicVeh").setTextContent(this.dAdicVeh);
 
         if (this.dTipIdenVeh == 2)
-            gVehTras.addChildElement("dNroMatVeh", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNroMatVeh);
+            gVehTras.addChildElement("dNroMatVeh").setTextContent(this.dNroMatVeh);
 
         if (iModTrans.getVal() == 3)
-            gVehTras.addChildElement("dNroVuelo", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNroVuelo);
+            gVehTras.addChildElement("dNroVuelo").setTextContent(this.dNroVuelo);
     }
 
     public String getdTiVehTras() {

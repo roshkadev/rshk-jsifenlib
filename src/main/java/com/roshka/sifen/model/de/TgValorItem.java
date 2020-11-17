@@ -14,13 +14,13 @@ public class TgValorItem {
     private TgValorRestaItem gValorRestaItem;
 
     public void setupSOAPElements(SOAPElement gCamItem, TdCondTiCam dCondTiCam) throws SOAPException {
-        SOAPElement gValorItem = gCamItem.addChildElement("gValorItem", Constants.SIFEN_NS_PREFIX);
-        gValorItem.addChildElement("dPUniProSer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPUniProSer));
+        SOAPElement gValorItem = gCamItem.addChildElement("gValorItem");
+        gValorItem.addChildElement("dPUniProSer").setTextContent(String.valueOf(this.dPUniProSer));
 
-        if (dCondTiCam.getVal() == 2)
-            gValorItem.addChildElement("dTiCamIt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCamIt));
+        if (dCondTiCam != null && dCondTiCam.getVal() == 2)
+            gValorItem.addChildElement("dTiCamIt").setTextContent(String.valueOf(this.dTiCamIt));
 
-        gValorItem.addChildElement("dTotBruOpeItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotBruOpeItem));
+        gValorItem.addChildElement("dTotBruOpeItem").setTextContent(String.valueOf(this.dTotBruOpeItem));
 
         this.gValorRestaItem.setupSOAPElements(gValorItem, this.dTiCamIt);
     }

@@ -11,9 +11,9 @@ public class TgGrupSeg {
     private List<TgGrupPolSeg> gGrupPolSegList;
 
     public void setupSOAPElements(SOAPElement gCamEsp) throws SOAPException {
-        SOAPElement gGrupSeg = gCamEsp.addChildElement("gGrupSeg", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gGrupSeg = gCamEsp.addChildElement("gGrupSeg");
         if (this.dCodEmpSeg != null)
-            gGrupSeg.addChildElement("dCodEmpSeg", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCodEmpSeg);
+            gGrupSeg.addChildElement("dCodEmpSeg").setTextContent(this.dCodEmpSeg);
 
         for (TgGrupPolSeg gGrupPolSeg : gGrupPolSegList) {
             gGrupPolSeg.setupSOAPElements(gGrupSeg);

@@ -26,43 +26,43 @@ public class TgCamTrans {
     private String dDirAge;
 
     public void setupSOAPElements(SOAPElement gTransp) throws SOAPException {
-        SOAPElement gCamTrans = gTransp.addChildElement("gCamTrans", Constants.SIFEN_NS_PREFIX);
-        gCamTrans.addChildElement("iNatTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatTrans.getVal()));
-        gCamTrans.addChildElement("dNomTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomTrans);
+        SOAPElement gCamTrans = gTransp.addChildElement("gCamTrans");
+        gCamTrans.addChildElement("iNatTrans").setTextContent(String.valueOf(this.iNatTrans.getVal()));
+        gCamTrans.addChildElement("dNomTrans").setTextContent(this.dNomTrans);
 
         if (this.iNatTrans.getVal() == 1) {
-            gCamTrans.addChildElement("dRucTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRucTrans);
-            gCamTrans.addChildElement("dDVTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVTrans));
+            gCamTrans.addChildElement("dRucTrans").setTextContent(this.dRucTrans);
+            gCamTrans.addChildElement("dDVTrans").setTextContent(String.valueOf(this.dDVTrans));
         } else if (this.iNatTrans.getVal() == 2) {
-            gCamTrans.addChildElement("iTipIDTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDTrans.getVal()));
-            gCamTrans.addChildElement("dDTipIDTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipIDTrans.getDescripcion());
-            gCamTrans.addChildElement("dNumIDTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDTrans);
+            gCamTrans.addChildElement("iTipIDTrans").setTextContent(String.valueOf(this.iTipIDTrans.getVal()));
+            gCamTrans.addChildElement("dDTipIDTrans").setTextContent(this.iTipIDTrans.getDescripcion());
+            gCamTrans.addChildElement("dNumIDTrans").setTextContent(this.dNumIDTrans);
         }
 
         if (this.cNacTrans != null) {
-            gCamTrans.addChildElement("cNacTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.toString());
-            gCamTrans.addChildElement("dDesNacTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.cNacTrans.getNombre());
+            gCamTrans.addChildElement("cNacTrans").setTextContent(this.cNacTrans.toString());
+            gCamTrans.addChildElement("dDesNacTrans").setTextContent(this.cNacTrans.getNombre());
         }
 
-        gCamTrans.addChildElement("dNumIDChof", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDChof);
-        gCamTrans.addChildElement("dNomChof", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomChof);
+        gCamTrans.addChildElement("dNumIDChof").setTextContent(this.dNumIDChof);
+        gCamTrans.addChildElement("dNomChof").setTextContent(this.dNomChof);
 
         if (this.dDomFisc != null)
-            gCamTrans.addChildElement("dDomFisc", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDomFisc);
+            gCamTrans.addChildElement("dDomFisc").setTextContent(this.dDomFisc);
 
         if (this.dDirChof != null)
-            gCamTrans.addChildElement("dDirChof", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirChof);
+            gCamTrans.addChildElement("dDirChof").setTextContent(this.dDirChof);
 
         if (this.dNombAg != null)
-            gCamTrans.addChildElement("dNombAg", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNombAg);
+            gCamTrans.addChildElement("dNombAg").setTextContent(this.dNombAg);
 
         if (this.dRucAg != null) {
-            gCamTrans.addChildElement("dRucAg", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRucAg);
-            gCamTrans.addChildElement("dDVAg", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVAg));
+            gCamTrans.addChildElement("dRucAg").setTextContent(this.dRucAg);
+            gCamTrans.addChildElement("dDVAg").setTextContent(String.valueOf(this.dDVAg));
         }
 
         if (this.dNombAg != null)
-            gCamTrans.addChildElement("dDirAge", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirAge);
+            gCamTrans.addChildElement("dDirAge").setTextContent(this.dDirAge);
     }
 
     public TiNatRec getiNatTrans() {

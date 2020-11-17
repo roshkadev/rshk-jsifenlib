@@ -9,7 +9,6 @@ import com.roshka.sifen.model.de.types.TiTipDocAso;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class TgCamDEAsoc {
@@ -28,37 +27,35 @@ public class TgCamDEAsoc {
     private String dNumControl;
 
     public void setupSOAPElements(SOAPElement DE, TTipTra iTipTra, boolean retencionExists) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        SOAPElement gOpeDE = DE.addChildElement("gOpeDE", Constants.SIFEN_NS_PREFIX);
-        gOpeDE.addChildElement("iTipDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipDocAso.getVal()));
-        gOpeDE.addChildElement("dDesTipDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipDocAso.getDescripcion());
+        SOAPElement gOpeDE = DE.addChildElement("gOpeDE");
+        gOpeDE.addChildElement("iTipDocAso").setTextContent(String.valueOf(this.iTipDocAso.getVal()));
+        gOpeDE.addChildElement("dDesTipDocAso").setTextContent(this.iTipDocAso.getDescripcion());
 
         if (this.iTipDocAso.getVal() == 1)
-            gOpeDE.addChildElement("dCdCDERef", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCdCDERef);
+            gOpeDE.addChildElement("dCdCDERef").setTextContent(this.dCdCDERef);
         else if (this.iTipDocAso.getVal() == 2) {
-            gOpeDE.addChildElement("dNTimDI", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNTimDI);
-            gOpeDE.addChildElement("dEstDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.dEstDocAso);
-            gOpeDE.addChildElement("dPExpDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.dPExpDocAso);
-            gOpeDE.addChildElement("dNumDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumDocAso);
-            gOpeDE.addChildElement("iTipoDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
-            gOpeDE.addChildElement("dDTipoDocAso", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipoDocAso.getDescripcion());
-            gOpeDE.addChildElement("dFecEmiDI", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEmiDI));
+            gOpeDE.addChildElement("dNTimDI").setTextContent(this.dNTimDI);
+            gOpeDE.addChildElement("dEstDocAso").setTextContent(this.dEstDocAso);
+            gOpeDE.addChildElement("dPExpDocAso").setTextContent(this.dPExpDocAso);
+            gOpeDE.addChildElement("dNumDocAso").setTextContent(this.dNumDocAso);
+            gOpeDE.addChildElement("iTipoDocAso").setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
+            gOpeDE.addChildElement("dDTipoDocAso").setTextContent(this.iTipoDocAso.getDescripcion());
+            gOpeDE.addChildElement("dFecEmiDI").setTextContent(this.dFecEmiDI.toString());
         } else if (this.iTipDocAso.getVal() == 3) {
-            gOpeDE.addChildElement("iTipCons", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipCons.getVal()));
-            gOpeDE.addChildElement("dDesTipCons", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipCons.getDescripcion());
+            gOpeDE.addChildElement("iTipCons").setTextContent(String.valueOf(this.iTipCons.getVal()));
+            gOpeDE.addChildElement("dDesTipCons").setTextContent(this.iTipCons.getDescripcion());
 
             if (this.iTipCons.getVal() == 2) {
-                gOpeDE.addChildElement("dNumCons", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCons));
-                gOpeDE.addChildElement("dNumControl", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumControl);
+                gOpeDE.addChildElement("dNumCons").setTextContent(String.valueOf(this.dNumCons));
+                gOpeDE.addChildElement("dNumControl").setTextContent(this.dNumControl);
             }
         }
 
         if (iTipTra.getVal() == 12)
-            gOpeDE.addChildElement("dNumResCF", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumResCF);
+            gOpeDE.addChildElement("dNumResCF").setTextContent(this.dNumResCF);
 
         if (retencionExists)
-            gOpeDE.addChildElement("dNumComRet", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumComRet);
+            gOpeDE.addChildElement("dNumComRet").setTextContent(this.dNumComRet);
     }
 
     public TiTipDocAso getiTipDocAso() {

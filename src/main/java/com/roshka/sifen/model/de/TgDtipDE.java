@@ -17,10 +17,10 @@ public class TgDtipDE {
     private TgCamEsp gCamEsp;
     private TgTransp gTransp;
 
-    public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TgDaGOC gDatGralOpe) throws SOAPException {
+    public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
 
-        SOAPElement gDtipDE = DE.addChildElement("gDtipDE", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gDtipDE = DE.addChildElement("gDtipDE");
         if (iTiDE.getVal() == 1)
             this.gCamFE.setupSOAPElements(gDtipDE, iTiOpe);
         else if (iTiDE.getVal() == 4)

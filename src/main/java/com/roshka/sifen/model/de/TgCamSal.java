@@ -19,29 +19,29 @@ public class TgCamSal {
     private String dTelSal;
 
     public void setupSOAPElements(SOAPElement gTransp) throws SOAPException {
-        SOAPElement gCamSal = gTransp.addChildElement("gCamSal", Constants.SIFEN_NS_PREFIX);
-        gCamSal.addChildElement("dDirLocSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirLocSal);
-        gCamSal.addChildElement("dNumCasSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasSal));
+        SOAPElement gCamSal = gTransp.addChildElement("gCamSal");
+        gCamSal.addChildElement("dDirLocSal").setTextContent(this.dDirLocSal);
+        gCamSal.addChildElement("dNumCasSal").setTextContent(String.valueOf(this.dNumCasSal));
 
         if (this.dComp1Sal != null)
-            gCamSal.addChildElement("dComp1Sal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dComp1Sal);
+            gCamSal.addChildElement("dComp1Sal").setTextContent(this.dComp1Sal);
 
         if (this.dComp2Sal != null)
-            gCamSal.addChildElement("dComp2Sal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dComp2Sal);
+            gCamSal.addChildElement("dComp2Sal").setTextContent(this.dComp2Sal);
 
-        gCamSal.addChildElement("cDepSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepSal.getVal()));
-        gCamSal.addChildElement("dDesDepSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.cDepSal.getDescripcion());
+        gCamSal.addChildElement("cDepSal").setTextContent(String.valueOf(this.cDepSal.getVal()));
+        gCamSal.addChildElement("dDesDepSal").setTextContent(this.cDepSal.getDescripcion());
 
         if (this.cDisSal != 0) {
-            gCamSal.addChildElement("cDisSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisSal));
-            gCamSal.addChildElement("dDesDisSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisSal);
+            gCamSal.addChildElement("cDisSal").setTextContent(String.valueOf(this.cDisSal));
+            gCamSal.addChildElement("dDesDisSal").setTextContent(this.dDesDisSal);
         }
 
-        gCamSal.addChildElement("cCiuSal", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuSal));
-        gCamSal.addChildElement("dDesCiuSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuSal);
+        gCamSal.addChildElement("cCiuSal").setTextContent(String.valueOf(this.cCiuSal));
+        gCamSal.addChildElement("dDesCiuSal").setTextContent(this.dDesCiuSal);
 
         if (this.dTelSal != null)
-            gCamSal.addChildElement("dTelSal", Constants.SIFEN_NS_PREFIX).setTextContent(this.dTelSal);
+            gCamSal.addChildElement("dTelSal").setTextContent(this.dTelSal);
     }
 
     public String getdDirLocSal() {

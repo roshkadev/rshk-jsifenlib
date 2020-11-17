@@ -14,14 +14,14 @@ public class TgRespDE {
     private String dCarRespDE;
 
     public void setupSOAPElements(SOAPElement gEmis) throws SOAPException {
-        SOAPElement gRespDE = gEmis.addChildElement("gRespDE", Constants.SIFEN_NS_PREFIX);
-        gRespDE.addChildElement("iTipIDRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDRespDE.getVal()));
-        gRespDE.addChildElement("dDTipIDRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(
+        SOAPElement gRespDE = gEmis.addChildElement("gRespDE");
+        gRespDE.addChildElement("iTipIDRespDE").setTextContent(String.valueOf(this.iTipIDRespDE.getVal()));
+        gRespDE.addChildElement("dDTipIDRespDE").setTextContent(
                 this.iTipIDRespDE.getDescripcion() != null ? this.iTipIDRespDE.getDescripcion() : this.dDTipIDRespDE
         );
-        gRespDE.addChildElement("dNumIDRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDRespDE);
-        gRespDE.addChildElement("dNomRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomRespDE);
-        gRespDE.addChildElement("dCarRespDE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCarRespDE);
+        gRespDE.addChildElement("dNumIDRespDE").setTextContent(this.dNumIDRespDE);
+        gRespDE.addChildElement("dNomRespDE").setTextContent(this.dNomRespDE);
+        gRespDE.addChildElement("dCarRespDE").setTextContent(this.dCarRespDE);
     }
 
     public TiTipIDRespDE getiTipIDRespDE() {

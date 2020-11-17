@@ -31,36 +31,36 @@ public class TgCamAE {
     private String dDesCiuProv;
 
     public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
-        SOAPElement gCamAE = gDtipDE.addChildElement("gCamAE", Constants.SIFEN_NS_PREFIX);
-        gCamAE.addChildElement("iNatVen", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatVen.getVal()));
-        gCamAE.addChildElement("dDesNatVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.iNatVen.getDescripcion());
-        gCamAE.addChildElement("iTipIDVen", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDVen.getVal()));
-        gCamAE.addChildElement("dDTipIDVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipIDVen.getDescripcion());
-        gCamAE.addChildElement("dNumIDVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDVen);
-        gCamAE.addChildElement("dNomVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomVen);
-        gCamAE.addChildElement("dDirVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirVen);
-        gCamAE.addChildElement("dNumCasVen", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasVen));
-        gCamAE.addChildElement("cDepVen", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepVen.getVal()));
-        gCamAE.addChildElement("dDesDepVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.cDepVen.getDescripcion());
+        SOAPElement gCamAE = gDtipDE.addChildElement("gCamAE");
+        gCamAE.addChildElement("iNatVen").setTextContent(String.valueOf(this.iNatVen.getVal()));
+        gCamAE.addChildElement("dDesNatVen").setTextContent(this.iNatVen.getDescripcion());
+        gCamAE.addChildElement("iTipIDVen").setTextContent(String.valueOf(this.iTipIDVen.getVal()));
+        gCamAE.addChildElement("dDTipIDVen").setTextContent(this.iTipIDVen.getDescripcion());
+        gCamAE.addChildElement("dNumIDVen").setTextContent(this.dNumIDVen);
+        gCamAE.addChildElement("dNomVen").setTextContent(this.dNomVen);
+        gCamAE.addChildElement("dDirVen").setTextContent(this.dDirVen);
+        gCamAE.addChildElement("dNumCasVen").setTextContent(String.valueOf(this.dNumCasVen));
+        gCamAE.addChildElement("cDepVen").setTextContent(String.valueOf(this.cDepVen.getVal()));
+        gCamAE.addChildElement("dDesDepVen").setTextContent(this.cDepVen.getDescripcion());
 
         if (this.cDisVen != 0) {
-            gCamAE.addChildElement("cDisVen", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisVen));
-            gCamAE.addChildElement("dDesDisVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisVen);
+            gCamAE.addChildElement("cDisVen").setTextContent(String.valueOf(this.cDisVen));
+            gCamAE.addChildElement("dDesDisVen").setTextContent(this.dDesDisVen);
         }
 
-        gCamAE.addChildElement("cCiuVen", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuVen));
-        gCamAE.addChildElement("dDesCiuVen", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuVen);
-        gCamAE.addChildElement("dDirProv", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirProv);
-        gCamAE.addChildElement("cDepProv", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepProv.getVal()));
-        gCamAE.addChildElement("dDesDepProv", Constants.SIFEN_NS_PREFIX).setTextContent(this.cDepProv.getDescripcion());
+        gCamAE.addChildElement("cCiuVen").setTextContent(String.valueOf(this.cCiuVen));
+        gCamAE.addChildElement("dDesCiuVen").setTextContent(this.dDesCiuVen);
+        gCamAE.addChildElement("dDirProv").setTextContent(this.dDirProv);
+        gCamAE.addChildElement("cDepProv").setTextContent(String.valueOf(this.cDepProv.getVal()));
+        gCamAE.addChildElement("dDesDepProv").setTextContent(this.cDepProv.getDescripcion());
 
         if (this.cDisProv != 0) {
-            gCamAE.addChildElement("cDisProv", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisProv));
-            gCamAE.addChildElement("dDesDisProv", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisProv);
+            gCamAE.addChildElement("cDisProv").setTextContent(String.valueOf(this.cDisProv));
+            gCamAE.addChildElement("dDesDisProv").setTextContent(this.dDesDisProv);
         }
 
-        gCamAE.addChildElement("cCiuProv", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuProv));
-        gCamAE.addChildElement("dDesCiuProv", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuProv);
+        gCamAE.addChildElement("cCiuProv").setTextContent(String.valueOf(this.cCiuProv));
+        gCamAE.addChildElement("dDesCiuProv").setTextContent(this.dDesCiuProv);
     }
 
     public TiNatVen getiNatVen() {

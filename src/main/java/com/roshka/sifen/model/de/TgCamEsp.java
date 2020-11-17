@@ -12,7 +12,7 @@ public class TgCamEsp {
     private TgGrupAdi gGrupAdi;
 
     public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
-        SOAPElement gCamEsp = gDtipDE.addChildElement("gCamEsp", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gCamEsp = gDtipDE.addChildElement("gCamEsp");
         if (this.gGrupEner != null)
             this.gGrupEner.setupSOAPElements(gCamEsp);
 

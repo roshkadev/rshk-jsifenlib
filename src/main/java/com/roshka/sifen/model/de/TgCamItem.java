@@ -31,59 +31,58 @@ public class TgCamItem {
     private TgRasMerc gRasMerc;
     private TgVehNuevo gVehNuevo;
 
-    public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TgDaGOC gDatGralOpe) throws SOAPException {
+    public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
         TTipTra iTipTra = gDatGralOpe.getgOpeCom().getTipTra();
         TdCondTiCam dCondTiCam = gDatGralOpe.getgOpeCom().getdCondTiCam();
         TTImp iTImp = gDatGralOpe.getgOpeCom().getiTImp();
 
-        SOAPElement gCamItem = gDtipDE.addChildElement("gCamItem", Constants.SIFEN_NS_PREFIX);
-        gCamItem.addChildElement("dCodInt", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCodInt);
+        SOAPElement gCamItem = gDtipDE.addChildElement("gCamItem");
+        gCamItem.addChildElement("dCodInt").setTextContent(this.dCodInt);
 
         if (this.dParAranc != 0)
-            gCamItem.addChildElement("dParAranc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dParAranc));
+            gCamItem.addChildElement("dParAranc").setTextContent(String.valueOf(this.dParAranc));
 
         if (this.dNCM != 0)
-            gCamItem.addChildElement("dNCM", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNCM));
+            gCamItem.addChildElement("dNCM").setTextContent(String.valueOf(this.dNCM));
 
         if (this.dDncpG != null || iTiOpe.getVal() == 3) {
-            gCamItem.addChildElement("dDncpG", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDncpG);
-            gCamItem.addChildElement("dDncpE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDncpE);
+            gCamItem.addChildElement("dDncpG").setTextContent(this.dDncpG);
+            gCamItem.addChildElement("dDncpE").setTextContent(this.dDncpE);
         }
 
         if (this.dGtin != 0)
-            gCamItem.addChildElement("dGtin", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtin));
+            gCamItem.addChildElement("dGtin").setTextContent(String.valueOf(this.dGtin));
 
         if (this.dGtinPq != 0)
-            gCamItem.addChildElement("dGtinPq", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dGtinPq));
+            gCamItem.addChildElement("dGtinPq").setTextContent(String.valueOf(this.dGtinPq));
 
-        gCamItem.addChildElement("dDesProSer", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesProSer);
-        gCamItem.addChildElement("cUniMed", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cUniMed.getVal()));
-        gCamItem.addChildElement("dDesUniMed", Constants.SIFEN_NS_PREFIX).setTextContent(this.cUniMed.getDescripcion());
-        gCamItem.addChildElement("dCantProSer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCantProSer));
+        gCamItem.addChildElement("dDesProSer").setTextContent(this.dDesProSer);
+        gCamItem.addChildElement("cUniMed").setTextContent(String.valueOf(this.cUniMed.getVal()));
+        gCamItem.addChildElement("dDesUniMed").setTextContent(this.cUniMed.toString());
+        gCamItem.addChildElement("dCantProSer").setTextContent(String.valueOf(this.dCantProSer));
 
         if (this.cPaisOrig != null) {
-            gCamItem.addChildElement("cPaisOrig", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.toString());
-            gCamItem.addChildElement("dDesPaisOrig", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisOrig.getNombre());
+            gCamItem.addChildElement("cPaisOrig").setTextContent(this.cPaisOrig.toString());
+            gCamItem.addChildElement("dDesPaisOrig").setTextContent(this.cPaisOrig.getNombre());
         }
 
         if (this.dInfItem != null)
-            gCamItem.addChildElement("dInfItem", Constants.SIFEN_NS_PREFIX).setTextContent(this.dInfItem);
+            gCamItem.addChildElement("dInfItem").setTextContent(this.dInfItem);
 
-        if (iTiDE.getVal() != 7 || this.tcRelMerc != null) {
-            gCamItem.addChildElement("cRelMerc", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tcRelMerc.getVal()));
-            gCamItem.addChildElement("dDesRelMerc", Constants.SIFEN_NS_PREFIX).setTextContent(this.tcRelMerc.getDescripcion());
-
+        if (iTiDE.getVal() == 7 && this.tcRelMerc != null) {
+            gCamItem.addChildElement("cRelMerc").setTextContent(String.valueOf(this.tcRelMerc.getVal()));
+            gCamItem.addChildElement("dDesRelMerc").setTextContent(this.tcRelMerc.getDescripcion());
         }
 
-        if ((iTiDE.getVal() != 7 || this.tcRelMerc != null) || this.dCanQuiMer != null)
-            gCamItem.addChildElement("dCanQuiMer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCanQuiMer));
+        if ((iTiDE.getVal() == 7 && this.tcRelMerc != null) || this.dCanQuiMer != null)
+            gCamItem.addChildElement("dCanQuiMer").setTextContent(String.valueOf(this.dCanQuiMer));
 
-        if ((iTiDE.getVal() != 7 || this.tcRelMerc != null) || this.dPorQuiMer != null)
-            gCamItem.addChildElement("dPorQuiMer", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorQuiMer));
+        if ((iTiDE.getVal() == 7 && this.tcRelMerc != null) || this.dPorQuiMer != null)
+            gCamItem.addChildElement("dPorQuiMer").setTextContent(String.valueOf(this.dPorQuiMer));
 
         if (iTipTra.getVal() == 9 || this.dCDCAnticipo != null)
-            gCamItem.addChildElement("dCDCAnticipo", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCDCAnticipo);
+            gCamItem.addChildElement("dCDCAnticipo").setTextContent(this.dCDCAnticipo);
 
         if (iTiDE.getVal() != 7)
             this.gValorItem.setupSOAPElements(gCamItem, dCondTiCam);

@@ -11,13 +11,13 @@ import java.util.List;
 
 public class TgEmis {
     private String dRucEmi;
-    private short dDVEmi;
+    private String dDVEmi;
     private TiTipCont iTipCont;
     private TTipReg cTipReg;    // optional
     private String dNomEmi;
     private String dNomFanEmi;
     private String dDirEmi;
-    private int dNumCas;
+    private String dNumCas;
     private String dCompDir1;
     private String dCompDir2;
     private TDepartamento cDepEmi;
@@ -32,40 +32,40 @@ public class TgEmis {
     private TgRespDE gRespDE;
 
     public void setupSOAPElements(SOAPElement gDatGralOpe) throws SOAPException {
-        SOAPElement gEmis = gDatGralOpe.addChildElement("gEmis", Constants.SIFEN_NS_PREFIX);
-        gEmis.addChildElement("dRucEm", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRucEmi);
-        gEmis.addChildElement("dDVEmi", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVEmi));
-        gEmis.addChildElement("iTipCont", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipCont.getVal()));
+        SOAPElement gEmis = gDatGralOpe.addChildElement("gEmis");
+        gEmis.addChildElement("dRucEm").setTextContent(this.dRucEmi);
+        gEmis.addChildElement("dDVEmi").setTextContent(this.dDVEmi);
+        gEmis.addChildElement("iTipCont").setTextContent(String.valueOf(this.iTipCont.getVal()));
         if (this.cTipReg != null)
-            gEmis.addChildElement("cTipReg", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cTipReg.getVal()));
-        gEmis.addChildElement("dNomEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomEmi);
+            gEmis.addChildElement("cTipReg").setTextContent(String.valueOf(this.cTipReg.getVal()));
+        gEmis.addChildElement("dNomEmi").setTextContent(this.dNomEmi);
         if (this.dNomFanEmi != null)
-            gEmis.addChildElement("dNomFanEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomFanEmi);
-        gEmis.addChildElement("dDirEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirEmi);
-        gEmis.addChildElement("dNumCas", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCas));
+            gEmis.addChildElement("dNomFanEmi").setTextContent(this.dNomFanEmi);
+        gEmis.addChildElement("dDirEmi").setTextContent(this.dDirEmi);
+        gEmis.addChildElement("dNumCas").setTextContent(this.dNumCas);
         if (dCompDir1 != null)
-            gEmis.addChildElement("dCompDir1", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCompDir1);
+            gEmis.addChildElement("dCompDir1").setTextContent(this.dCompDir1);
         if (dCompDir2 != null)
-            gEmis.addChildElement("dCompDir2", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCompDir2);
-        gEmis.addChildElement("cDepEmi", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepEmi.getVal()));
-        gEmis.addChildElement("dDesDepEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.cDepEmi.getDescripcion());
+            gEmis.addChildElement("dCompDir2").setTextContent(this.dCompDir2);
+        gEmis.addChildElement("cDepEmi").setTextContent(String.valueOf(this.cDepEmi.getVal()));
+        gEmis.addChildElement("dDesDepEmi").setTextContent(this.cDepEmi.getDescripcion());
 
         if (this.cDisEmi != 0) {
-            gEmis.addChildElement("cDisEmi", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisEmi));
-            gEmis.addChildElement("dDesDisEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisEmi);
+            gEmis.addChildElement("cDisEmi").setTextContent(String.valueOf(this.cDisEmi));
+            gEmis.addChildElement("dDesDisEmi").setTextContent(this.dDesDisEmi);
         }
-        gEmis.addChildElement("cCiuEmi", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuEmi));
-        gEmis.addChildElement("dDesCiuEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuEmi);
-        gEmis.addChildElement("dTelEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dTelEmi);
-        gEmis.addChildElement("dEmailE", Constants.SIFEN_NS_PREFIX).setTextContent(this.dEmailE);
+        gEmis.addChildElement("cCiuEmi").setTextContent(String.valueOf(this.cCiuEmi));
+        gEmis.addChildElement("dDesCiuEmi").setTextContent(this.dDesCiuEmi);
+        gEmis.addChildElement("dTelEmi").setTextContent(this.dTelEmi);
+        gEmis.addChildElement("dEmailE").setTextContent(this.dEmailE);
 
         if (this.dDenSuc != null)
-            gEmis.addChildElement("dDenSuc", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDenSuc);
+            gEmis.addChildElement("dDenSuc").setTextContent(this.dDenSuc);
 
         for (TgActEco gActEco : this.gActEcoList) {
-            SOAPElement gActEcoElement = gEmis.addChildElement("gActEco", Constants.SIFEN_NS_PREFIX);
-            gActEcoElement.addChildElement("cActEco", Constants.SIFEN_NS_PREFIX).setTextContent(gActEco.getcActEco());
-            gActEcoElement.addChildElement("dDesActEco", Constants.SIFEN_NS_PREFIX).setTextContent(gActEco.getdDesActEco());
+            SOAPElement gActEcoElement = gEmis.addChildElement("gActEco");
+            gActEcoElement.addChildElement("cActEco").setTextContent(gActEco.getcActEco());
+            gActEcoElement.addChildElement("dDesActEco").setTextContent(gActEco.getdDesActEco());
         }
 
         if (gRespDE != null) this.gRespDE.setupSOAPElements(gEmis);
@@ -79,11 +79,11 @@ public class TgEmis {
         this.dRucEmi = dRucEmi;
     }
 
-    public short getdDVEmi() {
+    public String getdDVEmi() {
         return dDVEmi;
     }
 
-    public void setdDVEmi(short dDVEmi) {
+    public void setdDVEmi(String dDVEmi) {
         this.dDVEmi = dDVEmi;
     }
 
@@ -127,11 +127,11 @@ public class TgEmis {
         this.dDirEmi = dDirEmi;
     }
 
-    public int getdNumCas() {
+    public String getdNumCas() {
         return dNumCas;
     }
 
-    public void setdNumCas(int dNumCas) {
+    public void setdNumCas(String dNumCas) {
         this.dNumCas = dNumCas;
     }
 

@@ -1,5 +1,7 @@
 package com.roshka.sifen.config;
 
+import com.roshka.sifen.util.SifenUtil;
+
 import static com.roshka.sifen.model.Constants.SDK_CURRENT_VERSION;
 
 /**
@@ -47,6 +49,9 @@ public class SifenConfig {
     private String contrasenaCertificadoCliente;
     private TipoCertificadoCliente tipoCertificadoCliente;
 
+    private String idCSC;
+    private String CSC;
+
     private final int httpConnectTimeout;
     private final int httpReadTimeout;
     private final String userAgent;
@@ -71,14 +76,19 @@ public class SifenConfig {
         this.urlConsulta = "/de/ws/consultas/consulta.wsdl";
         this.usarCertificadoCliente = true;
 
+        this.idCSC = "0001";
+        this.CSC = "ABCD0000000000000000000000000000";
+
         this.httpConnectTimeout = 15 * 1000; // 15 Segundos
         this.httpReadTimeout = 45 * 1000; // 45 Segundos
         this.userAgent = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
     }
 
-    public SifenConfig(String rutaCertificadoCliente, String contrasenaCertificadoCliente,
+    public SifenConfig(TipoAmbiente tipoAmbiente, String rutaCertificadoCliente, String contrasenaCertificadoCliente,
                        TipoCertificadoCliente tipoCertificadoCliente) {
         this();
+        this.setAmbiente(tipoAmbiente);
+
         this.usarCertificadoCliente = true;
         this.rutaCertificadoCliente = rutaCertificadoCliente;
         this.contrasenaCertificadoCliente = contrasenaCertificadoCliente;
@@ -86,9 +96,11 @@ public class SifenConfig {
     }
 
     public SifenConfig(TipoAmbiente tipoAmbiente, String rutaCertificadoCliente, String contrasenaCertificadoCliente,
-                       TipoCertificadoCliente tipoCertificadoCliente) {
-        this(rutaCertificadoCliente, contrasenaCertificadoCliente, tipoCertificadoCliente);
-        this.ambiente = tipoAmbiente;
+                       TipoCertificadoCliente tipoCertificadoCliente, String idCSC, String CSC) {
+        this(tipoAmbiente, rutaCertificadoCliente, contrasenaCertificadoCliente, tipoCertificadoCliente);
+
+        this.setIdCSC(idCSC);
+        this.CSC = CSC;
     }
 
     // Getters y Setters
@@ -210,5 +222,21 @@ public class SifenConfig {
 
     public String getUserAgent() {
         return userAgent;
+    }
+
+    public String getIdCSC() {
+        return idCSC;
+    }
+
+    public void setIdCSC(String idCSC) {
+        this.idCSC = SifenUtil.leftPad(idCSC, '0', 4);
+    }
+
+    public String getCSC() {
+        return CSC;
+    }
+
+    public void setCSC(String CSC) {
+        this.CSC = CSC;
     }
 }

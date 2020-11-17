@@ -19,13 +19,11 @@ public class REnviConsRUC extends REnviBase {
     public void setupSOAPBody(SOAPBody soapBody, SifenConfig sifenConfig) throws SifenException {
         try {
             // Main Element
-            SOAPBodyElement rResEnviConsRUC = soapBody.addBodyElement(
-                    new QName(Constants.SIFEN_NS_URI, TAG_NAME, Constants.SIFEN_NS_PREFIX)
-            );
+            SOAPBodyElement rResEnviConsRUC = soapBody.addBodyElement(new QName(Constants.SIFEN_NS_URI, TAG_NAME));
 
             // Elements
-            rResEnviConsRUC.addChildElement("dId", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.getdId()));
-            rResEnviConsRUC.addChildElement("dRUCCons", Constants.SIFEN_NS_PREFIX).setTextContent(this.getdRUCCons());
+            rResEnviConsRUC.addChildElement("dId").setTextContent(String.valueOf(this.getdId()));
+            rResEnviConsRUC.addChildElement("dRUCCons").setTextContent(this.getdRUCCons());
         } catch (SOAPException e) {
             throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
         }

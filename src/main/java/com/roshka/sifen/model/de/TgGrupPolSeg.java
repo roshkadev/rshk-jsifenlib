@@ -5,8 +5,8 @@ import com.roshka.sifen.model.Constants;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TgGrupPolSeg {
     private String dPoliza;
@@ -18,22 +18,22 @@ public class TgGrupPolSeg {
     private String dCodInt;
 
     public void setupSOAPElements(SOAPElement gGrupSeg) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        SOAPElement gGrupPolSeg = gGrupSeg.addChildElement("gGrupPolSeg", Constants.SIFEN_NS_PREFIX);
-        gGrupPolSeg.addChildElement("dPoliza", Constants.SIFEN_NS_PREFIX).setTextContent(this.dPoliza);
-        gGrupPolSeg.addChildElement("dUnidVig", Constants.SIFEN_NS_PREFIX).setTextContent(this.dUnidVig);
-        gGrupPolSeg.addChildElement("dVigencia", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dVigencia));
-        gGrupPolSeg.addChildElement("dNumPoliza", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumPoliza);
+        SOAPElement gGrupPolSeg = gGrupSeg.addChildElement("gGrupPolSeg");
+        gGrupPolSeg.addChildElement("dPoliza").setTextContent(this.dPoliza);
+        gGrupPolSeg.addChildElement("dUnidVig").setTextContent(this.dUnidVig);
+        gGrupPolSeg.addChildElement("dVigencia").setTextContent(String.valueOf(this.dVigencia));
+        gGrupPolSeg.addChildElement("dNumPoliza").setTextContent(this.dNumPoliza);
 
         if (this.dFecIniVig != null)
-            gGrupPolSeg.addChildElement("dFecIniVig", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecIniVig));
+            gGrupPolSeg.addChildElement("dFecIniVig").setTextContent(this.dFecIniVig.format(formatter));
 
         if (this.dFecFinVig != null)
-            gGrupPolSeg.addChildElement("dFecFinVig", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecFinVig));
+            gGrupPolSeg.addChildElement("dFecFinVig").setTextContent(this.dFecFinVig.format(formatter));
 
         if (this.dCodInt != null)
-            gGrupPolSeg.addChildElement("dCodInt", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCodInt);
+            gGrupPolSeg.addChildElement("dCodInt").setTextContent(this.dCodInt);
     }
 
     public String getdPoliza() {

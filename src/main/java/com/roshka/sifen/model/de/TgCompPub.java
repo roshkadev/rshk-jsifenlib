@@ -4,7 +4,6 @@ import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class TgCompPub {
@@ -15,14 +14,12 @@ public class TgCompPub {
     private LocalDate dFeCodCont;
 
     public void setupSOAPElements(SOAPElement gCamFE) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        SOAPElement gCompPub = gCamFE.addChildElement("gCompPub", Constants.SIFEN_NS_PREFIX);
-        gCompPub.addChildElement("dModCont", Constants.SIFEN_NS_PREFIX).setTextContent(this.dModCont);
-        gCompPub.addChildElement("dEntCont", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dEntCont));
-        gCompPub.addChildElement("dAnoCont", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dAnoCont));
-        gCompPub.addChildElement("dSecCont", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSecCont));
-        gCompPub.addChildElement("dFeCodCont", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeCodCont));
+        SOAPElement gCompPub = gCamFE.addChildElement("gCompPub");
+        gCompPub.addChildElement("dModCont").setTextContent(this.dModCont);
+        gCompPub.addChildElement("dEntCont").setTextContent(String.valueOf(this.dEntCont));
+        gCompPub.addChildElement("dAnoCont").setTextContent(String.valueOf(this.dAnoCont));
+        gCompPub.addChildElement("dSecCont").setTextContent(String.valueOf(this.dSecCont));
+        gCompPub.addChildElement("dFeCodCont").setTextContent(this.dFeCodCont.toString());
     }
 
     public String getdModCont() {

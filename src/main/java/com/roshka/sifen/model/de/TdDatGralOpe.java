@@ -5,20 +5,20 @@ import com.roshka.sifen.model.de.types.TTiDE;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class TgDaGOC {
+public class TdDatGralOpe {
     private LocalDateTime dFeEmiDE;
-    private TGOpeCom gOpeCom;
+    private TgOpeCom gOpeCom;
     private TgEmis gEmis;
     private TgDatRec gDatRec;
 
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-        SOAPElement gDatGralOpe = DE.addChildElement("gDatGralOpe", Constants.SIFEN_NS_PREFIX);
-        gDatGralOpe.addChildElement("dFeEmiDE", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFeEmiDE));
+        SOAPElement gDatGralOpe = DE.addChildElement("gDatGralOpe");
+        gDatGralOpe.addChildElement("dFeEmiDE").setTextContent(this.dFeEmiDE.format(formatter));
         if (iTiDE.getVal() != 7) this.gOpeCom.setupSOAPElements(gDatGralOpe, iTiDE);
         this.gEmis.setupSOAPElements(gDatGralOpe);
         this.gDatRec.setupSOAPElements(gDatGralOpe, iTiDE);
@@ -32,11 +32,11 @@ public class TgDaGOC {
         this.dFeEmiDE = dFeEmiDE;
     }
 
-    public TGOpeCom getgOpeCom() {
+    public TgOpeCom getgOpeCom() {
         return gOpeCom;
     }
 
-    public void setgOpeCom(TGOpeCom gOpeCom) {
+    public void setgOpeCom(TgOpeCom gOpeCom) {
         this.gOpeCom = gOpeCom;
     }
 

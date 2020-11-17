@@ -6,7 +6,6 @@ import com.roshka.sifen.model.paises.PaisType;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,45 +25,43 @@ public class TgTransp {
     private TgCamTrans gCamTrans;
 
     public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TiMotivTras iMotEmiNR) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        SOAPElement gTransp = gDtipDE.addChildElement("gTransp", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gTransp = gDtipDE.addChildElement("gTransp");
 
         if (iTiDE.getVal() == 7 || this.iTipTrans != null) {
-            gTransp.addChildElement("iTipTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipTrans.getVal()));
-            gTransp.addChildElement("dDesTipTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTipTrans.getDescripcion());
+            gTransp.addChildElement("iTipTrans").setTextContent(String.valueOf(this.iTipTrans.getVal()));
+            gTransp.addChildElement("dDesTipTrans").setTextContent(this.iTipTrans.getDescripcion());
         }
 
-        gTransp.addChildElement("iModTrans", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iModTrans.getVal()));
-        gTransp.addChildElement("dDesModTrans", Constants.SIFEN_NS_PREFIX).setTextContent(this.iModTrans.getDescripcion());
-        gTransp.addChildElement("iRespFlete", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iRespFlete.getVal()));
+        gTransp.addChildElement("iModTrans").setTextContent(String.valueOf(this.iModTrans.getVal()));
+        gTransp.addChildElement("dDesModTrans").setTextContent(this.iModTrans.getDescripcion());
+        gTransp.addChildElement("iRespFlete").setTextContent(String.valueOf(this.iRespFlete.getVal()));
 
         if (this.dNuManif != null)
-            gTransp.addChildElement("dNuManif", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNuManif);
+            gTransp.addChildElement("dNuManif").setTextContent(this.dNuManif);
 
         if (iMotEmiNR.getVal() == 5)
-            gTransp.addChildElement("dNuDespImp", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNuDespImp);
+            gTransp.addChildElement("dNuDespImp").setTextContent(this.dNuDespImp);
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.dIniTras != null)) {
-            gTransp.addChildElement("dIniTras", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dIniTras));
-            gTransp.addChildElement("dFinTras", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFinTras));
+            gTransp.addChildElement("dIniTras").setTextContent(this.dIniTras.toString());
+            gTransp.addChildElement("dFinTras").setTextContent(this.dFinTras.toString());
         }
 
         if (this.cPaisDest != null) {
-            gTransp.addChildElement("cPaisDest", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.toString());
-            gTransp.addChildElement("dDesPaisDest", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisDest.getNombre());
+            gTransp.addChildElement("cPaisDest").setTextContent(this.cPaisDest.toString());
+            gTransp.addChildElement("dDesPaisDest").setTextContent(this.cPaisDest.getNombre());
         }
 
         if (this.gCamSal != null)
             this.gCamSal.setupSOAPElements(gTransp);
 
-        if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gCamEntList.size() > 0)) {
+        if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gCamEntList != null)) {
             for (TgCamEnt gCamEnt : gCamEntList) {
                 gCamEnt.setupSOAPElements(gTransp);
             }
         }
 
-        if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gVehTrasList.size() > 0)) {
+        if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gVehTrasList != null)) {
             for (TgVehTras gVehTras : gVehTrasList) {
                 gVehTras.setupSOAPElements(gTransp, this.iModTrans);
             }

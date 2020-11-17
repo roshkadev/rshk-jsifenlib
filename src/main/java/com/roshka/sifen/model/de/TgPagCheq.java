@@ -10,9 +10,9 @@ public class TgPagCheq {
     private String dBcoEmi;
 
     public void setupSOAPElements(SOAPElement gPaConEIni) throws SOAPException {
-        SOAPElement gPagCheq = gPaConEIni.addChildElement("gPagCheq", Constants.SIFEN_NS_PREFIX);
-        gPagCheq.addChildElement("dNumCheq", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumCheq);
-        gPagCheq.addChildElement("dBcoEmi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dBcoEmi);
+        SOAPElement gPagCheq = gPaConEIni.addChildElement("gPagCheq");
+        gPagCheq.addChildElement("dNumCheq").setTextContent(this.dNumCheq);
+        gPagCheq.addChildElement("dBcoEmi").setTextContent(this.dBcoEmi);
     }
 
     public String getdNumCheq() {

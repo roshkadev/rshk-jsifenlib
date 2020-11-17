@@ -6,7 +6,6 @@ import com.roshka.sifen.model.de.types.TiRespEmiNR;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 /**
@@ -19,19 +18,17 @@ public class TgCamNRE {
     private LocalDate dFecEm;
 
     public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        SOAPElement gCamNRE = gDtipDE.addChildElement("gCamNRE", Constants.SIFEN_NS_PREFIX);
-        gCamNRE.addChildElement("iMotEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iMotEmiNR.getVal()));
-        gCamNRE.addChildElement("dDesMotEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(this.iMotEmiNR.getDescripcion());
-        gCamNRE.addChildElement("iRespEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iRespEmiNR.getVal()));
-        gCamNRE.addChildElement("dDesRespEmiNR", Constants.SIFEN_NS_PREFIX).setTextContent(this.iRespEmiNR.getDescripcion());
+        SOAPElement gCamNRE = gDtipDE.addChildElement("gCamNRE");
+        gCamNRE.addChildElement("iMotEmiNR").setTextContent(String.valueOf(this.iMotEmiNR.getVal()));
+        gCamNRE.addChildElement("dDesMotEmiNR").setTextContent(this.iMotEmiNR.getDescripcion());
+        gCamNRE.addChildElement("iRespEmiNR").setTextContent(String.valueOf(this.iRespEmiNR.getVal()));
+        gCamNRE.addChildElement("dDesRespEmiNR").setTextContent(this.iRespEmiNR.getDescripcion());
 
         if (this.dKmR != 0)
-            gCamNRE.addChildElement("dKmR", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dKmR));
+            gCamNRE.addChildElement("dKmR").setTextContent(String.valueOf(this.dKmR));
 
         if (dFecEm != null)
-            gCamNRE.addChildElement("dFecEm", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecEm));
+            gCamNRE.addChildElement("dFecEm").setTextContent(this.dFecEm.toString());
     }
 
     public TiMotivTras getiMotEmiNR() {

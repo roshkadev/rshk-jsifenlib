@@ -6,7 +6,6 @@ import com.roshka.sifen.model.monedas.CMondT;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class TgCuotas {
@@ -15,15 +14,13 @@ public class TgCuotas {
     private LocalDate dVencCuo;
 
     public void setupSOAPElements(SOAPElement gPagCred) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        SOAPElement gCuotas = gPagCred.addChildElement("gCuotas", Constants.SIFEN_NS_PREFIX);
-        gCuotas.addChildElement("cMoneCuo", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneCuo.toString());
-        gCuotas.addChildElement("dDMoneCuo", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneCuo.getDescripcion());
-        gCuotas.addChildElement("dMonCuota", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dMonCuota));
+        SOAPElement gCuotas = gPagCred.addChildElement("gCuotas");
+        gCuotas.addChildElement("cMoneCuo").setTextContent(this.cMoneCuo.toString());
+        gCuotas.addChildElement("dDMoneCuo").setTextContent(this.cMoneCuo.getDescripcion());
+        gCuotas.addChildElement("dMonCuota").setTextContent(String.valueOf(this.dMonCuota));
 
         if (this.dVencCuo != null)
-            gCuotas.addChildElement("dVencCuo", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dVencCuo));
+            gCuotas.addChildElement("dVencCuo").setTextContent(this.dVencCuo.toString());
     }
 
     public CMondT getcMoneCuo() {

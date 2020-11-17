@@ -13,7 +13,9 @@ import javax.net.ssl.SSLContext;
 import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -74,6 +76,13 @@ public class SOAPHelper {
             // Respuesta
             soapResponse.setStatus(httpURLConnection.getResponseCode());
             soapResponse.setContentType(httpURLConnection.getContentType());
+
+            /*BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            StringBuilder res = new StringBuilder();
+            String l;
+            while ((l = in.readLine()) != null) {
+                res.append(l);
+            }*/
 
             if (!soapResponse.isRequestSuccessful()) {
                 // Hubo un error en la petición

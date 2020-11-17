@@ -6,6 +6,7 @@ import com.roshka.sifen.util.SifenExceptionUtil;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import java.security.cert.Certificate;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.*;
@@ -63,24 +64,12 @@ public class SSLContextHelper {
         }
     }
 
-    public static KeyPair getCertificateKeyPair(SifenConfig sifenConfig) throws SifenException {
+    public static KeyStore getCertificateKeyStore(SifenConfig sifenConfig) throws SifenException {
         if (!isCertificateConfigurationValid(sifenConfig)) {
             throw SifenExceptionUtil.invalidConfiguration("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
         }
 
-        try {
-            KeyStore keyStore = getCertificateKeyStore(sifenConfig.getRutaCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
-            String alias = keyStore.aliases().nextElement();
-
-            PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
-            PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, sifenConfig.getContrasenaCertificadoCliente().toCharArray());
-
-            return new KeyPair(publicKey, privateKey);
-        } catch (KeyStoreException e) {
-            throw SifenExceptionUtil.invalidConfiguration("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
-        } catch (UnrecoverableKeyException | NoSuchAlgorithmException e) {
-            throw SifenExceptionUtil.invalidSSLContext("No se puede obtener una instancia de administrador de claves de algoritmo: " + KeyManagerFactory.getDefaultAlgorithm(), e);
-        }
+        return getCertificateKeyStore(sifenConfig.getRutaCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
     }
 
     private static KeyStore getCertificateKeyStore(String certificatePath, String password) throws SifenException {

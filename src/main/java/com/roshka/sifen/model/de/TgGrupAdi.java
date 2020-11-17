@@ -5,38 +5,34 @@ import com.roshka.sifen.model.Constants;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class TgGrupAdi {
     private String dCiclo;
-    private LocalDateTime dFecIniC;
+    private LocalDate dFecIniC;
     private LocalDate dFecFinC;
     private List<LocalDate> dVencPagList;
     private String dContrato;
     private BigDecimal dSalAnt;
 
     public void setupSOAPElements(SOAPElement gCamEsp) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        SOAPElement gGrupAdi = gCamEsp.addChildElement("gGrupAdi", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gGrupAdi = gCamEsp.addChildElement("gGrupAdi");
         if (this.dCiclo != null) {
-            gGrupAdi.addChildElement("dCiclo", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCiclo);
-            gGrupAdi.addChildElement("dFecIniC", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecIniC));
-            gGrupAdi.addChildElement("dFecFinC", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dFecFinC));
+            gGrupAdi.addChildElement("dCiclo").setTextContent(this.dCiclo);
+            gGrupAdi.addChildElement("dFecIniC").setTextContent(this.dFecIniC.toString());
+            gGrupAdi.addChildElement("dFecFinC").setTextContent(this.dFecFinC.toString());
         }
 
         for (LocalDate dVencPag : dVencPagList) {
-            gGrupAdi.addChildElement("dVencPag", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(dVencPag));
+            gGrupAdi.addChildElement("dVencPag").setTextContent(dVencPag.toString());
         }
 
         if (this.dContrato != null)
-            gGrupAdi.addChildElement("dContrato", Constants.SIFEN_NS_PREFIX).setTextContent(this.dContrato);
+            gGrupAdi.addChildElement("dContrato").setTextContent(this.dContrato);
 
         if (this.dSalAnt != null)
-            gGrupAdi.addChildElement("dSalAnt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dSalAnt));
+            gGrupAdi.addChildElement("dSalAnt").setTextContent(String.valueOf(this.dSalAnt));
     }
 
     public String getdCiclo() {
@@ -47,11 +43,11 @@ public class TgGrupAdi {
         this.dCiclo = dCiclo;
     }
 
-    public LocalDateTime getdFecIniC() {
+    public LocalDate getdFecIniC() {
         return dFecIniC;
     }
 
-    public void setdFecIniC(LocalDateTime dFecIniC) {
+    public void setdFecIniC(LocalDate dFecIniC) {
         this.dFecIniC = dFecIniC;
     }
 

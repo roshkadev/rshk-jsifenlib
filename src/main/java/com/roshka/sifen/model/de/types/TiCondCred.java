@@ -1,9 +1,8 @@
 package com.roshka.sifen.model.de.types;
 
 public enum TiCondCred {
-
-    PLAZO((short)1, "Plazo"),
-    CUOTA((short)2, "Cuota");
+    PLAZO((short) 1, "Plazo"),
+    CUOTA((short) 2, "Cuota");
 
     private short val;
     private String descripcion;
@@ -20,5 +19,4 @@ public enum TiCondCred {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

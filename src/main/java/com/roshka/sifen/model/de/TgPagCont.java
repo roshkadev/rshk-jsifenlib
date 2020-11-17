@@ -18,15 +18,15 @@ public class TgPagCont {
     private TgPagCheq gPagCheq;
 
     public void setupSOAPElements(SOAPElement gCamCond) throws SOAPException {
-        SOAPElement gPaConEIni = gCamCond.addChildElement("gPaConEIni", Constants.SIFEN_NS_PREFIX);
-        gPaConEIni.addChildElement("iTiPago", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTiPago.getVal()));
-        gPaConEIni.addChildElement("dDesTiPag", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTiPago.getDescripcion());
-        gPaConEIni.addChildElement("dMonTiPag", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dMonTiPag));
-        gPaConEIni.addChildElement("cMoneTiPag", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneTiPag.toString());
-        gPaConEIni.addChildElement("dDMoneTiPag", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneTiPag.getDescripcion());
+        SOAPElement gPaConEIni = gCamCond.addChildElement("gPaConEIni");
+        gPaConEIni.addChildElement("iTiPago").setTextContent(String.valueOf(this.iTiPago.getVal()));
+        gPaConEIni.addChildElement("dDesTiPag").setTextContent(this.iTiPago.getDescripcion());
+        gPaConEIni.addChildElement("dMonTiPag").setTextContent(String.valueOf(this.dMonTiPag));
+        gPaConEIni.addChildElement("cMoneTiPag").setTextContent(this.cMoneTiPag.toString());
+        gPaConEIni.addChildElement("dDMoneTiPag").setTextContent(this.cMoneTiPag.getDescripcion());
 
         if (this.dTiCamTiPag != null || !this.cMoneTiPag.toString().equals("PYG"))
-            gPaConEIni.addChildElement("dTiCamTiPag", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCamTiPag));
+            gPaConEIni.addChildElement("dTiCamTiPag").setTextContent(String.valueOf(this.dTiCamTiPag));
 
         if (this.iTiPago.getVal() == 3 || this.iTiPago.getVal() == 4)
             this.gPagTarCD.setupSOAPElements(gPaConEIni);

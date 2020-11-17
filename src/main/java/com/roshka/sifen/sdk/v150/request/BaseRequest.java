@@ -10,6 +10,8 @@ import com.roshka.sifen.soap.MessageHelper;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public abstract class BaseRequest {
@@ -24,6 +26,18 @@ public abstract class BaseRequest {
             // Preparamos el mensaje
             SOAPMessage message = MessageHelper.createMessage();
             request.setupSOAPBody(message.getSOAPBody(), sifenConfig);
+
+            message.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
+            message.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
+
+            // Para obtener el xml
+            /*ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try {
+                message.writeTo(out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String xml = new String(out.toByteArray());*/
 
             // Realizamos la consulta
             String requestUrl = (sifenConfig.getUrlBase() != null ? sifenConfig.getUrlBase() : sifenConfig.getUrlBaseLocal()) + url;

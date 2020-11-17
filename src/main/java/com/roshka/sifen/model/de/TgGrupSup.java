@@ -14,21 +14,21 @@ public class TgGrupSup {
     private String dDesDonac;
 
     public void setupSOAPElements(SOAPElement gCamEsp) throws SOAPException {
-        SOAPElement gGrupSup = gCamEsp.addChildElement("gGrupSup", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gGrupSup = gCamEsp.addChildElement("gGrupSup");
         if (this.dNomCaj != null)
-            gGrupSup.addChildElement("dNomCaj", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomCaj);
+            gGrupSup.addChildElement("dNomCaj").setTextContent(this.dNomCaj);
 
         if (this.dEfectivo != null)
-            gGrupSup.addChildElement("dEfectivo", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dEfectivo));
+            gGrupSup.addChildElement("dEfectivo").setTextContent(String.valueOf(this.dEfectivo));
 
         if (this.dVuelto != null)
-            gGrupSup.addChildElement("dVuelto", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dVuelto));
+            gGrupSup.addChildElement("dVuelto").setTextContent(String.valueOf(this.dVuelto));
 
         if (this.dDonac != null)
-            gGrupSup.addChildElement("dDonac", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDonac));
+            gGrupSup.addChildElement("dDonac").setTextContent(String.valueOf(this.dDonac));
 
         if (this.dDesDonac != null)
-            gGrupSup.addChildElement("dDesDonac", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDonac);
+            gGrupSup.addChildElement("dDesDonac").setTextContent(this.dDesDonac);
     }
 
     public String getdNomCaj() {

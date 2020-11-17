@@ -8,7 +8,7 @@ import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TGOpeCom {
+public class TgOpeCom {
     private TTipTra tipTra;
     private TTImp iTImp;
     private CMondT cMoneOpe;
@@ -17,27 +17,27 @@ public class TGOpeCom {
     private TiCondAnt iCondAnt;
 
     public void setupSOAPElements(SOAPElement gDatGralOpe, TTiDE iTiDE) throws SOAPException {
-        SOAPElement gOpeCom = gDatGralOpe.addChildElement("gOpeCom", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gOpeCom = gDatGralOpe.addChildElement("gOpeCom");
         if (iTiDE.getVal() == 1 || iTiDE.getVal() == 4) {
-            gOpeCom.addChildElement("iTipTra", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.tipTra.getVal()));
-            gOpeCom.addChildElement("dDesTipTra", Constants.SIFEN_NS_PREFIX).setTextContent(this.tipTra.getDescripcion());
+            gOpeCom.addChildElement("iTipTra").setTextContent(String.valueOf(this.tipTra.getVal()));
+            gOpeCom.addChildElement("dDesTipTra").setTextContent(this.tipTra.getDescripcion());
         }
 
-        gOpeCom.addChildElement("iTImp", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTImp.getVal()));
-        gOpeCom.addChildElement("dDesTImp", Constants.SIFEN_NS_PREFIX).setTextContent(this.iTImp.getDescripcion());
-        gOpeCom.addChildElement("cMoneOpe", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneOpe.toString());
-        gOpeCom.addChildElement("dDesMoneOpe", Constants.SIFEN_NS_PREFIX).setTextContent(this.cMoneOpe.getDescripcion());
+        gOpeCom.addChildElement("iTImp").setTextContent(String.valueOf(this.iTImp.getVal()));
+        gOpeCom.addChildElement("dDesTImp").setTextContent(this.iTImp.getDescripcion());
+        gOpeCom.addChildElement("cMoneOpe").setTextContent(this.cMoneOpe.toString());
+        gOpeCom.addChildElement("dDesMoneOpe").setTextContent(this.cMoneOpe.getDescripcion());
 
         if (!this.cMoneOpe.toString().equals("PYG")) {
-            gOpeCom.addChildElement("dCondTiCam", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dCondTiCam.getVal()));
+            gOpeCom.addChildElement("dCondTiCam").setTextContent(String.valueOf(this.dCondTiCam.getVal()));
             if (this.dCondTiCam.getVal() == 1) {
-                gOpeCom.addChildElement("dTiCam", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTiCam));
+                gOpeCom.addChildElement("dTiCam").setTextContent(String.valueOf(this.dTiCam));
             }
         }
 
         if (this.iCondAnt != null) {
-            gOpeCom.addChildElement("iCondAnt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iCondAnt.getVal()));
-            gOpeCom.addChildElement("dDesCondAnt", Constants.SIFEN_NS_PREFIX).setTextContent(this.iCondAnt.getDescripcion());
+            gOpeCom.addChildElement("iCondAnt").setTextContent(String.valueOf(this.iCondAnt.getVal()));
+            gOpeCom.addChildElement("dDesCondAnt").setTextContent(this.iCondAnt.getDescripcion());
         }
     }
 

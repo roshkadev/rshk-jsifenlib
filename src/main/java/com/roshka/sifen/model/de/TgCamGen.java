@@ -13,15 +13,15 @@ public class TgCamGen {
     private TgCamCarg gCamCarg;
 
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE) throws SOAPException {
-        SOAPElement gCamGen = DE.addChildElement("gCamGen", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gCamGen = DE.addChildElement("gCamGen");
         if (this.dOrdCompra != null)
-            gCamGen.addChildElement("dOrdCompra", Constants.SIFEN_NS_PREFIX).setTextContent(this.dOrdCompra);
+            gCamGen.addChildElement("dOrdCompra").setTextContent(this.dOrdCompra);
 
         if (this.dOrdVta != null)
-            gCamGen.addChildElement("dOrdVta", Constants.SIFEN_NS_PREFIX).setTextContent(this.dOrdVta);
+            gCamGen.addChildElement("dOrdVta").setTextContent(this.dOrdVta);
 
         if (this.dAsiento != null)
-            gCamGen.addChildElement("dAsiento", Constants.SIFEN_NS_PREFIX).setTextContent(this.dAsiento);
+            gCamGen.addChildElement("dAsiento").setTextContent(this.dAsiento);
 
         if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.gCamCarg != null)
             this.gCamCarg.setupSOAPElements(gCamGen);

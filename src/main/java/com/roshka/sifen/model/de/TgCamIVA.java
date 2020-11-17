@@ -15,13 +15,13 @@ public class TgCamIVA {
     private BigDecimal dLiqIVAItem;
 
     public void setupSOAPElements(SOAPElement gCamItem) throws SOAPException {
-        SOAPElement gCamIVA = gCamItem.addChildElement("gCamIVA", Constants.SIFEN_NS_PREFIX);
-        gCamIVA.addChildElement("iAfecIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iAfecIVA.getVal()));
-        gCamIVA.addChildElement("dDesAfecIVA", Constants.SIFEN_NS_PREFIX).setTextContent(this.iAfecIVA.getDescripcion());
-        gCamIVA.addChildElement("dPropIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPropIVA));
-        gCamIVA.addChildElement("dTasaIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTasaIVA));
-        gCamIVA.addChildElement("dBasGravIVA", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dBasGravIVA));
-        gCamIVA.addChildElement("dLiqIVAItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dLiqIVAItem));
+        SOAPElement gCamIVA = gCamItem.addChildElement("gCamIVA");
+        gCamIVA.addChildElement("iAfecIVA").setTextContent(String.valueOf(this.iAfecIVA.getVal()));
+        gCamIVA.addChildElement("dDesAfecIVA").setTextContent(this.iAfecIVA.getDescripcion());
+        gCamIVA.addChildElement("dPropIVA").setTextContent(String.valueOf(this.dPropIVA));
+        gCamIVA.addChildElement("dTasaIVA").setTextContent(String.valueOf(this.dTasaIVA));
+        gCamIVA.addChildElement("dBasGravIVA").setTextContent(String.valueOf(this.dBasGravIVA));
+        gCamIVA.addChildElement("dLiqIVAItem").setTextContent(String.valueOf(this.dLiqIVAItem));
     }
 
     public TiAfecIVA getiAfecIVA() {

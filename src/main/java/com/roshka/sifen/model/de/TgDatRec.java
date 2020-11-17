@@ -33,52 +33,54 @@ public class TgDatRec {
     private String dCodCliente;
 
     public void setupSOAPElements(SOAPElement gDatGralOpe, TTiDE iTiDE) throws SOAPException {
-        SOAPElement gDatRec = gDatGralOpe.addChildElement("gDatRec", Constants.SIFEN_NS_PREFIX);
-        gDatRec.addChildElement("iNatRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iNatRec.getVal()));
-        gDatRec.addChildElement("iTiOpe", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTiOpe.getVal()));
-        gDatRec.addChildElement("cPaisRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisRec.toString());
-        gDatRec.addChildElement("dDesPaisRe", Constants.SIFEN_NS_PREFIX).setTextContent(this.cPaisRec.getNombre());
+        SOAPElement gDatRec = gDatGralOpe.addChildElement("gDatRec");
+        gDatRec.addChildElement("iNatRec").setTextContent(String.valueOf(this.iNatRec.getVal()));
+        gDatRec.addChildElement("iTiOpe").setTextContent(String.valueOf(this.iTiOpe.getVal()));
+        gDatRec.addChildElement("cPaisRec").setTextContent(this.cPaisRec.toString());
+        gDatRec.addChildElement("dDesPaisRe").setTextContent(this.cPaisRec.getNombre());
 
         if (this.iNatRec.getVal() == 1) {
-            gDatRec.addChildElement("iTiContRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTiContRec.getVal()));
-            gDatRec.addChildElement("dRucRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dRucRec);
-            gDatRec.addChildElement("dDVRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDVRec));
+            gDatRec.addChildElement("iTiContRec").setTextContent(String.valueOf(this.iTiContRec.getVal()));
+            gDatRec.addChildElement("dRucRec").setTextContent(this.dRucRec);
+            gDatRec.addChildElement("dDVRec").setTextContent(String.valueOf(this.dDVRec));
         }
 
         if (this.iNatRec.getVal() == 2 && this.iTiOpe.getVal() != 4) {
-            gDatRec.addChildElement("iTipIDRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.iTipIDRec.getVal()));
-            gDatRec.addChildElement("dDTipIDRec", Constants.SIFEN_NS_PREFIX).setTextContent(
+            gDatRec.addChildElement("iTipIDRec").setTextContent(String.valueOf(this.iTipIDRec.getVal()));
+            gDatRec.addChildElement("dDTipIDRec").setTextContent(
                     this.iTipIDRec.getDescripcion() != null ? this.iTipIDRec.getDescripcion() : this.dDTipIDRec
             );
-            gDatRec.addChildElement("dNumIDRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumIDRec);
+            gDatRec.addChildElement("dNumIDRec").setTextContent(
+                    this.dNumIDRec != null ? this.dNumIDRec : "0"
+            );
         }
 
-        gDatRec.addChildElement("dNomRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomRec);
+        gDatRec.addChildElement("dNomRec").setTextContent(this.dNomRec);
         if (this.dNomFanRec != null)
-            gDatRec.addChildElement("dNomFanRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomFanRec);
+            gDatRec.addChildElement("dNomFanRec").setTextContent(this.dNomFanRec);
         if (this.dDirRec != null || iTiDE.getVal() == 7 || this.iTiOpe.getVal() == 4) {
-            gDatRec.addChildElement("dDirRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirRec);
-            gDatRec.addChildElement("dNumCasRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dNumCasRec));
+            gDatRec.addChildElement("dDirRec").setTextContent(this.dDirRec);
+            gDatRec.addChildElement("dNumCasRec").setTextContent(String.valueOf(this.dNumCasRec));
 
             if (this.iTiOpe.getVal() != 4) {
-                gDatRec.addChildElement("cDepRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDepRec.getVal()));
-                gDatRec.addChildElement("dDesDepRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.cDepRec.getDescripcion());
-                gDatRec.addChildElement("cCiuRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cCiuRec));
-                gDatRec.addChildElement("dDesCiuRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesCiuRec);
+                gDatRec.addChildElement("cDepRec").setTextContent(String.valueOf(this.cDepRec.getVal()));
+                gDatRec.addChildElement("dDesDepRec").setTextContent(this.cDepRec.getDescripcion());
+                gDatRec.addChildElement("cCiuRec").setTextContent(String.valueOf(this.cCiuRec));
+                gDatRec.addChildElement("dDesCiuRec").setTextContent(this.dDesCiuRec);
             }
         }
         if (this.cDisRec != 0) {
-            gDatRec.addChildElement("cDisRec", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.cDisRec));
-            gDatRec.addChildElement("dDesDisRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDesDisRec);
+            gDatRec.addChildElement("cDisRec").setTextContent(String.valueOf(this.cDisRec));
+            gDatRec.addChildElement("dDesDisRec").setTextContent(this.dDesDisRec);
         }
         if (this.dTelRec != null)
-            gDatRec.addChildElement("dTelRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dTelRec);
+            gDatRec.addChildElement("dTelRec").setTextContent(this.dTelRec);
         if (this.dCelRec != null)
-            gDatRec.addChildElement("dCelRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCelRec);
+            gDatRec.addChildElement("dCelRec").setTextContent(this.dCelRec);
         if (this.dEmailRec != null)
-            gDatRec.addChildElement("dEmailRec", Constants.SIFEN_NS_PREFIX).setTextContent(this.dEmailRec);
+            gDatRec.addChildElement("dEmailRec").setTextContent(this.dEmailRec);
         if (this.dCodCliente != null)
-            gDatRec.addChildElement("dCodCliente", Constants.SIFEN_NS_PREFIX).setTextContent(this.dCodCliente);
+            gDatRec.addChildElement("dCodCliente").setTextContent(this.dCodCliente);
     }
 
     public TiNatRec getiNatRec() {

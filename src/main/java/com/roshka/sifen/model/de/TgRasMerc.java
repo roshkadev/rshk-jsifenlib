@@ -4,7 +4,6 @@ import com.roshka.sifen.model.Constants;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class TgRasMerc {
@@ -20,38 +19,36 @@ public class TgRasMerc {
     private String dNumRegEntCom;
 
     public void setupSOAPElements(SOAPElement gCamItem) throws SOAPException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        SOAPElement gRasMerc = gCamItem.addChildElement("gRasMerc", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gRasMerc = gCamItem.addChildElement("gRasMerc");
         if (this.dNumLote != null)
-            gRasMerc.addChildElement("dNumLote", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumLote);
+            gRasMerc.addChildElement("dNumLote").setTextContent(this.dNumLote);
 
         if (this.dVencMerc != null)
-            gRasMerc.addChildElement("dVencMerc", Constants.SIFEN_NS_PREFIX).setTextContent(dateFormat.format(this.dVencMerc));
+            gRasMerc.addChildElement("dVencMerc").setTextContent(this.dVencMerc.toString());
 
         if (this.dNSerie != null)
-            gRasMerc.addChildElement("dNSerie", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNSerie);
+            gRasMerc.addChildElement("dNSerie").setTextContent(this.dNSerie);
 
         if (this.dNumPedi != null)
-            gRasMerc.addChildElement("dNumPedi", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumPedi);
+            gRasMerc.addChildElement("dNumPedi").setTextContent(this.dNumPedi);
 
         if (this.dNumSegui != null)
-            gRasMerc.addChildElement("dNumSegui", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumSegui);
+            gRasMerc.addChildElement("dNumSegui").setTextContent(this.dNumSegui);
 
         if (this.dNomImp != null)
-            gRasMerc.addChildElement("dNomImp", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNomImp);
+            gRasMerc.addChildElement("dNomImp").setTextContent(this.dNomImp);
 
         if (this.dDirImp != null)
-            gRasMerc.addChildElement("dDirImp", Constants.SIFEN_NS_PREFIX).setTextContent(this.dDirImp);
+            gRasMerc.addChildElement("dDirImp").setTextContent(this.dDirImp);
 
         if (this.dNumFir != null)
-            gRasMerc.addChildElement("dNumFir", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumFir);
+            gRasMerc.addChildElement("dNumFir").setTextContent(this.dNumFir);
 
         if (this.dNumReg != null)
-            gRasMerc.addChildElement("dNumReg", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumReg);
+            gRasMerc.addChildElement("dNumReg").setTextContent(this.dNumReg);
 
         if (this.dNumRegEntCom != null)
-            gRasMerc.addChildElement("dNumRegEntCom", Constants.SIFEN_NS_PREFIX).setTextContent(this.dNumRegEntCom);
+            gRasMerc.addChildElement("dNumRegEntCom").setTextContent(this.dNumRegEntCom);
     }
 
     public String getdNumLote() {

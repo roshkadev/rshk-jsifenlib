@@ -16,28 +16,28 @@ public class TgValorRestaItem {
     private BigDecimal dTotOpeGs;
 
     public void setupSOAPElements(SOAPElement gValorItem, BigDecimal dTiCamIt) throws SOAPException {
-        SOAPElement gValorRestaItem = gValorItem.addChildElement("gValorRestaItem", Constants.SIFEN_NS_PREFIX);
+        SOAPElement gValorRestaItem = gValorItem.addChildElement("gValorRestaItem");
 
         if (this.dDescItem != null) {
-            gValorRestaItem.addChildElement("dDescItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescItem));
-            gValorRestaItem.addChildElement("dPorcDesIt", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dPorcDesIt));
+            gValorRestaItem.addChildElement("dDescItem").setTextContent(String.valueOf(this.dDescItem));
+            gValorRestaItem.addChildElement("dPorcDesIt").setTextContent(String.valueOf(this.dPorcDesIt));
         }
 
         if (this.dDescGloItem != null)
-            gValorRestaItem.addChildElement("dDescGloItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dDescGloItem));
+            gValorRestaItem.addChildElement("dDescGloItem").setTextContent(String.valueOf(this.dDescGloItem));
 
-        gValorRestaItem.addChildElement("dAntPreUniIt", Constants.SIFEN_NS_PREFIX).setTextContent(
+        gValorRestaItem.addChildElement("dAntPreUniIt").setTextContent(
                 this.dAntPreUniIt != null ? String.valueOf(this.dAntPreUniIt) : "0"
         );
 
-        gValorRestaItem.addChildElement("dAntGloPreUniIt", Constants.SIFEN_NS_PREFIX).setTextContent(
+        gValorRestaItem.addChildElement("dAntGloPreUniIt").setTextContent(
                 this.dAntGloPreUniIt != null ? String.valueOf(this.dAntGloPreUniIt) : "0"
         );
 
-        gValorRestaItem.addChildElement("dTotOpeItem", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeItem));
+        gValorRestaItem.addChildElement("dTotOpeItem").setTextContent(String.valueOf(this.dTotOpeItem));
 
         if (dTiCamIt != null)
-            gValorRestaItem.addChildElement("dTotOpeGs", Constants.SIFEN_NS_PREFIX).setTextContent(String.valueOf(this.dTotOpeGs));
+            gValorRestaItem.addChildElement("dTotOpeGs").setTextContent(String.valueOf(this.dTotOpeGs));
     }
 
     public BigDecimal getdDescItem() {
