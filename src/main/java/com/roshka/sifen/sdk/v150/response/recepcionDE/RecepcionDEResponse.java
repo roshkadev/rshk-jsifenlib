@@ -11,7 +11,7 @@ public class RecepcionDEResponse extends BaseResponse {
 
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
-        if (value.getLocalName().equals("xProtDe")) {
+        if (value.getLocalName().equals("rProtDe")) {
             xProtDE = SifenObjectFactory.getFromNode(value, ProtDe.class);
         }
     }

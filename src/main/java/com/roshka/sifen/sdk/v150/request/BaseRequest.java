@@ -2,16 +2,14 @@ package com.roshka.sifen.sdk.v150.request;
 
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.util.SifenExceptionUtil;
 import com.roshka.sifen.http.SOAPHelper;
 import com.roshka.sifen.http.SOAPResponse;
 import com.roshka.sifen.model.envi.REnviBase;
 import com.roshka.sifen.soap.MessageHelper;
+import com.roshka.sifen.util.SifenExceptionUtil;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public abstract class BaseRequest {
@@ -31,13 +29,17 @@ public abstract class BaseRequest {
             message.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
 
             // Para obtener el xml
-            /*ByteArrayOutputStream out = new ByteArrayOutputStream();
+            /*final StringWriter sw = new StringWriter();
+
             try {
-                message.writeTo(out);
-            } catch (IOException e) {
-                e.printStackTrace();
+                TransformerFactory.newInstance().newTransformer().transform(
+                        new DOMSource(message.getSOAPPart()),
+                        new StreamResult(sw));
+            } catch (TransformerException e) {
+                throw new RuntimeException(e);
             }
-            String xml = new String(out.toByteArray());*/
+
+            String xml = sw.toString();*/
 
             // Realizamos la consulta
             String requestUrl = (sifenConfig.getUrlBase() != null ? sifenConfig.getUrlBase() : sifenConfig.getUrlBaseLocal()) + url;

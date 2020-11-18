@@ -49,24 +49,6 @@ public class TgTotSub {
                 gTotSub.addChildElement("dSub5").setTextContent(this.dSub5 != null ? String.valueOf(this.dSub5) : "0");
                 gTotSub.addChildElement("dSub10").setTextContent(this.dSub10 != null ? String.valueOf(this.dSub10) : "0");
             }
-
-            if (iTImp.getVal() == 1 || iTImp.getVal() == 5) {
-                gTotSub.addChildElement("dIVA5").setTextContent(this.dIVA5 != null ? String.valueOf(this.dIVA5) : "0");
-                gTotSub.addChildElement("dIVA10").setTextContent(this.dIVA10 != null ? String.valueOf(this.dIVA10) : "0");
-                gTotSub.addChildElement("dTotIVA").setTextContent(String.valueOf(this.dTotIVA));
-                gTotSub.addChildElement("dBaseGrav5").setTextContent(this.dBaseGrav5 != null ? String.valueOf(this.dBaseGrav5) : "0");
-                gTotSub.addChildElement("dBaseGrav10").setTextContent(this.dBaseGrav10 != null ? String.valueOf(this.dBaseGrav10) : "0");
-                gTotSub.addChildElement("dTBasGraIVA").setTextContent(String.valueOf(this.dTBasGraIVA));
-            }
-
-            if (!cMoneOpe.toString().equals("PYG"))
-                gTotSub.addChildElement("dTotalGs").setTextContent(String.valueOf(this.dTotalGs));
-
-            if (this.dComi != null)
-                gTotSub.addChildElement("dComi").setTextContent(String.valueOf(this.dComi));
-
-            if (this.dIVAComi != null)
-                gTotSub.addChildElement("dIVAComi").setTextContent(String.valueOf(this.dIVAComi));
         }
 
         gTotSub.addChildElement("dTotOpe").setTextContent(String.valueOf(this.dTotOpe));
@@ -78,11 +60,39 @@ public class TgTotSub {
         gTotSub.addChildElement("dDescTotal").setTextContent(String.valueOf(this.dDescTotal));
         gTotSub.addChildElement("dAnticipo").setTextContent(String.valueOf(this.dAnticipo));
         gTotSub.addChildElement("dRedon").setTextContent(String.valueOf(this.dRedon));
+
+        if (iTiDE.getVal() != 4) {
+            if (this.dComi != null)
+                gTotSub.addChildElement("dComi").setTextContent(String.valueOf(this.dComi));
+        }
+
         gTotSub.addChildElement("dTotGralOpe").setTextContent(String.valueOf(this.dTotGralOpe));
+
+        if (iTiDE.getVal() != 4) {
+            if (iTImp.getVal() == 1 || iTImp.getVal() == 5) {
+                gTotSub.addChildElement("dIVA5").setTextContent(this.dIVA5 != null ? String.valueOf(this.dIVA5) : "0");
+                gTotSub.addChildElement("dIVA10").setTextContent(this.dIVA10 != null ? String.valueOf(this.dIVA10) : "0");
+            }
+        }
 
         if (iTImp.getVal() == 1 || iTImp.getVal() == 5) {
             gTotSub.addChildElement("dLiqTotIVA5").setTextContent(this.dLiqTotIVA5 != null ? String.valueOf(this.dLiqTotIVA5) : "0");
             gTotSub.addChildElement("dLiqTotIVA10").setTextContent(this.dLiqTotIVA10 != null ? String.valueOf(this.dLiqTotIVA10) : "0");
+        }
+
+        if (iTiDE.getVal() != 4) {
+            if (this.dIVAComi != null)
+                gTotSub.addChildElement("dIVAComi").setTextContent(String.valueOf(this.dIVAComi));
+
+            if (iTImp.getVal() == 1 || iTImp.getVal() == 5) {
+                gTotSub.addChildElement("dTotIVA").setTextContent(String.valueOf(this.dTotIVA));
+                gTotSub.addChildElement("dBaseGrav5").setTextContent(this.dBaseGrav5 != null ? String.valueOf(this.dBaseGrav5) : "0");
+                gTotSub.addChildElement("dBaseGrav10").setTextContent(this.dBaseGrav10 != null ? String.valueOf(this.dBaseGrav10) : "0");
+                gTotSub.addChildElement("dTBasGraIVA").setTextContent(String.valueOf(this.dTBasGraIVA));
+            }
+
+            if (!cMoneOpe.toString().equals("PYG"))
+                gTotSub.addChildElement("dTotalGs").setTextContent(String.valueOf(this.dTotalGs));
         }
     }
 

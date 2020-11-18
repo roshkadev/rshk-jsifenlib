@@ -33,8 +33,10 @@ public class SOAPTests {
 
     @BeforeClass
     public static void setupSifenConfig() {
-        Sifen.setSifenConfig(new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mdazarza\\Documents\\taxare.pfx",
-                "Pqntslc0$", SifenConfig.TipoCertificadoCliente.PFX));
+        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mdazarza\\Documents\\taxare.pfx",
+                "", SifenConfig.TipoCertificadoCliente.PFX);
+
+        Sifen.setSifenConfig(sifenConfig);
     }
 
     @Test
@@ -169,6 +171,7 @@ public class SOAPTests {
         gTotSub.setdTotAnt(BigDecimal.valueOf(0));
         gTotSub.setdPorcDescTotal(BigDecimal.valueOf(0));
         gTotSub.setdDescTotal(BigDecimal.valueOf(0));
+        gTotSub.setdAnticipo(BigDecimal.valueOf(0));
         gTotSub.setdRedon(BigDecimal.valueOf(0));
         gTotSub.setdTotGralOpe(BigDecimal.valueOf(240000));
         gTotSub.setdIVA10(BigDecimal.valueOf(21818));

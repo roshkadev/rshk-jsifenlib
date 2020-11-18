@@ -51,13 +51,13 @@ public class REnviDe extends REnviBase {
             SOAPBodyElement rResEnviDe = soapBody.addBodyElement(new QName(Constants.SIFEN_NS_URI, TAG_NAME));
             rResEnviDe.addChildElement("dId").setTextContent(String.valueOf(this.getdId()));
 
-            SOAPElement rDe = rResEnviDe.addChildElement("xDe").addChildElement(new QName(Constants.SIFEN_NS_URI, "rDe"));
-            rDe.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            rDe.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
+            SOAPElement rDE = rResEnviDe.addChildElement("xDE").addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
+            rDE.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            rDE.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
 
-            rDe.addChildElement("dVerFor").setTextContent(SIFEN_CURRENT_VERSION);
+            rDE.addChildElement("dVerFor").setTextContent(SIFEN_CURRENT_VERSION);
 
-            SOAPElement DE = rDe.addChildElement("DE");
+            SOAPElement DE = rDE.addChildElement("DE");
             DE.setAttribute("Id", this.Id);
             Attr idAttribute = DE.getAttributeNode("Id");
             DE.setIdAttributeNode(idAttribute, true);
@@ -93,7 +93,7 @@ public class REnviDe extends REnviBase {
             }
 
             // Firma Digital del XML
-            SignedInfo signedInfo = this.signFields(rDe, sifenConfig);
+            SignedInfo signedInfo = this.signFields(rDE, sifenConfig);
 
             // Preparación de la URL del QR
             HashMap<String, String> queryParams = new HashMap<>();
@@ -133,7 +133,7 @@ public class REnviDe extends REnviBase {
             String dCarQR = sifenConfig.getUrlConsultaQr() + urlParamsString + "&cHashQR=" + hashedParams;
             //dCarQR = dCarQR.replaceAll("&", "&amp;");
 
-            SOAPElement gCamFuFD = rDe.addChildElement("gCamFuFD");
+            SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
             gCamFuFD.addChildElement("dCarQR").setTextContent(dCarQR);
         } catch (SOAPException | NoSuchAlgorithmException e) {
             throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);

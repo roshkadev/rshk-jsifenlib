@@ -77,7 +77,7 @@ public class SOAPHelper {
             soapResponse.setStatus(httpURLConnection.getResponseCode());
             soapResponse.setContentType(httpURLConnection.getContentType());
 
-            /*BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+            /*BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             StringBuilder res = new StringBuilder();
             String l;
             while ((l = in.readLine()) != null) {
