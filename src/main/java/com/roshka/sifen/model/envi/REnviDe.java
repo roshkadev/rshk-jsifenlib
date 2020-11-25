@@ -3,9 +3,6 @@ package com.roshka.sifen.model.envi;
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.model.Constants;
-import com.roshka.sifen.model.de.TgCamDEAsoc;
-import com.roshka.sifen.model.de.TgPagCont;
-import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
 import com.roshka.sifen.ssl.SSLContextHelper;
 import com.roshka.sifen.util.HttpUtil;
@@ -66,75 +63,15 @@ public class REnviDe extends REnviBase {
             DE.addChildElement("dFecFirma").setTextContent(this.DE.getdFecFirma().format(formatter));
             DE.addChildElement("dSisFact").setTextContent(String.valueOf(this.DE.getdSisFact()));
 
-            TTiDE iTiDE = this.DE.getgTimb().getTiDE();
-            this.DE.getgOpeDE().setupSOAPElements(DE, iTiDE);
-            this.DE.getgTimb().setupSOAPElements(DE);
-            this.DE.getdDatGralOpe().setupSOAPElements(DE, iTiDE);
-            this.DE.getgDtipDE().setupSOAPElements(DE, iTiDE, this.DE.getdDatGralOpe());
-
-            if (iTiDE.getVal() != 7)
-                this.DE.getgTotSub().setupSOAPElements(DE, iTiDE, this.DE.getdDatGralOpe().getgOpeCom());
-
-            if (this.DE.getgCamGen() != null)
-                this.DE.getgCamGen().setupSOAPElements(DE, iTiDE);
-
-            if (iTiDE.getVal() == 4 || iTiDE.getVal() == 5 || iTiDE.getVal() == 6 || ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.DE.getgCamDEAsocList() != null)) {
-                boolean retencionExists = false;
-                for (TgPagCont gPaCondEIni : this.DE.getgDtipDE().getgCamCond().getgPaCondEIniList()) {
-                    if (gPaCondEIni.getiTiPago().getVal() == 10) {
-                        retencionExists = true;
-                        break;
-                    }
-                }
-
-                for (TgCamDEAsoc gCamDEAsoc : this.DE.getgCamDEAsocList()) {
-                    gCamDEAsoc.setupSOAPElements(DE, this.DE.getdDatGralOpe().getgOpeCom().getTipTra(), retencionExists);
-                }
-            }
+            // Se completa con los demás elementos del XML
+            this.DE.setupSOAPElements(DE);
 
             // Firma Digital del XML
-            SignedInfo signedInfo = this.signFields(rDE, sifenConfig);
+            SignedInfo signedInfo = this.signDocument(rDE, sifenConfig);
 
             // Preparación de la URL del QR
-            HashMap<String, String> queryParams = new HashMap<>();
-            queryParams.put("nVersion", SIFEN_CURRENT_VERSION);
-            queryParams.put("Id", this.Id);
-            queryParams.put("dFeEmiDE", SifenUtil.bytesToHex(this.DE.getdDatGralOpe().getdFeEmiDE().toString().getBytes(StandardCharsets.UTF_8)));
-
-            if (this.DE.getdDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
-                queryParams.put("dRucRec", this.DE.getdDatGralOpe().getgDatRec().getdRucRec());
-            } else if (this.DE.getdDatGralOpe().getgDatRec().getiTiOpe().getVal() != 4 && this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec() != null) {
-                queryParams.put("dNumIDRec", this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec());
-            } else {
-                queryParams.put("dNumIDRec", "0");
-            }
-
-            if (iTiDE.getVal() != 7) {
-                queryParams.put("dTotGralOpe", String.valueOf(this.DE.getgTotSub().getdTotGralOpe()));
-                queryParams.put("dTotIVA",
-                        this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 1 || this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 5
-                                ? String.valueOf(this.DE.getgTotSub().getdTotIVA())
-                                : "0"
-                );
-            } else {
-                queryParams.put("dTotGralOpe", "0");
-                queryParams.put("dTotIVA", "0");
-            }
-
-            queryParams.put("cItems", String.valueOf(this.DE.getgDtipDE().getgCamItemList().size()));
-            queryParams.put("DigestValue", SifenUtil.bytesToHex(((Reference) signedInfo.getReferences().get(0)).getDigestValue()));
-            queryParams.put("IdCSC", sifenConfig.getIdCSC());
-
-            String urlParamsString = HttpUtil.buildUrlParams(queryParams);
-
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            String hashedParams = SifenUtil.bytesToHex(digest.digest((urlParamsString + sifenConfig.getCSC()).getBytes(StandardCharsets.UTF_8)));
-
-            String dCarQR = sifenConfig.getUrlConsultaQr() + urlParamsString + "&cHashQR=" + hashedParams;
-            //dCarQR = dCarQR.replaceAll("&", "&amp;");
-
             SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
-            gCamFuFD.addChildElement("dCarQR").setTextContent(dCarQR);
+            gCamFuFD.addChildElement("dCarQR").setTextContent(this.generateQRLink(signedInfo, sifenConfig));
         } catch (SOAPException | NoSuchAlgorithmException e) {
             throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
         }
@@ -159,7 +96,7 @@ public class REnviDe extends REnviBase {
         this.Id = CDC + this.dDVId;
     }
 
-    private SignedInfo signFields(Node nodeToSign, SifenConfig sifenConfig) throws SifenException {
+    private SignedInfo signDocument(Node parentNode, SifenConfig sifenConfig) throws SifenException {
         try {
             XMLSignatureFactory sigFactory = XMLSignatureFactory.getInstance();
 
@@ -178,23 +115,58 @@ public class REnviDe extends REnviBase {
             String alias = keyStore.aliases().nextElement();
             X509Certificate certificate = (X509Certificate) keyStore.getCertificate(alias);
 
-            List<X509Certificate> x509Content = new ArrayList<>();
-            x509Content.add(certificate);
-
             KeyInfoFactory keyInfoFactory = sigFactory.getKeyInfoFactory();
-            X509Data x509Data = keyInfoFactory.newX509Data(x509Content);
+            X509Data x509Data = keyInfoFactory.newX509Data(Collections.singletonList(certificate));
             KeyInfo keyInfo = keyInfoFactory.newKeyInfo(Collections.singletonList(x509Data));
 
             XMLSignature signature = sigFactory.newXMLSignature(signedInfo, keyInfo);
             PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, sifenConfig.getContrasenaCertificadoCliente().toCharArray());
 
-            DOMSignContext signatureContext = new DOMSignContext(privateKey, nodeToSign);
+            DOMSignContext signatureContext = new DOMSignContext(privateKey, parentNode);
             signature.sign(signatureContext);
 
             return signedInfo;
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | XMLSignatureException | MarshalException | KeyStoreException | UnrecoverableKeyException e) {
             throw SifenExceptionUtil.requestSigningError("Ocurrió un error al firmar la petición SOAP utilizando el certificado activo", e);
         }
+    }
+
+    private String generateQRLink(SignedInfo signedInfo, SifenConfig sifenConfig) throws NoSuchAlgorithmException {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("nVersion", SIFEN_CURRENT_VERSION);
+        queryParams.put("Id", this.Id);
+        queryParams.put("dFeEmiDE", SifenUtil.bytesToHex(this.DE.getdDatGralOpe().getdFeEmiDE().toString().getBytes(StandardCharsets.UTF_8)));
+
+        if (this.DE.getdDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
+            queryParams.put("dRucRec", this.DE.getdDatGralOpe().getgDatRec().getdRucRec());
+        } else if (this.DE.getdDatGralOpe().getgDatRec().getiTiOpe().getVal() != 4 && this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec() != null) {
+            queryParams.put("dNumIDRec", this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec());
+        } else {
+            queryParams.put("dNumIDRec", "0");
+        }
+
+        if (this.DE.getgTimb().getTiDE().getVal() != 7) {
+            queryParams.put("dTotGralOpe", String.valueOf(this.DE.getgTotSub().getdTotGralOpe()));
+            queryParams.put("dTotIVA",
+                    this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 1 || this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 5
+                            ? String.valueOf(this.DE.getgTotSub().getdTotIVA())
+                            : "0"
+            );
+        } else {
+            queryParams.put("dTotGralOpe", "0");
+            queryParams.put("dTotIVA", "0");
+        }
+
+        queryParams.put("cItems", String.valueOf(this.DE.getgDtipDE().getgCamItemList().size()));
+        queryParams.put("DigestValue", SifenUtil.bytesToHex(((Reference) signedInfo.getReferences().get(0)).getDigestValue()));
+        queryParams.put("IdCSC", sifenConfig.getIdCSC());
+
+        String urlParamsString = HttpUtil.buildUrlParams(queryParams);
+
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        String hashedParams = SifenUtil.bytesToHex(digest.digest((urlParamsString + sifenConfig.getCSC()).getBytes(StandardCharsets.UTF_8)));
+
+        return sifenConfig.getUrlConsultaQr() + urlParamsString + "&cHashQR=" + hashedParams;
     }
 
     public void setDE(DocumentoElectronico DE) {

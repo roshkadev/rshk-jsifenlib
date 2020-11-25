@@ -10,5 +10,5 @@ public class Constants {
     // Namespaces
     public static final String SIFEN_NS_PREFIX = "rshksifen";
     public static final String SIFEN_NS_URI = "http://ekuatia.set.gov.py/sifen/xsd";
-    public static final String SIFEN_NS_URI_RECEP_DE = SIFEN_NS_URI + "/siRecepDE_v150.xsd";
+    public static final String SIFEN_NS_URI_RECEP_DE = SIFEN_NS_URI + " siRecepDE_v150.xsd";
 }

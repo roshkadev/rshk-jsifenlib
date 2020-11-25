@@ -10,6 +10,11 @@ import com.roshka.sifen.util.SifenExceptionUtil;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
 import java.util.logging.Logger;
 
 public abstract class BaseRequest {

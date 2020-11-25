@@ -1,7 +1,10 @@
 package com.roshka.sifen.sdk.v150.beans;
 
 import com.roshka.sifen.model.de.*;
+import com.roshka.sifen.model.de.types.TTiDE;
 
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,6 +24,35 @@ public class DocumentoElectronico {
     private TgTotSub gTotSub;
     private TgCamGen gCamGen;
     private List<TgCamDEAsoc> gCamDEAsocList;
+
+    public void setupSOAPElements(SOAPElement DE) throws SOAPException {
+        TTiDE iTiDE = this.gTimb.getTiDE();
+
+        this.gOpeDE.setupSOAPElements(DE, iTiDE);
+        this.gTimb.setupSOAPElements(DE);
+        this.dDatGralOpe.setupSOAPElements(DE, iTiDE);
+        this.gDtipDE.setupSOAPElements(DE, iTiDE, this.dDatGralOpe);
+
+        if (iTiDE.getVal() != 7)
+            this.gTotSub.setupSOAPElements(DE, iTiDE, this.dDatGralOpe.getgOpeCom());
+
+        if (this.gCamGen != null)
+            this.gCamGen.setupSOAPElements(DE, iTiDE);
+
+        if (iTiDE.getVal() == 4 || iTiDE.getVal() == 5 || iTiDE.getVal() == 6 || ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.gCamDEAsocList != null)) {
+            boolean retencionExists = false;
+            for (TgPagCont gPaCondEIni : this.gDtipDE.getgCamCond().getgPaCondEIniList()) {
+                if (gPaCondEIni.getiTiPago().getVal() == 10) {
+                    retencionExists = true;
+                    break;
+                }
+            }
+
+            for (TgCamDEAsoc gCamDEAsoc : this.gCamDEAsocList) {
+                gCamDEAsoc.setupSOAPElements(DE, this.dDatGralOpe.getgOpeCom().getTipTra(), retencionExists);
+            }
+        }
+    }
 
     public LocalDateTime getdFecFirma() {
         return dFecFirma;
