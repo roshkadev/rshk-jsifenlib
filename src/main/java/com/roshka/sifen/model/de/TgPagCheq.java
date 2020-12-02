@@ -1,6 +1,6 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -11,7 +11,7 @@ public class TgPagCheq {
 
     public void setupSOAPElements(SOAPElement gPaConEIni) throws SOAPException {
         SOAPElement gPagCheq = gPaConEIni.addChildElement("gPagCheq");
-        gPagCheq.addChildElement("dNumCheq").setTextContent(this.dNumCheq);
+        gPagCheq.addChildElement("dNumCheq").setTextContent(SifenUtil.leftPad(this.dNumCheq, '0', 8));
         gPagCheq.addChildElement("dBcoEmi").setTextContent(this.dBcoEmi);
     }
 

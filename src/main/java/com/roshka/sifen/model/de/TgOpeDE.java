@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TTipEmi;
 import com.roshka.sifen.util.SifenUtil;

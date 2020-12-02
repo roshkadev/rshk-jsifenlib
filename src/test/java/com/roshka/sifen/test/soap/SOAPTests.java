@@ -141,10 +141,8 @@ public class SOAPTests {
 
             TgValorItem gValorItem = new TgValorItem();
             gValorItem.setdPUniProSer(BigDecimal.valueOf(120000));
-            gValorItem.setdTotBruOpeItem(BigDecimal.valueOf(120000));
 
             TgValorRestaItem gValorRestaItem = new TgValorRestaItem();
-            gValorRestaItem.setdTotOpeItem(BigDecimal.valueOf(120000));
             gValorItem.setgValorRestaItem(gValorRestaItem);
             gCamItem.setgValorItem(gValorItem);
 
@@ -152,7 +150,6 @@ public class SOAPTests {
             gCamIVA.setiAfecIVA(TiAfecIVA.GRAVADO);
             gCamIVA.setdPropIVA(BigDecimal.valueOf(100));
             gCamIVA.setdTasaIVA(BigDecimal.valueOf(10));
-            gCamIVA.setdBasGravIVA(BigDecimal.valueOf(109091));
             gCamIVA.setdLiqIVAItem(BigDecimal.valueOf(10909));
             gCamItem.setgCamIVA(gCamIVA);
 
@@ -162,23 +159,7 @@ public class SOAPTests {
         gDtipDE.setgCamItemList(gCamItemList);
         DE.setgDtipDE(gDtipDE);
 
-        TgTotSub gTotSub = new TgTotSub();
-        gTotSub.setdSub10(BigDecimal.valueOf(240000));
-        gTotSub.setdTotOpe(BigDecimal.valueOf(240000));
-        gTotSub.setdTotDesc(BigDecimal.valueOf(0));
-        gTotSub.setdTotDescGlotem(BigDecimal.valueOf(0));
-        gTotSub.setdTotAntItem(BigDecimal.valueOf(0));
-        gTotSub.setdTotAnt(BigDecimal.valueOf(0));
-        gTotSub.setdPorcDescTotal(BigDecimal.valueOf(0));
-        gTotSub.setdDescTotal(BigDecimal.valueOf(0));
-        gTotSub.setdAnticipo(BigDecimal.valueOf(0));
-        gTotSub.setdRedon(BigDecimal.valueOf(0));
-        gTotSub.setdTotGralOpe(BigDecimal.valueOf(240000));
-        gTotSub.setdIVA10(BigDecimal.valueOf(21818));
-        gTotSub.setdTotIVA(BigDecimal.valueOf(21818));
-        gTotSub.setdBaseGrav10(BigDecimal.valueOf(218182));
-        gTotSub.setdTBasGraIVA(BigDecimal.valueOf(218182));
-        DE.setgTotSub(gTotSub);
+        DE.setgTotSub(new TgTotSub());
 
         RespuestaSifen ret = Sifen.recepcionDE(++currentdId, DE);
         logger.info(ret.toString());

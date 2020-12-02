@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiDenTarj;
 import com.roshka.sifen.model.de.types.TiForProPa;
 

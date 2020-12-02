@@ -1,9 +1,9 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.paises.PaisType;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -47,7 +47,7 @@ public class TgCamItem {
             gCamItem.addChildElement("dNCM").setTextContent(String.valueOf(this.dNCM));
 
         if (this.dDncpG != null || iTiOpe.getVal() == 3) {
-            gCamItem.addChildElement("dDncpG").setTextContent(this.dDncpG);
+            gCamItem.addChildElement("dDncpG").setTextContent(SifenUtil.leftPad(this.dDncpG, '0', 8));
             gCamItem.addChildElement("dDncpE").setTextContent(this.dDncpE);
         }
 
@@ -70,7 +70,7 @@ public class TgCamItem {
         if (this.dInfItem != null)
             gCamItem.addChildElement("dInfItem").setTextContent(this.dInfItem);
 
-        if (iTiDE.getVal() == 7 && this.tcRelMerc != null) {
+        if (this.tcRelMerc != null) {
             gCamItem.addChildElement("cRelMerc").setTextContent(String.valueOf(this.tcRelMerc.getVal()));
             gCamItem.addChildElement("dDesRelMerc").setTextContent(this.tcRelMerc.getDescripcion());
         }
@@ -85,10 +85,10 @@ public class TgCamItem {
             gCamItem.addChildElement("dCDCAnticipo").setTextContent(this.dCDCAnticipo);
 
         if (iTiDE.getVal() != 7)
-            this.gValorItem.setupSOAPElements(gCamItem, dCondTiCam);
+            this.gValorItem.setupSOAPElements(gCamItem, iTiDE, dCondTiCam, iTImp, this.dCantProSer);
 
         if (((iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) && (iTiDE.getVal() != 4 && iTiDE.getVal() != 7)) || iTImp.getVal() != 2)
-            this.gCamIVA.setupSOAPElements(gCamItem);
+            this.gCamIVA.setupSOAPElements(gCamItem, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
 
         if (this.gRasMerc != null)
             this.gRasMerc.setupSOAPElements(gCamItem);

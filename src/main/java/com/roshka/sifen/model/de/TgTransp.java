@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.paises.PaisType;
 
@@ -36,6 +35,9 @@ public class TgTransp {
         gTransp.addChildElement("dDesModTrans").setTextContent(this.iModTrans.getDescripcion());
         gTransp.addChildElement("iRespFlete").setTextContent(String.valueOf(this.iRespFlete.getVal()));
 
+        if (this.cCondNeg != null)
+            gTransp.addChildElement("cCondNeg").setTextContent(this.cCondNeg.toString());
+
         if (this.dNuManif != null)
             gTransp.addChildElement("dNuManif").setTextContent(this.dNuManif);
 
@@ -52,7 +54,7 @@ public class TgTransp {
             gTransp.addChildElement("dDesPaisDest").setTextContent(this.cPaisDest.getNombre());
         }
 
-        if (this.gCamSal != null)
+        if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.gCamSal != null))
             this.gCamSal.setupSOAPElements(gTransp);
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gCamEntList != null)) {

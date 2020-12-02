@@ -1,10 +1,10 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTipTra;
 import com.roshka.sifen.model.de.types.TdTipCons;
 import com.roshka.sifen.model.de.types.TiTIpoDoc;
 import com.roshka.sifen.model.de.types.TiTipDocAso;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -35,9 +35,9 @@ public class TgCamDEAsoc {
             gOpeDE.addChildElement("dCdCDERef").setTextContent(this.dCdCDERef);
         else if (this.iTipDocAso.getVal() == 2) {
             gOpeDE.addChildElement("dNTimDI").setTextContent(this.dNTimDI);
-            gOpeDE.addChildElement("dEstDocAso").setTextContent(this.dEstDocAso);
-            gOpeDE.addChildElement("dPExpDocAso").setTextContent(this.dPExpDocAso);
-            gOpeDE.addChildElement("dNumDocAso").setTextContent(this.dNumDocAso);
+            gOpeDE.addChildElement("dEstDocAso").setTextContent(SifenUtil.leftPad(this.dEstDocAso, '0', 3));
+            gOpeDE.addChildElement("dPExpDocAso").setTextContent(SifenUtil.leftPad(this.dPExpDocAso, '0', 3));
+            gOpeDE.addChildElement("dNumDocAso").setTextContent(SifenUtil.leftPad(this.dNumDocAso, '0', 7));
             gOpeDE.addChildElement("iTipoDocAso").setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
             gOpeDE.addChildElement("dDTipoDocAso").setTextContent(this.iTipoDocAso.getDescripcion());
             gOpeDE.addChildElement("dFecEmiDI").setTextContent(this.dFecEmiDI.toString());

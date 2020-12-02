@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiCondCred;
 
 import javax.xml.soap.SOAPElement;
@@ -13,7 +12,7 @@ public class TgPagCred {
     private String dPlazoCre;
     private short dCuotas;
     private BigDecimal dMonEnt;
-    private List<TgCuotas> gCoutasList;
+    private List<TgCuotas> gCuotasList;
 
     public void setupSOAPElements(SOAPElement gCamCond) throws SOAPException {
         SOAPElement gPagCred = gCamCond.addChildElement("gPagCred");
@@ -29,8 +28,8 @@ public class TgPagCred {
         if (this.dMonEnt != null)
             gPagCred.addChildElement("dMonEnt").setTextContent(String.valueOf(this.dMonEnt));
 
-        if (this.iCondCred.getVal() == 2) {
-            for (TgCuotas gCuotas : gCoutasList) {
+        if (this.gCuotasList != null) {
+            for (TgCuotas gCuotas : this.gCuotasList) {
                 gCuotas.setupSOAPElements(gPagCred);
             }
         }
@@ -68,11 +67,11 @@ public class TgPagCred {
         this.dMonEnt = dMonEnt;
     }
 
-    public List<TgCuotas> getgCoutasList() {
-        return gCoutasList;
+    public List<TgCuotas> getgCuotasList() {
+        return gCuotasList;
     }
 
-    public void setgCoutasList(List<TgCuotas> gCoutasList) {
-        this.gCoutasList = gCoutasList;
+    public void setgCuotasList(List<TgCuotas> gCuotasList) {
+        this.gCuotasList = gCuotasList;
     }
 }

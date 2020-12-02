@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiModTrans;
 
 import javax.xml.soap.SOAPElement;

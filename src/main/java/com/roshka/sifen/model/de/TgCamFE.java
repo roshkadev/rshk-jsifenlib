@@ -1,12 +1,12 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiIndPres;
 import com.roshka.sifen.model.de.types.TiTiOpe;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class TgCamFE {
     private TiIndPres iIndPres;
@@ -24,8 +24,9 @@ public class TgCamFE {
         if (this.dFecEmNR != null)
             gCamFE.addChildElement("dFecEmNR").setTextContent(this.dFecEmNR.toString());
 
-        if (iTiOpe.getVal() == 3)
-            this.gCompPub.setupSOAPElements(gCamFE);
+        if (this.gCompPub != null || iTiOpe.getVal() == 3) {
+            Objects.requireNonNull(this.gCompPub).setupSOAPElements(gCamFE);
+        }
     }
 
     public TiIndPres getiIndPres() {

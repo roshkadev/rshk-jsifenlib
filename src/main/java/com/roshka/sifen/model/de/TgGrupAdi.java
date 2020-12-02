@@ -1,7 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
-
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
@@ -24,8 +22,10 @@ public class TgGrupAdi {
             gGrupAdi.addChildElement("dFecFinC").setTextContent(this.dFecFinC.toString());
         }
 
-        for (LocalDate dVencPag : dVencPagList) {
-            gGrupAdi.addChildElement("dVencPag").setTextContent(dVencPag.toString());
+        if (dVencPagList != null) {
+            for (LocalDate dVencPag : dVencPagList) {
+                gGrupAdi.addChildElement("dVencPag").setTextContent(dVencPag.toString());
+            }
         }
 
         if (this.dContrato != null)

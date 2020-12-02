@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTiDE;
 
 import javax.xml.soap.SOAPElement;
@@ -19,7 +18,8 @@ public class TdDatGralOpe {
 
         SOAPElement gDatGralOpe = DE.addChildElement("gDatGralOpe");
         gDatGralOpe.addChildElement("dFeEmiDE").setTextContent(this.dFeEmiDE.format(formatter));
-        if (iTiDE.getVal() != 7) this.gOpeCom.setupSOAPElements(gDatGralOpe, iTiDE);
+        if (iTiDE.getVal() != 7)
+            this.gOpeCom.setupSOAPElements(gDatGralOpe, iTiDE);
         this.gEmis.setupSOAPElements(gDatGralOpe);
         this.gDatRec.setupSOAPElements(gDatGralOpe, iTiDE);
     }

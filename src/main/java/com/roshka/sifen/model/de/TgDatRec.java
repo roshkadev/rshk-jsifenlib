@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.departamentos.TDepartamento;
 import com.roshka.sifen.model.paises.PaisType;
@@ -55,9 +54,10 @@ public class TgDatRec {
             );
         }
 
-        gDatRec.addChildElement("dNomRec").setTextContent(this.dNomRec);
+        gDatRec.addChildElement("dNomRec").setTextContent(this.dNomRec != null ? this.dNomRec : "Sin Nombre");
         if (this.dNomFanRec != null)
             gDatRec.addChildElement("dNomFanRec").setTextContent(this.dNomFanRec);
+
         if (this.dDirRec != null || iTiDE.getVal() == 7 || this.iTiOpe.getVal() == 4) {
             gDatRec.addChildElement("dDirRec").setTextContent(this.dDirRec);
             gDatRec.addChildElement("dNumCasRec").setTextContent(String.valueOf(this.dNumCasRec));
@@ -65,14 +65,19 @@ public class TgDatRec {
             if (this.iTiOpe.getVal() != 4) {
                 gDatRec.addChildElement("cDepRec").setTextContent(String.valueOf(this.cDepRec.getVal()));
                 gDatRec.addChildElement("dDesDepRec").setTextContent(this.cDepRec.getDescripcion());
-                gDatRec.addChildElement("cCiuRec").setTextContent(String.valueOf(this.cCiuRec));
-                gDatRec.addChildElement("dDesCiuRec").setTextContent(this.dDesCiuRec);
             }
         }
+
         if (this.cDisRec != 0) {
             gDatRec.addChildElement("cDisRec").setTextContent(String.valueOf(this.cDisRec));
             gDatRec.addChildElement("dDesDisRec").setTextContent(this.dDesDisRec);
         }
+
+        if ((this.dDirRec != null || iTiDE.getVal() == 7 || this.iTiOpe.getVal() == 4) && this.iTiOpe.getVal() != 4) {
+            gDatRec.addChildElement("cCiuRec").setTextContent(String.valueOf(this.cCiuRec));
+            gDatRec.addChildElement("dDesCiuRec").setTextContent(this.dDesCiuRec);
+        }
+
         if (this.dTelRec != null)
             gDatRec.addChildElement("dTelRec").setTextContent(this.dTelRec);
         if (this.dCelRec != null)

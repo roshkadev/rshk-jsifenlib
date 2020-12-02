@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TTipReg;
 import com.roshka.sifen.model.de.types.TiTipCont;
 import com.roshka.sifen.model.departamentos.TDepartamento;
@@ -42,7 +41,7 @@ public class TgEmis {
         if (this.dNomFanEmi != null)
             gEmis.addChildElement("dNomFanEmi").setTextContent(this.dNomFanEmi);
         gEmis.addChildElement("dDirEmi").setTextContent(this.dDirEmi);
-        gEmis.addChildElement("dNumCas").setTextContent(this.dNumCas);
+        gEmis.addChildElement("dNumCas").setTextContent(this.dNumCas != null ? this.dNumCas : "0");
         if (dCompDir1 != null)
             gEmis.addChildElement("dCompDir1").setTextContent(this.dCompDir1);
         if (dCompDir2 != null)
@@ -68,7 +67,8 @@ public class TgEmis {
             gActEcoElement.addChildElement("dDesActEco").setTextContent(gActEco.getdDesActEco());
         }
 
-        if (gRespDE != null) this.gRespDE.setupSOAPElements(gEmis);
+        if (this.gRespDE != null)
+            this.gRespDE.setupSOAPElements(gEmis);
     }
 
     public String getdRucEmi() {

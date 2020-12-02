@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.monedas.CMondT;
 
 import javax.xml.soap.SOAPElement;

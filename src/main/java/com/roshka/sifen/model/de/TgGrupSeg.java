@@ -1,7 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
-
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.util.List;

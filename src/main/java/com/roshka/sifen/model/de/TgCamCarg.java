@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.extra.TiCarCarga;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
 

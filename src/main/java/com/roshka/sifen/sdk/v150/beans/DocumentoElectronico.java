@@ -34,7 +34,7 @@ public class DocumentoElectronico {
         this.gDtipDE.setupSOAPElements(DE, iTiDE, this.dDatGralOpe);
 
         if (iTiDE.getVal() != 7)
-            this.gTotSub.setupSOAPElements(DE, iTiDE, this.dDatGralOpe.getgOpeCom());
+            this.gTotSub.setupSOAPElements(DE, iTiDE, this.getgDtipDE(), this.dDatGralOpe.getgOpeCom());
 
         if (this.gCamGen != null)
             this.gCamGen.setupSOAPElements(DE, iTiDE);

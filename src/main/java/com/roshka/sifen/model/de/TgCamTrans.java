@@ -1,6 +1,5 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.model.de.types.TiNatRec;
 import com.roshka.sifen.model.de.types.TiTipDoc;
 import com.roshka.sifen.model.paises.PaisType;
