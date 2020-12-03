@@ -2,6 +2,7 @@ package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.model.de.extra.TiCarCarga;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -33,9 +34,7 @@ public class TgCamCarg {
 
         if (this.iCarCarga != null) {
             gCamCarg.addChildElement("iCarCarga").setTextContent(String.valueOf(this.iCarCarga.getVal()));
-            gCamCarg.addChildElement("dDesCarCarga").setTextContent(
-                    this.iCarCarga.getDescripcion() != null ? this.iCarCarga.getDescripcion() : this.dDesCarCarga
-            );
+            gCamCarg.addChildElement("dDesCarCarga").setTextContent(SifenUtil.coalesce(this.iCarCarga.getDescripcion(), this.dDesCarCarga));
         }
     }
 

@@ -3,6 +3,7 @@ package com.roshka.sifen.model.de;
 import com.roshka.sifen.model.de.types.TTipReg;
 import com.roshka.sifen.model.de.types.TiTipCont;
 import com.roshka.sifen.model.departamentos.TDepartamento;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -41,7 +42,7 @@ public class TgEmis {
         if (this.dNomFanEmi != null)
             gEmis.addChildElement("dNomFanEmi").setTextContent(this.dNomFanEmi);
         gEmis.addChildElement("dDirEmi").setTextContent(this.dDirEmi);
-        gEmis.addChildElement("dNumCas").setTextContent(this.dNumCas != null ? this.dNumCas : "0");
+        gEmis.addChildElement("dNumCas").setTextContent(SifenUtil.coalesce(this.dNumCas, "0"));
         if (dCompDir1 != null)
             gEmis.addChildElement("dCompDir1").setTextContent(this.dCompDir1);
         if (dCompDir2 != null)

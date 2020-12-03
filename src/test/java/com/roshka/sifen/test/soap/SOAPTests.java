@@ -34,7 +34,7 @@ public class SOAPTests {
     @BeforeClass
     public static void setupSifenConfig() {
         SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mdazarza\\Documents\\taxare.pfx",
-                "Pqntslc0$", SifenConfig.TipoCertificadoCliente.PFX);
+                "", SifenConfig.TipoCertificadoCliente.PFX);
 
         Sifen.setSifenConfig(sifenConfig);
     }

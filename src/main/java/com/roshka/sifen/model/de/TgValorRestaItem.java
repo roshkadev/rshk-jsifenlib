@@ -33,13 +33,9 @@ public class TgValorRestaItem {
         if (this.dDescGloItem != null)
             gValorRestaItem.addChildElement("dDescGloItem").setTextContent(String.valueOf(this.dDescGloItem));
 
-        gValorRestaItem.addChildElement("dAntPreUniIt").setTextContent(
-                this.dAntPreUniIt != null ? String.valueOf(this.dAntPreUniIt) : "0"
-        );
+        gValorRestaItem.addChildElement("dAntPreUniIt").setTextContent(String.valueOf(SifenUtil.coalesce(this.dAntPreUniIt, BigDecimal.ZERO)));
 
-        gValorRestaItem.addChildElement("dAntGloPreUniIt").setTextContent(
-                this.dAntGloPreUniIt != null ? String.valueOf(this.dAntGloPreUniIt) : "0"
-        );
+        gValorRestaItem.addChildElement("dAntGloPreUniIt").setTextContent(String.valueOf(SifenUtil.coalesce(this.dAntGloPreUniIt, BigDecimal.ZERO)));
 
         if (iTiDE.getVal() == 4) {
             this.dTotOpeItem = dPUniProSer.multiply(dCantProSer);

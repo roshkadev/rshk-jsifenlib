@@ -2,6 +2,7 @@ package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.model.de.types.TiIndPres;
 import com.roshka.sifen.model.de.types.TiTiOpe;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -17,9 +18,7 @@ public class TgCamFE {
     public void setupSOAPElements(SOAPElement gDtipDE, TiTiOpe iTiOpe) throws SOAPException {
         SOAPElement gCamFE = gDtipDE.addChildElement("gCamFE");
         gCamFE.addChildElement("iIndPres").setTextContent(String.valueOf(this.iIndPres.getVal()));
-        gCamFE.addChildElement("dDesIndPres").setTextContent(
-                this.iIndPres.getDescripcion() != null ? this.iIndPres.getDescripcion() : this.dDesIndPres
-        );
+        gCamFE.addChildElement("dDesIndPres").setTextContent(SifenUtil.coalesce(this.iIndPres.getDescripcion(), this.dDesIndPres));
 
         if (this.dFecEmNR != null)
             gCamFE.addChildElement("dFecEmNR").setTextContent(this.dFecEmNR.toString());

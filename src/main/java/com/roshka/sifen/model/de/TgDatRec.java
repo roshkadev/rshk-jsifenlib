@@ -3,6 +3,7 @@ package com.roshka.sifen.model.de;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.departamentos.TDepartamento;
 import com.roshka.sifen.model.paises.PaisType;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -46,15 +47,11 @@ public class TgDatRec {
 
         if (this.iNatRec.getVal() == 2 && this.iTiOpe.getVal() != 4) {
             gDatRec.addChildElement("iTipIDRec").setTextContent(String.valueOf(this.iTipIDRec.getVal()));
-            gDatRec.addChildElement("dDTipIDRec").setTextContent(
-                    this.iTipIDRec.getDescripcion() != null ? this.iTipIDRec.getDescripcion() : this.dDTipIDRec
-            );
-            gDatRec.addChildElement("dNumIDRec").setTextContent(
-                    this.dNumIDRec != null ? this.dNumIDRec : "0"
-            );
+            gDatRec.addChildElement("dDTipIDRec").setTextContent(SifenUtil.coalesce(this.iTipIDRec.getDescripcion(), this.dDTipIDRec));
+            gDatRec.addChildElement("dNumIDRec").setTextContent(SifenUtil.coalesce(this.dNumIDRec, "0"));
         }
 
-        gDatRec.addChildElement("dNomRec").setTextContent(this.dNomRec != null ? this.dNomRec : "Sin Nombre");
+        gDatRec.addChildElement("dNomRec").setTextContent(SifenUtil.coalesce(this.dNomRec, "Sin Nombre"));
         if (this.dNomFanRec != null)
             gDatRec.addChildElement("dNomFanRec").setTextContent(this.dNomFanRec);
 

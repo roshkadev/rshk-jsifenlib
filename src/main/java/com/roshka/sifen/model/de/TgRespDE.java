@@ -1,6 +1,7 @@
 package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.model.de.types.TiTipIDRespDE;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -15,9 +16,7 @@ public class TgRespDE {
     public void setupSOAPElements(SOAPElement gEmis) throws SOAPException {
         SOAPElement gRespDE = gEmis.addChildElement("gRespDE");
         gRespDE.addChildElement("iTipIDRespDE").setTextContent(String.valueOf(this.iTipIDRespDE.getVal()));
-        gRespDE.addChildElement("dDTipIDRespDE").setTextContent(
-                this.iTipIDRespDE.getDescripcion() != null ? this.iTipIDRespDE.getDescripcion() : this.dDTipIDRespDE
-        );
+        gRespDE.addChildElement("dDTipIDRespDE").setTextContent(SifenUtil.coalesce(this.iTipIDRespDE.getDescripcion(), this.dDTipIDRespDE));
         gRespDE.addChildElement("dNumIDRespDE").setTextContent(this.dNumIDRespDE);
         gRespDE.addChildElement("dNomRespDE").setTextContent(this.dNomRespDE);
         gRespDE.addChildElement("dCarRespDE").setTextContent(this.dCarRespDE);

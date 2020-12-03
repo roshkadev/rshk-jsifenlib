@@ -2,6 +2,7 @@ package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.model.de.types.TiTipCom;
 import com.roshka.sifen.model.de.types.TiTipOpVN;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -51,9 +52,7 @@ public class TgVehNuevo {
 
         if (this.iTipOpVN != null) {
             gVehNuevo.addChildElement("iTipCom").setTextContent(String.valueOf(this.iTipCom.getVal()));
-            gVehNuevo.addChildElement("dDesTipCom").setTextContent(
-                    this.iTipCom.getDescripcion() != null ? this.iTipCom.getDescripcion() : this.dDesTipCom
-            );
+            gVehNuevo.addChildElement("dDesTipCom").setTextContent(SifenUtil.coalesce(this.iTipCom.getDescripcion(), this.dDesTipCom));
         }
 
         if (this.dNroMotor != null)
