@@ -34,7 +34,7 @@ public class SOAPTests {
     @BeforeClass
     public static void setupSifenConfig() {
         SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mdazarza\\Documents\\taxare.pfx",
-                "", SifenConfig.TipoCertificadoCliente.PFX);
+                "Pqntslc0$", SifenConfig.TipoCertificadoCliente.PFX);
 
         Sifen.setSifenConfig(sifenConfig);
     }
@@ -150,7 +150,6 @@ public class SOAPTests {
             gCamIVA.setiAfecIVA(TiAfecIVA.GRAVADO);
             gCamIVA.setdPropIVA(BigDecimal.valueOf(100));
             gCamIVA.setdTasaIVA(BigDecimal.valueOf(10));
-            gCamIVA.setdLiqIVAItem(BigDecimal.valueOf(10909));
             gCamItem.setgCamIVA(gCamIVA);
 
             gCamItemList.add(gCamItem);
@@ -159,6 +158,7 @@ public class SOAPTests {
         gDtipDE.setgCamItemList(gCamItemList);
         DE.setgDtipDE(gDtipDE);
 
+        // Grupo E
         DE.setgTotSub(new TgTotSub());
 
         RespuestaSifen ret = Sifen.recepcionDE(++currentdId, DE);

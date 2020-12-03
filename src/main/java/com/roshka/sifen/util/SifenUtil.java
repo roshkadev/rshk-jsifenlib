@@ -1,9 +1,6 @@
 package com.roshka.sifen.util;
 
-import java.util.Arrays;
 import java.util.Random;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class SifenUtil {
     public static String bytesToHex(byte[] bytes) {
@@ -39,5 +36,10 @@ public class SifenUtil {
 
     public static String generateRandomNumber() {
         return leftPad(String.valueOf(new Random().ints(1, 1, 999999999).distinct().toArray()[0]), '0', 9);
+    }
+
+    public static <T> T coalesce(T... items) {
+        for (T i : items) if (i != null) return i;
+        return null;
     }
 }

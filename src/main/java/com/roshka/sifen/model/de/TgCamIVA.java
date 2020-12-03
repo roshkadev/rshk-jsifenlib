@@ -1,10 +1,12 @@
 package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.model.de.types.*;
+import com.roshka.sifen.model.monedas.CMondT;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class TgCamIVA {
@@ -14,7 +16,7 @@ public class TgCamIVA {
     private BigDecimal dBasGravIVA;
     private BigDecimal dLiqIVAItem;
 
-    public void setupSOAPElements(SOAPElement gCamItem, BigDecimal dTotOpeItem) throws SOAPException {
+    public void setupSOAPElements(SOAPElement gCamItem, CMondT cMoneOpe, BigDecimal dTotOpeItem) throws SOAPException {
         SOAPElement gCamIVA = gCamItem.addChildElement("gCamIVA");
         gCamIVA.addChildElement("iAfecIVA").setTextContent(String.valueOf(this.iAfecIVA.getVal()));
         gCamIVA.addChildElement("dDesAfecIVA").setTextContent(this.iAfecIVA.getDescripcion());
@@ -22,13 +24,14 @@ public class TgCamIVA {
         gCamIVA.addChildElement("dTasaIVA").setTextContent(String.valueOf(this.dTasaIVA));
 
         if (this.iAfecIVA.getVal() == 1 || this.iAfecIVA.getVal() == 4) {
+            int scale = cMoneOpe.toString().equals("PYG") ? 0 : 2;
             if (this.dTasaIVA.equals(BigDecimal.valueOf(10))) {
-                this.dBasGravIVA = (dTotOpeItem.multiply(this.dPropIVA.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))).divide(BigDecimal.valueOf(1.1), RoundingMode.HALF_UP);
+                this.dBasGravIVA = dTotOpeItem.multiply(this.dPropIVA.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP)).divide(BigDecimal.valueOf(1.1), scale, RoundingMode.HALF_UP);
             } else if (this.dTasaIVA.equals(BigDecimal.valueOf(5))) {
-                this.dBasGravIVA = (dTotOpeItem.multiply(this.dPropIVA.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP))).divide(BigDecimal.valueOf(1.05), RoundingMode.HALF_UP);
+                this.dBasGravIVA = dTotOpeItem.multiply(this.dPropIVA.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP)).divide(BigDecimal.valueOf(1.05), scale, RoundingMode.HALF_UP);
             }
 
-            this.dLiqIVAItem = this.dBasGravIVA.multiply(this.dTasaIVA.divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP));
+            this.dLiqIVAItem = this.dBasGravIVA.multiply(this.dTasaIVA.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP)).setScale(0, RoundingMode.HALF_UP);
         } else {
             this.dBasGravIVA = BigDecimal.ZERO;
             this.dLiqIVAItem = BigDecimal.ZERO;
@@ -68,9 +71,5 @@ public class TgCamIVA {
 
     public BigDecimal getdLiqIVAItem() {
         return dLiqIVAItem;
-    }
-
-    public void setdLiqIVAItem(BigDecimal dLiqIVAItem) {
-        this.dLiqIVAItem = dLiqIVAItem;
     }
 }

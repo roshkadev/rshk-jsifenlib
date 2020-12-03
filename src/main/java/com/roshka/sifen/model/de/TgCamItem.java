@@ -1,6 +1,7 @@
 package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.model.de.types.*;
+import com.roshka.sifen.model.monedas.CMondT;
 import com.roshka.sifen.model.paises.PaisType;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
 import com.roshka.sifen.util.SifenUtil;
@@ -36,6 +37,7 @@ public class TgCamItem {
         TTipTra iTipTra = gDatGralOpe.getgOpeCom().getTipTra();
         TdCondTiCam dCondTiCam = gDatGralOpe.getgOpeCom().getdCondTiCam();
         TTImp iTImp = gDatGralOpe.getgOpeCom().getiTImp();
+        CMondT cMoneOpe = gDatGralOpe.getgOpeCom().getcMoneOpe();
 
         SOAPElement gCamItem = gDtipDE.addChildElement("gCamItem");
         gCamItem.addChildElement("dCodInt").setTextContent(this.dCodInt);
@@ -88,7 +90,7 @@ public class TgCamItem {
             this.gValorItem.setupSOAPElements(gCamItem, iTiDE, dCondTiCam, iTImp, this.dCantProSer);
 
         if (((iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) && (iTiDE.getVal() != 4 && iTiDE.getVal() != 7)) || iTImp.getVal() != 2)
-            this.gCamIVA.setupSOAPElements(gCamItem, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
+            this.gCamIVA.setupSOAPElements(gCamItem, cMoneOpe, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
 
         if (this.gRasMerc != null)
             this.gRasMerc.setupSOAPElements(gCamItem);

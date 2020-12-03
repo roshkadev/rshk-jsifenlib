@@ -3,6 +3,7 @@ package com.roshka.sifen.model.de;
 import com.roshka.sifen.model.de.types.TTImp;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TdCondTiCam;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -25,7 +26,7 @@ public class TgValorRestaItem {
         if (this.dDescItem != null) {
             gValorRestaItem.addChildElement("dDescItem").setTextContent(String.valueOf(this.dDescItem));
 
-            this.dPorcDesIt = (this.dDescItem.multiply(BigDecimal.valueOf(100))).divide(dPUniProSer, RoundingMode.HALF_UP);
+            this.dPorcDesIt = this.dDescItem.multiply(BigDecimal.valueOf(100)).divide(dPUniProSer, 2, RoundingMode.HALF_UP);
             gValorRestaItem.addChildElement("dPorcDesIt").setTextContent(String.valueOf(this.dPorcDesIt));
         }
 
@@ -43,10 +44,10 @@ public class TgValorRestaItem {
         if (iTiDE.getVal() == 4) {
             this.dTotOpeItem = dPUniProSer.multiply(dCantProSer);
         } else if (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) {
-            this.dTotOpeItem = (dPUniProSer.subtract(this.dDescItem != null ? this.dDescItem : BigDecimal.valueOf(0))
-                    .subtract(this.dDescGloItem != null ? this.dDescGloItem : BigDecimal.valueOf(0))
-                    .subtract(this.dAntPreUniIt != null ? this.dAntPreUniIt : BigDecimal.valueOf(0))
-                    .subtract(this.dAntGloPreUniIt != null ? this.dAntGloPreUniIt : BigDecimal.valueOf(0)))
+            this.dTotOpeItem = (dPUniProSer.subtract(SifenUtil.coalesce(this.dDescItem, BigDecimal.ZERO))
+                    .subtract(SifenUtil.coalesce(this.dDescGloItem, BigDecimal.ZERO))
+                    .subtract(SifenUtil.coalesce(this.dAntPreUniIt, BigDecimal.ZERO))
+                    .subtract(SifenUtil.coalesce(this.dAntGloPreUniIt, BigDecimal.ZERO)))
                     .multiply(dCantProSer);
         }
         gValorRestaItem.addChildElement("dTotOpeItem").setTextContent(String.valueOf(this.dTotOpeItem));

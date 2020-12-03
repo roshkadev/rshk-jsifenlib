@@ -77,12 +77,12 @@ public class SOAPHelper {
             soapResponse.setStatus(httpURLConnection.getResponseCode());
             soapResponse.setContentType(httpURLConnection.getContentType());
 
-            /*BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
             StringBuilder res = new StringBuilder();
             String l;
             while ((l = in.readLine()) != null) {
                 res.append(l);
-            }*/
+            }
 
             if (!soapResponse.isRequestSuccessful()) {
                 // Hubo un error en la petición

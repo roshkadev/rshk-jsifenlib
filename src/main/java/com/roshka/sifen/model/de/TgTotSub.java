@@ -4,6 +4,7 @@ import com.roshka.sifen.model.de.types.TTImp;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TdCondTiCam;
 import com.roshka.sifen.model.monedas.CMondT;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -20,21 +21,21 @@ public class TgTotSub {
     private BigDecimal dTotDescGlotem = BigDecimal.ZERO;
     private BigDecimal dTotAntItem = BigDecimal.ZERO;
     private BigDecimal dTotAnt = BigDecimal.ZERO;
-    private BigDecimal dPorcDescTotal;
-    private BigDecimal dDescTotal;
-    private BigDecimal dAnticipo;
-    private BigDecimal dRedon;
-    private BigDecimal dComi;
-    private BigDecimal dTotGralOpe;
+    private BigDecimal dPorcDescTotal = BigDecimal.ZERO;
+    private BigDecimal dDescTotal = BigDecimal.ZERO;
+    private BigDecimal dAnticipo = BigDecimal.ZERO;
+    private BigDecimal dRedon = BigDecimal.ZERO;
+    private BigDecimal dComi = BigDecimal.ZERO;
+    private BigDecimal dTotGralOpe = BigDecimal.ZERO;
     private BigDecimal dIVA5 = BigDecimal.ZERO;
     private BigDecimal dIVA10 = BigDecimal.ZERO;
     private BigDecimal dLiqTotIVA5 = BigDecimal.ZERO;
     private BigDecimal dLiqTotIVA10 = BigDecimal.ZERO;
     private BigDecimal dIVAComi = BigDecimal.ZERO;
-    private BigDecimal dTotIVA;
+    private BigDecimal dTotIVA = BigDecimal.ZERO;
     private BigDecimal dBaseGrav5 = BigDecimal.ZERO;
     private BigDecimal dBaseGrav10 = BigDecimal.ZERO;
-    private BigDecimal dTBasGraIVA;
+    private BigDecimal dTBasGraIVA = BigDecimal.ZERO;
     private BigDecimal dTotalGs = BigDecimal.ZERO;
 
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TgDtipDE gDtipDE, TgOpeCom gOpeCom) throws SOAPException {
@@ -70,10 +71,10 @@ public class TgTotSub {
             if (iTiDE.getVal() == 4)
                 this.dTotOpe = this.dTotOpe.add(dTotOpeItem);
 
-            this.dTotDesc = this.dTotDesc.add(gCamItem.getgValorItem().getgValorRestaItem().getdDescItem());
-            this.dTotDescGlotem = this.dTotDescGlotem.add(gCamItem.getgValorItem().getgValorRestaItem().getdDescGloItem());
-            this.dTotAntItem = this.dTotAntItem.add(gCamItem.getgValorItem().getgValorRestaItem().getdAntPreUniIt());
-            this.dTotAnt = this.dTotAnt.add(gCamItem.getgValorItem().getgValorRestaItem().getdAntGloPreUniIt());
+            this.dTotDesc = this.dTotDesc.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescItem(), BigDecimal.ZERO));
+            this.dTotDescGlotem = this.dTotDescGlotem.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescGloItem(), BigDecimal.ZERO));
+            this.dTotAntItem = this.dTotAntItem.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntPreUniIt(), BigDecimal.ZERO));
+            this.dTotAnt = this.dTotAnt.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntGloPreUniIt(), BigDecimal.ZERO));
 
             if (!cMoneOpe.toString().equals("PYG") && dCondTiCam.getVal() == 2)
                 this.dTotalGs = this.dTotalGs.add(gCamItem.getgValorItem().getgValorRestaItem().getdTotOpeGs());
@@ -83,13 +84,15 @@ public class TgTotSub {
             this.dTotOpe = this.dSub10.add(this.dSub5).add(this.dSubExo).add(this.dSubExe);
         }
         this.dDescTotal = this.dTotDesc.add(this.dTotDescGlotem);
-        this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), RoundingMode.HALF_UP);
+        this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), 2, RoundingMode.HALF_UP);
         this.dAnticipo = this.dTotAntItem.add(this.dTotAnt);
         this.dRedon = this.dTotOpe.subtract(BigDecimal.valueOf(Math.round(this.dTotOpe.doubleValue() * 50) / 50));
-        this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(this.dComi != null ? this.dComi : BigDecimal.ZERO);
+        this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(SifenUtil.coalesce(this.dComi, BigDecimal.ZERO));
 
-        if (this.dComi != null)
-            this.dIVAComi = this.dComi.divide(BigDecimal.valueOf(1.1), RoundingMode.HALF_UP);
+        if (this.dComi != null) {
+            int scale = cMoneOpe.toString().equals("PYG") ? 0 : 2;
+            this.dIVAComi = this.dComi.divide(BigDecimal.valueOf(1.1), scale, RoundingMode.HALF_UP);
+        }
 
         this.dTotIVA = this.dIVA5.add(this.dIVA10).subtract(this.dLiqTotIVA5).subtract(this.dLiqTotIVA10).add(this.dIVAComi);
         this.dTBasGraIVA = this.dBaseGrav5.add(this.dBaseGrav10);
