@@ -26,10 +26,10 @@ public class Sifen {
         return ConsultaRUC.prepareRequest(sifenConfig, dId, ruc);
     }
 
-    public static RespuestaSifen recepcionDE(long dId, DocumentoElectronico DE) throws SifenException {
+    public static RespuestaSifen recepcionDE(long dId, DocumentoElectronico de) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
-        return RecepcionDE.prepareRequest(sifenConfig, dId, DE);
+        return RecepcionDE.prepareRequest(sifenConfig, dId, de);
     }
 }

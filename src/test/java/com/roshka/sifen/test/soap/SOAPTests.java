@@ -33,8 +33,16 @@ public class SOAPTests {
 
     @BeforeClass
     public static void setupSifenConfig() {
-        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mdazarza\\Documents\\taxare.pfx",
-                "", SifenConfig.TipoCertificadoCliente.PFX);
+        SifenConfig sifenConfig = new
+                SifenConfig
+                    (
+                        SifenConfig.TipoAmbiente.DEV,
+                            "/Users/pablo/Desktop/tmp/taxit/taxare.pfx",
+                            "Pqntslc0$",
+                SifenConfig.TipoCertificadoCliente.PFX
+        );
+        //sifenConfig.setUrlBase("http://localhost:8080");
+        sifenConfig.setUrlBase("https://sifen-test.set.gov.py");
 
         Sifen.setSifenConfig(sifenConfig);
     }
@@ -89,7 +97,7 @@ public class SOAPTests {
         gEmis.setdRucEmi("80080553");
         gEmis.setdDVEmi("4");
         gEmis.setiTipCont(TiTipCont.PERSONA_JURIDICA);
-        gEmis.setdNomEmi("DE generado en ambiente de prueba - sin valor comercial ni fiscal");
+        gEmis.setdNomEmi("Taxare S.A.");
         gEmis.setdDirEmi("Mayor Bullo");
         gEmis.setdNumCas("670");
         gEmis.setcDepEmi(TDepartamento.CAPITAL);
@@ -126,7 +134,7 @@ public class SOAPTests {
 
         TgPagCred gPagCred = new TgPagCred();
         gPagCred.setiCondCred(TiCondCred.PLAZO);
-        gPagCred.setdPlazoCre("60 días");
+        gPagCred.setdPlazoCre("60 dias");
 
         gCamCond.setgPagCred(gPagCred);
         gDtipDE.setgCamCond(gCamCond);
@@ -135,7 +143,7 @@ public class SOAPTests {
         for (int i = 0; i < 2; i++) {
             TgCamItem gCamItem = new TgCamItem();
             gCamItem.setdCodInt(i == 0 ? "001" : "002");
-            gCamItem.setdDesProSer(i == 0 ? "Servicio de Liquidación de IVA" : "Servicio de Liquidación de IRP");
+            gCamItem.setdDesProSer(i == 0 ? "Servicio de Liquidacion de IVA" : "Servicio de Liquidacion de IRP");
             gCamItem.setcUniMed(TcUniMed.UNI);
             gCamItem.setdCantProSer(BigDecimal.valueOf(1));
 

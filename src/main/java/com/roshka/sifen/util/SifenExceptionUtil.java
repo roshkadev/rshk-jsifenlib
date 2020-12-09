@@ -4,6 +4,7 @@ import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.exceptions.SifenExceptionCodes;
 
 public class SifenExceptionUtil {
+
     public static SifenException invalidConfiguration(String message) {
         return new SifenException(
                 SifenExceptionCodes.INVALID_CONFIGURATION_CODE,
@@ -59,6 +60,9 @@ public class SifenExceptionUtil {
         );
     }
 
+    public static SifenException requestSigningError(String message) {
+        return requestSigningError(message, null);
+    }
     public static SifenException requestSigningError(String message, Throwable t) {
         return new SifenException(
                 SifenExceptionCodes.REQUEST_SIGNING_ERROR_CODE,

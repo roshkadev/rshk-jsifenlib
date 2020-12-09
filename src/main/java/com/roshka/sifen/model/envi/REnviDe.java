@@ -4,39 +4,46 @@ import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
-import com.roshka.sifen.ssl.SSLContextHelper;
 import com.roshka.sifen.util.HttpUtil;
 import com.roshka.sifen.util.SifenExceptionUtil;
 import com.roshka.sifen.util.SifenUtil;
 import org.w3c.dom.Attr;
 
-import javax.xml.crypto.MarshalException;
-import javax.xml.crypto.dsig.*;
-import javax.xml.crypto.dsig.dom.DOMSignContext;
-import javax.xml.crypto.dsig.keyinfo.KeyInfo;
-import javax.xml.crypto.dsig.keyinfo.KeyInfoFactory;
-import javax.xml.crypto.dsig.keyinfo.X509Data;
-import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
-import javax.xml.crypto.dsig.spec.TransformParameterSpec;
+import javax.xml.crypto.dsig.Reference;
+import javax.xml.crypto.dsig.SignedInfo;
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.security.cert.X509Certificate;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 import static com.roshka.sifen.model.Constants.SIFEN_CURRENT_VERSION;
 
-public class REnviDe extends REnviBase {
+public class REnviDe extends RSignedEnviBase {
     public static final String TAG_NAME = "rEnviDe";
 
     private DocumentoElectronico DE;
     private String Id;
     private String dDVId;
+
+    @Override
+    public String getSignedNodeId() {
+        return this.Id;
+    }
+
+    private Node signatureParentNode;
+    @Override
+    public Node getSignatureParentNode() {
+        return signatureParentNode;
+    }
+
+    private Node signatureNextSiblingNode;
+    @Override
+    public Node getSignatureNextSiblingNode() {
+        return signatureNextSiblingNode;
+    }
 
     @Override
     public void setupSOAPBody(SOAPBody soapBody, SifenConfig sifenConfig) throws SifenException {
@@ -49,6 +56,8 @@ public class REnviDe extends REnviBase {
             rResEnviDe.addChildElement("dId").setTextContent(String.valueOf(this.getdId()));
 
             SOAPElement rDE = rResEnviDe.addChildElement("xDE").addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
+            this.signatureParentNode = rDE;
+
             rDE.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
             rDE.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
 
@@ -67,12 +76,17 @@ public class REnviDe extends REnviBase {
             this.DE.setupSOAPElements(DE);
 
             // Firma Digital del XML
-            SignedInfo signedInfo = this.signDocument(rDE, sifenConfig);
+//            SignedInfo signedInfo = this.signDocument(rDE, sifenConfig);
 
             // Preparación de la URL del QR
             SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
-            gCamFuFD.addChildElement("dCarQR").setTextContent(this.generateQRLink(signedInfo, sifenConfig));
-        } catch (SOAPException | NoSuchAlgorithmException e) {
+            this.signatureNextSiblingNode = gCamFuFD;
+//            gCamFuFD.addChildElement("dCarQR").setTextContent(this.generateQRLink(signedInfo, sifenConfig));
+            gCamFuFD.addChildElement("dCarQR").setTextContent("https://ekuatia.set.gov.py/consultas-test/qr?nVersion=150&amp;dNumIDRec=4579993&amp;dTotGralOpe=240000&amp;dTotIVA=21818&amp;cItems=2&amp;Id=01800805534001002000000322020120514391019776&amp;DigestValue=C2E5D637A6CCEFEAE6EE9535F4276C5444578EFE0A231B22FA4130556B6C270A&amp;IdCSC=0001&amp;dFeEmiDE=323032302D31322D30355431313A31313A32372E313430&amp;cHashQR=15F4D41C0164AE4C31F6F2F71E440B21BD3D5897F0D8C2F6B6357CA6D1ED73F6");
+
+            setReadyToSign(true);
+
+        } catch (SOAPException e) {
             throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
         }
     }
@@ -94,41 +108,6 @@ public class REnviDe extends REnviBase {
 
         this.dDVId = SifenUtil.generateDv(CDC);
         this.Id = CDC + this.dDVId;
-    }
-
-    private SignedInfo signDocument(Node parentNode, SifenConfig sifenConfig) throws SifenException {
-        try {
-            XMLSignatureFactory sigFactory = XMLSignatureFactory.getInstance();
-
-            List<Transform> transforms = new ArrayList<>();
-            transforms.add(sigFactory.newTransform(Transform.ENVELOPED, (TransformParameterSpec) null));
-            transforms.add(sigFactory.newTransform(CanonicalizationMethod.EXCLUSIVE, (TransformParameterSpec) null));
-
-            Reference ref = sigFactory.newReference("#" + this.Id, sigFactory.newDigestMethod(DigestMethod.SHA256, null), transforms, null, null);
-            SignedInfo signedInfo = sigFactory.newSignedInfo(
-                    sigFactory.newCanonicalizationMethod(CanonicalizationMethod.INCLUSIVE, (C14NMethodParameterSpec) null),
-                    sigFactory.newSignatureMethod(Constants.RSA_SHA256, null),
-                    Collections.singletonList(ref)
-            );
-
-            KeyStore keyStore = SSLContextHelper.getCertificateKeyStore(sifenConfig);
-            String alias = keyStore.aliases().nextElement();
-            X509Certificate certificate = (X509Certificate) keyStore.getCertificate(alias);
-
-            KeyInfoFactory keyInfoFactory = sigFactory.getKeyInfoFactory();
-            X509Data x509Data = keyInfoFactory.newX509Data(Collections.singletonList(certificate));
-            KeyInfo keyInfo = keyInfoFactory.newKeyInfo(Collections.singletonList(x509Data));
-
-            XMLSignature signature = sigFactory.newXMLSignature(signedInfo, keyInfo);
-            PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, sifenConfig.getContrasenaCertificadoCliente().toCharArray());
-
-            DOMSignContext signatureContext = new DOMSignContext(privateKey, parentNode);
-            signature.sign(signatureContext);
-
-            return signedInfo;
-        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | XMLSignatureException | MarshalException | KeyStoreException | UnrecoverableKeyException e) {
-            throw SifenExceptionUtil.requestSigningError("Ocurrió un error al firmar la petición SOAP utilizando el certificado activo", e);
-        }
     }
 
     private String generateQRLink(SignedInfo signedInfo, SifenConfig sifenConfig) throws NoSuchAlgorithmException {

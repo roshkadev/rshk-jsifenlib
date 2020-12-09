@@ -14,15 +14,16 @@ import org.w3c.dom.Node;
 import java.util.logging.Logger;
 
 public class RecepcionDE extends BaseRequest {
+
     private final static Logger logger = Logger.getLogger(RecepcionDE.class.toString());
 
-    public static RespuestaSifen prepareRequest(SifenConfig sifenConfig, long dId, DocumentoElectronico DE) throws SifenException {
+    public static RespuestaSifen prepareRequest(SifenConfig sifenConfig, long dId, DocumentoElectronico de) throws SifenException {
         logger.info("Preparando petición 'Recepción de DE'");
         setConfig(sifenConfig, sifenConfig.getUrlRecibe());
 
         REnviDe rEnviDe = new REnviDe();
         rEnviDe.setdId(dId);
-        rEnviDe.setDE(DE);
+        rEnviDe.setDE(de);
 
         return processResponse(makeRequest(rEnviDe));
     }
