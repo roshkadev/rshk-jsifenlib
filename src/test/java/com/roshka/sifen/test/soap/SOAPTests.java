@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -33,16 +32,8 @@ public class SOAPTests {
 
     @BeforeClass
     public static void setupSifenConfig() {
-        SifenConfig sifenConfig = new
-                SifenConfig
-                    (
-                        SifenConfig.TipoAmbiente.DEV,
-                            "/Users/pablo/Desktop/tmp/taxit/taxare.pfx",
-                            "Pqntslc0$",
-                SifenConfig.TipoCertificadoCliente.PFX
-        );
-        //sifenConfig.setUrlBase("http://localhost:8080");
-        sifenConfig.setUrlBase("https://sifen-test.set.gov.py");
+        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mdazarza\\Documents\\taxare.pfx",
+                "", SifenConfig.TipoCertificadoCliente.PFX);
 
         Sifen.setSifenConfig(sifenConfig);
     }
@@ -76,10 +67,10 @@ public class SOAPTests {
         // Grupo C
         TgTimb gTimb = new TgTimb();
         gTimb.setTiDE(TTiDE.FACTURA_ELECTRONICA);
-        gTimb.setdNumTim(12557693);
-        gTimb.setdEst("1");
-        gTimb.setdPunExp("2");
-        gTimb.setdNumDoc("3");
+        gTimb.setdNumTim(12557662);
+        gTimb.setdEst("001");
+        gTimb.setdPunExp("002");
+        gTimb.setdNumDoc("0000003");
         gTimb.setdFeIniT(LocalDate.parse("2019-07-31"));
         DE.setgTimb(gTimb);
 
@@ -97,7 +88,7 @@ public class SOAPTests {
         gEmis.setdRucEmi("80080553");
         gEmis.setdDVEmi("4");
         gEmis.setiTipCont(TiTipCont.PERSONA_JURIDICA);
-        gEmis.setdNomEmi("Taxare S.A.");
+        gEmis.setdNomEmi("DE generado en ambiente de prueba - sin valor comercial ni fiscal");
         gEmis.setdDirEmi("Mayor Bullo");
         gEmis.setdNumCas("670");
         gEmis.setcDepEmi(TDepartamento.CAPITAL);
@@ -106,10 +97,18 @@ public class SOAPTests {
         gEmis.setdTelEmi("212376717");
         gEmis.setdEmailE("administracion@taxare.com.py");
 
+        List<TgActEco> gActEcoList = new ArrayList<>();
         TgActEco gActEco = new TgActEco();
-        gActEco.setcActEco("69201");
-        gActEco.setdDesActEco("ACTIVIDADES DE CONTABILIDAD, TENEDURÍA DE LIBROS (CONTADOR)");
-        gEmis.setgActEcoList(Collections.singletonList(gActEco));
+        gActEco.setcActEco("69209");
+        gActEco.setdDesActEco("ACTIVIDADES DE CONTABILIDAD, TENEDURÍA DE LIBROS, AUDITORIA Y ASESORIA FISCAL N.C.P.");
+        gActEcoList.add(gActEco);
+
+        TgActEco gActEco2 = new TgActEco();
+        gActEco2.setcActEco("62090");
+        gActEco2.setdDesActEco("OTRAS ACTIVIDADES DE TECNOLOGÍA DE LA INFORMACIÓN Y SERVICIOS INFORMÁTICOS");
+        gActEcoList.add(gActEco2);
+
+        gEmis.setgActEcoList(gActEcoList);
         dDatGralOpe.setgEmis(gEmis);
 
         TgDatRec gDatRec = new TgDatRec();
@@ -134,7 +133,7 @@ public class SOAPTests {
 
         TgPagCred gPagCred = new TgPagCred();
         gPagCred.setiCondCred(TiCondCred.PLAZO);
-        gPagCred.setdPlazoCre("60 dias");
+        gPagCred.setdPlazoCre("60 días");
 
         gCamCond.setgPagCred(gPagCred);
         gDtipDE.setgCamCond(gCamCond);
@@ -143,7 +142,7 @@ public class SOAPTests {
         for (int i = 0; i < 2; i++) {
             TgCamItem gCamItem = new TgCamItem();
             gCamItem.setdCodInt(i == 0 ? "001" : "002");
-            gCamItem.setdDesProSer(i == 0 ? "Servicio de Liquidacion de IVA" : "Servicio de Liquidacion de IRP");
+            gCamItem.setdDesProSer(i == 0 ? "Servicio de Liquidación de IVA" : "Servicio de Liquidación de IRP");
             gCamItem.setcUniMed(TcUniMed.UNI);
             gCamItem.setdCantProSer(BigDecimal.valueOf(1));
 

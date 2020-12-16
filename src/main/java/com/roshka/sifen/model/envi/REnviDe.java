@@ -4,6 +4,7 @@ import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.model.Constants;
 import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
+import com.roshka.sifen.soap.SignatureHelper;
 import com.roshka.sifen.util.HttpUtil;
 import com.roshka.sifen.util.SifenExceptionUtil;
 import com.roshka.sifen.util.SifenUtil;
@@ -12,38 +13,24 @@ import org.w3c.dom.Attr;
 import javax.xml.crypto.dsig.Reference;
 import javax.xml.crypto.dsig.SignedInfo;
 import javax.xml.namespace.QName;
-import javax.xml.soap.*;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPBodyElement;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.Base64;
+import java.util.LinkedHashMap;
 
 import static com.roshka.sifen.model.Constants.SIFEN_CURRENT_VERSION;
 
-public class REnviDe extends RSignedEnviBase {
+public class REnviDe extends REnviBase {
     public static final String TAG_NAME = "rEnviDe";
 
     private DocumentoElectronico DE;
     private String Id;
     private String dDVId;
-
-    @Override
-    public String getSignedNodeId() {
-        return this.Id;
-    }
-
-    private Node signatureParentNode;
-    @Override
-    public Node getSignatureParentNode() {
-        return signatureParentNode;
-    }
-
-    private Node signatureNextSiblingNode;
-    @Override
-    public Node getSignatureNextSiblingNode() {
-        return signatureNextSiblingNode;
-    }
 
     @Override
     public void setupSOAPBody(SOAPBody soapBody, SifenConfig sifenConfig) throws SifenException {
@@ -56,7 +43,6 @@ public class REnviDe extends RSignedEnviBase {
             rResEnviDe.addChildElement("dId").setTextContent(String.valueOf(this.getdId()));
 
             SOAPElement rDE = rResEnviDe.addChildElement("xDE").addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
-            this.signatureParentNode = rDE;
 
             rDE.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
             rDE.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
@@ -76,17 +62,12 @@ public class REnviDe extends RSignedEnviBase {
             this.DE.setupSOAPElements(DE);
 
             // Firma Digital del XML
-//            SignedInfo signedInfo = this.signDocument(rDE, sifenConfig);
+            SignedInfo signedInfo = SignatureHelper.signDocument(sifenConfig, rDE, this.Id);
 
             // Preparación de la URL del QR
             SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
-            this.signatureNextSiblingNode = gCamFuFD;
-//            gCamFuFD.addChildElement("dCarQR").setTextContent(this.generateQRLink(signedInfo, sifenConfig));
-            gCamFuFD.addChildElement("dCarQR").setTextContent("https://ekuatia.set.gov.py/consultas-test/qr?nVersion=150&amp;dNumIDRec=4579993&amp;dTotGralOpe=240000&amp;dTotIVA=21818&amp;cItems=2&amp;Id=01800805534001002000000322020120514391019776&amp;DigestValue=C2E5D637A6CCEFEAE6EE9535F4276C5444578EFE0A231B22FA4130556B6C270A&amp;IdCSC=0001&amp;dFeEmiDE=323032302D31322D30355431313A31313A32372E313430&amp;cHashQR=15F4D41C0164AE4C31F6F2F71E440B21BD3D5897F0D8C2F6B6357CA6D1ED73F6");
-
-            setReadyToSign(true);
-
-        } catch (SOAPException e) {
+            gCamFuFD.addChildElement("dCarQR").setTextContent(this.generateQRLink(signedInfo, sifenConfig));
+        } catch (SOAPException | NoSuchAlgorithmException e) {
             throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
         }
     }
@@ -111,10 +92,12 @@ public class REnviDe extends RSignedEnviBase {
     }
 
     private String generateQRLink(SignedInfo signedInfo, SifenConfig sifenConfig) throws NoSuchAlgorithmException {
-        HashMap<String, String> queryParams = new HashMap<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LinkedHashMap<String, String> queryParams = new LinkedHashMap<>();
+
         queryParams.put("nVersion", SIFEN_CURRENT_VERSION);
         queryParams.put("Id", this.Id);
-        queryParams.put("dFeEmiDE", SifenUtil.bytesToHex(this.DE.getdDatGralOpe().getdFeEmiDE().toString().getBytes(StandardCharsets.UTF_8)));
+        queryParams.put("dFeEmiDE", SifenUtil.bytesToHex(this.DE.getdDatGralOpe().getdFeEmiDE().format(formatter).getBytes(StandardCharsets.UTF_8)));
 
         if (this.DE.getdDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
             queryParams.put("dRucRec", this.DE.getdDatGralOpe().getgDatRec().getdRucRec());
@@ -137,13 +120,13 @@ public class REnviDe extends RSignedEnviBase {
         }
 
         queryParams.put("cItems", String.valueOf(this.DE.getgDtipDE().getgCamItemList().size()));
-        queryParams.put("DigestValue", SifenUtil.bytesToHex(((Reference) signedInfo.getReferences().get(0)).getDigestValue()));
+
+        byte[] digestValue = Base64.getEncoder().encode(((Reference) signedInfo.getReferences().get(0)).getDigestValue());
+        queryParams.put("DigestValue", SifenUtil.bytesToHex(digestValue));
         queryParams.put("IdCSC", sifenConfig.getIdCSC());
 
         String urlParamsString = HttpUtil.buildUrlParams(queryParams);
-
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        String hashedParams = SifenUtil.bytesToHex(digest.digest((urlParamsString + sifenConfig.getCSC()).getBytes(StandardCharsets.UTF_8)));
+        String hashedParams = SifenUtil.sha256Hex(urlParamsString + sifenConfig.getCSC());
 
         return sifenConfig.getUrlConsultaQr() + urlParamsString + "&cHashQR=" + hashedParams;
     }

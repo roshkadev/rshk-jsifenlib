@@ -76,8 +76,8 @@ public class SifenConfig {
         this.urlConsulta = "/de/ws/consultas/consulta.wsdl";
         this.usarCertificadoCliente = true;
 
-        this.idCSC = "0001";
-        this.CSC = "ABCD0000000000000000000000000000";
+        this.idCSC = "0002";
+        this.CSC = "EFGH0000000000000000000000000000";
 
         this.httpConnectTimeout = 15 * 1000; // 15 Segundos
         this.httpReadTimeout = 45 * 1000; // 45 Segundos

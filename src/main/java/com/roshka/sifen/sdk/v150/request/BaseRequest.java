@@ -5,19 +5,12 @@ import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.http.SOAPHelper;
 import com.roshka.sifen.http.SOAPResponse;
 import com.roshka.sifen.model.envi.REnviBase;
-import com.roshka.sifen.model.envi.RSignedEnviBase;
 import com.roshka.sifen.soap.MessageHelper;
-import com.roshka.sifen.soap.SignatureHelper;
 import com.roshka.sifen.util.SifenExceptionUtil;
 import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.StringWriter;
 import java.util.logging.Logger;
 
 public abstract class BaseRequest {
@@ -51,9 +44,6 @@ public abstract class BaseRequest {
 
             // Realizamos la consulta
             String requestUrl = SifenUtil.coalesce(sifenConfig.getUrlBase(), sifenConfig.getUrlBaseLocal()) + url;
-            if (request instanceof RSignedEnviBase) {
-                SignatureHelper.signDocument(sifenConfig, (RSignedEnviBase)request);
-            }
             return SOAPHelper.makeSOAPRequest(sifenConfig, requestUrl, message);
         } catch (SOAPException e) {
             String msg = "Ocurrió un error al realizan la petición a: " + url + ". Mensaje: " + e.getLocalizedMessage();
