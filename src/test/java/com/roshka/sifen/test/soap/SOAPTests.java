@@ -32,7 +32,7 @@ public class SOAPTests {
 
     @BeforeClass
     public static void setupSifenConfig() {
-        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mdazarza\\Documents\\taxare.pfx",
+        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mzarz\\Documents\\taxare.pfx",
                 "", SifenConfig.TipoCertificadoCliente.PFX);
 
         Sifen.setSifenConfig(sifenConfig);
@@ -70,7 +70,7 @@ public class SOAPTests {
         gTimb.setdNumTim(12557662);
         gTimb.setdEst("001");
         gTimb.setdPunExp("002");
-        gTimb.setdNumDoc("0000003");
+        gTimb.setdNumDoc("0000004");
         gTimb.setdFeIniT(LocalDate.parse("2019-07-31"));
         DE.setgTimb(gTimb);
 
@@ -168,7 +168,15 @@ public class SOAPTests {
         // Grupo E
         DE.setgTotSub(new TgTotSub());
 
+        logger.info("CDC del Documento Electrónico -> " + DE.generateCDC());
+
         RespuestaSifen ret = Sifen.recepcionDE(++currentdId, DE);
+        logger.info(ret.toString());
+    }
+
+    @Test
+    public void testConsultaDE() throws SifenException {
+        RespuestaSifen ret = Sifen.consultaDE(++currentdId, "01800805534001002000000422021033018553767225");
         logger.info(ret.toString());
     }
 }

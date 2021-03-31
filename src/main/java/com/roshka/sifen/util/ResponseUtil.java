@@ -1,11 +1,22 @@
 package com.roshka.sifen.util;
 
 import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.soap.MessageHelper;
 import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 public class ResponseUtil {
@@ -34,21 +45,52 @@ public class ResponseUtil {
         return node;
     }
 
+    public static SOAPMessage parseSoapMessage(SOAPMessage soapMessage) {
+        final StringWriter sw = new StringWriter();
+        try {
+            TransformerFactory.newInstance().newTransformer().transform(new DOMSource(soapMessage.getSOAPPart()), new StreamResult(sw));
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
+
+        String xml = sw.toString();
+        xml = SifenUtil.unescapeXML(xml)
+                .replaceAll("<\\?xml version=\"1.0\" encoding=\"UTF-8\"\\?>", "")
+                .replaceAll(">[\\s\r\n]*<", "><");
+
+        try {
+            soapMessage = MessageHelper.parseMessage(soapMessage.getMimeHeaders(), new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+        } catch (SOAPException | IOException e) {
+            logger.info("Se produjo un error al parsear la respuesta XML. Ignorando.");
+        }
+
+        return soapMessage;
+    }
+
     public static String getTextValue(Node node) {
         if (node == null)
             return null;
 
         Node firstChild = node.getFirstChild();
         if (firstChild == null) {
-            logger.warning("El nodo " + node.getNodeName() + " no contiene nodos hijos. Retornand");
+            logger.warning("El nodo " + node.getNodeName() + " no contiene nodos hijos. Retornando");
             return null;
         }
 
         if (firstChild.getNodeType() != Node.TEXT_NODE) {
-            logger.warning("Node " + node.getNodeName() + "'s first child is not a TextNode. Returning null for Text Value");
+            logger.warning("El primer nodo hijo del nodo " + node.getNodeName() + "no es un nodo de texto. Retornando null.");
             return null;
         }
 
         return firstChild.getTextContent();
+    }
+
+    public static LocalDateTime getDateTimeValue(Node node) {
+        String date = getTextValue(node);
+        if (date != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+            return LocalDateTime.parse(date, formatter);
+        }
+        return null;
     }
 }

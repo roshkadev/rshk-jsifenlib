@@ -20,6 +20,8 @@ public class SifenExceptionCodes {
     public static final String REQUEST_PREPARATION_ERROR_MESSAGE = "Error al preparar el cuerpo de la petición";
     public static final String REQUEST_SIGNING_ERROR_CODE = "i401";
     public static final String REQUEST_SIGNING_ERROR_MESSAGE = "Error al firmar la petición";
+    public static final String FIELD_NOT_FOUND_CODE = "i402";
+    public static final String FIELD_NOT_FOUND_MESSAGE = "Campo no encontrado";
 
     private static final Map<String, String> errorMessages;
 
@@ -29,8 +31,10 @@ public class SifenExceptionCodes {
         errorMessages.put(INVALID_CONFIGURATION_CODE, INVALID_CONFIGURATION_MESSAGE);
         errorMessages.put(INVALID_SSL_CONTEXT_CODE, INVALID_SSL_CONTEXT_MESSAGE);
         errorMessages.put(INVALID_SOAP_REQUEST_CODE, INVALID_SOAP_REQUEST_MESSAGE);
+        errorMessages.put(INVALID_SOAP_RESPONSE_CODE, INVALID_SOAP_RESPONSE_MESSAGE);
         errorMessages.put(REQUEST_PREPARATION_ERROR_CODE, REQUEST_PREPARATION_ERROR_MESSAGE);
-        errorMessages.put(REQUEST_SIGNING_ERROR_CODE, REQUEST_SIGNING_ERROR_CODE);
+        errorMessages.put(REQUEST_SIGNING_ERROR_CODE, REQUEST_SIGNING_ERROR_MESSAGE);
+        errorMessages.put(FIELD_NOT_FOUND_CODE, FIELD_NOT_FOUND_MESSAGE);
     }
 
     public static String getErrorMessage(String code) {

@@ -3,7 +3,11 @@ package com.roshka.sifen.util;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SifenUtil {
     public static String bytesToHex(byte[] bytes) {
@@ -58,5 +62,48 @@ public class SifenUtil {
     public static <T> T coalesce(T... items) {
         for (T i : items) if (i != null) return i;
         return null;
+    }
+
+    public static String unescapeXML(final String xml) {
+        Pattern xmlEntityRegex = Pattern.compile("&(#?)([^;]+);");
+        StringBuffer unescapedOutput = new StringBuffer(xml.length());
+
+        Matcher m = xmlEntityRegex.matcher(xml);
+        Map<String, String> builtinEntities = buildBuiltinXMLEntityMap();
+        String entity;
+        String hashMark;
+        String ent;
+        int code;
+
+        while (m.find()) {
+            ent = m.group(2);
+            hashMark = m.group(1);
+            if (hashMark != null && hashMark.length() > 0) {
+                code = Integer.parseInt(ent);
+                entity = Character.toString((char) code);
+            } else {
+                entity = builtinEntities.get(ent);
+                if (entity == null) {
+                    entity = "&" + ent + ';';
+                }
+            }
+            m.appendReplacement(unescapedOutput, entity);
+        }
+        m.appendTail(unescapedOutput);
+        return unescapedOutput.toString();
+    }
+
+    private static Map<String, String> buildBuiltinXMLEntityMap() {
+        Map<String, String> entities = new HashMap<>(5);
+        entities.put("lt", "<");
+        entities.put("gt", ">");
+        entities.put("amp", "&");
+        entities.put("apos", "'");
+        entities.put("quot", "\"");
+        return entities;
+    }
+
+    public static boolean isStringBlank(String str) {
+        return str == null || str.trim().isEmpty();
     }
 }

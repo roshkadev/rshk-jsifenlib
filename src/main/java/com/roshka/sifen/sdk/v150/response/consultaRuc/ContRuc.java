@@ -5,12 +5,6 @@ import com.roshka.sifen.util.ResponseUtil;
 import org.w3c.dom.Node;
 
 public class ContRuc extends SifenObjectBase {
-    public static final String NOMBRE_ELEMENTO_DRUCCONS = "dRUCCons";
-    public static final String NOMBRE_ELEMENTO_DRAZCONS = "dRazCons";
-    public static final String NOMBRE_ELEMENTO_DCODESTCONS = "dCodEstCons";
-    public static final String NOMBRE_ELEMENTO_DDESESTCONS = "dDesEstCons";
-    public static final String NOMBRE_ELEMENTO_DRUCFACTELEC = "dRUCFactElec";
-
     private String dRUCCons;
     private String dRazCons;
     private String dCodEstCons;
@@ -19,16 +13,22 @@ public class ContRuc extends SifenObjectBase {
 
     @Override
     public void setValueFromChildNode(Node value) {
-        if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRUCCONS)) {
-            dRUCCons = ResponseUtil.getTextValue(value);
-        } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRAZCONS)) {
-            dRazCons = ResponseUtil.getTextValue(value);
-        } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DCODESTCONS)) {
-            dCodEstCons = ResponseUtil.getTextValue(value);
-        } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DDESESTCONS)) {
-            dDesEstCons = ResponseUtil.getTextValue(value);
-        } else if (value.getLocalName().equals(NOMBRE_ELEMENTO_DRUCFACTELEC)) {
-            dRUCFactElec = ResponseUtil.getTextValue(value);
+        switch (value.getLocalName()) {
+            case "dRUCCons":
+                dRUCCons = ResponseUtil.getTextValue(value);
+                break;
+            case "dRazCons":
+                dRazCons = ResponseUtil.getTextValue(value);
+                break;
+            case "dCodEstCons":
+                dCodEstCons = ResponseUtil.getTextValue(value);
+                break;
+            case "dDesEstCons":
+                dDesEstCons = ResponseUtil.getTextValue(value);
+                break;
+            case "dRUCFactElec":
+                dRUCFactElec = ResponseUtil.getTextValue(value);
+                break;
         }
     }
 

@@ -1,11 +1,15 @@
 package com.roshka.sifen.sdk.v150.beans;
 
+import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.model.de.*;
 import com.roshka.sifen.model.de.types.TTiDE;
+import com.roshka.sifen.util.SifenExceptionUtil;
+import com.roshka.sifen.util.SifenUtil;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -13,6 +17,8 @@ import java.util.List;
  * basado en el tipo tDE definido en DE_v150.xsd
  */
 public class DocumentoElectronico {
+    private String Id;
+    private String dDVId;
     private LocalDateTime dFecFirma;  // se debe serializar en el formato: yyyy-mm-ddThh:mi:ss
     private short dSisFact;           // sistema que factura (1. Sistema del Cliente,
                                       // 2. Sistema de facturación gratuita de la SET)
@@ -52,6 +58,14 @@ public class DocumentoElectronico {
                 gCamDEAsoc.setupSOAPElements(DE, this.dDatGralOpe.getgOpeCom().getTipTra(), retencionExists);
             }
         }
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public String getdDVId() {
+        return dDVId;
     }
 
     public LocalDateTime getdFecFirma() {
@@ -124,5 +138,31 @@ public class DocumentoElectronico {
 
     public void setgCamDEAsocList(List<TgCamDEAsoc> gCamDEAsocList) {
         this.gCamDEAsocList = gCamDEAsocList;
+    }
+
+    public String generateCDC() throws SifenException {
+        // Se intenta la generación del CDC
+        String CDC;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getTiDE().getVal()), '0', 2) +
+                    SifenUtil.leftPad(this.getdDatGralOpe().getgEmis().getdRucEmi(), '0', 8) +
+                    this.getdDatGralOpe().getgEmis().getdDVEmi() +
+                    this.getgTimb().getdEst() +
+                    this.getgTimb().getdPunExp() +
+                    SifenUtil.leftPad(String.valueOf(this.getgTimb().getdNumDoc()), '0', 7) +
+                    this.getdDatGralOpe().getgEmis().getiTipCont().getVal() +
+                    this.getdDatGralOpe().getdFeEmiDE().format(formatter) +
+                    this.getgOpeDE().getiTipEmi().getVal() +
+                    this.getgOpeDE().getdCodSeg();
+        } catch (Exception e) {
+            throw SifenExceptionUtil.fieldNotFound("Se produjo un error al generar el CDC. Verificar si todos los campos necesarios están presentes.");
+        }
+
+        // Se setean los valores generados en sus lugares correspondientes dentro de la clase
+        this.dDVId = SifenUtil.generateDv(CDC);
+        this.Id = CDC + this.dDVId;
+
+        return this.Id;
     }
 }

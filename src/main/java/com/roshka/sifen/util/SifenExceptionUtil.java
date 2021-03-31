@@ -60,12 +60,21 @@ public class SifenExceptionUtil {
         );
     }
 
-    public static SifenException requestSigningError(String message) {
-        return requestSigningError(message, null);
-    }
     public static SifenException requestSigningError(String message, Throwable t) {
         return new SifenException(
                 SifenExceptionCodes.REQUEST_SIGNING_ERROR_CODE,
+                message,
+                t
+        );
+    }
+
+    public static SifenException fieldNotFound(String message) {
+        return fieldNotFound(message, null);
+    }
+
+    public static SifenException fieldNotFound(String message, Throwable t) {
+        return new SifenException(
+                SifenExceptionCodes.FIELD_NOT_FOUND_CODE,
                 message,
                 t
         );

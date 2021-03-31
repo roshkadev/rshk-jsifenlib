@@ -13,9 +13,7 @@ import javax.net.ssl.SSLContext;
 import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -58,9 +56,8 @@ public class SOAPHelper {
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
             httpURLConnection.setRequestMethod("POST"); // Siempre POST
-            MimeHeaders mimeHeaders = soapMessage.getMimeHeaders();
             setupHttpURLConnectionProperties(httpURLConnection, sifenConfig);
-            setupHttpURLConnectionHeaders(mimeHeaders, sifenConfig);
+            setupHttpURLConnectionHeaders(soapMessage.getMimeHeaders(), sifenConfig);
 
             httpURLConnection.setDoInput(true);
             httpURLConnection.setDoOutput(true);
@@ -84,16 +81,13 @@ public class SOAPHelper {
                 res.append(l);
             }*/
 
+            MimeHeaders mimeHeaders = MimeHeadersHelper.getFromHttpURLConnection(httpURLConnection);
             if (!soapResponse.isRequestSuccessful()) {
                 // Hubo un error en la petición
                 logger.severe("El servidor devolvió un estado HTTP de fallo: " + soapResponse.getStatus());
 
                 try {
-                    SOAPMessage errorSOAPMessage = MessageHelper.parseMessage(
-                            MimeHeadersHelper.getFromHttpURLConnection(httpURLConnection),
-                            httpURLConnection.getErrorStream()
-                    );
-
+                    SOAPMessage errorSOAPMessage = MessageHelper.parseMessage(mimeHeaders, httpURLConnection.getErrorStream());
                     soapResponse.setSoapError(errorSOAPMessage);
                 } catch (SOAPException se) {
                     logger.severe("SOAPException -> No se puede convertir el error obtenido en un mensaje SOAP: " + se.getLocalizedMessage());
@@ -107,10 +101,7 @@ public class SOAPHelper {
             }
 
             // La respuesta fue correcta
-            SOAPMessage respuestaSOAPMessage = MessageHelper.parseMessage(
-                    MimeHeadersHelper.getFromHttpURLConnection(httpURLConnection),
-                    httpURLConnection.getInputStream()
-            );
+            SOAPMessage respuestaSOAPMessage = MessageHelper.parseMessage(mimeHeaders, httpURLConnection.getInputStream());
             soapResponse.setSoapResponse(respuestaSOAPMessage);
 
             return soapResponse;
