@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiMotivTras {
     TRASLADO_POR_VENTAS((short) 1, "Traslado por ventas"),
     TRASLADO_POR_CONSIGNACION((short) 2, "Traslado por consignación"),
@@ -23,6 +25,10 @@ public enum TiMotivTras {
     TiMotivTras(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiMotivTras getByVal(short val) {
+        return Arrays.stream(TiMotivTras.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

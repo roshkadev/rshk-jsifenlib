@@ -1,13 +1,17 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TiNatRec;
 import com.roshka.sifen.model.de.types.TiTipDoc;
 import com.roshka.sifen.model.paises.PaisType;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgCamTrans {
+public class TgCamTrans extends SifenObjectBase {
     private TiNatRec iNatTrans;
     private String dNomTrans;
     private String dRucTrans;
@@ -62,6 +66,57 @@ public class TgCamTrans {
 
         if (this.dNombAg != null)
             gCamTrans.addChildElement("dDirAge").setTextContent(this.dDirAge);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iNatTrans":
+                this.iNatTrans = TiNatRec.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dNomTrans":
+                this.dNomTrans = ResponseUtil.getTextValue(value);
+                break;
+            case "dRucTrans":
+                this.dRucTrans = ResponseUtil.getTextValue(value);
+                break;
+            case "dDVTrans":
+                this.dDVTrans = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "iTipIDTrans":
+                this.iTipIDTrans = TiTipDoc.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dNumIDTrans":
+                this.dNumIDTrans = ResponseUtil.getTextValue(value);
+                break;
+            case "cNacTrans":
+                this.cNacTrans = PaisType.getByName(ResponseUtil.getTextValue(value));
+                break;
+            case "dNumIDChof":
+                this.dNumIDChof = ResponseUtil.getTextValue(value);
+                break;
+            case "dNomChof":
+                this.dNomChof = ResponseUtil.getTextValue(value);
+                break;
+            case "dDomFisc":
+                this.dDomFisc = ResponseUtil.getTextValue(value);
+                break;
+            case "dDirChof":
+                this.dDirChof = ResponseUtil.getTextValue(value);
+                break;
+            case "dNombAg":
+                this.dNombAg = ResponseUtil.getTextValue(value);
+                break;
+            case "dRucAg":
+                this.dRucAg = ResponseUtil.getTextValue(value);
+                break;
+            case "dDVAg":
+                this.dDVAg = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dDirAge":
+                this.dDirAge = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public TiNatRec getiNatTrans() {

@@ -1,11 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.departamentos.TDepartamento;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgCamSal {
+public class TgCamSal extends SifenObjectBase {
     private String dDirLocSal;
     private short dNumCasSal;
     private String dComp1Sal;
@@ -41,6 +45,42 @@ public class TgCamSal {
 
         if (this.dTelSal != null)
             gCamSal.addChildElement("dTelSal").setTextContent(this.dTelSal);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dDirLocSal":
+                this.dDirLocSal = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumCasSal":
+                this.dNumCasSal = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dComp1Sal":
+                this.dComp1Sal = ResponseUtil.getTextValue(value);
+                break;
+            case "dComp2Sal":
+                this.dComp2Sal = ResponseUtil.getTextValue(value);
+                break;
+            case "cDepSal":
+                this.cDepSal = TDepartamento.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cDisSal":
+                this.cDisSal = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesDisSal":
+                this.dDesDisSal = ResponseUtil.getTextValue(value);
+                break;
+            case "cCiuSal":
+                this.cCiuSal = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesCiuSal":
+                this.dDesCiuSal = ResponseUtil.getTextValue(value);
+                break;
+            case "dTelSal":
+                this.dTelSal = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public String getdDirLocSal() {

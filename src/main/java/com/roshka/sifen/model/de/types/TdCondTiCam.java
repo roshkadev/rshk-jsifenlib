@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TdCondTiCam {
     GLOBAL((short) 1, "Global"),
     POR_ITEM((short) 2, "Por ítem");
@@ -10,6 +12,10 @@ public enum TdCondTiCam {
     TdCondTiCam(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TdCondTiCam getByVal(short val) {
+        return Arrays.stream(TdCondTiCam.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

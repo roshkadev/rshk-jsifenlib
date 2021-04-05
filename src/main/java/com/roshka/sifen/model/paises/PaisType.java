@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.paises;
 
+import java.util.Arrays;
+
 /**
  * Este enumerado contiene los países oficiales según la SET,
  * además de sus descripiones
@@ -260,9 +262,11 @@ public enum PaisType {
         this.nombre = nombre;
     }
 
+    public static PaisType getByName(String name) {
+        return Arrays.stream(PaisType.values()).filter(e -> e.toString().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
     public String getNombre() {
         return nombre;
     }
-
-
 }

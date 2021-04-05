@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 /**
  * Esta clase engloba los datos/tipos tiCondAnt y tdDesCondAnt
  */
@@ -13,6 +15,10 @@ public enum TiCondAnt {
     TiCondAnt(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiCondAnt getByVal(short val) {
+        return Arrays.stream(TiCondAnt.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

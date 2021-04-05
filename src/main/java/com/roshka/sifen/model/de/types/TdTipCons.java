@@ -1,9 +1,10 @@
 package com.roshka.sifen.model.de.types;
 
-public enum TdTipCons {
+import java.util.Arrays;
 
-    CONSTANCIA_NO_CONTRIBUYENTE((short)1, "Constancia de no ser contribuyente"),
-    CONSTANCIA_MICROPRODUCTORES((short)2, "Constancia de microproductores");
+public enum TdTipCons {
+    CONSTANCIA_NO_CONTRIBUYENTE((short) 1, "Constancia de no ser contribuyente"),
+    CONSTANCIA_MICROPRODUCTORES((short) 2, "Constancia de microproductores");
 
     private short val;
     private String descripcion;
@@ -13,6 +14,10 @@ public enum TdTipCons {
         this.descripcion = descripcion;
     }
 
+    public static TdTipCons getByVal(short val) {
+        return Arrays.stream(TdTipCons.values()).filter(e -> e.val == val).findFirst().orElse(null);
+    }
+
     public short getVal() {
         return val;
     }
@@ -20,6 +25,4 @@ public enum TdTipCons {
     public String getDescripcion() {
         return descripcion;
     }
-
-
 }

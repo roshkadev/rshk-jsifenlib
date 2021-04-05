@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 /**
  * Esta clase engloba los datos/tipos tiTiDE y tdDesTiDE
  */
@@ -16,6 +18,10 @@ public enum TTiDE {
     TTiDE(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TTiDE getByVal(short val) {
+        return Arrays.stream(TTiDE.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

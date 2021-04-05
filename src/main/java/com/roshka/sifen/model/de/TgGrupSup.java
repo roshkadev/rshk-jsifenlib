@@ -1,10 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
+
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TgGrupSup {
+public class TgGrupSup extends SifenObjectBase {
     private String dNomCaj;
     private BigDecimal dEfectivo;
     private BigDecimal dVuelto;
@@ -27,6 +32,27 @@ public class TgGrupSup {
 
         if (this.dDesDonac != null)
             gGrupSup.addChildElement("dDesDonac").setTextContent(this.dDesDonac);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dNomCaj":
+                this.dNomCaj = ResponseUtil.getTextValue(value);
+                break;
+            case "dEfectivo":
+                this.dEfectivo = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dVuelto":
+                this.dVuelto = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dDonac":
+                this.dDonac = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesDonac":
+                this.dDesDonac = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public String getdNomCaj() {
@@ -68,5 +94,4 @@ public class TgGrupSup {
     public void setdDesDonac(String dDesDonac) {
         this.dDesDonac = dDesDonac;
     }
-
 }

@@ -1,13 +1,17 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.monedas.CMondT;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class TgCuotas {
+public class TgCuotas extends SifenObjectBase {
     private CMondT cMoneCuo;
     private BigDecimal dMonCuota;
     private LocalDate dVencCuo;
@@ -20,6 +24,21 @@ public class TgCuotas {
 
         if (this.dVencCuo != null)
             gCuotas.addChildElement("dVencCuo").setTextContent(this.dVencCuo.toString());
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "cMoneCuo":
+                this.cMoneCuo = CMondT.getByName(ResponseUtil.getTextValue(value));
+                break;
+            case "dMonCuota":
+                this.dMonCuota = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dVencCuo":
+                this.dVencCuo = ResponseUtil.getDateValue(value);
+                break;
+        }
     }
 
     public CMondT getcMoneCuo() {

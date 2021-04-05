@@ -1,14 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.extra.TiCarCarga;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigInteger;
 
-public class TgCamCarg {
+public class TgCamCarg extends SifenObjectBase {
     private TcUniMed cUniMedTotVol;
     private BigInteger dTotVolMerc;
     private TcUniMed cUniMedTotPes;
@@ -35,6 +39,30 @@ public class TgCamCarg {
         if (this.iCarCarga != null) {
             gCamCarg.addChildElement("iCarCarga").setTextContent(String.valueOf(this.iCarCarga.getVal()));
             gCamCarg.addChildElement("dDesCarCarga").setTextContent(SifenUtil.coalesce(this.iCarCarga.getDescripcion(), this.dDesCarCarga));
+        }
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "cUniMedTotVol":
+                this.cUniMedTotVol = TcUniMed.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dTotVolMerc":
+                this.dTotVolMerc = new BigInteger(ResponseUtil.getTextValue(value));
+                break;
+            case "cUniMedTotPes":
+                this.cUniMedTotPes = TcUniMed.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dTotPesMerc":
+                this.dTotPesMerc = new BigInteger(ResponseUtil.getTextValue(value));
+                break;
+            case "iCarCarga":
+                this.iCarCarga = TiCarCarga.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dDesCarCarga":
+                this.dDesCarCarga = ResponseUtil.getTextValue(value);
+                break;
         }
     }
 

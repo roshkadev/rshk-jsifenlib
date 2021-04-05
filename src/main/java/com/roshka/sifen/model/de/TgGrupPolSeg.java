@@ -1,12 +1,17 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
+
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TgGrupPolSeg {
+public class TgGrupPolSeg extends SifenObjectBase {
     private String dPoliza;
     private String dUnidVig;
     private BigDecimal dVigencia;
@@ -32,6 +37,33 @@ public class TgGrupPolSeg {
 
         if (this.dCodInt != null)
             gGrupPolSeg.addChildElement("dCodInt").setTextContent(this.dCodInt);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dPoliza":
+                this.dPoliza = ResponseUtil.getTextValue(value);
+                break;
+            case "dUnidVig":
+                this.dUnidVig = ResponseUtil.getTextValue(value);
+                break;
+            case "dVigencia":
+                this.dVigencia = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dNumPoliza":
+                this.dNumPoliza = ResponseUtil.getTextValue(value);
+                break;
+            case "dFecIniVig":
+                this.dFecIniVig = ResponseUtil.getDateTimeValue(value, false);
+                break;
+            case "dFecFinVig":
+                this.dFecFinVig = ResponseUtil.getDateTimeValue(value, false);
+                break;
+            case "dCodInt":
+                this.dCodInt = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public String getdPoliza() {

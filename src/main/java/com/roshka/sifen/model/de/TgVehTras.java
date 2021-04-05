@@ -1,11 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TiModTrans;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgVehTras {
+public class TgVehTras extends SifenObjectBase {
     private String dTiVehTras;
     private String dMarVeh;
     private short dTipIdenVeh;
@@ -31,6 +35,33 @@ public class TgVehTras {
 
         if (iModTrans.getVal() == 3)
             gVehTras.addChildElement("dNroVuelo").setTextContent(this.dNroVuelo);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dTiVehTras":
+                this.dTiVehTras = ResponseUtil.getTextValue(value);
+                break;
+            case "dMarVeh":
+                this.dMarVeh = ResponseUtil.getTextValue(value);
+                break;
+            case "dTipIdenVeh":
+                this.dTipIdenVeh = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dNroIDVeh":
+                this.dNroIDVeh = ResponseUtil.getTextValue(value);
+                break;
+            case "dAdicVeh":
+                this.dAdicVeh = ResponseUtil.getTextValue(value);
+                break;
+            case "dNroMatVeh":
+                this.dNroMatVeh = ResponseUtil.getTextValue(value);
+                break;
+            case "dNroVuelo":
+                this.dNroVuelo = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public String getdTiVehTras() {

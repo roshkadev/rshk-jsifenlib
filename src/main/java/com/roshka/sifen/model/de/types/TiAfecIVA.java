@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiAfecIVA {
     GRAVADO((short) 1, "Gravado IVA"),
     EXONERADO((short) 2, "Exonerado (Art. 83- Ley 125/91)"),
@@ -12,6 +14,10 @@ public enum TiAfecIVA {
     TiAfecIVA(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiAfecIVA getByVal(short val) {
+        return Arrays.stream(TiAfecIVA.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

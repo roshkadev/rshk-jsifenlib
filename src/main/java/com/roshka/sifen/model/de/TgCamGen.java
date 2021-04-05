@@ -1,11 +1,16 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.de.types.TTiDE;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgCamGen {
+public class TgCamGen extends SifenObjectBase {
     private String dOrdCompra;
     private String dOrdVta;
     private String dAsiento;
@@ -24,6 +29,24 @@ public class TgCamGen {
 
         if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.gCamCarg != null)
             this.gCamCarg.setupSOAPElements(gCamGen);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dOrdCompra":
+                this.dOrdCompra = ResponseUtil.getTextValue(value);
+                break;
+            case "dOrdVta":
+                this.dOrdVta = ResponseUtil.getTextValue(value);
+                break;
+            case "dAsiento":
+                this.dAsiento = ResponseUtil.getTextValue(value);
+                break;
+            case "gCamCarg":
+                this.gCamCarg = SifenObjectFactory.getFromNode(value, TgCamCarg.class);
+                break;
+        }
     }
 
     public String getdOrdCompra() {

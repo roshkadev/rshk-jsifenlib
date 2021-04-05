@@ -1,12 +1,16 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TiDenTarj;
 import com.roshka.sifen.model.de.types.TiForProPa;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgPagTarCD {
+public class TgPagTarCD extends SifenObjectBase {
     private TiDenTarj iDenTarj;
     private String dDesDenTarj;
     private String dRSProTar;
@@ -41,6 +45,39 @@ public class TgPagTarCD {
 
         if (this.dNumTarj != 0)
             gPagTarCD.addChildElement("dNumTarj").setTextContent(String.valueOf(this.dNumTarj));
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iDenTarj":
+                this.iDenTarj = TiDenTarj.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dDesDenTarj":
+                this.dDesDenTarj = ResponseUtil.getTextValue(value);
+                break;
+            case "dRSProTar":
+                this.dRSProTar = ResponseUtil.getTextValue(value);
+                break;
+            case "dRUCProTar":
+                this.dRUCProTar = ResponseUtil.getTextValue(value);
+                break;
+            case "dDVProTar":
+                this.dDVProTar = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "iForProPa":
+                this.iForProPa = TiForProPa.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dCodAuOpe":
+                this.dCodAuOpe = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dNomTit":
+                this.dNomTit = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumTarj":
+                this.dNumTarj = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+        }
     }
 
     public TiDenTarj getiDenTarj() {

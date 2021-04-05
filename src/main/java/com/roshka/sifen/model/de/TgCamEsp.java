@@ -1,9 +1,14 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
+import org.w3c.dom.Node;
+
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgCamEsp {
+public class TgCamEsp extends SifenObjectBase {
     private TgGrupEner gGrupEner;
     private TgGrupSeg gGrupSeg;
     private TgGrupSup gGrupSup;
@@ -22,6 +27,24 @@ public class TgCamEsp {
 
         if (this.gGrupAdi != null)
             this.gGrupAdi.setupSOAPElements(gCamEsp);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "gGrupEner":
+                this.gGrupEner = SifenObjectFactory.getFromNode(value, TgGrupEner.class);
+                break;
+            case "gGrupSeg":
+                this.gGrupSeg = SifenObjectFactory.getFromNode(value, TgGrupSeg.class);
+                break;
+            case "gGrupSup":
+                this.gGrupSup = SifenObjectFactory.getFromNode(value, TgGrupSup.class);
+                break;
+            case "gGrupAdi":
+                this.gGrupAdi = SifenObjectFactory.getFromNode(value, TgGrupAdi.class);
+                break;
+        }
     }
 
     public TgGrupEner getgGrupEner() {

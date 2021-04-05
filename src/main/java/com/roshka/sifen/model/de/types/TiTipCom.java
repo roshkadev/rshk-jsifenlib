@@ -1,13 +1,14 @@
 package com.roshka.sifen.model.de.types;
 
-public enum TiTipCom {
+import java.util.Arrays;
 
-    GASOLINA((short)1, "Gasolina"),
-    DIESEL((short)2, "Diésel"),
-    ETANOL((short)2, "Etanol"),
-    GNV((short)2, "GNV"),
-    FLEX((short)2, "Flex"),
-    OTRO((short)9, null);
+public enum TiTipCom {
+    GASOLINA((short) 1, "Gasolina"),
+    DIESEL((short) 2, "Diésel"),
+    ETANOL((short) 2, "Etanol"),
+    GNV((short) 2, "GNV"),
+    FLEX((short) 2, "Flex"),
+    OTRO((short) 9, null);
 
     private short val;
     private String descripcion;
@@ -17,6 +18,10 @@ public enum TiTipCom {
         this.descripcion = descripcion;
     }
 
+    public static TiTipCom getByVal(short val) {
+        return Arrays.stream(TiTipCom.values()).filter(e -> e.val == val).findFirst().orElse(null);
+    }
+
     public short getVal() {
         return val;
     }
@@ -24,5 +29,4 @@ public enum TiTipCom {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

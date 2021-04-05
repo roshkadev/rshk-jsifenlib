@@ -1,10 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
+
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
 
-public class TgRasMerc {
+public class TgRasMerc extends SifenObjectBase {
     private String dNumLote;
     private LocalDate dVencMerc;
     private String dNSerie;
@@ -47,6 +52,42 @@ public class TgRasMerc {
 
         if (this.dNumRegEntCom != null)
             gRasMerc.addChildElement("dNumRegEntCom").setTextContent(this.dNumRegEntCom);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dNumLote":
+                this.dNumLote = ResponseUtil.getTextValue(value);
+                break;
+            case "dVencMerc":
+                this.dVencMerc = ResponseUtil.getDateValue(value);
+                break;
+            case "dNSerie":
+                this.dNSerie = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumPedi":
+                this.dNumPedi = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumSegui":
+                this.dNumSegui = ResponseUtil.getTextValue(value);
+                break;
+            case "dNomImp":
+                this.dNomImp = ResponseUtil.getTextValue(value);
+                break;
+            case "dDirImp":
+                this.dDirImp = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumFir":
+                this.dNumFir = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumReg":
+                this.dNumReg = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumRegEntCom":
+                this.dNumRegEntCom = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public String getdNumLote() {

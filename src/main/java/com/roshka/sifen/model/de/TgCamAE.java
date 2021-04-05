@@ -1,8 +1,12 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TiNatVen;
 import com.roshka.sifen.model.de.types.TiTipDoc;
 import com.roshka.sifen.model.departamentos.TDepartamento;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -10,7 +14,7 @@ import javax.xml.soap.SOAPException;
 /**
  * AUTOFACTURA ELECTRÓNICA
  */
-public class TgCamAE {
+public class TgCamAE extends SifenObjectBase {
     private TiNatVen iNatVen;
     private TiTipDoc iTipIDVen;
     private String dNumIDVen;
@@ -60,6 +64,63 @@ public class TgCamAE {
 
         gCamAE.addChildElement("cCiuProv").setTextContent(String.valueOf(this.cCiuProv));
         gCamAE.addChildElement("dDesCiuProv").setTextContent(this.dDesCiuProv);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iNatVen":
+                this.iNatVen = TiNatVen.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "iTipIDVen":
+                this.iTipIDVen = TiTipDoc.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dNumIDVen":
+                this.dNumIDVen = ResponseUtil.getTextValue(value);
+                break;
+            case "dNomVen":
+                this.dNomVen = ResponseUtil.getTextValue(value);
+                break;
+            case "dDirVen":
+                this.dDirVen = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumCasVen":
+                this.dNumCasVen = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "cDepVen":
+                this.cDepVen = TDepartamento.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cDisVen":
+                this.cDisVen = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesDisVen":
+                this.dDesDisVen = ResponseUtil.getTextValue(value);
+                break;
+            case "cCiuVen":
+                this.cCiuVen = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesCiuVen":
+                this.dDesCiuVen = ResponseUtil.getTextValue(value);
+                break;
+            case "dDirProv":
+                this.dDirProv = ResponseUtil.getTextValue(value);
+                break;
+            case "cDepProv":
+                this.cDepProv = TDepartamento.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cDisProv":
+                this.cDisProv = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesDisProv":
+                this.dDesDisProv = ResponseUtil.getTextValue(value);
+                break;
+            case "cCiuProv":
+                this.cCiuProv = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesCiuProv":
+                this.dDesCiuProv = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public TiNatVen getiNatVen() {

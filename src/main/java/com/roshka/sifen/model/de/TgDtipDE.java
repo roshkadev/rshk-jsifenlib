@@ -1,12 +1,17 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.de.types.*;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TgDtipDE {
+public class TgDtipDE extends SifenObjectBase {
     private TgCamFE gCamFE;
     private TgCamAE gCamAE;
     private TgCamNCDE gCamNCDE;
@@ -41,6 +46,39 @@ public class TgDtipDE {
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.gTransp != null))
             this.gTransp.setupSOAPElements(gDtipDE, iTiDE, this.gCamNRE.getiMotEmiNR());
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "gCamFE":
+                this.gCamFE = SifenObjectFactory.getFromNode(value, TgCamFE.class);
+                break;
+            case "gCamAE":
+                this.gCamAE = SifenObjectFactory.getFromNode(value, TgCamAE.class);
+                break;
+            case "gCamNCDE":
+                this.gCamNCDE = SifenObjectFactory.getFromNode(value, TgCamNCDE.class);
+                break;
+            case "gCamNRE":
+                this.gCamNRE = SifenObjectFactory.getFromNode(value, TgCamNRE.class);
+                break;
+            case "gCamCond":
+                this.gCamCond = SifenObjectFactory.getFromNode(value, TgCamCond.class);
+                break;
+            case "gCamItem":
+                if (this.gCamItemList == null) {
+                    this.gCamItemList = new ArrayList<>();
+                }
+                this.gCamItemList.add(SifenObjectFactory.getFromNode(value, TgCamItem.class));
+                break;
+            case "gCamEsp":
+                this.gCamEsp = SifenObjectFactory.getFromNode(value, TgCamEsp.class);
+                break;
+            case "gTransp":
+                this.gTransp = SifenObjectFactory.getFromNode(value, TgTransp.class);
+                break;
+        }
     }
 
     public TgCamFE getgCamFE() {

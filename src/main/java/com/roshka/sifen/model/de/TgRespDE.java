@@ -1,12 +1,16 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TiTipIDRespDE;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgRespDE {
+public class TgRespDE extends SifenObjectBase {
     private TiTipIDRespDE iTipIDRespDE;
     private String dDTipIDRespDE;
     private String dNumIDRespDE;
@@ -20,6 +24,27 @@ public class TgRespDE {
         gRespDE.addChildElement("dNumIDRespDE").setTextContent(this.dNumIDRespDE);
         gRespDE.addChildElement("dNomRespDE").setTextContent(this.dNomRespDE);
         gRespDE.addChildElement("dCarRespDE").setTextContent(this.dCarRespDE);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTipIDRespDE":
+                this.iTipIDRespDE = TiTipIDRespDE.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dDTipIDRespDE":
+                this.dDTipIDRespDE = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumIDRespDE":
+                this.dNumIDRespDE = ResponseUtil.getTextValue(value);
+                break;
+            case "dNomRespDE":
+                this.dNomRespDE = ResponseUtil.getTextValue(value);
+                break;
+            case "dCarRespDE":
+                this.dCarRespDE = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public TiTipIDRespDE getiTipIDRespDE() {

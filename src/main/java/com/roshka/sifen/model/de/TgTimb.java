@@ -1,14 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TTiDE;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
 
-public class TgTimb {
-    private TTiDE tiDE;         // este campo engloba a iTiDE y a dDesTiDE
+public class TgTimb extends SifenObjectBase {
+    private TTiDE iTiDE;         // este campo engloba a iTiDE y a dDesTiDE
     private int dNumTim;        // número de timbrado
     private String dEst;         // código de establecimiento: patron ej: 001
     private String dPunExp;      // punto de expedición: patron ej: 001
@@ -18,8 +22,8 @@ public class TgTimb {
 
     public void setupSOAPElements(SOAPElement DE) throws SOAPException {
         SOAPElement gTimb = DE.addChildElement("gTimb");
-        gTimb.addChildElement("iTiDE").setTextContent(String.valueOf(this.tiDE.getVal()));
-        gTimb.addChildElement("dDesTiDE").setTextContent(this.tiDE.getDescripcion());
+        gTimb.addChildElement("iTiDE").setTextContent(String.valueOf(this.iTiDE.getVal()));
+        gTimb.addChildElement("dDesTiDE").setTextContent(this.iTiDE.getDescripcion());
         gTimb.addChildElement("dNumTim").setTextContent(String.valueOf(this.dNumTim));
         gTimb.addChildElement("dEst").setTextContent(this.dEst);
         gTimb.addChildElement("dPunExp").setTextContent(this.dPunExp);
@@ -29,12 +33,39 @@ public class TgTimb {
         gTimb.addChildElement("dFeIniT").setTextContent(this.dFeIniT.toString());
     }
 
-    public TTiDE getTiDE() {
-        return tiDE;
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTiDE":
+                this.iTiDE = TTiDE.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dNumTim":
+                this.dNumTim = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dEst":
+                this.dEst = ResponseUtil.getTextValue(value);
+                break;
+            case "dPunExp":
+                this.dPunExp = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumDoc":
+                this.dNumDoc = ResponseUtil.getTextValue(value);
+                break;
+            case "dSerieNum":
+                this.dSerieNum = ResponseUtil.getTextValue(value);
+                break;
+            case "dFeIniT":
+                this.dFeIniT = ResponseUtil.getDateValue(value);
+                break;
+        }
     }
 
-    public void setTiDE(TTiDE tiDE) {
-        this.tiDE = tiDE;
+    public TTiDE getiTiDE() {
+        return iTiDE;
+    }
+
+    public void setiTiDE(TTiDE iTiDE) {
+        this.iTiDE = iTiDE;
     }
 
     public int getdNumTim() {

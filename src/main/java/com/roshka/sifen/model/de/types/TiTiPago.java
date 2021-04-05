@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiTiPago {
     EFECTIVO((short) 1, "Efectivo"),
     CHEQUE((short) 2, "Cheque"),
@@ -30,6 +32,10 @@ public enum TiTiPago {
     TiTiPago(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiTiPago getByVal(short val) {
+        return Arrays.stream(TiTiPago.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

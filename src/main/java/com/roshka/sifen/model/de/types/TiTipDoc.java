@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiTipDoc {
     CEDULA_PARAGUAYA((short) 1, "Cédula paraguaya"),
     PASAPORTE((short) 2, "Pasaporte"),
@@ -12,6 +14,10 @@ public enum TiTipDoc {
     TiTipDoc(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiTipDoc getByVal(short val) {
+        return Arrays.stream(TiTipDoc.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

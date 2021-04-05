@@ -1,13 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.monedas.CMondT;
 import com.roshka.sifen.model.de.types.TiTiPago;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TgPagCont {
+public class TgPaConEIni extends SifenObjectBase {
     private TiTiPago iTiPago;
     private String dDesTiPag;
     private BigDecimal dMonTiPag;
@@ -31,6 +36,33 @@ public class TgPagCont {
             this.gPagTarCD.setupSOAPElements(gPaConEIni);
         else if (this.iTiPago.getVal() == 2)
             this.gPagCheq.setupSOAPElements(gPaConEIni);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTiPago":
+                this.iTiPago = TiTiPago.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dDesTiPag":
+                this.dDesTiPag = ResponseUtil.getTextValue(value);
+                break;
+            case "dMonTiPag":
+                this.dMonTiPag = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "cMoneTiPag":
+                this.cMoneTiPag = CMondT.getByName(ResponseUtil.getTextValue(value));
+                break;
+            case "dTiCamTiPag":
+                this.dTiCamTiPag = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "gPagTarCD":
+                this.gPagTarCD = SifenObjectFactory.getFromNode(value, TgPagTarCD.class);
+                break;
+            case "gPagCheq":
+                this.gPagCheq = SifenObjectFactory.getFromNode(value, TgPagCheq.class);
+                break;
+        }
     }
 
     public TiTiPago getiTiPago() {

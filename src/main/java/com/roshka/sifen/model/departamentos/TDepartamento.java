@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.departamentos;
 
+import java.util.Arrays;
+
 /**
  * Este enumerado contiene los códigos de departamento y sus descripciones oficiales para la SET
  */
@@ -31,6 +33,10 @@ public enum TDepartamento {
     TDepartamento(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TDepartamento getByVal(short val) {
+        return Arrays.stream(TDepartamento.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

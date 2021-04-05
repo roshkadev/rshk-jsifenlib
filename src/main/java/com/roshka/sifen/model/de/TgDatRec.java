@@ -1,14 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.departamentos.TDepartamento;
 import com.roshka.sifen.model.paises.PaisType;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgDatRec {
+public class TgDatRec extends SifenObjectBase {
     private TiNatRec iNatRec;
     private TiTiOpe iTiOpe;
     private PaisType cPaisRec;
@@ -83,6 +87,78 @@ public class TgDatRec {
             gDatRec.addChildElement("dEmailRec").setTextContent(this.dEmailRec);
         if (this.dCodCliente != null)
             gDatRec.addChildElement("dCodCliente").setTextContent(this.dCodCliente);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iNatRec":
+                this.iNatRec = TiNatRec.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "iTiOpe":
+                this.iTiOpe = TiTiOpe.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cPaisRec":
+                this.cPaisRec = PaisType.getByName(ResponseUtil.getTextValue(value));
+                break;
+            case "iTiContRec":
+                this.iTiContRec = TiTipCont.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dRucRec":
+                this.dRucRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dDVRec":
+                this.dDVRec = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "iTipIDRec":
+                this.iTipIDRec = TiTipDocRec.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dDTipIDRec":
+                this.dDTipIDRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumIDRec":
+                this.dNumIDRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dNomRec":
+                this.dNomRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dNomFanRec":
+                this.dNomFanRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dDirRec":
+                this.dDirRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumCasRec":
+                this.dNumCasRec = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "cDepRec":
+                this.cDepRec = TDepartamento.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cDisRec":
+                this.cDisRec = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesDisRec":
+                this.dDesDisRec = ResponseUtil.getTextValue(value);
+                break;
+            case "cCiuRec":
+                this.cCiuRec = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesCiuRec":
+                this.dDesCiuRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dTelRec":
+                this.dTelRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dCelRec":
+                this.dCelRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dEmailRec":
+                this.dEmailRec = ResponseUtil.getTextValue(value);
+                break;
+            case "dCodCliente":
+                this.dCodCliente = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public TiNatRec getiNatRec() {

@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiDenTarj {
     VISA((short) 1, "Visa"),
     MASTERCARD((short) 2, "Mastercard"),
@@ -15,6 +17,10 @@ public enum TiDenTarj {
     TiDenTarj(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiDenTarj getByVal(short val) {
+        return Arrays.stream(TiDenTarj.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 /**
  * Esta clase engloba los datos/tipos tiTipEmi y tdDesTipEmi
  */
@@ -13,6 +15,10 @@ public enum TTipEmi {
     TTipEmi(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TTipEmi getByVal(short val) {
+        return Arrays.stream(TTipEmi.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

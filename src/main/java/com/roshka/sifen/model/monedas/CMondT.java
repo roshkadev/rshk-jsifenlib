@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.monedas;
 
+import java.util.Arrays;
+
 public enum CMondT {
     AED("Dirham"),
     AFN("Afghani"),
@@ -208,8 +210,11 @@ public enum CMondT {
         this.descripcion = descripcion;
     }
 
+    public static CMondT getByName(String name) {
+        return Arrays.stream(CMondT.values()).filter(e -> e.toString().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
-
 }

@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiCondOpe {
     CONTADO((short) 1, "Contado"),
     CREDITO((short) 2, "Crédito");
@@ -10,6 +12,10 @@ public enum TiCondOpe {
     TiCondOpe(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiCondOpe getByVal(short val) {
+        return Arrays.stream(TiCondOpe.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

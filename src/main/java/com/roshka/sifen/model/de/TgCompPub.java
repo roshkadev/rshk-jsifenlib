@@ -1,10 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
+
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
 
-public class TgCompPub {
+public class TgCompPub extends SifenObjectBase {
     private String dModCont;
     private int dEntCont;
     private short dAnoCont;
@@ -18,6 +23,27 @@ public class TgCompPub {
         gCompPub.addChildElement("dAnoCont").setTextContent(String.valueOf(this.dAnoCont));
         gCompPub.addChildElement("dSecCont").setTextContent(String.valueOf(this.dSecCont));
         gCompPub.addChildElement("dFeCodCont").setTextContent(this.dFeCodCont.toString());
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dModCont":
+                this.dModCont = ResponseUtil.getTextValue(value);
+                break;
+            case "dEntCont":
+                this.dEntCont = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dAnoCont":
+                this.dAnoCont = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dSecCont":
+                this.dSecCont = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dFeCodCont":
+                this.dFeCodCont = ResponseUtil.getDateValue(value);
+                break;
+        }
     }
 
     public String getdModCont() {

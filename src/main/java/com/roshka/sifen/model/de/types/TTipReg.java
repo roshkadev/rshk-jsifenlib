@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TTipReg {
     REGIMEN_TURISMO((short) 1, "Régimen de Turismo"),
     IMPORTADOR((short) 2, "Importador"),
@@ -16,6 +18,10 @@ public enum TTipReg {
     TTipReg(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TTipReg getByVal(short val) {
+        return Arrays.stream(TTipReg.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

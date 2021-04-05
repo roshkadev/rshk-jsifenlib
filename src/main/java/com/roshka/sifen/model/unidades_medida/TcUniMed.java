@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.unidades_medida;
 
+import java.util.Arrays;
+
 public enum TcUniMed {
     m("m", (short) 87, "Metros - m", "Metros"),
     CPM("CPM", (short) 2366, "Costo Por Mil - CPM", "Costo Por Mil"),
@@ -36,6 +38,11 @@ public enum TcUniMed {
     ha("ha", (short) 869, "Hectáreas - ha", "Hectáreas"),
     racion("ración", (short) 569, "Ración - ración", "Ración");
 
+    private String abreviatura;
+    private short val;
+    private String documentacion;
+    private String descripcion;
+
     TcUniMed(String abreviatura, short val, String documentacion, String descripcion) {
         this.abreviatura = abreviatura;
         this.val = val;
@@ -43,10 +50,9 @@ public enum TcUniMed {
         this.descripcion = descripcion;
     }
 
-    private String abreviatura;
-    private short val;
-    private String documentacion;
-    private String descripcion;
+    public static TcUniMed getByVal(short val) {
+        return Arrays.stream(TcUniMed.values()).filter(e -> e.val == val).findFirst().orElse(null);
+    }
 
     public String getAbreviatura() {
         return abreviatura;

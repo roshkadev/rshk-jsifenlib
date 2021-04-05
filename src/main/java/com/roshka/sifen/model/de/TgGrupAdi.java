@@ -1,12 +1,21 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
+import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TgGrupAdi {
+public class TgGrupAdi extends SifenObjectBase {
     private String dCiclo;
     private LocalDate dFecIniC;
     private LocalDate dFecFinC;
@@ -33,6 +42,33 @@ public class TgGrupAdi {
 
         if (this.dSalAnt != null)
             gGrupAdi.addChildElement("dSalAnt").setTextContent(String.valueOf(this.dSalAnt));
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dCiclo":
+                this.dCiclo = ResponseUtil.getTextValue(value);
+                break;
+            case "dFecIniC":
+                this.dFecIniC = ResponseUtil.getDateValue(value);
+                break;
+            case "dFecFinC":
+                this.dFecFinC = ResponseUtil.getDateValue(value);
+                break;
+            case "dVencPag":
+                if (this.dVencPagList == null) {
+                    this.dVencPagList = new ArrayList<>();
+                }
+                this.dVencPagList.add(ResponseUtil.getDateValue(value));
+                break;
+            case "dContrato":
+                this.dContrato = ResponseUtil.getTextValue(value);
+                break;
+            case "dSalAnt":
+                this.dSalAnt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+        }
     }
 
     public String getdCiclo() {
@@ -82,5 +118,4 @@ public class TgGrupAdi {
     public void setdSalAnt(BigDecimal dSalAnt) {
         this.dSalAnt = dSalAnt;
     }
-
 }

@@ -1,13 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.de.types.TTiDE;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class TdDatGralOpe {
+public class TdDatGralOpe extends SifenObjectBase {
     private LocalDateTime dFeEmiDE;
     private TgOpeCom gOpeCom;
     private TgEmis gEmis;
@@ -22,6 +27,24 @@ public class TdDatGralOpe {
             this.gOpeCom.setupSOAPElements(gDatGralOpe, iTiDE);
         this.gEmis.setupSOAPElements(gDatGralOpe);
         this.gDatRec.setupSOAPElements(gDatGralOpe, iTiDE);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dFeEmiDE":
+                this.dFeEmiDE = ResponseUtil.getDateTimeValue(value, false);
+                break;
+            case "gOpeCom":
+                this.gOpeCom = SifenObjectFactory.getFromNode(value, TgOpeCom.class);
+                break;
+            case "gEmis":
+                this.gEmis = SifenObjectFactory.getFromNode(value, TgEmis.class);
+                break;
+            case "gDatRec":
+                this.gDatRec = SifenObjectFactory.getFromNode(value, TgDatRec.class);
+                break;
+        }
     }
 
     public LocalDateTime getdFeEmiDE() {

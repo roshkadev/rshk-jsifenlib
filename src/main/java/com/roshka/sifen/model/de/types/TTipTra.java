@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 /**
  * Esta clase engloba los datos/tipos tiTipTra y tdDesTiTran
  */
@@ -24,6 +26,10 @@ public enum TTipTra {
     TTipTra(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TTipTra getByVal(short val) {
+        return Arrays.stream(TTipTra.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

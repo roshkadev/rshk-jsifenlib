@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiCondCred {
     PLAZO((short) 1, "Plazo"),
     CUOTA((short) 2, "Cuota");
@@ -10,6 +12,10 @@ public enum TiCondCred {
     TiCondCred(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiCondCred getByVal(short val) {
+        return Arrays.stream(TiCondCred.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

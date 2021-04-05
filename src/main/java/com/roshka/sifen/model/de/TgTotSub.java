@@ -1,17 +1,21 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TTImp;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TdCondTiCam;
 import com.roshka.sifen.model.monedas.CMondT;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class TgTotSub {
+public class TgTotSub extends SifenObjectBase {
     private BigDecimal dSubExe = BigDecimal.ZERO;
     private BigDecimal dSubExo = BigDecimal.ZERO;
     private BigDecimal dSub5 = BigDecimal.ZERO;
@@ -153,6 +157,87 @@ public class TgTotSub {
 
             if (!cMoneOpe.toString().equals("PYG"))
                 gTotSub.addChildElement("dTotalGs").setTextContent(String.valueOf(this.dTotalGs));
+        }
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dSubExe":
+                this.dSubExe = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dSubExo":
+                this.dSubExo = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dSub5":
+                this.dSub5 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dSub10":
+                this.dSub10 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotOpe":
+                this.dTotOpe = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotDesc":
+                this.dTotDesc = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotDescGlotem":
+                this.dTotDescGlotem = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotAntItem":
+                this.dTotAntItem = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotAnt":
+                this.dTotAnt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dPorcDescTotal":
+                this.dPorcDescTotal = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dDescTotal":
+                this.dDescTotal = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dAnticipo":
+                this.dAnticipo = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dRedon":
+                this.dRedon = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dComi":
+                this.dComi = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotGralOpe":
+                this.dTotGralOpe = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dIVA5":
+                this.dIVA5 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dIVA10":
+                this.dIVA10 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dLiqTotIVA5":
+                this.dLiqTotIVA5 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dLiqTotIVA10":
+                this.dLiqTotIVA10 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dIVAComi":
+                this.dIVAComi = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotIVA":
+                this.dTotIVA = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dBaseGrav5":
+                this.dBaseGrav5 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dBaseGrav10":
+                this.dBaseGrav10 = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTBasGraIVA":
+                this.dTBasGraIVA = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotalGs":
+                this.dTotalGs = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
         }
     }
 

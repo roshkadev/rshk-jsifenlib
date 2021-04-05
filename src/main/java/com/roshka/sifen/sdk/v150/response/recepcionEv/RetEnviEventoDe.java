@@ -17,7 +17,7 @@ public class RetEnviEventoDe extends SifenObjectBase {
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals("dFecProc")) {
-            dFecProc = ResponseUtil.getDateTimeValue(value);
+            dFecProc = ResponseUtil.getDateTimeValue(value, true);
         } else if (value.getLocalName().equals("gResProcEVe")) {
             gResProcEVe.add(SifenObjectFactory.getFromNode(value, ResProcEVe.class));
         }

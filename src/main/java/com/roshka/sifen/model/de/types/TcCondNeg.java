@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TcCondNeg {
     CFR("Costo y flete"),
     CIF("Costo, seguro y flete"),
@@ -19,8 +21,11 @@ public enum TcCondNeg {
         this.descripcion = descripcion;
     }
 
+    public static TcCondNeg getByDescription(String description) {
+        return Arrays.stream(TcCondNeg.values()).filter(e -> e.toString().equalsIgnoreCase(description)).findFirst().orElse(null);
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
-
 }

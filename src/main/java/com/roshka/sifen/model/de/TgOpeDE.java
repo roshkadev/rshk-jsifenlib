@@ -1,15 +1,19 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TTipEmi;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgOpeDE {
+public class TgOpeDE extends SifenObjectBase {
     private TTipEmi iTipEmi;
-    private final String dCodSeg;   // número aleatorio entre 1 y 999999999 generado por el emisor
+    private String dCodSeg;   // número aleatorio entre 1 y 999999999 generado por el emisor
     private String dInfoEmi;        // información de interés del emisor (opcional). Entre 1 y 3000 carácteres
     private String dInfoFisc;       // información de interés del fisco (opcional). Entre 1 y 3000 carácteres
 
@@ -26,6 +30,24 @@ public class TgOpeDE {
             gOpeDE.addChildElement("dInfoEmi").setTextContent(this.dInfoEmi);
         if (this.dInfoFisc != null || iTiDE.getVal() == 7)
             gOpeDE.addChildElement("dInfoFisc").setTextContent(this.dInfoFisc);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTipEmi":
+                this.iTipEmi = TTipEmi.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dCodSeg":
+                this.dCodSeg = ResponseUtil.getTextValue(value);
+                break;
+            case "dInfoEmi":
+                this.dInfoEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "dInfoFisc":
+                this.dInfoFisc = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public TTipEmi getiTipEmi() {

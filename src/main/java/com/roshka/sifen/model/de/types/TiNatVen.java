@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiNatVen {
     NO_CONTRIBUYENTE((short) 1, "No Contribuyente"),
     EXRANJERO((short) 2, "Extranjero");
@@ -10,6 +12,10 @@ public enum TiNatVen {
     TiNatVen(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiNatVen getByVal(short val) {
+        return Arrays.stream(TiNatVen.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

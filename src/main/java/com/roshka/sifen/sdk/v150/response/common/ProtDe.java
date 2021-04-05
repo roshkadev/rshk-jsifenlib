@@ -25,7 +25,7 @@ public class ProtDe extends SifenObjectBase {
                 id = ResponseUtil.getTextValue(value);
                 break;
             case "dFecProc":
-                dFecProc = ResponseUtil.getDateTimeValue(value);
+                dFecProc = ResponseUtil.getDateTimeValue(value, true);
                 break;
             case "dDigVal":
                 dDigVal = ResponseUtil.getTextValue(value);

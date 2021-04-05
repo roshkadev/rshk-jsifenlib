@@ -1,13 +1,19 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.de.types.TiCondCred;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TgPagCred {
+public class TgPagCred extends SifenObjectBase {
     private TiCondCred iCondCred;
     private String dPlazoCre;
     private short dCuotas;
@@ -32,6 +38,30 @@ public class TgPagCred {
             for (TgCuotas gCuotas : this.gCuotasList) {
                 gCuotas.setupSOAPElements(gPagCred);
             }
+        }
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iCondCred":
+                this.iCondCred = TiCondCred.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dPlazoCre":
+                this.dPlazoCre = ResponseUtil.getTextValue(value);
+                break;
+            case "dCuotas":
+                this.dCuotas = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dMonEnt":
+                this.dMonEnt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "gCuotas":
+                if (this.gCuotasList == null) {
+                    this.gCuotasList = new ArrayList<>();
+                }
+                this.gCuotasList.add(SifenObjectFactory.getFromNode(value, TgCuotas.class));
+                break;
         }
     }
 

@@ -1,10 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
+
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TgGrupEner {
+public class TgGrupEner extends SifenObjectBase {
     private String dNroMed;
     private short dActiv;
     private String dCateg;
@@ -31,6 +36,30 @@ public class TgGrupEner {
 
         if (this.dConKwh != null)
             gGrupEner.addChildElement("dConKwh").setTextContent(String.valueOf(this.dConKwh));
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dNroMed":
+                this.dNroMed = ResponseUtil.getTextValue(value);
+                break;
+            case "dActiv":
+                this.dActiv = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dCateg":
+                this.dCateg = ResponseUtil.getTextValue(value);
+                break;
+            case "dLecAnt":
+                this.dLecAnt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dLecAct":
+                this.dLecAct = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dConKwh":
+                this.dConKwh = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+        }
     }
 
     public String getdNroMed() {

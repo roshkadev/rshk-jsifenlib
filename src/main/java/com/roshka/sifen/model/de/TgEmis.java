@@ -1,16 +1,21 @@
 package com.roshka.sifen.model.de;
 
-import com.roshka.sifen.model.de.types.TTipReg;
-import com.roshka.sifen.model.de.types.TiTipCont;
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
+import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.departamentos.TDepartamento;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TgEmis {
-    private String dRucEmi;
+public class TgEmis extends SifenObjectBase {
+    private String dRucEm;
     private String dDVEmi;
     private TiTipCont iTipCont;
     private TTipReg cTipReg;    // optional
@@ -33,7 +38,7 @@ public class TgEmis {
 
     public void setupSOAPElements(SOAPElement gDatGralOpe) throws SOAPException {
         SOAPElement gEmis = gDatGralOpe.addChildElement("gEmis");
-        gEmis.addChildElement("dRucEm").setTextContent(this.dRucEmi);
+        gEmis.addChildElement("dRucEm").setTextContent(this.dRucEm);
         gEmis.addChildElement("dDVEmi").setTextContent(this.dDVEmi);
         gEmis.addChildElement("iTipCont").setTextContent(String.valueOf(this.iTipCont.getVal()));
         if (this.cTipReg != null)
@@ -72,12 +77,81 @@ public class TgEmis {
             this.gRespDE.setupSOAPElements(gEmis);
     }
 
-    public String getdRucEmi() {
-        return dRucEmi;
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dRucEm":
+                this.dRucEm = ResponseUtil.getTextValue(value);
+                break;
+            case "dDVEmi":
+                this.dDVEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "iTipCont":
+                this.iTipCont = TiTipCont.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cTipReg":
+                this.cTipReg = TTipReg.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dNomEmi":
+                this.dNomEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "dNomFanEmi":
+                this.dNomFanEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "dDirEmi":
+                this.dDirEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumCas":
+                this.dNumCas = ResponseUtil.getTextValue(value);
+                break;
+            case "dCompDir1":
+                this.dCompDir1 = ResponseUtil.getTextValue(value);
+                break;
+            case "dCompDir2":
+                this.dCompDir2 = ResponseUtil.getTextValue(value);
+                break;
+            case "cDepEmi":
+                this.cDepEmi = TDepartamento.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cDisEmi":
+                this.cDisEmi = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesDisEmi":
+                this.dDesDisEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "cCiuEmi":
+                this.cCiuEmi = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesCiuEmi":
+                this.dDesCiuEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "dTelEmi":
+                this.dTelEmi = ResponseUtil.getTextValue(value);
+                break;
+            case "dEmailE":
+                this.dEmailE = ResponseUtil.getTextValue(value);
+                break;
+            case "dDenSuc":
+                this.dDenSuc = ResponseUtil.getTextValue(value);
+                break;
+            case "gActEco":
+                if (this.gActEcoList == null) {
+                    this.gActEcoList = new ArrayList<>();
+                }
+                this.gActEcoList.add(SifenObjectFactory.getFromNode(value, TgActEco.class));
+                break;
+            case "gRespDE":
+                this.gRespDE = SifenObjectFactory.getFromNode(value, TgRespDE.class);
+                break;
+        }
     }
 
-    public void setdRucEmi(String dRucEmi) {
-        this.dRucEmi = dRucEmi;
+    public String getdRucEm() {
+        return dRucEm;
+    }
+
+    public void setdRucEm(String dRucEm) {
+        this.dRucEm = dRucEm;
     }
 
     public String getdDVEmi() {

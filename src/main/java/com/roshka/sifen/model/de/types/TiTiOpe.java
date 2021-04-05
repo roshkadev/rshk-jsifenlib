@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiTiOpe {
     B2B((short) 1, "Business To Business"),
     B2C((short) 2, "Business To Consumer"),
@@ -12,6 +14,10 @@ public enum TiTiOpe {
     TiTiOpe(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiTiOpe getByVal(short val) {
+        return Arrays.stream(TiTiOpe.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

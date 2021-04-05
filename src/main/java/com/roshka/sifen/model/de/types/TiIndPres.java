@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiIndPres {
     OPERACION_PRESENCIAL((short) 1, "Operación presencial"),
     OPERACION_ELECTRONICA((short) 2, "Operación electrónica"),
@@ -15,6 +17,10 @@ public enum TiIndPres {
     TiIndPres(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiIndPres getByVal(short val) {
+        return Arrays.stream(TiIndPres.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

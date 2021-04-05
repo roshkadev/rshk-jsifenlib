@@ -1,7 +1,11 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.monedas.CMondT;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -9,7 +13,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-public class TgCamIVA {
+public class TgCamIVA extends SifenObjectBase {
     private TiAfecIVA iAfecIVA;
     private BigDecimal dPropIVA;
     private BigDecimal dTasaIVA;
@@ -39,6 +43,27 @@ public class TgCamIVA {
 
         gCamIVA.addChildElement("dBasGravIVA").setTextContent(String.valueOf(this.dBasGravIVA));
         gCamIVA.addChildElement("dLiqIVAItem").setTextContent(String.valueOf(this.dLiqIVAItem));
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iAfecIVA":
+                this.iAfecIVA = TiAfecIVA.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dPropIVA":
+                this.dPropIVA = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTasaIVA":
+                this.dTasaIVA = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dBasGravIVA":
+                this.dBasGravIVA = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dLiqIVAItem":
+                this.dLiqIVAItem = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+        }
     }
 
     public TiAfecIVA getiAfecIVA() {

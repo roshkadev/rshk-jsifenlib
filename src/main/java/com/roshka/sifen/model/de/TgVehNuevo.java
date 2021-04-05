@@ -1,14 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TiTipCom;
 import com.roshka.sifen.model.de.types.TiTipOpVN;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TgVehNuevo {
+public class TgVehNuevo extends SifenObjectBase {
     private TiTipOpVN iTipOpVN;
     private String dChasis;
     private String dColor;
@@ -72,6 +76,57 @@ public class TgVehNuevo {
 
         if (this.dCilin != null)
             gVehNuevo.addChildElement("dCilin").setTextContent(this.dCilin);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTipOpVN":
+                this.iTipOpVN = TiTipOpVN.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dChasis":
+                this.dChasis = ResponseUtil.getTextValue(value);
+                break;
+            case "dColor":
+                this.dColor = ResponseUtil.getTextValue(value);
+                break;
+            case "dPotencia":
+                this.dPotencia = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dCapMot":
+                this.dCapMot = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dPNet":
+                this.dPNet = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dPBruto":
+                this.dPBruto = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "iTipCom":
+                this.iTipCom = TiTipCom.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dDesTipCom":
+                this.dDesTipCom = ResponseUtil.getTextValue(value);
+                break;
+            case "dNroMotor":
+                this.dNroMotor = ResponseUtil.getTextValue(value);
+                break;
+            case "dCapTracc":
+                this.dCapTracc = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dAnoFab":
+                this.dAnoFab = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "cTipVeh":
+                this.cTipVeh = ResponseUtil.getTextValue(value);
+                break;
+            case "dCapac":
+                this.dCapac = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dCilin":
+                this.dCilin = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public TiTipOpVN getiTipOpVN() {

@@ -1,10 +1,11 @@
 package com.roshka.sifen.model.de.types;
 
-public enum TiForProPa {
+import java.util.Arrays;
 
-    POS((short)1, "POS"),
-    PAGO_ELECTRONICO((short)2, "Pago Electrónico"),
-    OTRO((short)9, "Otro");
+public enum TiForProPa {
+    POS((short) 1, "POS"),
+    PAGO_ELECTRONICO((short) 2, "Pago Electrónico"),
+    OTRO((short) 9, "Otro");
 
     private short val;
     private String descripcion;
@@ -14,6 +15,10 @@ public enum TiForProPa {
         this.descripcion = descripcion;
     }
 
+    public static TiForProPa getByVal(short val) {
+        return Arrays.stream(TiForProPa.values()).filter(e -> e.val == val).findFirst().orElse(null);
+    }
+
     public short getVal() {
         return val;
     }
@@ -21,5 +26,4 @@ public enum TiForProPa {
     public String getDescripcion() {
         return descripcion;
     }
-
 }

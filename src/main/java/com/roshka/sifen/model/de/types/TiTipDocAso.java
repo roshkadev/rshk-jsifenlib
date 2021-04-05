@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiTipDocAso {
     ELECTRONICO((short) 1, "Electrónico"),
     IMPRESO((short) 2, "Impreso"),
@@ -11,6 +13,10 @@ public enum TiTipDocAso {
     TiTipDocAso(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiTipDocAso getByVal(short val) {
+        return Arrays.stream(TiTipDocAso.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

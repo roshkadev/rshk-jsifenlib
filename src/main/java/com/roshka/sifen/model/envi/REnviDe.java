@@ -76,20 +76,20 @@ public class REnviDe extends REnviBase {
 
         queryParams.put("nVersion", SIFEN_CURRENT_VERSION);
         queryParams.put("Id", this.DE.getId());
-        queryParams.put("dFeEmiDE", SifenUtil.bytesToHex(this.DE.getdDatGralOpe().getdFeEmiDE().format(formatter).getBytes(StandardCharsets.UTF_8)));
+        queryParams.put("dFeEmiDE", SifenUtil.bytesToHex(this.DE.getgDatGralOpe().getdFeEmiDE().format(formatter).getBytes(StandardCharsets.UTF_8)));
 
-        if (this.DE.getdDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
-            queryParams.put("dRucRec", this.DE.getdDatGralOpe().getgDatRec().getdRucRec());
-        } else if (this.DE.getdDatGralOpe().getgDatRec().getiTiOpe().getVal() != 4 && this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec() != null) {
-            queryParams.put("dNumIDRec", this.DE.getdDatGralOpe().getgDatRec().getdNumIDRec());
+        if (this.DE.getgDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
+            queryParams.put("dRucRec", this.DE.getgDatGralOpe().getgDatRec().getdRucRec());
+        } else if (this.DE.getgDatGralOpe().getgDatRec().getiTiOpe().getVal() != 4 && this.DE.getgDatGralOpe().getgDatRec().getdNumIDRec() != null) {
+            queryParams.put("dNumIDRec", this.DE.getgDatGralOpe().getgDatRec().getdNumIDRec());
         } else {
             queryParams.put("dNumIDRec", "0");
         }
 
-        if (this.DE.getgTimb().getTiDE().getVal() != 7) {
+        if (this.DE.getgTimb().getiTiDE().getVal() != 7) {
             queryParams.put("dTotGralOpe", String.valueOf(this.DE.getgTotSub().getdTotGralOpe()));
             queryParams.put("dTotIVA",
-                    this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 1 || this.DE.getdDatGralOpe().getgOpeCom().getiTImp().getVal() == 5
+                    this.DE.getgDatGralOpe().getgOpeCom().getiTImp().getVal() == 1 || this.DE.getgDatGralOpe().getgOpeCom().getiTImp().getVal() == 5
                             ? String.valueOf(this.DE.getgTotSub().getdTotIVA())
                             : "0"
             );

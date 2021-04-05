@@ -1,16 +1,21 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.monedas.CMondT;
 import com.roshka.sifen.model.paises.PaisType;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TgCamItem {
+public class TgCamItem extends SifenObjectBase {
     private String dCodInt;
     private short dParAranc;
     private int dNCM;
@@ -23,7 +28,7 @@ public class TgCamItem {
     private BigDecimal dCantProSer;
     private PaisType cPaisOrig;
     private String dInfItem;
-    private TcRelMerc tcRelMerc;
+    private TcRelMerc cRelMerc;
     private BigDecimal dCanQuiMer;
     private BigDecimal dPorQuiMer;
     private String dCDCAnticipo;
@@ -34,7 +39,7 @@ public class TgCamItem {
 
     public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
-        TTipTra iTipTra = gDatGralOpe.getgOpeCom().getTipTra();
+        TTipTra iTipTra = gDatGralOpe.getgOpeCom().getiTipTra();
         TdCondTiCam dCondTiCam = gDatGralOpe.getgOpeCom().getdCondTiCam();
         TTImp iTImp = gDatGralOpe.getgOpeCom().getiTImp();
         CMondT cMoneOpe = gDatGralOpe.getgOpeCom().getcMoneOpe();
@@ -72,15 +77,15 @@ public class TgCamItem {
         if (this.dInfItem != null)
             gCamItem.addChildElement("dInfItem").setTextContent(this.dInfItem);
 
-        if (this.tcRelMerc != null) {
-            gCamItem.addChildElement("cRelMerc").setTextContent(String.valueOf(this.tcRelMerc.getVal()));
-            gCamItem.addChildElement("dDesRelMerc").setTextContent(this.tcRelMerc.getDescripcion());
+        if (this.cRelMerc != null) {
+            gCamItem.addChildElement("cRelMerc").setTextContent(String.valueOf(this.cRelMerc.getVal()));
+            gCamItem.addChildElement("dDesRelMerc").setTextContent(this.cRelMerc.getDescripcion());
         }
 
-        if ((iTiDE.getVal() == 7 && this.tcRelMerc != null) || this.dCanQuiMer != null)
+        if ((iTiDE.getVal() == 7 && this.cRelMerc != null) || this.dCanQuiMer != null)
             gCamItem.addChildElement("dCanQuiMer").setTextContent(String.valueOf(this.dCanQuiMer));
 
-        if ((iTiDE.getVal() == 7 && this.tcRelMerc != null) || this.dPorQuiMer != null)
+        if ((iTiDE.getVal() == 7 && this.cRelMerc != null) || this.dPorQuiMer != null)
             gCamItem.addChildElement("dPorQuiMer").setTextContent(String.valueOf(this.dPorQuiMer));
 
         if (iTipTra.getVal() == 9 || this.dCDCAnticipo != null)
@@ -97,6 +102,72 @@ public class TgCamItem {
 
         if (this.gVehNuevo != null)
             this.gVehNuevo.setupSOAPElements(gCamItem);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dCodInt":
+                this.dCodInt = ResponseUtil.getTextValue(value);
+                break;
+            case "dParAranc":
+                this.dParAranc = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dNCM":
+                this.dNCM = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDncpG":
+                this.dDncpG = ResponseUtil.getTextValue(value);
+                break;
+            case "dDncpE":
+                this.dDncpE = ResponseUtil.getTextValue(value);
+                break;
+            case "dGtin":
+                this.dGtin = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dGtinPq":
+                this.dGtinPq = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesProSer":
+                this.dDesProSer = ResponseUtil.getTextValue(value);
+                break;
+            case "cUniMed":
+                this.cUniMed = TcUniMed.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dCantProSer":
+                this.dCantProSer = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "cPaisOrig":
+                this.cPaisOrig = PaisType.getByName(ResponseUtil.getTextValue(value));
+                break;
+            case "dInfItem":
+                this.dInfItem = ResponseUtil.getTextValue(value);
+                break;
+            case "cRelMerc":
+                this.cRelMerc = TcRelMerc.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dCanQuiMer":
+                this.dCanQuiMer = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dPorQuiMer":
+                this.dPorQuiMer = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dCDCAnticipo":
+                this.dCDCAnticipo = ResponseUtil.getTextValue(value);
+                break;
+            case "gValorItem":
+                this.gValorItem = SifenObjectFactory.getFromNode(value, TgValorItem.class);
+                break;
+            case "gCamIVA":
+                this.gCamIVA = SifenObjectFactory.getFromNode(value, TgCamIVA.class);
+                break;
+            case "gRasMerc":
+                this.gRasMerc = SifenObjectFactory.getFromNode(value, TgRasMerc.class);
+                break;
+            case "gVehNuevo":
+                this.gVehNuevo = SifenObjectFactory.getFromNode(value, TgVehNuevo.class);
+                break;
+        }
     }
 
     public String getdCodInt() {
@@ -195,12 +266,12 @@ public class TgCamItem {
         this.dInfItem = dInfItem;
     }
 
-    public TcRelMerc getTcRelMerc() {
-        return tcRelMerc;
+    public TcRelMerc getcRelMerc() {
+        return cRelMerc;
     }
 
-    public void setTcRelMerc(TcRelMerc tcRelMerc) {
-        this.tcRelMerc = tcRelMerc;
+    public void setcRelMerc(TcRelMerc cRelMerc) {
+        this.cRelMerc = cRelMerc;
     }
 
     public BigDecimal getdCanQuiMer() {

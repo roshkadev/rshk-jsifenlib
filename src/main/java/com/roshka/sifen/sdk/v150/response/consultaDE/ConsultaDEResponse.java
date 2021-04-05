@@ -15,7 +15,7 @@ public class ConsultaDEResponse extends BaseResponse {
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals("dFecProc")) {
-            dFecProc = ResponseUtil.getDateTimeValue(value);
+            dFecProc = ResponseUtil.getDateTimeValue(value, true);
         } else if (value.getLocalName().equals("xContenDE")) {
             xContenDE = SifenObjectFactory.getFromNode(value, ContenDE.class);
         } else {

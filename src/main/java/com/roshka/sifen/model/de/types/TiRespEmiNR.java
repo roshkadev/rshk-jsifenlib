@@ -1,5 +1,7 @@
 package com.roshka.sifen.model.de.types;
 
+import java.util.Arrays;
+
 public enum TiRespEmiNR {
     EMISOR_FACTURA((short) 1, "Emisor de la factura"),
     POSEEDOR_FACTURA_Y_BIENES((short) 2, "Poseedor de la factura y bienes"),
@@ -13,6 +15,10 @@ public enum TiRespEmiNR {
     TiRespEmiNR(short val, String descripcion) {
         this.val = val;
         this.descripcion = descripcion;
+    }
+
+    public static TiRespEmiNR getByVal(short val) {
+        return Arrays.stream(TiRespEmiNR.values()).filter(e -> e.val == val).findFirst().orElse(null);
     }
 
     public short getVal() {

@@ -1,16 +1,20 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TTImp;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TdCondTiCam;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class TgValorRestaItem {
+public class TgValorRestaItem extends SifenObjectBase {
     private BigDecimal dDescItem;
     private BigDecimal dPorcDesIt;
     private BigDecimal dDescGloItem;
@@ -51,6 +55,33 @@ public class TgValorRestaItem {
         if (dCondTiCam != null && dCondTiCam.getVal() == 2) {
             this.dTotOpeGs = this.dTotOpeItem.multiply(dTiCamIt);
             gValorRestaItem.addChildElement("dTotOpeGs").setTextContent(String.valueOf(this.dTotOpeGs));
+        }
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dDescItem":
+                this.dDescItem = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dPorcDesIt":
+                this.dPorcDesIt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dDescGloItem":
+                this.dDescGloItem = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dAntPreUniIt":
+                this.dAntPreUniIt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dAntGloPreUniIt":
+                this.dAntGloPreUniIt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotOpeItem":
+                this.dTotOpeItem = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotOpeGs":
+                this.dTotOpeGs = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
         }
     }
 

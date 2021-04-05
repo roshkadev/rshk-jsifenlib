@@ -1,14 +1,18 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.monedas.CMondT;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TgOpeCom {
-    private TTipTra tipTra;
+public class TgOpeCom extends SifenObjectBase {
+    private TTipTra iTipTra;
     private TTImp iTImp;
     private CMondT cMoneOpe;
     private TdCondTiCam dCondTiCam; // opcional
@@ -18,8 +22,8 @@ public class TgOpeCom {
     public void setupSOAPElements(SOAPElement gDatGralOpe, TTiDE iTiDE) throws SOAPException {
         SOAPElement gOpeCom = gDatGralOpe.addChildElement("gOpeCom");
         if (iTiDE.getVal() == 1 || iTiDE.getVal() == 4) {
-            gOpeCom.addChildElement("iTipTra").setTextContent(String.valueOf(this.tipTra.getVal()));
-            gOpeCom.addChildElement("dDesTipTra").setTextContent(this.tipTra.getDescripcion());
+            gOpeCom.addChildElement("iTipTra").setTextContent(String.valueOf(this.iTipTra.getVal()));
+            gOpeCom.addChildElement("dDesTipTra").setTextContent(this.iTipTra.getDescripcion());
         }
 
         gOpeCom.addChildElement("iTImp").setTextContent(String.valueOf(this.iTImp.getVal()));
@@ -40,12 +44,36 @@ public class TgOpeCom {
         }
     }
 
-    public TTipTra getTipTra() {
-        return tipTra;
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTipTra":
+                this.iTipTra = TTipTra.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "iTImp":
+                this.iTImp = TTImp.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cMoneOpe":
+                this.cMoneOpe = CMondT.getByName(ResponseUtil.getTextValue(value));
+                break;
+            case "dCondTiCam":
+                this.dCondTiCam = TdCondTiCam.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dTiCam":
+                this.dTiCam = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "iCondAnt":
+                this.iCondAnt = TiCondAnt.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+        }
     }
 
-    public void setTipTra(TTipTra tipTra) {
-        this.tipTra = tipTra;
+    public TTipTra getiTipTra() {
+        return iTipTra;
+    }
+
+    public void setiTipTra(TTipTra iTipTra) {
+        this.iTipTra = iTipTra;
     }
 
     public TTImp getiTImp() {

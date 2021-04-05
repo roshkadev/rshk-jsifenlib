@@ -1,11 +1,15 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.departamentos.TDepartamento;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 
-public class TgCamEnt {
+public class TgCamEnt extends SifenObjectBase {
     private String dDirLocEnt;
     private short dNumCasEnt;
     private String dComp1Ent;
@@ -41,6 +45,42 @@ public class TgCamEnt {
 
         if (this.dTelEnt != null)
             gCamEnt.addChildElement("dTelEnt").setTextContent(this.dTelEnt);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dDirLocEnt":
+                this.dDirLocEnt = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumCasEnt":
+                this.dNumCasEnt = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dComp1Ent":
+                this.dComp1Ent = ResponseUtil.getTextValue(value);
+                break;
+            case "dComp2Ent":
+                this.dComp2Ent = ResponseUtil.getTextValue(value);
+                break;
+            case "cDepEnt":
+                this.cDepEnt = TDepartamento.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cDisEnt":
+                this.cDisEnt = Short.parseShort(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesDisEnt":
+                this.dDesDisEnt = ResponseUtil.getTextValue(value);
+                break;
+            case "cCiuEnt":
+                this.cCiuEnt = Integer.parseInt(ResponseUtil.getTextValue(value));
+                break;
+            case "dDesCiuEnt":
+                this.dDesCiuEnt = ResponseUtil.getTextValue(value);
+                break;
+            case "dTelEnt":
+                this.dTelEnt = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public String getdDirLocEnt() {

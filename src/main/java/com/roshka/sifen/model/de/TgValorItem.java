@@ -1,14 +1,19 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.de.types.TTImp;
 import com.roshka.sifen.model.de.types.TTiDE;
 import com.roshka.sifen.model.de.types.TdCondTiCam;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
-public class TgValorItem {
+public class TgValorItem extends SifenObjectBase {
     private BigDecimal dPUniProSer;
     private BigDecimal dTiCamIt;
     private BigDecimal dTotBruOpeItem;
@@ -25,6 +30,24 @@ public class TgValorItem {
         gValorItem.addChildElement("dTotBruOpeItem").setTextContent(String.valueOf(this.dTotBruOpeItem));
 
         this.gValorRestaItem.setupSOAPElements(gValorItem, iTiDE, iTImp, dCondTiCam, this.dTiCamIt, this.dPUniProSer, dCantProSer);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "dPUniProSer":
+                this.dPUniProSer = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTiCamIt":
+                this.dTiCamIt = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "dTotBruOpeItem":
+                this.dTotBruOpeItem = new BigDecimal(ResponseUtil.getTextValue(value));
+                break;
+            case "gValorRestaItem":
+                this.gValorRestaItem = SifenObjectFactory.getFromNode(value, TgValorRestaItem.class);
+                break;
+        }
     }
 
     public BigDecimal getdPUniProSer() {

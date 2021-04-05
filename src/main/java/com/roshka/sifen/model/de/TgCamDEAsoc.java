@@ -1,17 +1,21 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.de.types.TTipTra;
 import com.roshka.sifen.model.de.types.TdTipCons;
 import com.roshka.sifen.model.de.types.TiTIpoDoc;
 import com.roshka.sifen.model.de.types.TiTipDocAso;
+import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.math.BigInteger;
 import java.time.LocalDate;
 
-public class TgCamDEAsoc {
+public class TgCamDEAsoc extends SifenObjectBase {
     private TiTipDocAso iTipDocAso;
     private String dCdCDERef;
     private String dNTimDI;
@@ -27,35 +31,80 @@ public class TgCamDEAsoc {
     private String dNumControl;
 
     public void setupSOAPElements(SOAPElement DE, TTipTra iTipTra, boolean retencionExists) throws SOAPException {
-        SOAPElement gOpeDE = DE.addChildElement("gOpeDE");
-        gOpeDE.addChildElement("iTipDocAso").setTextContent(String.valueOf(this.iTipDocAso.getVal()));
-        gOpeDE.addChildElement("dDesTipDocAso").setTextContent(this.iTipDocAso.getDescripcion());
+        SOAPElement gCamDEAsoc = DE.addChildElement("gCamDEAsoc");
+        gCamDEAsoc.addChildElement("iTipDocAso").setTextContent(String.valueOf(this.iTipDocAso.getVal()));
+        gCamDEAsoc.addChildElement("dDesTipDocAso").setTextContent(this.iTipDocAso.getDescripcion());
 
         if (this.iTipDocAso.getVal() == 1)
-            gOpeDE.addChildElement("dCdCDERef").setTextContent(this.dCdCDERef);
+            gCamDEAsoc.addChildElement("dCdCDERef").setTextContent(this.dCdCDERef);
         else if (this.iTipDocAso.getVal() == 2) {
-            gOpeDE.addChildElement("dNTimDI").setTextContent(this.dNTimDI);
-            gOpeDE.addChildElement("dEstDocAso").setTextContent(SifenUtil.leftPad(this.dEstDocAso, '0', 3));
-            gOpeDE.addChildElement("dPExpDocAso").setTextContent(SifenUtil.leftPad(this.dPExpDocAso, '0', 3));
-            gOpeDE.addChildElement("dNumDocAso").setTextContent(SifenUtil.leftPad(this.dNumDocAso, '0', 7));
-            gOpeDE.addChildElement("iTipoDocAso").setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
-            gOpeDE.addChildElement("dDTipoDocAso").setTextContent(this.iTipoDocAso.getDescripcion());
-            gOpeDE.addChildElement("dFecEmiDI").setTextContent(this.dFecEmiDI.toString());
+            gCamDEAsoc.addChildElement("dNTimDI").setTextContent(this.dNTimDI);
+            gCamDEAsoc.addChildElement("dEstDocAso").setTextContent(SifenUtil.leftPad(this.dEstDocAso, '0', 3));
+            gCamDEAsoc.addChildElement("dPExpDocAso").setTextContent(SifenUtil.leftPad(this.dPExpDocAso, '0', 3));
+            gCamDEAsoc.addChildElement("dNumDocAso").setTextContent(SifenUtil.leftPad(this.dNumDocAso, '0', 7));
+            gCamDEAsoc.addChildElement("iTipoDocAso").setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
+            gCamDEAsoc.addChildElement("dDTipoDocAso").setTextContent(this.iTipoDocAso.getDescripcion());
+            gCamDEAsoc.addChildElement("dFecEmiDI").setTextContent(this.dFecEmiDI.toString());
         } else if (this.iTipDocAso.getVal() == 3) {
-            gOpeDE.addChildElement("iTipCons").setTextContent(String.valueOf(this.iTipCons.getVal()));
-            gOpeDE.addChildElement("dDesTipCons").setTextContent(this.iTipCons.getDescripcion());
+            gCamDEAsoc.addChildElement("iTipCons").setTextContent(String.valueOf(this.iTipCons.getVal()));
+            gCamDEAsoc.addChildElement("dDesTipCons").setTextContent(this.iTipCons.getDescripcion());
 
             if (this.iTipCons.getVal() == 2) {
-                gOpeDE.addChildElement("dNumCons").setTextContent(String.valueOf(this.dNumCons));
-                gOpeDE.addChildElement("dNumControl").setTextContent(this.dNumControl);
+                gCamDEAsoc.addChildElement("dNumCons").setTextContent(String.valueOf(this.dNumCons));
+                gCamDEAsoc.addChildElement("dNumControl").setTextContent(this.dNumControl);
             }
         }
 
         if (iTipTra.getVal() == 12)
-            gOpeDE.addChildElement("dNumResCF").setTextContent(this.dNumResCF);
+            gCamDEAsoc.addChildElement("dNumResCF").setTextContent(this.dNumResCF);
 
         if (retencionExists)
-            gOpeDE.addChildElement("dNumComRet").setTextContent(this.dNumComRet);
+            gCamDEAsoc.addChildElement("dNumComRet").setTextContent(this.dNumComRet);
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTipDocAso":
+                this.iTipDocAso = TiTipDocAso.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dCdCDERef":
+                this.dCdCDERef = ResponseUtil.getTextValue(value);
+                break;
+            case "dNTimDI":
+                this.dNTimDI = ResponseUtil.getTextValue(value);
+                break;
+            case "dEstDocAso":
+                this.dEstDocAso = ResponseUtil.getTextValue(value);
+                break;
+            case "dPExpDocAso":
+                this.dPExpDocAso = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumDocAso":
+                this.dNumDocAso = ResponseUtil.getTextValue(value);
+                break;
+            case "iTipoDocAso":
+                this.iTipoDocAso = TiTIpoDoc.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dFecEmiDI":
+                this.dFecEmiDI = ResponseUtil.getDateValue(value);
+                break;
+            case "iTipCons":
+                this.iTipCons = TdTipCons.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "dNumCons":
+                this.dNumCons = new BigInteger(ResponseUtil.getTextValue(value));
+                break;
+            case "dNumControl":
+                this.dNumControl = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumResCF":
+                this.dNumResCF = ResponseUtil.getTextValue(value);
+                break;
+            case "dNumComRet":
+                this.dNumComRet = ResponseUtil.getTextValue(value);
+                break;
+        }
     }
 
     public TiTipDocAso getiTipDocAso() {
@@ -161,5 +210,4 @@ public class TgCamDEAsoc {
     public void setdNumControl(String dNumControl) {
         this.dNumControl = dNumControl;
     }
-
 }

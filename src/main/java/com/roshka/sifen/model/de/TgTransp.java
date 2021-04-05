@@ -1,14 +1,20 @@
 package com.roshka.sifen.model.de;
 
+import com.roshka.sifen.exceptions.SifenException;
+import com.roshka.sifen.model.SifenObjectBase;
+import com.roshka.sifen.model.SifenObjectFactory;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.paises.PaisType;
+import com.roshka.sifen.util.ResponseUtil;
+import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public class TgTransp {
+public class TgTransp extends SifenObjectBase {
     private TiTTrans iTipTrans;
     private TiModTrans iModTrans;
     private TiRespFlete iRespFlete;
@@ -71,6 +77,57 @@ public class TgTransp {
 
         if (iTiDE.getVal() == 7 || (this.iModTrans.getVal() == 1 && this.gCamTrans != null)) {
             this.gCamTrans.setupSOAPElements(gTransp);
+        }
+    }
+
+    @Override
+    public void setValueFromChildNode(Node value) throws SifenException {
+        switch (value.getLocalName()) {
+            case "iTipTrans":
+                this.iTipTrans = TiTTrans.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "iModTrans":
+                this.iModTrans = TiModTrans.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "iRespFlete":
+                this.iRespFlete = TiRespFlete.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
+                break;
+            case "cCondNeg":
+                this.cCondNeg = TcCondNeg.getByDescription(ResponseUtil.getTextValue(value));
+                break;
+            case "dNuManif":
+                this.dNuManif = ResponseUtil.getTextValue(value);
+                break;
+            case "dNuDespImp":
+                this.dNuDespImp = ResponseUtil.getTextValue(value);
+                break;
+            case "dIniTras":
+                this.dIniTras = ResponseUtil.getDateValue(value);
+                break;
+            case "dFinTras":
+                this.dFinTras = ResponseUtil.getDateValue(value);
+                break;
+            case "cPaisDest":
+                this.cPaisDest = PaisType.getByName(ResponseUtil.getTextValue(value));
+                break;
+            case "gCamSal":
+                this.gCamSal = SifenObjectFactory.getFromNode(value, TgCamSal.class);
+                break;
+            case "gCamEnt":
+                if (this.gCamEntList == null) {
+                    this.gCamEntList = new ArrayList<>();
+                }
+                this.gCamEntList.add(SifenObjectFactory.getFromNode(value, TgCamEnt.class));
+                break;
+            case "gVehTras":
+                if (this.gVehTrasList == null) {
+                    this.gVehTrasList = new ArrayList<>();
+                }
+                this.gVehTrasList.add(SifenObjectFactory.getFromNode(value, TgVehTras.class));
+                break;
+            case "gCamTrans":
+                this.gCamTrans = SifenObjectFactory.getFromNode(value, TgCamTrans.class);
+                break;
         }
     }
 

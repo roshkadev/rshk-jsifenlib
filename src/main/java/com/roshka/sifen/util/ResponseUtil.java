@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
@@ -85,10 +86,19 @@ public class ResponseUtil {
         return firstChild.getTextContent();
     }
 
-    public static LocalDateTime getDateTimeValue(Node node) {
+    public static LocalDate getDateValue(Node node) {
         String date = getTextValue(node);
         if (date != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            return LocalDate.parse(date, formatter);
+        }
+        return null;
+    }
+
+    public static LocalDateTime getDateTimeValue(Node node, boolean includesTimezone) {
+        String date = getTextValue(node);
+        if (date != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(includesTimezone ? "yyyy-MM-dd'T'HH:mm:ssXXX" : "yyyy-MM-dd'T'HH:mm:ss");
             return LocalDateTime.parse(date, formatter);
         }
         return null;

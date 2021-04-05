@@ -33,7 +33,7 @@ public class SOAPTests {
     @BeforeClass
     public static void setupSifenConfig() {
         SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mzarz\\Documents\\taxare.pfx",
-                "", SifenConfig.TipoCertificadoCliente.PFX);
+                "Pqntslc0$", SifenConfig.TipoCertificadoCliente.PFX);
 
         Sifen.setSifenConfig(sifenConfig);
     }
@@ -66,7 +66,7 @@ public class SOAPTests {
 
         // Grupo C
         TgTimb gTimb = new TgTimb();
-        gTimb.setTiDE(TTiDE.FACTURA_ELECTRONICA);
+        gTimb.setiTiDE(TTiDE.FACTURA_ELECTRONICA);
         gTimb.setdNumTim(12557662);
         gTimb.setdEst("001");
         gTimb.setdPunExp("002");
@@ -79,13 +79,13 @@ public class SOAPTests {
         dDatGralOpe.setdFeEmiDE(currentDate);
 
         TgOpeCom gOpeCom = new TgOpeCom();
-        gOpeCom.setTipTra(TTipTra.PRESTACION_SERVICIOS);
+        gOpeCom.setiTipTra(TTipTra.PRESTACION_SERVICIOS);
         gOpeCom.setiTImp(TTImp.IVA);
         gOpeCom.setcMoneOpe(CMondT.PYG);
         dDatGralOpe.setgOpeCom(gOpeCom);
 
         TgEmis gEmis = new TgEmis();
-        gEmis.setdRucEmi("80080553");
+        gEmis.setdRucEm("80080553");
         gEmis.setdDVEmi("4");
         gEmis.setiTipCont(TiTipCont.PERSONA_JURIDICA);
         gEmis.setdNomEmi("DE generado en ambiente de prueba - sin valor comercial ni fiscal");
@@ -119,7 +119,7 @@ public class SOAPTests {
         gDatRec.setdNumIDRec("4579993");
         gDatRec.setdNomRec("Martin Zarza");
         dDatGralOpe.setgDatRec(gDatRec);
-        DE.setdDatGralOpe(dDatGralOpe);
+        DE.setgDatGralOpe(dDatGralOpe);
 
         // Grupo E
         TgDtipDE gDtipDE = new TgDtipDE();
