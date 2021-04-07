@@ -1,4 +1,4 @@
-package com.roshka.sifen.model.de.extra;
+package com.roshka.sifen.model.de.types;
 
 import java.util.Arrays;
 

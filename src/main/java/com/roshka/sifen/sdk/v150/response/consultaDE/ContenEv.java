@@ -5,17 +5,20 @@ import com.roshka.sifen.model.SifenObjectBase;
 import com.roshka.sifen.model.SifenObjectFactory;
 import org.w3c.dom.Node;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContenEv extends SifenObjectBase {
-    private ContEv rContEv;
+    private final List<ContEv> rContEvList = new ArrayList<>();
 
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals("rContEv")) {
-            rContEv = SifenObjectFactory.getFromNode(value, ContEv.class);
+            rContEvList.add(SifenObjectFactory.getFromNode(value, ContEv.class));
         }
     }
 
-    public ContEv getrContEv() {
-        return rContEv;
+    public List<ContEv> getrContEvList() {
+        return rContEvList;
     }
 }

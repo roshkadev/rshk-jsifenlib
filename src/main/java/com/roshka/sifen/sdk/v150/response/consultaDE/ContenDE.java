@@ -8,13 +8,10 @@ import com.roshka.sifen.util.ResponseUtil;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ContenDE extends SifenObjectBase {
     private DocumentoElectronico DE;
     private String dProtAut;
-    private final List<ContenEv> xContEv = new ArrayList<>();
+    private ContenEv xContEv;
 
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
@@ -34,7 +31,7 @@ public class ContenDE extends SifenObjectBase {
                 dProtAut = ResponseUtil.getTextValue(value);
                 break;
             case "xContEv":
-                xContEv.add(SifenObjectFactory.getFromNode(value, ContenEv.class));
+                xContEv = SifenObjectFactory.getFromNode(value, ContenEv.class);
                 break;
         }
     }
@@ -47,7 +44,7 @@ public class ContenDE extends SifenObjectBase {
         return dProtAut;
     }
 
-    public List<ContenEv> getxContEv() {
+    public ContenEv getxContEv() {
         return xContEv;
     }
 }

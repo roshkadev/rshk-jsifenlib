@@ -3,8 +3,10 @@ package com.roshka.sifen;
 import com.roshka.sifen.config.SifenConfig;
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
+import com.roshka.sifen.sdk.v150.beans.EventoDE;
 import com.roshka.sifen.sdk.v150.request.ConsultaDE;
 import com.roshka.sifen.sdk.v150.request.RecepcionDE;
+import com.roshka.sifen.sdk.v150.request.RecepcionEvento;
 import com.roshka.sifen.sdk.v150.response.RespuestaSifen;
 import com.roshka.sifen.sdk.v150.request.ConsultaRUC;
 import com.roshka.sifen.util.SifenExceptionUtil;
@@ -39,5 +41,12 @@ public class Sifen {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
         return ConsultaDE.prepareRequest(sifenConfig, dId, cdc);
+    }
+
+    public static RespuestaSifen recepcionEvento(long dId, EventoDE eventoDE) throws SifenException {
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+        return RecepcionEvento.prepareRequest(sifenConfig, dId, eventoDE);
     }
 }

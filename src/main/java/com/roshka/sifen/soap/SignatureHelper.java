@@ -38,13 +38,9 @@ public class SignatureHelper {
 
     public static SignedInfo signDocument(SifenConfig sifenConfig, SOAPElement signatureParentNode, String signedNodeId) throws SifenException {
         try {
-            Reference ref = _xmlSignatureFactory.newReference(
-                    "#" + signedNodeId,
+            Reference ref = _xmlSignatureFactory.newReference("#" + signedNodeId,
                     _xmlSignatureFactory.newDigestMethod(DigestMethod.SHA256, null),
-                    transforms,
-                    null,
-                    null
-            );
+                    transforms, null, null);
 
             SignedInfo signedInfo = _xmlSignatureFactory.newSignedInfo(
                     _xmlSignatureFactory.newCanonicalizationMethod(CanonicalizationMethod.EXCLUSIVE, (C14NMethodParameterSpec) null),

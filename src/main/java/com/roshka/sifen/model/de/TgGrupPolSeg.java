@@ -55,10 +55,10 @@ public class TgGrupPolSeg extends SifenObjectBase {
                 this.dNumPoliza = ResponseUtil.getTextValue(value);
                 break;
             case "dFecIniVig":
-                this.dFecIniVig = ResponseUtil.getDateTimeValue(value, false);
+                this.dFecIniVig = ResponseUtil.getDateTimeValue(value);
                 break;
             case "dFecFinVig":
-                this.dFecFinVig = ResponseUtil.getDateTimeValue(value, false);
+                this.dFecFinVig = ResponseUtil.getDateTimeValue(value);
                 break;
             case "dCodInt":
                 this.dCodInt = ResponseUtil.getTextValue(value);

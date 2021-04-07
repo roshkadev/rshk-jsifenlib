@@ -7,10 +7,13 @@ import java.util.Arrays;
  */
 public enum TTiDE {
     FACTURA_ELECTRONICA((short) 1, "Factura electrónica"),
+    FACTURA_ELECTRONICA_EXPORTACION((short) 2, "Factura electrónica de exportación"),
+    FACTURA_ELECTRONICA_IMPORTACION((short) 3, "Factura electrónica de importación"),
     AUTOFACTURA_ELECTRONICA((short) 4, "Autofactura electrónica"),
     NOTA_DE_CREDITO_ELECTRONICA((short) 5, "Nota de crédito electrónica"),
     NOTA_DE_DEBITO_ELECTRONICA((short) 6, "Nota de débito electrónica"),
-    NOTA_DE_REMISION_ELECTRONICA((short) 7, "Nota de remisión electrónica");
+    NOTA_DE_REMISION_ELECTRONICA((short) 7, "Nota de remisión electrónica"),
+    COMPROBANTE_RETENCION_ELECTRONICO((short) 8, "Comprobante de retención electrónico");
 
     private short val;
     private String descripcion;

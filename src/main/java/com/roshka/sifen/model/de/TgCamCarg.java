@@ -2,7 +2,7 @@ package com.roshka.sifen.model.de;
 
 import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.model.SifenObjectBase;
-import com.roshka.sifen.model.de.extra.TiCarCarga;
+import com.roshka.sifen.model.de.types.TiCarCarga;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
 import com.roshka.sifen.util.ResponseUtil;
 import com.roshka.sifen.util.SifenUtil;

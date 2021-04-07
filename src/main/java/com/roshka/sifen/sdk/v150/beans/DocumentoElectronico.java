@@ -72,7 +72,7 @@ public class DocumentoElectronico extends SifenObjectBase {
                 this.dDVId = ResponseUtil.getTextValue(value);
                 break;
             case "dFecFirma":
-                this.dFecFirma = ResponseUtil.getDateTimeValue(value, false);
+                this.dFecFirma = ResponseUtil.getDateTimeValue(value);
                 break;
             case "dSisFact":
                 this.dSisFact = Short.parseShort(ResponseUtil.getTextValue(value));

@@ -6,10 +6,12 @@ import com.roshka.sifen.exceptions.SifenException;
 import com.roshka.sifen.model.de.*;
 import com.roshka.sifen.model.de.types.*;
 import com.roshka.sifen.model.departamentos.TDepartamento;
+import com.roshka.sifen.model.event.*;
 import com.roshka.sifen.model.monedas.CMondT;
 import com.roshka.sifen.model.paises.PaisType;
 import com.roshka.sifen.model.unidades_medida.TcUniMed;
 import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
+import com.roshka.sifen.sdk.v150.beans.EventoDE;
 import com.roshka.sifen.sdk.v150.response.RespuestaSifen;
 import com.roshka.sifen.soap.MessageHelper;
 import org.junit.BeforeClass;
@@ -22,6 +24,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -33,7 +36,7 @@ public class SOAPTests {
     @BeforeClass
     public static void setupSifenConfig() {
         SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mzarz\\Documents\\taxare.pfx",
-                "Pqntslc0$", SifenConfig.TipoCertificadoCliente.PFX);
+                "", SifenConfig.TipoCertificadoCliente.PFX);
 
         Sifen.setSifenConfig(sifenConfig);
     }
@@ -70,7 +73,7 @@ public class SOAPTests {
         gTimb.setdNumTim(12557662);
         gTimb.setdEst("001");
         gTimb.setdPunExp("002");
-        gTimb.setdNumDoc("0000004");
+        gTimb.setdNumDoc("0000007");
         gTimb.setdFeIniT(LocalDate.parse("2019-07-31"));
         DE.setgTimb(gTimb);
 
@@ -176,7 +179,48 @@ public class SOAPTests {
 
     @Test
     public void testConsultaDE() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaDE(++currentdId, "01800805534001002000000422021033018553767225");
+        RespuestaSifen ret = Sifen.consultaDE(++currentdId, "01800805534001002000000722021040613265708133");
+        logger.info(ret.toString());
+    }
+
+    @Test
+    public void testRecepcionEvento() throws SifenException {
+        LocalDateTime currentDate = LocalDateTime.now();
+
+        // Evento de Cancelación
+        /*TrGeVeCan trGeVeCan = new TrGeVeCan();
+        trGeVeCan.setId("01800805534001002000000722021040613265708133");
+        trGeVeCan.setmOtEve("Prueba de cancelación de documento electrónico");
+
+        TgGroupTiEvt tgGroupTiEvt = new TgGroupTiEvt();
+        tgGroupTiEvt.setrGeVeCan(trGeVeCan);*/
+
+        // Evento de Conformidad
+        /*TrGeVeConf trGeVeConf = new TrGeVeConf();
+        trGeVeConf.setId("01800805534001002000000722021040613265708133");
+        trGeVeConf.setiTipConf(TiTipConf.CONFORMIDAD_PARCIAL);
+        trGeVeConf.setdFecRecep(currentDate);
+
+        TgGroupTiEvt tgGroupTiEvt = new TgGroupTiEvt();
+        tgGroupTiEvt.setrGeVeConf(trGeVeConf);*/
+
+        // Evento de Disconformidad
+        TrGeVeDisconf trGeVeDisconf = new TrGeVeDisconf();
+        trGeVeDisconf.setId("01800805534001002000000722021040613265708133");
+        trGeVeDisconf.setmOtEve("Prueba de disconformidad de documento electrónico");
+
+        TgGroupTiEvt tgGroupTiEvt = new TgGroupTiEvt();
+        tgGroupTiEvt.setrGeVeDisconf(trGeVeDisconf);
+
+        TrGesEve rGesEve1 = new TrGesEve();
+        rGesEve1.setId("1");
+        rGesEve1.setdFecFirma(currentDate);
+        rGesEve1.setgGroupTiEvt(tgGroupTiEvt);
+
+        EventoDE eventoDE = new EventoDE();
+        eventoDE.setrGesEveList(Collections.singletonList(rGesEve1));
+
+        RespuestaSifen ret = Sifen.recepcionEvento(++currentdId, eventoDE);
         logger.info(ret.toString());
     }
 }

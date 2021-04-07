@@ -33,7 +33,7 @@ public class TdDatGralOpe extends SifenObjectBase {
     public void setValueFromChildNode(Node value) throws SifenException {
         switch (value.getLocalName()) {
             case "dFeEmiDE":
-                this.dFeEmiDE = ResponseUtil.getDateTimeValue(value, false);
+                this.dFeEmiDE = ResponseUtil.getDateTimeValue(value);
                 break;
             case "gOpeCom":
                 this.gOpeCom = SifenObjectFactory.getFromNode(value, TgOpeCom.class);

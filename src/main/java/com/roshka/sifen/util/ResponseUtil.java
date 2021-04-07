@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Logger;
 
 public class ResponseUtil {
@@ -95,12 +96,19 @@ public class ResponseUtil {
         return null;
     }
 
-    public static LocalDateTime getDateTimeValue(Node node, boolean includesTimezone) {
+    public static LocalDateTime getDateTimeValue(Node node) {
         String date = getTextValue(node);
+        LocalDateTime parsedDate = null;
+
         if (date != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(includesTimezone ? "yyyy-MM-dd'T'HH:mm:ssXXX" : "yyyy-MM-dd'T'HH:mm:ss");
-            return LocalDateTime.parse(date, formatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            try {
+                parsedDate = LocalDateTime.parse(date, formatter);
+            } catch (DateTimeParseException e) {
+                formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+                parsedDate = LocalDateTime.parse(date, formatter);
+            }
         }
-        return null;
+        return parsedDate;
     }
 }

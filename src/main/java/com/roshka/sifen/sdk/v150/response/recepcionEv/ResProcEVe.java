@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ResProcEVe extends SifenObjectBase {
     private String dEstRes;
-    private String dProtAuto;
+    private String dProtAut;
     private String id;
     private final List<ResProc> gResProc = new ArrayList<>();
 
@@ -22,8 +22,8 @@ public class ResProcEVe extends SifenObjectBase {
             case "dEstRes":
                 dEstRes = ResponseUtil.getTextValue(value);
                 break;
-            case "dProtAuto":
-                dProtAuto = ResponseUtil.getTextValue(value);
+            case "dProtAut":
+                dProtAut = ResponseUtil.getTextValue(value);
                 break;
             case "id":
                 id = ResponseUtil.getTextValue(value);
@@ -38,8 +38,8 @@ public class ResProcEVe extends SifenObjectBase {
         return dEstRes;
     }
 
-    public String getdProtAuto() {
-        return dProtAuto;
+    public String getdProtAut() {
+        return dProtAut;
     }
 
     public String getId() {
