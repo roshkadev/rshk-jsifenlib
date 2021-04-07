@@ -1,0 +1,64 @@
+package com.roshka.sifen.internal.request;
+
+import com.roshka.sifen.core.SifenConfig;
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.beans.SOAPResponse;
+import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.util.ResponseUtil;
+import com.roshka.sifen.core.Constants;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
+import com.roshka.sifen.core.RespuestaSifen;
+import com.roshka.sifen.core.beans.response.RespuestaRecepcionEv;
+import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.internal.util.SifenExceptionUtil;
+import org.w3c.dom.Node;
+
+import javax.xml.namespace.QName;
+import javax.xml.soap.*;
+
+public class ReqRecEventoDe extends BaseRequest {
+    private EventosDE eventosDE;
+
+    public ReqRecEventoDe(long dId, SifenConfig sifenConfig) {
+        super(dId, sifenConfig);
+    }
+
+    @Override
+    SOAPMessage setupSoapMessage() throws SifenException {
+        try {
+            // Main Element
+            SOAPMessage message = SoapHelper.createSoapMessage();
+            SOAPBody soapBody = message.getSOAPBody();
+
+            SOAPBodyElement rEnviEventoDe = soapBody.addBodyElement(new QName(Constants.SIFEN_NS_URI, "rEnviEventoDe"));
+            rEnviEventoDe.addChildElement("dId").setTextContent(String.valueOf(this.getdId()));
+
+            SOAPElement gGroupGesEve = rEnviEventoDe.addChildElement("dEvReg").addChildElement("gGroupGesEve");
+
+            gGroupGesEve.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            gGroupGesEve.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_EVENTO);
+
+            // Se completa con los demás elementos del XML
+            this.eventosDE.setupSOAPElements(gGroupGesEve, this.getSifenConfig());
+
+            return message;
+        } catch (SOAPException e) {
+            throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
+        }
+    }
+
+    @Override
+    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+        Node rRetEnviEventoDe = ResponseUtil.getMainNode(soapResponse.getSoapResponse(), "rRetEnviEventoDe");
+        RespuestaRecepcionEv respuestaRecepcionEv = SifenObjectFactory.getFromNode(rRetEnviEventoDe, RespuestaRecepcionEv.class);
+
+        RespuestaSifen respuestaSifen = new RespuestaSifen();
+        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
+        respuestaSifen.setRespuesta(respuestaRecepcionEv);
+        return respuestaSifen;
+    }
+
+    public void setEventoDE(EventosDE eventosDE) {
+        this.eventosDE = eventosDE;
+    }
+}

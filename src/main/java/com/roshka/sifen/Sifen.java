@@ -1,15 +1,15 @@
 package com.roshka.sifen;
 
-import com.roshka.sifen.config.SifenConfig;
-import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
-import com.roshka.sifen.sdk.v150.beans.EventoDE;
-import com.roshka.sifen.sdk.v150.request.ConsultaDE;
-import com.roshka.sifen.sdk.v150.request.RecepcionDE;
-import com.roshka.sifen.sdk.v150.request.RecepcionEvento;
-import com.roshka.sifen.sdk.v150.response.RespuestaSifen;
-import com.roshka.sifen.sdk.v150.request.ConsultaRUC;
-import com.roshka.sifen.util.SifenExceptionUtil;
+import com.roshka.sifen.core.RespuestaSifen;
+import com.roshka.sifen.core.SifenConfig;
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.util.SifenExceptionUtil;
+import com.roshka.sifen.internal.request.ReqConsDe;
+import com.roshka.sifen.internal.request.ReqConsRuc;
+import com.roshka.sifen.internal.request.ReqRecDe;
+import com.roshka.sifen.internal.request.ReqRecEventoDe;
+import com.roshka.sifen.core.beans.DocumentoElectronico;
+import com.roshka.sifen.core.beans.EventosDE;
 
 import java.util.logging.Logger;
 
@@ -26,27 +26,65 @@ public class Sifen {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
-        return ConsultaRUC.prepareRequest(sifenConfig, dId, ruc);
+
+        logger.info("Preparando petición 'Consulta de RUC'");
+        ReqConsRuc reqConsRuc = new ReqConsRuc(dId, sifenConfig);
+        reqConsRuc.setdRUCCons(ruc);
+
+        return reqConsRuc.makeRequest(sifenConfig.getUrlConsultaRUC());
     }
 
     public static RespuestaSifen recepcionDE(long dId, DocumentoElectronico de) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
-        return RecepcionDE.prepareRequest(sifenConfig, dId, de);
+
+        logger.info("Preparando petición 'Recepción de DE'");
+        ReqRecDe reqRecDe = new ReqRecDe(dId, sifenConfig);
+        reqRecDe.setDE(de);
+
+        return reqRecDe.makeRequest(sifenConfig.getUrlRecibe());
+    }
+
+    public static String generarXmlDE(long dId, DocumentoElectronico de) throws SifenException {
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+
+        logger.info("Preparando XML del DE");
+        return de.getXmlString(dId, sifenConfig);
+    }
+
+    public static boolean generarXmlDE(long dId, DocumentoElectronico de, String rutaDestino) throws SifenException {
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+
+        logger.info("Preparando XML del DE");
+        return de.saveXml(dId, sifenConfig, rutaDestino);
     }
 
     public static RespuestaSifen consultaDE(long dId, String cdc) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
-        return ConsultaDE.prepareRequest(sifenConfig, dId, cdc);
+
+        logger.info("Preparando petición 'Consulta de DE'");
+        ReqConsDe reqConsDe = new ReqConsDe(dId, sifenConfig);
+        reqConsDe.setdCDC(cdc);
+
+        return reqConsDe.makeRequest(sifenConfig.getUrlConsulta());
     }
 
-    public static RespuestaSifen recepcionEvento(long dId, EventoDE eventoDE) throws SifenException {
+    public static RespuestaSifen recepcionEvento(long dId, EventosDE eventosDE) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
-        return RecepcionEvento.prepareRequest(sifenConfig, dId, eventoDE);
+
+        logger.info("Preparando petición 'Recepción de Eventos'");
+        ReqRecEventoDe reqRecEventoDe = new ReqRecEventoDe(dId, sifenConfig);
+        reqRecEventoDe.setEventoDE(eventosDE);
+
+        return reqRecEventoDe.makeRequest(sifenConfig.getUrlEvento());
     }
 }

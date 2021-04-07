@@ -1,19 +1,21 @@
 package com.roshka.sifen.test.soap;
 
 import com.roshka.sifen.Sifen;
-import com.roshka.sifen.config.SifenConfig;
-import com.roshka.sifen.exceptions.SifenException;
-import com.roshka.sifen.model.de.*;
-import com.roshka.sifen.model.de.types.*;
-import com.roshka.sifen.model.departamentos.TDepartamento;
-import com.roshka.sifen.model.event.*;
-import com.roshka.sifen.model.monedas.CMondT;
-import com.roshka.sifen.model.paises.PaisType;
-import com.roshka.sifen.model.unidades_medida.TcUniMed;
-import com.roshka.sifen.sdk.v150.beans.DocumentoElectronico;
-import com.roshka.sifen.sdk.v150.beans.EventoDE;
-import com.roshka.sifen.sdk.v150.response.RespuestaSifen;
-import com.roshka.sifen.soap.MessageHelper;
+import com.roshka.sifen.core.SifenConfig;
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.core.fields.request.de.*;
+import com.roshka.sifen.core.types.TDepartamento;
+import com.roshka.sifen.core.types.CMondT;
+import com.roshka.sifen.core.types.PaisType;
+import com.roshka.sifen.core.types.TcUniMed;
+import com.roshka.sifen.core.beans.DocumentoElectronico;
+import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.core.RespuestaSifen;
+import com.roshka.sifen.core.fields.request.event.TgGroupTiEvt;
+import com.roshka.sifen.core.fields.request.event.TrGeVeDisconf;
+import com.roshka.sifen.core.fields.request.event.TrGesEve;
+import com.roshka.sifen.core.types.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -36,14 +38,14 @@ public class SOAPTests {
     @BeforeClass
     public static void setupSifenConfig() {
         SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mzarz\\Documents\\taxare.pfx",
-                "", SifenConfig.TipoCertificadoCliente.PFX);
+                "Pqntslc0$", SifenConfig.TipoCertificadoCliente.PFX);
 
         Sifen.setSifenConfig(sifenConfig);
     }
 
     @Test
     public void testBasicMessage() throws SOAPException, IOException {
-        SOAPMessage soapMessage = MessageHelper.createMessage();
+        SOAPMessage soapMessage = SoapHelper.createSoapMessage();
         soapMessage.writeTo(System.out);
     }
 
@@ -171,7 +173,7 @@ public class SOAPTests {
         // Grupo E
         DE.setgTotSub(new TgTotSub());
 
-        logger.info("CDC del Documento Electrónico -> " + DE.generateCDC());
+        logger.info("CDC del Documento Electrónico -> " + DE.obtenerCDC());
 
         RespuestaSifen ret = Sifen.recepcionDE(++currentdId, DE);
         logger.info(ret.toString());
@@ -217,10 +219,10 @@ public class SOAPTests {
         rGesEve1.setdFecFirma(currentDate);
         rGesEve1.setgGroupTiEvt(tgGroupTiEvt);
 
-        EventoDE eventoDE = new EventoDE();
-        eventoDE.setrGesEveList(Collections.singletonList(rGesEve1));
+        EventosDE eventosDE = new EventosDE();
+        eventosDE.setrGesEveList(Collections.singletonList(rGesEve1));
 
-        RespuestaSifen ret = Sifen.recepcionEvento(++currentdId, eventoDE);
+        RespuestaSifen ret = Sifen.recepcionEvento(++currentdId, eventosDE);
         logger.info(ret.toString());
     }
 }

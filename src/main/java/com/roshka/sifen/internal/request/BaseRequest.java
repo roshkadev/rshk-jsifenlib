@@ -1,0 +1,52 @@
+package com.roshka.sifen.internal.request;
+
+import com.roshka.sifen.core.SifenConfig;
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.beans.SOAPResponse;
+import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.util.SifenExceptionUtil;
+import com.roshka.sifen.internal.util.SifenUtil;
+import com.roshka.sifen.core.RespuestaSifen;
+
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import java.util.logging.Logger;
+
+abstract class BaseRequest {
+    private final long dId;
+    private final SifenConfig sifenConfig;
+    private final static Logger logger = Logger.getLogger(BaseRequest.class.toString());
+
+    BaseRequest(long dId, SifenConfig sifenConfig) {
+        this.dId = dId;
+        this.sifenConfig = sifenConfig;
+    }
+
+    abstract SOAPMessage setupSoapMessage() throws SifenException;
+    abstract RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException;
+
+    public RespuestaSifen makeRequest(String url) throws SifenException {
+        try {
+            // Preparamos el mensaje
+            SOAPMessage message = this.setupSoapMessage();
+            message.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
+            message.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
+            logger.info("XML generado, se realiza la petición");
+
+            // Realizamos la consulta
+            String requestUrl = SifenUtil.coalesce(sifenConfig.getUrlBase(), sifenConfig.getUrlBaseLocal()) + url;
+            return this.processResponse(SoapHelper.makeSoapRequest(sifenConfig, requestUrl, message));
+        } catch (SOAPException e) {
+            String msg = "Ocurrió un error al realizan la petición a: " + url + ". Mensaje: " + e.getLocalizedMessage();
+            throw SifenExceptionUtil.invalidSOAPRequest(msg, e);
+        }
+    }
+
+    long getdId() {
+        return dId;
+    }
+
+    SifenConfig getSifenConfig() {
+        return sifenConfig;
+    }
+}
