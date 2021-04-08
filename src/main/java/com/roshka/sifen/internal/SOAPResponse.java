@@ -1,4 +1,4 @@
-package com.roshka.sifen.internal.beans;
+package com.roshka.sifen.internal;
 
 import javax.xml.soap.SOAPMessage;
 import java.net.HttpURLConnection;

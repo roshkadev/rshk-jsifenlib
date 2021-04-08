@@ -1,5 +1,8 @@
 package com.roshka.sifen.core.exceptions;
 
+/**
+ * Excepción para los errores ocurridos en las diferentes partes de las consultas a Sifen.
+ */
 public class SifenException extends Exception {
     private final String code;
 

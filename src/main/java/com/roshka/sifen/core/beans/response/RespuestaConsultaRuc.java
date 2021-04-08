@@ -6,9 +6,15 @@ import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.core.fields.response.ruc.TxContRuc;
 import org.w3c.dom.Node;
 
+/**
+ * Clase principal que contiene la respuesta de Sifen a la consulta de un RUC de un contribuyente.
+ */
 public class RespuestaConsultaRuc extends BaseResponse {
     private TxContRuc xContRUC;
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals("xContRUC")) {

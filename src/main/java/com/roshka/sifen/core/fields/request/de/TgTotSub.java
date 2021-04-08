@@ -61,10 +61,12 @@ public class TgTotSub extends SifenObjectBase {
                     this.dSub10 = this.dSub10.add(dTotOpeItem);
                     this.dIVA10 = this.dIVA10.add(dLiqIVAItem);
                     this.dBaseGrav10 = this.dBaseGrav10.add(dBasGravIVA);
+                    this.dLiqTotIVA10 = BigDecimal.ZERO;
                 } else if (gCamItem.getgCamIVA().getdTasaIVA().equals(BigDecimal.valueOf(5))) {
                     this.dSub5 = this.dSub5.add(dTotOpeItem);
                     this.dIVA5 = this.dIVA5.add(dLiqIVAItem);
                     this.dBaseGrav5 = this.dBaseGrav5.add(dBasGravIVA);
+                    this.dLiqTotIVA5 = BigDecimal.ZERO;
                 }
             } else if (gCamItem.getgCamIVA().getiAfecIVA().getVal() == 2) {
                 this.dSubExo = this.dSubExo.add(dTotOpeItem);

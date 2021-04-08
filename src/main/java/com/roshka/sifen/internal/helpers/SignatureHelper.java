@@ -2,7 +2,7 @@ package com.roshka.sifen.internal.helpers;
 
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.core.Constants;
+import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 
 import javax.xml.crypto.MarshalException;

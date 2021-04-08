@@ -9,10 +9,16 @@ import org.w3c.dom.Node;
 
 import java.time.LocalDateTime;
 
+/**
+ * Clase principal que contiene la respuesta de Sifen a la consulta de un Documento Electrónico.
+ */
 public class RespuestaConsultaDE extends BaseResponse {
     private LocalDateTime dFecProc;
     private TxContenDE xContenDE;
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals("dFecProc")) {

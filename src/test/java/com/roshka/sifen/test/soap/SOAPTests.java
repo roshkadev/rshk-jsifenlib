@@ -51,7 +51,7 @@ public class SOAPTests {
 
     @Test
     public void testConsultaRUC() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaRUC(++currentdId, "80080553");
+        RespuestaSifen ret = Sifen.consultaRUC(++currentdId, "788643-8");
         logger.info(ret.toString());
     }
 

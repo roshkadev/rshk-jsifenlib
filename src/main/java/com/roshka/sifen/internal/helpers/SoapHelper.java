@@ -2,7 +2,7 @@ package com.roshka.sifen.internal.helpers;
 
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.beans.SOAPResponse;
+import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.IOUtil;
 

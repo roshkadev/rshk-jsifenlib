@@ -13,17 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase que representa un Conjunto de Eventos de Documentos Electrónicos
+ * Clase que representa un conjunto de Eventos de Documentos Electrónicos.
  */
 public class EventosDE extends SifenObjectBase {
     List<TrGesEve> rGesEveList;
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     public void setupSOAPElements(SOAPElement gGroupGesEve, SifenConfig sifenConfig) throws SOAPException, SifenException {
         for (TrGesEve trGesEve : this.rGesEveList) {
             trGesEve.setupSOAPElements(gGroupGesEve, sifenConfig);
         }
     }
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals("rGesEve")) {

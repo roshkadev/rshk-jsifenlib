@@ -8,7 +8,7 @@ import com.roshka.sifen.internal.util.HttpUtil;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
-import com.roshka.sifen.core.Constants;
+import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.fields.request.de.*;
@@ -36,10 +36,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static com.roshka.sifen.core.Constants.SIFEN_CURRENT_VERSION;
+import static com.roshka.sifen.internal.Constants.SIFEN_CURRENT_VERSION;
 
 /**
- * Clase que representa un Documento Electrónico
+ * Clase que simula un Documento Electrónico, incluyendo todos los campos disponibles en un DE en formato XML.
  */
 public class DocumentoElectronico extends SifenObjectBase {
     private String Id;
@@ -57,6 +57,9 @@ public class DocumentoElectronico extends SifenObjectBase {
 
     private final static Logger logger = Logger.getLogger(DocumentoElectronico.class.toString());
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     public SOAPMessage setupSOAPElements(long dId, SifenConfig sifenConfig) throws SOAPException, SifenException {
         SOAPMessage message = SoapHelper.createSoapMessage();
         SOAPBody soapBody = message.getSOAPBody();
@@ -122,7 +125,9 @@ public class DocumentoElectronico extends SifenObjectBase {
         return message;
     }
 
-
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         switch (value.getLocalName()) {
@@ -162,6 +167,12 @@ public class DocumentoElectronico extends SifenObjectBase {
         }
     }
 
+    /**
+     * Calcula el CDC del Documento Electrónico en cuestión y lo retorna. Además de lo anterior, también establece los
+     * valores en el lugar correspondiente dentro del objeto.
+     * @return CDC calculado del Documento Electrónico.
+     * @throws SifenException Si alguno de los campos necesarios para el cálculo del CDC no se encuentra.
+     */
     public String obtenerCDC() throws SifenException {
         // Se intenta la generación del CDC
         String CDC;
@@ -188,6 +199,9 @@ public class DocumentoElectronico extends SifenObjectBase {
         return this.Id;
     }
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     public String getXmlString(long dId, SifenConfig sifenConfig) throws SifenException {
         String xml = null;
         try {
@@ -209,6 +223,9 @@ public class DocumentoElectronico extends SifenObjectBase {
         return xml;
     }
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     public boolean saveXml(long dId, SifenConfig sifenConfig, String filePath) throws SifenException {
         boolean res = false;
         String xml = this.getXmlString(dId, sifenConfig);

@@ -16,7 +16,7 @@ import javax.xml.soap.SOAPException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static com.roshka.sifen.core.Constants.SIFEN_CURRENT_VERSION;
+import static com.roshka.sifen.internal.Constants.SIFEN_CURRENT_VERSION;
 
 public class TrGesEve extends SifenObjectBase {
     private String Id;

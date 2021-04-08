@@ -2,10 +2,10 @@ package com.roshka.sifen.internal.request;
 
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.beans.SOAPResponse;
+import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.util.ResponseUtil;
-import com.roshka.sifen.core.Constants;
+import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.RespuestaSifen;

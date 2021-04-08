@@ -1,4 +1,4 @@
-package com.roshka.sifen.core;
+package com.roshka.sifen.internal;
 
 public class Constants {
     // Globals

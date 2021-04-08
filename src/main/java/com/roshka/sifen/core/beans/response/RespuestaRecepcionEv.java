@@ -11,10 +11,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase principal que contiene la respuesta de Sifen al envío de eventos relacionados a los Documentos Electrónicos.
+ */
 public class RespuestaRecepcionEv extends BaseResponse {
     private LocalDateTime dFecProc;
     private final List<TgResProcEVe> gResProcEVe = new ArrayList<>();
 
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         if (value.getLocalName().equals("dFecProc")) {

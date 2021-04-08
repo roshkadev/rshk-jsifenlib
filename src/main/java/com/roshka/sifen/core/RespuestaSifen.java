@@ -2,6 +2,9 @@ package com.roshka.sifen.core;
 
 import com.roshka.sifen.internal.response.BaseResponse;
 
+/**
+ * Clase principal que engloba todas las respuestas de Sifen, para cualquier tipo de consulta.
+ */
 public class RespuestaSifen {
     private int codigoEstado;
     private BaseResponse respuesta;

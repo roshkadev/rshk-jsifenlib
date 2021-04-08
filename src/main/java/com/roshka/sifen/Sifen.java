@@ -17,11 +17,25 @@ public class Sifen {
     private final static Logger logger = Logger.getLogger(Sifen.class.toString());
     private static SifenConfig sifenConfig = null;
 
+    /**
+     * Establece la configuración necesaria para el funcionamiento correcto de todas las funcionalidades. Solo
+     * debe realizarse una vez al principio, antes de ejecutar alguna acción. Si la configuración necesita ser
+     * actualizada, simplemente invocar de vuelta.
+     * @param newSifenConfig El objeto de configuración que será utilizado.
+     */
     public static void setSifenConfig(SifenConfig newSifenConfig) {
         sifenConfig = newSifenConfig;
         logger.info("Configuración del Sifen guardada correctamente");
     }
 
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado los datos y el estado del RUC de un contribuyente.
+     * @param dId Identificador único para cada consulta realizada a Sifen.
+     * @param ruc RUC de un contribuyente a ser consultado en Sifen, sin el DV.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
     public static RespuestaSifen consultaRUC(long dId, String ruc) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
@@ -34,6 +48,14 @@ public class Sifen {
         return reqConsRuc.makeRequest(sifenConfig.getUrlConsultaRUC());
     }
 
+    /**
+     * Realiza un envío del Documento Electrónico a Sifen para su correspondiente aprobación.
+     * @param dId Identificador único para cada consulta realizada a Sifen.
+     * @param de Objeto que hace referencia a un Documento Electrónico, con todos sus datos.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la firma digital del DE falla o, si la consulta no pudo ser realizada.
+     */
     public static RespuestaSifen recepcionDE(long dId, DocumentoElectronico de) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
@@ -46,6 +68,14 @@ public class Sifen {
         return reqRecDe.makeRequest(sifenConfig.getUrlRecibe());
     }
 
+    /**
+     * Genera un XML completo en base al Documento Electrónico enviado como argumento.
+     * @param dId Identificador único para cada consulta realizada a Sifen.
+     * @param de Objeto que hace referencia a un Documento Electrónico, con todos sus datos.
+     * @return XML del Documento Electrónico enviado como argumento.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
+     */
     public static String generarXmlDE(long dId, DocumentoElectronico de) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
@@ -55,6 +85,17 @@ public class Sifen {
         return de.getXmlString(dId, sifenConfig);
     }
 
+    /**
+     * Genera un XML completo en base al Documento Electrónico enviado como argumento, y lo guarda como archivo en la
+     * ruta definida.
+     * @param dId Identificador único para cada consulta realizada a Sifen.
+     * @param de Objeto que hace referencia a un Documento Electrónico, con todos sus datos.
+     * @param rutaDestino Ruta absoluta (con nombre de archivo y extensión incluidos) en la que será creada el archivo
+     *                    XML.<br> Ejemplo: "C:\Users\Roshka\Documents\de.xml"
+     * @return <strong>true</strong> si el archivo fue creado correctamente, <strong>false</strong> de lo contrario.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
+     */
     public static boolean generarXmlDE(long dId, DocumentoElectronico de, String rutaDestino) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
@@ -64,6 +105,14 @@ public class Sifen {
         return de.saveXml(dId, sifenConfig, rutaDestino);
     }
 
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado el Documento Electrónico encontrado y todos sus eventos asociados.
+     * @param dId Identificador único para cada consulta realizada a Sifen.
+     * @param cdc Código de Control, que es el identificador único de un Documento Electrónico.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
     public static RespuestaSifen consultaDE(long dId, String cdc) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
@@ -76,6 +125,15 @@ public class Sifen {
         return reqConsDe.makeRequest(sifenConfig.getUrlConsulta());
     }
 
+    /**
+     * Realiza un envío a Sifen de los eventos agregados en el objeto recibido como argumento.
+     * @param dId Identificador único para cada consulta realizada a Sifen.
+     * @param eventosDE Objeto que contiene el listado de eventos a ser enviados a Sifen.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la firma digital de algún evento falla o, si la consulta no pudo ser
+     * realizada.
+     */
     public static RespuestaSifen recepcionEvento(long dId, EventosDE eventosDE) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");

@@ -2,7 +2,7 @@ package com.roshka.sifen.core;
 
 import com.roshka.sifen.internal.util.SifenUtil;
 
-import static com.roshka.sifen.core.Constants.SDK_CURRENT_VERSION;
+import static com.roshka.sifen.internal.Constants.SDK_CURRENT_VERSION;
 
 /**
  * Clase de configuración de las peticiones Sifen.<br>
