@@ -4,11 +4,12 @@ import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
-import com.roshka.sifen.internal.util.IOUtil;
+import com.roshka.sifen.internal.util.SifenUtil;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.xml.soap.*;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -87,7 +88,7 @@ public class SoapHelper {
             httpURLConnection.setDoOutput(true);
 
             // Conexion
-            logger.info("Conectando a: " + url.toString());
+            logger.info("Conectando a: " + url);
             httpURLConnection.connect();
 
             // Se envía el mensaje SOAP
@@ -96,37 +97,30 @@ public class SoapHelper {
 
             // Respuesta
             soapResponse.setStatus(httpURLConnection.getResponseCode());
-            soapResponse.setContentType(httpURLConnection.getContentType());
-
-            /*BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            StringBuilder res = new StringBuilder();
-            String l;
-            while ((l = in.readLine()) != null) {
-                res.append(l);
-            }*/
 
             MimeHeaders mimeHeaders = getMimeHeadersFromHttpConnection(httpURLConnection);
             if (!soapResponse.isRequestSuccessful()) {
                 // Hubo un error en la petición
-                logger.severe("El servidor devolvió un estado HTTP de fallo: " + soapResponse.getStatus());
+                logger.warning("El servidor devolvió un estado HTTP de fallo: " + soapResponse.getStatus());
 
                 try {
-                    SOAPMessage errorSOAPMessage = SoapHelper.parseSoapMessage(mimeHeaders, httpURLConnection.getErrorStream());
-                    soapResponse.setSoapError(errorSOAPMessage);
-                } catch (SOAPException se) {
-                    logger.severe("SOAPException -> No se puede convertir el error obtenido en un mensaje SOAP: " + se.getLocalizedMessage());
-                    soapResponse.setRawErrorData(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
-                } catch (IOException ioe) {
-                    logger.severe("IOException -> No se puede convertir el error obtenido en un mensaje SOAP: " + ioe.getLocalizedMessage());
-                    soapResponse.setRawErrorData(IOUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream()));
+                    // Actualizamos el content type para poder parsear la respuesta
+                    mimeHeaders.setHeader("Content-Type", "application/soap+xml");
+
+                    byte[] readData = SifenUtil.getByteArrayFromInputStream(httpURLConnection.getErrorStream());
+                    SOAPMessage errorSoapMessage = SoapHelper.parseSoapMessage(mimeHeaders, new ByteArrayInputStream(readData));
+                    soapResponse.setSoapResponse(errorSoapMessage);
+                    soapResponse.setRawData(readData);
+                } catch (SOAPException | IOException e) {
+                    logger.severe("No se puede convertir el error obtenido en un mensaje SOAP: " + e.getLocalizedMessage());
                 }
-
-                return soapResponse;
+            } else {
+                // La respuesta fue correcta
+                byte[] readData = SifenUtil.getByteArrayFromInputStream(httpURLConnection.getInputStream());
+                SOAPMessage successSoapMessage = SoapHelper.parseSoapMessage(mimeHeaders, new ByteArrayInputStream(readData));
+                soapResponse.setSoapResponse(successSoapMessage);
+                soapResponse.setRawData(readData);
             }
-
-            // La respuesta fue correcta
-            SOAPMessage respuestaSOAPMessage = SoapHelper.parseSoapMessage(mimeHeaders, httpURLConnection.getInputStream());
-            soapResponse.setSoapResponse(respuestaSOAPMessage);
 
             return soapResponse;
         } catch (MalformedURLException e) {

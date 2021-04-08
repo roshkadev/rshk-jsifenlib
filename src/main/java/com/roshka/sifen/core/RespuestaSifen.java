@@ -8,6 +8,7 @@ import com.roshka.sifen.internal.response.BaseResponse;
 public class RespuestaSifen {
     private int codigoEstado;
     private BaseResponse respuesta;
+    private String respuestaBruta;
 
     public int getCodigoEstado() {
         return codigoEstado;
@@ -23,5 +24,13 @@ public class RespuestaSifen {
 
     public void setRespuesta(BaseResponse respuesta) {
         this.respuesta = respuesta;
+    }
+
+    public String getRespuestaBruta() {
+        return respuestaBruta;
+    }
+
+    public void setRespuestaBruta(String respuestaBruta) {
+        this.respuestaBruta = respuestaBruta;
     }
 }

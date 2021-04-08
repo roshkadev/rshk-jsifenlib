@@ -17,9 +17,12 @@ import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 public class ReqConsDe extends BaseRequest {
     private String dCDC;
+    private final static Logger logger = Logger.getLogger(ReqConsDe.class.toString());
 
     public ReqConsDe(long dId, SifenConfig sifenConfig) {
         super(dId, sifenConfig);
@@ -45,13 +48,23 @@ public class ReqConsDe extends BaseRequest {
 
     @Override
     RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
-        SOAPMessage soapMessage = ResponseUtil.parseSoapMessage(soapResponse.getSoapResponse());
-        Node nodeRRetEnviConsDe = ResponseUtil.getMainNode(soapMessage, "rEnviConsDeResponse");
-        RespuestaConsultaDE respuestaConsultaDE = SifenObjectFactory.getFromNode(nodeRRetEnviConsDe, RespuestaConsultaDE.class);
+        Node rEnviConsDe = null;
+        try {
+            SOAPMessage soapMessage = ResponseUtil.parseSoapMessage(soapResponse.getSoapResponse());
+            rEnviConsDe = ResponseUtil.getMainNode(soapMessage, "rEnviConsDeResponse");
+        } catch (SifenException e) {
+            logger.warning(e.getMessage());
+        }
+
+        RespuestaConsultaDE respuestaConsultaDE = null;
+        if (rEnviConsDe != null) {
+            respuestaConsultaDE = SifenObjectFactory.getFromNode(rEnviConsDe, RespuestaConsultaDE.class);
+        }
 
         RespuestaSifen respuestaSifen = new RespuestaSifen();
         respuestaSifen.setCodigoEstado(soapResponse.getStatus());
         respuestaSifen.setRespuesta(respuestaConsultaDE);
+        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
         return respuestaSifen;
     }
 

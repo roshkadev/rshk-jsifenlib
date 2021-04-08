@@ -5,10 +5,8 @@ import java.net.HttpURLConnection;
 
 public class SOAPResponse {
     private int status;
-    private String contentType;
     private SOAPMessage soapResponse;
-    private SOAPMessage soapError;
-    private byte[] rawErrorData;
+    private byte[] rawData;
 
     public int getStatus() {
         return status;
@@ -16,14 +14,6 @@ public class SOAPResponse {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     public SOAPMessage getSoapResponse() {
@@ -34,20 +24,12 @@ public class SOAPResponse {
         this.soapResponse = soapResponse;
     }
 
-    public SOAPMessage getSoapError() {
-        return soapError;
+    public byte[] getRawData() {
+        return rawData;
     }
 
-    public void setSoapError(SOAPMessage soapError) {
-        this.soapError = soapError;
-    }
-
-    public byte[] getRawErrorData() {
-        return rawErrorData;
-    }
-
-    public void setRawErrorData(byte[] rawErrorData) {
-        this.rawErrorData = rawErrorData;
+    public void setRawData(byte[] rawData) {
+        this.rawData = rawData;
     }
 
     public boolean isRequestSuccessful() {

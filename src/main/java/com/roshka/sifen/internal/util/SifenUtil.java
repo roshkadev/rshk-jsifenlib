@@ -1,5 +1,6 @@
 package com.roshka.sifen.internal.util;
 
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -103,7 +104,12 @@ public class SifenUtil {
         return entities;
     }
 
-    public static boolean isStringBlank(String str) {
-        return str == null || str.trim().isEmpty();
+    public static byte[] getByteArrayFromInputStream(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        for (int length; (length = inputStream.read(buffer)) != -1; ) {
+            result.write(buffer, 0, length);
+        }
+        return result.toByteArray();
     }
 }
