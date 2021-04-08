@@ -41,7 +41,7 @@ import java.util.List;
 
 public class SignatureTests {
 
-    @Test
+    /*@Test
     public void testValidSignature() throws MarshalException, XMLSignatureException, ParserConfigurationException, IOException, SAXException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, InvalidKeySpecException, CertificateException, KeyException, TransformerException {
 
         // parse xml
@@ -114,7 +114,5 @@ public class SignatureTests {
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer trans = tf.newTransformer();
         trans.transform(new DOMSource(doc), new StreamResult(os));
-
-    }
-
+    }*/
 }
