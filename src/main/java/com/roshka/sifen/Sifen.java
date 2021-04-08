@@ -106,6 +106,18 @@ public class Sifen {
     }
 
     /**
+     * Genera un objeto de tipo Documento Electrónico en base a un XML.
+     * @param xml XML a ser convertido a un objeto del tipo Documento Electrónico.
+     * @return El objeto generado en base al XML.
+     * @throws SifenException Si el XML tiene un formato inválido o, si algún dato necesario para la generación del DE
+     * no pudo ser encontrado.
+     */
+    public static DocumentoElectronico convertirXml(String xml) throws SifenException {
+        logger.info("Preparando DE desde el XML");
+        return DocumentoElectronico.parseXml(xml);
+    }
+
+    /**
      * Realiza una consulta a Sifen y devuelve como resultado el Documento Electrónico encontrado y todos sus eventos asociados.
      * @param dId Identificador único para cada consulta realizada a Sifen.
      * @param cdc Código de Control, que es el identificador único de un Documento Electrónico.

@@ -78,4 +78,16 @@ public class SifenExceptionUtil {
                 t
         );
     }
+
+    public static SifenException xmlParsingError(String message) {
+        return xmlParsingError(message, null);
+    }
+
+    public static SifenException xmlParsingError(String message, Throwable t) {
+        return new SifenException(
+                SifenExceptionCodes.XML_PARSING_ERROR_CODE,
+                message,
+                t
+        );
+    }
 }

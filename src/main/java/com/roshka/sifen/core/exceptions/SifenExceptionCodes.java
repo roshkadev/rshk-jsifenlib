@@ -22,6 +22,8 @@ public class SifenExceptionCodes {
     public static final String REQUEST_SIGNING_ERROR_MESSAGE = "Error al firmar la petición";
     public static final String FIELD_NOT_FOUND_CODE = "i402";
     public static final String FIELD_NOT_FOUND_MESSAGE = "Campo no encontrado";
+    public static final String XML_PARSING_ERROR_CODE = "i403";
+    public static final String XML_PARSING_ERROR_MESSAGE = "Error al parsear el XML";
 
     private static final Map<String, String> errorMessages;
 
@@ -35,6 +37,7 @@ public class SifenExceptionCodes {
         errorMessages.put(REQUEST_PREPARATION_ERROR_CODE, REQUEST_PREPARATION_ERROR_MESSAGE);
         errorMessages.put(REQUEST_SIGNING_ERROR_CODE, REQUEST_SIGNING_ERROR_MESSAGE);
         errorMessages.put(FIELD_NOT_FOUND_CODE, FIELD_NOT_FOUND_MESSAGE);
+        errorMessages.put(XML_PARSING_ERROR_CODE, XML_PARSING_ERROR_MESSAGE);
     }
 
     public static String getErrorMessage(String code) {

@@ -23,6 +23,7 @@ abstract class BaseRequest {
     }
 
     abstract SOAPMessage setupSoapMessage() throws SifenException;
+
     abstract RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException;
 
     public RespuestaSifen makeRequest(String url) throws SifenException {
@@ -32,6 +33,19 @@ abstract class BaseRequest {
             message.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
             message.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
             logger.info("XML generado, se realiza la petición");
+
+            /*// Para obtener el xml
+            final StringWriter sw = new StringWriter();
+
+            try {
+                TransformerFactory.newInstance().newTransformer().transform(
+                        new DOMSource(message.getSOAPPart()),
+                        new StreamResult(sw));
+            } catch (TransformerException e) {
+                throw new RuntimeException(e);
+            }
+
+            String xml = sw.toString();*/
 
             // Realizamos la consulta
             String requestUrl = SifenUtil.coalesce(sifenConfig.getUrlBase(), sifenConfig.getUrlBaseLocal()) + url;

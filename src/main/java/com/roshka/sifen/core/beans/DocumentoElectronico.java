@@ -14,19 +14,23 @@ import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.fields.request.de.*;
 import com.roshka.sifen.core.types.TTiDE;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.crypto.dsig.Reference;
 import javax.xml.crypto.dsig.SignedInfo;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.*;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -227,10 +231,13 @@ public class DocumentoElectronico extends SifenObjectBase {
      * <h3>MÉTODO INTERNO, NO USAR.</h3>
      */
     public boolean saveXml(long dId, SifenConfig sifenConfig, String filePath) throws SifenException {
-        boolean res = false;
+        // Obtenemos el xml en string
         String xml = this.getXmlString(dId, sifenConfig);
 
+        // Creamos o modificamos el archivo, y escribimos en él el xml.
+        boolean res = false;
         try {
+
             FileWriter fileWriter = new FileWriter(filePath, false);
             fileWriter.write(xml);
             fileWriter.close();
@@ -241,6 +248,31 @@ public class DocumentoElectronico extends SifenObjectBase {
         }
 
         return res;
+    }
+
+    /**
+     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     */
+    public static DocumentoElectronico parseXml(String xml) throws SifenException {
+        xml = xml.replaceAll(">[\\s\r\n]*<", "><");
+
+        // Parseamos el xml
+        Document xmlDocument;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            xmlDocument = builder.parse(new InputSource(new StringReader(xml)));
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw SifenExceptionUtil.xmlParsingError("Se produjo un error al parsear el archivo XML. Formato incorrecto.");
+        }
+
+        // Obtenemos el nodo principal
+        Node mainNode = xmlDocument.getElementsByTagName("DE").item(0);
+
+        DocumentoElectronico DE = SifenObjectFactory.getFromNode(mainNode, DocumentoElectronico.class);
+        DE.obtenerCDC();
+        return DE;
     }
 
     private String generateQRLink(SignedInfo signedInfo, SifenConfig sifenConfig) {

@@ -1,21 +1,17 @@
 package com.roshka.sifen.test.soap;
 
 import com.roshka.sifen.Sifen;
+import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
-import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.helpers.SoapHelper;
-import com.roshka.sifen.core.fields.request.de.*;
-import com.roshka.sifen.core.types.TDepartamento;
-import com.roshka.sifen.core.types.CMondT;
-import com.roshka.sifen.core.types.PaisType;
-import com.roshka.sifen.core.types.TcUniMed;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.EventosDE;
-import com.roshka.sifen.core.RespuestaSifen;
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.core.fields.request.de.*;
 import com.roshka.sifen.core.fields.request.event.TgGroupTiEvt;
 import com.roshka.sifen.core.fields.request.event.TrGeVeDisconf;
 import com.roshka.sifen.core.fields.request.event.TrGesEve;
 import com.roshka.sifen.core.types.*;
+import com.roshka.sifen.internal.helpers.SoapHelper;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,6 +19,9 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -224,5 +223,12 @@ public class SOAPTests {
 
         RespuestaSifen ret = Sifen.recepcionEvento(++currentdId, eventosDE);
         logger.info(ret.toString());
+    }
+
+    @Test
+    public void testConversionXml() throws SifenException, IOException {
+        String xml = new String(Files.readAllBytes(Paths.get("C:\\Users\\mzarz\\Desktop\\de.xml")), StandardCharsets.UTF_8);
+        DocumentoElectronico DE = Sifen.convertirXml(xml);
+        logger.info(DE.toString());
     }
 }
