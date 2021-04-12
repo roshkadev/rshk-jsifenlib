@@ -58,25 +58,25 @@ Para esto, crear una nueva instancia de la clase `SifenConfig` utilizando alguno
 
 ```java
 // Constructor vacío. Los valores se deben agregar por medio de los *setters* de la clase.
-SifenConfig config=new SifenConfig();
+SifenConfig config = new SifenConfig();
 
 // Constructor con el tipo de ambiente, tipo de certificado, la ruta del certificado y la contraseña.
-        SifenConfig config=new SifenConfig(
-        SifenConfig.TipoAmbiente.PROD,
-        SifenConfig.TipoCertificadoCliente.PFX,
-        "C:\\Users\\Roshka\\Documents\\certificado.pfx",
-        "password"
-        );
+SifenConfig config = new SifenConfig(
+    SifenConfig.TipoAmbiente.PROD,
+    SifenConfig.TipoCertificadoCliente.PFX,
+    "C:\\Users\\Roshka\\Documents\\certificado.pfx",
+    "password"
+);
 
 // Constructor igual al anterior, con el CSC y su ID.
-        SifenConfig config=new SifenConfig(
-        SifenConfig.TipoAmbiente.PROD,
-        "0002", // ID CSC
-        "EFGH0000000000000000000000000000", // CSC
-        SifenConfig.TipoCertificadoCliente.PFX,
-        "C:\\Users\\Roshka\\Documents\\certificado.pfx",
-        "password"
-        );
+/SifenConfig config = new SifenConfig(
+    SifenConfig.TipoAmbiente.PROD,
+    "0002", // ID CSC
+    "EFGH0000000000000000000000000000", // CSC
+    SifenConfig.TipoCertificadoCliente.PFX,
+    "C:\\Users\\Roshka\\Documents\\certificado.pfx",
+    "password"
+);
 ```
 
 Luego de preparar la configuración, establecer la misma para usarla con las diferentes consultas.
