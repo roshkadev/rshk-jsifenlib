@@ -21,6 +21,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.logging.Logger;
 
+/**
+ * Util encargado de validar las respuestas SOAP.
+ */
 public class ResponseUtil {
     private final static Logger logger = Logger.getLogger(ResponseUtil.class.toString());
 

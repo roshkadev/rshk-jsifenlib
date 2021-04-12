@@ -7,6 +7,9 @@ import org.w3c.dom.NodeList;
 
 import java.util.logging.Logger;
 
+/**
+ * Clase encargada de leer los Nodos XML y sus hijos y generar las respuestas formateadas.
+ */
 public class SifenObjectFactory {
     private final static Logger logger = Logger.getLogger(SifenObjectFactory.class.toString());
 

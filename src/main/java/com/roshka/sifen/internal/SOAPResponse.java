@@ -3,6 +3,9 @@ package com.roshka.sifen.internal;
 import javax.xml.soap.SOAPMessage;
 import java.net.HttpURLConnection;
 
+/**
+ * Clase interna que almacena la respuesta SOAP proveída por Sifen.
+ */
 public class SOAPResponse {
     private int status;
     private SOAPMessage soapResponse;

@@ -1,0 +1,22 @@
+name: Publicación del paquete al Maven Central Repository
+on:
+    release:
+        types: [ created ]
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+            -   name: Setear la versión de Java
+                uses: actions/setup-java@v2
+                with:
+                    java-version: "8"
+                    distribution: "adopt"
+            -   name: Publicar el paquete
+                run: gradle publish
+                env:
+                    OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+                    OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+                    GPG_KEY: ${{ secrets.GPG_KEY }}
+                    GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}

@@ -20,6 +20,9 @@ import javax.xml.soap.SOAPMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+/**
+ * Clase encargada de la Consulta de RUC.
+ */
 public class ReqConsRuc extends BaseRequest {
     private String dRUCCons;
     private final static Logger logger = Logger.getLogger(ReqConsRuc.class.toString());

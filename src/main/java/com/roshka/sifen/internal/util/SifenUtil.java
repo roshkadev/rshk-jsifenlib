@@ -10,6 +10,9 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Util con propósitos generales.
+ */
 public class SifenUtil {
     public static String bytesToHex(byte[] bytes) {
         char[] HEX_ARRAY = "0123456789abcdef".toCharArray();
@@ -60,6 +63,7 @@ public class SifenUtil {
         return leftPad(String.valueOf(new Random().ints(1, 1, 999999999).distinct().toArray()[0]), '0', 9);
     }
 
+    @SafeVarargs
     public static <T> T coalesce(T... items) {
         for (T i : items) if (i != null) return i;
         return null;
@@ -111,5 +115,15 @@ public class SifenUtil {
             result.write(buffer, 0, length);
         }
         return result.toByteArray();
+    }
+
+    public static String buildUrlParams(HashMap<String, String> params) {
+        if (params.isEmpty()) return "";
+
+        StringBuilder paramsString = new StringBuilder();
+        for (Map.Entry<String, String> param : params.entrySet()) {
+            paramsString.append(param.getKey()).append("=").append(param.getValue()).append("&");
+        }
+        return paramsString.substring(0, paramsString.length() - 1);
     }
 }

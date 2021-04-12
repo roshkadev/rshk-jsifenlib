@@ -1,20 +1,85 @@
 plugins {
-    id 'java-library'
+    id "java-library"
+    id "maven-publish"
+    id "signing"
 }
 
-group 'com.roshka.sifen'
-version '1.0.0-SNAPSHOT'
+group "com.roshka.sifen"
+version "0.1.0"
 
 sourceCompatibility = 1.8
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: "junit", name: "junit", version: "4.12"
+    testImplementation "org.hamcrest:hamcrest:2.2"
 }
 
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
-javadoc.options.encoding = 'UTF-8'
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+javadoc {
+    options.charSet = "UTF-8"
+    options.encoding = "UTF-8"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "rshk-jsifenlib"
+            from components.java
+
+            pom {
+                name = "RSHK jsifenlib"
+                description = "Librería de código abierto, sin dependencias externas, para interactuar con SIFEN (Sistema Integrado de Factura Electrónica Nacional)."
+                url = "https://github.com/roshkadev/rshk-jsifenlib/"
+                licenses {
+                    license {
+                        name = "MIT License"
+                        url = "https://github.com/roshkadev/rshk-jsifenlib/blob/master/LICENCIA.md/"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "pablo"
+                        name = "Pablo Santa Cruz"
+                        email = "pablo@roshka.com.py"
+                    }
+                    developer {
+                        id = "martinzarza"
+                        name = "Martin Zarza"
+                        email = "mzarza99@gmail.com"
+                    }
+                }
+                scm {
+                    connection = "scm:git:git://github.com/roshkadev/rshk-jsifenlib.git/"
+                    developerConnection = "scm:git:ssh://github.com/roshkadev/rshk-jsifenlib.git/"
+                    url = "https://github.com/roshkadev/rshk-jsifenlib/"
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(System.getenv("GPG_KEY"), System.getenv("GPG_PASSWORD"))
+    sign publishing.publications.mavenJava
+}

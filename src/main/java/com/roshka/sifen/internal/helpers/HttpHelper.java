@@ -10,6 +10,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Helper encargado de manejar algunas peticiones HTTP.
+ */
 public class HttpHelper {
     public static void request(SSLSocketFactory sslSocketFactory, String url) {
         try {

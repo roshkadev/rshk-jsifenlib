@@ -29,7 +29,15 @@ import static com.roshka.sifen.internal.Constants.SDK_CURRENT_VERSION;
  */
 public class SifenConfig {
     // Enums
-    public enum TipoCertificadoCliente {PFX, PEM, DER}
+
+    /**
+     * Enum con los tipos de certificados disponibles para la conexión segura y la firma digital.
+     */
+    public enum TipoCertificadoCliente {PFX} // Implementar PEM y DER
+
+    /**
+     * Enum con los tipos de ambientes disponibles en Sifen.
+     */
     public enum TipoAmbiente {DEV, PROD}
 
     // Atributos

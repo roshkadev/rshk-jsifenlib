@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
 
+/**
+ * Helper encargado de manejar la conexión SSL y los certificados.
+ */
 public class SSLContextHelper {
     private final static Logger logger = getLogger(SSLContextHelper.class.toString());
     private static SSLContext _sslContext;

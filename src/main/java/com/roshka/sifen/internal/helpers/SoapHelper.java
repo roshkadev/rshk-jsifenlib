@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Helper encargado de manejar las peticiones SOAP.
+ */
 public class SoapHelper {
     private final static Logger logger = Logger.getLogger(SoapHelper.class.toString());
 

@@ -20,6 +20,9 @@ import javax.xml.soap.SOAPMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+/**
+ * Clase encargada de la Consulta de Documentos Electrónicos.
+ */
 public class ReqConsDe extends BaseRequest {
     private String dCDC;
     private final static Logger logger = Logger.getLogger(ReqConsDe.class.toString());

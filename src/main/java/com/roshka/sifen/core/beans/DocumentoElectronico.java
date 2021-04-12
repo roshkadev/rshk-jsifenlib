@@ -4,7 +4,6 @@ import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.helpers.SignatureHelper;
 import com.roshka.sifen.internal.helpers.SoapHelper;
-import com.roshka.sifen.internal.util.HttpUtil;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
@@ -43,7 +42,7 @@ import java.util.logging.Logger;
 import static com.roshka.sifen.internal.Constants.SIFEN_CURRENT_VERSION;
 
 /**
- * Clase que simula un Documento Electrónico, incluyendo todos los campos disponibles en un DE en formato XML.
+ * Clase que representa un Documento Electrónico, incluyendo todos los campos disponibles en un DE en formato XML.
  */
 public class DocumentoElectronico extends SifenObjectBase {
     private String Id;
@@ -62,7 +61,12 @@ public class DocumentoElectronico extends SifenObjectBase {
     private final static Logger logger = Logger.getLogger(DocumentoElectronico.class.toString());
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
+     * @param dId -
+     * @param sifenConfig -
+     * @return -
+     * @throws SOAPException -
+     * @throws SifenException -
      */
     public SOAPMessage setupSOAPElements(long dId, SifenConfig sifenConfig) throws SOAPException, SifenException {
         SOAPMessage message = SoapHelper.createSoapMessage();
@@ -130,7 +134,9 @@ public class DocumentoElectronico extends SifenObjectBase {
     }
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
+     * @param value -
+     * @throws SifenException -
      */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
@@ -204,7 +210,11 @@ public class DocumentoElectronico extends SifenObjectBase {
     }
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
+     * @param dId -
+     * @param sifenConfig -
+     * @return -
+     * @throws SifenException -
      */
     public String getXmlString(long dId, SifenConfig sifenConfig) throws SifenException {
         String xml = null;
@@ -228,7 +238,12 @@ public class DocumentoElectronico extends SifenObjectBase {
     }
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
+     * @param dId -
+     * @param sifenConfig -
+     * @param filePath -
+     * @return -
+     * @throws SifenException -
      */
     public boolean saveXml(long dId, SifenConfig sifenConfig, String filePath) throws SifenException {
         // Obtenemos el xml en string
@@ -251,7 +266,10 @@ public class DocumentoElectronico extends SifenObjectBase {
     }
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
+     * @param xml -
+     * @return -
+     * @throws SifenException -
      */
     public static DocumentoElectronico parseXml(String xml) throws SifenException {
         xml = xml.replaceAll(">[\\s\r\n]*<", "><");
@@ -309,7 +327,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         queryParams.put("DigestValue", SifenUtil.bytesToHex(digestValue));
         queryParams.put("IdCSC", sifenConfig.getIdCSC());
 
-        String urlParamsString = HttpUtil.buildUrlParams(queryParams);
+        String urlParamsString = SifenUtil.buildUrlParams(queryParams);
         String hashedParams = SifenUtil.sha256Hex(urlParamsString + sifenConfig.getCSC());
 
         return sifenConfig.getUrlConsultaQr() + urlParamsString + "&cHashQR=" + hashedParams;

@@ -13,7 +13,7 @@ public class RespuestaConsultaRuc extends BaseResponse {
     private TxContRuc xContRUC;
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
      */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {

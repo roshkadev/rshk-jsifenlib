@@ -1,5 +1,6 @@
 package com.roshka.sifen.test.signature;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -41,7 +42,8 @@ import java.util.List;
 
 public class SignatureTests {
 
-    /*@Test
+    @Test
+    @Ignore
     public void testValidSignature() throws MarshalException, XMLSignatureException, ParserConfigurationException, IOException, SAXException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, InvalidKeySpecException, CertificateException, KeyException, TransformerException {
 
         // parse xml
@@ -114,5 +116,5 @@ public class SignatureTests {
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer trans = tf.newTransformer();
         trans.transform(new DOMSource(doc), new StreamResult(os));
-    }*/
+    }
 }

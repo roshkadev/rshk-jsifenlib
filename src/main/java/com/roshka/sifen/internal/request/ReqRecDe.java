@@ -16,6 +16,9 @@ import javax.xml.soap.SOAPMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+/**
+ * Clase encargada de la petición de Recepción de Documentos Electrónicos.
+ */
 public class ReqRecDe extends BaseRequest {
     private DocumentoElectronico DE;
     private final static Logger logger = Logger.getLogger(ReqRecDe.class.toString());

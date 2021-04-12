@@ -1,5 +1,8 @@
 package com.roshka.sifen.internal;
 
+/**
+ * Valores constantes utilizados en la librería.
+ */
 public class Constants {
     // Globals
     public static final String SDK_CURRENT_VERSION = "0.67";

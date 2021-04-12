@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Helper encargado de la firma digital de los documentos XML.
+ */
 public class SignatureHelper {
     private static final XMLSignatureFactory _xmlSignatureFactory = XMLSignatureFactory.getInstance();
     private static final List<Transform> transforms;

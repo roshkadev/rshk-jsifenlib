@@ -3,6 +3,9 @@ package com.roshka.sifen.internal.util;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.exceptions.SifenExceptionCodes;
 
+/**
+ * Util encargado de crear las excepciones.
+ */
 public class SifenExceptionUtil {
     public static SifenException invalidConfiguration(String message) {
         return new SifenException(

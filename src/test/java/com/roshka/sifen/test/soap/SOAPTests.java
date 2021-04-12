@@ -13,6 +13,7 @@ import com.roshka.sifen.core.fields.request.event.TrGesEve;
 import com.roshka.sifen.core.types.*;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.xml.soap.SOAPException;
@@ -43,18 +44,21 @@ public class SOAPTests {
     }
 
     @Test
+    @Ignore
     public void testBasicMessage() throws SOAPException, IOException {
         SOAPMessage soapMessage = SoapHelper.createSoapMessage();
         soapMessage.writeTo(System.out);
     }
 
     @Test
+    @Ignore
     public void testConsultaRUC() throws SifenException {
         RespuestaSifen ret = Sifen.consultaRUC(++currentdId, "788643-8");
         logger.info(ret.toString());
     }
 
     @Test
+    @Ignore
     public void testRecepcionDE() throws SifenException {
         LocalDateTime currentDate = LocalDateTime.now();
 
@@ -179,12 +183,14 @@ public class SOAPTests {
     }
 
     @Test
+    @Ignore
     public void testConsultaDE() throws SifenException {
         RespuestaSifen ret = Sifen.consultaDE(++currentdId, "01800805534001002000000722021040613265708133");
         logger.info(ret.toString());
     }
 
     @Test
+    @Ignore
     public void testRecepcionEvento() throws SifenException {
         LocalDateTime currentDate = LocalDateTime.now();
 
@@ -226,6 +232,7 @@ public class SOAPTests {
     }
 
     @Test
+    @Ignore
     public void testConversionXml() throws SifenException, IOException {
         String xml = new String(Files.readAllBytes(Paths.get("C:\\Users\\mzarz\\Desktop\\de.xml")), StandardCharsets.UTF_8);
         DocumentoElectronico DE = Sifen.convertirXml(xml);

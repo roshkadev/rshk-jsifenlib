@@ -19,7 +19,11 @@ public class EventosDE extends SifenObjectBase {
     List<TrGesEve> rGesEveList;
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
+     * @param gGroupGesEve -
+     * @param sifenConfig -
+     * @throws SOAPException -
+     * @throws SifenException -
      */
     public void setupSOAPElements(SOAPElement gGroupGesEve, SifenConfig sifenConfig) throws SOAPException, SifenException {
         for (TrGesEve trGesEve : this.rGesEveList) {
@@ -28,7 +32,9 @@ public class EventosDE extends SifenObjectBase {
     }
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
+     * @param value -
+     * @throws SifenException -
      */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {

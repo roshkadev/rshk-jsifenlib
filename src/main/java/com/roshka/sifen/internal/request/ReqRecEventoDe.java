@@ -18,6 +18,9 @@ import javax.xml.soap.*;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
+/**
+ * Clase encargada de la petición de Recepción de Eventos de Documentos Electrónicos.
+ */
 public class ReqRecEventoDe extends BaseRequest {
     private EventosDE eventosDE;
     private final static Logger logger = Logger.getLogger(ReqRecEventoDe.class.toString());

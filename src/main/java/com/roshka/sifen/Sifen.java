@@ -13,6 +13,9 @@ import com.roshka.sifen.core.beans.EventosDE;
 
 import java.util.logging.Logger;
 
+/**
+ * Clase principal de la librería desde la cuál se realizan todas las operaciones de Sifen.
+ */
 public class Sifen {
     private final static Logger logger = Logger.getLogger(Sifen.class.toString());
     private static SifenConfig sifenConfig = null;

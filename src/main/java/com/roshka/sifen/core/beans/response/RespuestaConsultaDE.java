@@ -17,7 +17,7 @@ public class RespuestaConsultaDE extends BaseResponse {
     private TxContenDE xContenDE;
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
      */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {

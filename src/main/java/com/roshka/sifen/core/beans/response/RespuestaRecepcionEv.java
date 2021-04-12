@@ -19,7 +19,7 @@ public class RespuestaRecepcionEv extends BaseResponse {
     private final List<TgResProcEVe> gResProcEVe = new ArrayList<>();
 
     /**
-     * <h3>MÉTODO INTERNO, NO USAR.</h3>
+     * Método interno, no usar.
      */
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
