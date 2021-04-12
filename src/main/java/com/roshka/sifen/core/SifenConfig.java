@@ -92,8 +92,7 @@ public class SifenConfig {
         this.userAgent = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
     }
 
-    public SifenConfig(TipoAmbiente tipoAmbiente, String rutaCertificadoCliente, String contrasenaCertificadoCliente,
-                       TipoCertificadoCliente tipoCertificadoCliente) {
+    public SifenConfig(TipoAmbiente tipoAmbiente, TipoCertificadoCliente tipoCertificadoCliente, String rutaCertificadoCliente, String contrasenaCertificadoCliente) {
         this();
         this.setAmbiente(tipoAmbiente);
 
@@ -103,9 +102,9 @@ public class SifenConfig {
         this.tipoCertificadoCliente = tipoCertificadoCliente;
     }
 
-    public SifenConfig(TipoAmbiente tipoAmbiente, String rutaCertificadoCliente, String contrasenaCertificadoCliente,
-                       TipoCertificadoCliente tipoCertificadoCliente, String idCSC, String CSC) {
-        this(tipoAmbiente, rutaCertificadoCliente, contrasenaCertificadoCliente, tipoCertificadoCliente);
+    public SifenConfig(TipoAmbiente tipoAmbiente, String idCSC, String CSC, TipoCertificadoCliente tipoCertificadoCliente,
+                       String rutaCertificadoCliente, String contrasenaCertificadoCliente) {
+        this(tipoAmbiente, tipoCertificadoCliente, rutaCertificadoCliente, contrasenaCertificadoCliente);
 
         this.setIdCSC(idCSC);
         this.CSC = CSC;

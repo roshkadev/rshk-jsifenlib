@@ -33,12 +33,10 @@ import java.util.logging.Logger;
 public class SOAPTests {
     private final static Logger logger = Logger.getLogger(SOAPTests.class.toString());
 
-    private static long currentdId = 0;
-
     @BeforeClass
     public static void setupSifenConfig() {
-        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, "C:\\Users\\mzarz\\Documents\\taxare.pfx",
-                "Pqntslc0$", SifenConfig.TipoCertificadoCliente.PFX);
+        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, SifenConfig.TipoCertificadoCliente.PFX,
+                "C:\\Users\\mzarz\\Documents\\taxare.pfx", "Pqntslc0$");
 
         Sifen.setSifenConfig(sifenConfig);
     }
@@ -53,7 +51,7 @@ public class SOAPTests {
     @Test
     @Ignore
     public void testConsultaRUC() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaRUC(++currentdId, "788643-8");
+        RespuestaSifen ret = Sifen.consultaRUC("788643-8");
         logger.info(ret.toString());
     }
 
@@ -178,14 +176,14 @@ public class SOAPTests {
 
         logger.info("CDC del Documento Electrónico -> " + DE.obtenerCDC());
 
-        RespuestaSifen ret = Sifen.recepcionDE(++currentdId, DE);
+        RespuestaSifen ret = Sifen.recepcionDE(DE);
         logger.info(ret.toString());
     }
 
     @Test
     @Ignore
     public void testConsultaDE() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaDE(++currentdId, "01800805534001002000000722021040613265708133");
+        RespuestaSifen ret = Sifen.consultaDE("01800805534001002000000722021040613265708133");
         logger.info(ret.toString());
     }
 
@@ -227,7 +225,7 @@ public class SOAPTests {
         EventosDE eventosDE = new EventosDE();
         eventosDE.setrGesEveList(Collections.singletonList(rGesEve1));
 
-        RespuestaSifen ret = Sifen.recepcionEvento(++currentdId, eventosDE);
+        RespuestaSifen ret = Sifen.recepcionEvento(eventosDE);
         logger.info(ret.toString());
     }
 
