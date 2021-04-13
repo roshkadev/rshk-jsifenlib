@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -28,15 +29,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 public class SOAPTests {
     private final static Logger logger = Logger.getLogger(SOAPTests.class.toString());
 
     @BeforeClass
-    public static void setupSifenConfig() {
+    public static void setupSifenConfig() throws IOException {
+        Properties prop = new Properties();
+        prop.load(new FileReader("test.properties"));
+
         SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, SifenConfig.TipoCertificadoCliente.PFX,
-                "C:\\Users\\mzarz\\Documents\\taxare.pfx", "Pqntslc0$");
+                prop.getProperty("cert.path"), prop.getProperty("cert.password"));
 
         Sifen.setSifenConfig(sifenConfig);
     }
@@ -51,7 +56,7 @@ public class SOAPTests {
     @Test
     @Ignore
     public void testConsultaRUC() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaRUC("788643-8");
+        RespuestaSifen ret = Sifen.consultaRUC("788643");
         logger.info(ret.toString());
     }
 

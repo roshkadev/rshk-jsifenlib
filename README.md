@@ -69,7 +69,7 @@ SifenConfig config = new SifenConfig(
 );
 
 // Constructor igual al anterior, con el CSC y su ID.
-/SifenConfig config = new SifenConfig(
+SifenConfig config = new SifenConfig(
     SifenConfig.TipoAmbiente.PROD,
     "0002", // ID CSC
     "EFGH0000000000000000000000000000", // CSC
