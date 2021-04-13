@@ -364,4 +364,11 @@ public class SOAPTests {
         RespuestaSifen ret = Sifen.recepcionLoteDE(Collections.singletonList(DE));
         logger.info(ret.toString());
     }
+
+    @Test
+    @Ignore
+    public void testConsultaLoteDe() throws SifenException {
+        RespuestaSifen ret = Sifen.consultaLoteDE("109051592123694");
+        logger.info(ret.toString());
+    }
 }

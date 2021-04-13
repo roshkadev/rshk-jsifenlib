@@ -50,6 +50,44 @@ public class Sifen {
     }
 
     /**
+     * Realiza una consulta a Sifen y devuelve como resultado el Documento Electrónico encontrado y todos sus eventos asociados.
+     * @param cdc Código de Control, que es el identificador único de un Documento Electrónico.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaSifen consultaDE(String cdc) throws SifenException {
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+
+        logger.info("Preparando petición 'Consulta de DE'");
+        ReqConsDe reqConsDe = new ReqConsDe(dId++, sifenConfig);
+        reqConsDe.setdCDC(cdc);
+
+        return reqConsDe.makeRequest(sifenConfig.getUrlConsulta());
+    }
+
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado el estado del lote consultado.
+     * @param nroLote Número de Lote recibido como respuesta en el envío del mismo.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaSifen consultaLoteDE(String nroLote) throws SifenException {
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+
+        logger.info("Preparando petición 'Consulta de Resultado de Lote de DE'");
+        ReqConsLoteDe reqConsLoteDe = new ReqConsLoteDe(dId++, sifenConfig);
+        reqConsLoteDe.setdProtConsLote(nroLote);
+
+        return reqConsLoteDe.makeRequest(sifenConfig.getUrlConsultaLote());
+    }
+
+    /**
      * Realiza un envío del Documento Electrónico a Sifen para su correspondiente aprobación.
      * @param de Objeto que hace referencia a un Documento Electrónico, con todos sus datos.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
@@ -86,6 +124,26 @@ public class Sifen {
         reqRecLoteDe.setDEList(deList);
 
         return reqRecLoteDe.makeRequest(sifenConfig.getUrlRecibeLote());
+    }
+
+    /**
+     * Realiza un envío a Sifen de los eventos agregados en el objeto recibido como argumento.
+     * @param eventosDE Objeto que contiene el listado de eventos a ser enviados a Sifen.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la firma digital de algún evento falla o, si la consulta no pudo ser
+     * realizada.
+     */
+    public static RespuestaSifen recepcionEvento(EventosDE eventosDE) throws SifenException {
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+
+        logger.info("Preparando petición 'Recepción de Eventos'");
+        ReqRecEventoDe reqRecEventoDe = new ReqRecEventoDe(dId++, sifenConfig);
+        reqRecEventoDe.setEventoDE(eventosDE);
+
+        return reqRecEventoDe.makeRequest(sifenConfig.getUrlEvento());
     }
 
     /**
@@ -133,44 +191,5 @@ public class Sifen {
     public static DocumentoElectronico convertirXml(String xml) throws SifenException {
         logger.info("Preparando DE desde el XML");
         return DocumentoElectronico.parseXml(xml);
-    }
-
-    /**
-     * Realiza una consulta a Sifen y devuelve como resultado el Documento Electrónico encontrado y todos sus eventos asociados.
-     * @param cdc Código de Control, que es el identificador único de un Documento Electrónico.
-     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
-     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
-     * consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
-     */
-    public static RespuestaSifen consultaDE(String cdc) throws SifenException {
-        if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
-        }
-
-        logger.info("Preparando petición 'Consulta de DE'");
-        ReqConsDe reqConsDe = new ReqConsDe(dId++, sifenConfig);
-        reqConsDe.setdCDC(cdc);
-
-        return reqConsDe.makeRequest(sifenConfig.getUrlConsulta());
-    }
-
-    /**
-     * Realiza un envío a Sifen de los eventos agregados en el objeto recibido como argumento.
-     * @param eventosDE Objeto que contiene el listado de eventos a ser enviados a Sifen.
-     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
-     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
-     * consulta no pudo ser encontrado o, si la firma digital de algún evento falla o, si la consulta no pudo ser
-     * realizada.
-     */
-    public static RespuestaSifen recepcionEvento(EventosDE eventosDE) throws SifenException {
-        if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
-        }
-
-        logger.info("Preparando petición 'Recepción de Eventos'");
-        ReqRecEventoDe reqRecEventoDe = new ReqRecEventoDe(dId++, sifenConfig);
-        reqRecEventoDe.setEventoDE(eventosDE);
-
-        return reqRecEventoDe.makeRequest(sifenConfig.getUrlEvento());
     }
 }
