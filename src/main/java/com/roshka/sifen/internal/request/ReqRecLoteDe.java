@@ -49,7 +49,7 @@ public class ReqRecLoteDe extends BaseRequest {
             rEnvioLote.addChildElement("dId").setTextContent(String.valueOf(this.getdId()));
             SOAPElement xDE = rEnvioLote.addChildElement("xDE");
 
-            SOAPElement rLoteDE = rEnvioLote.addChildElement("rLoteDE");
+            SOAPElement rLoteDE = SoapHelper.createSoapMessage().getSOAPBody().addChildElement("rLoteDE");
             for (DocumentoElectronico DE : DEList) {
                 DE.setupDE(rLoteDE, this.getSifenConfig());
             }
@@ -68,7 +68,6 @@ public class ReqRecLoteDe extends BaseRequest {
             // Convertimos el zip a Base64
             String rLoteDEBase64 = new String(Base64.getEncoder().encode(zipFile), StandardCharsets.UTF_8);
             xDE.setTextContent(rLoteDEBase64);
-            rEnvioLote.removeChild(rLoteDE);
 
             return message;
         } catch (SOAPException | IOException e) {

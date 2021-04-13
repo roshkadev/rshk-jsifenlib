@@ -368,7 +368,7 @@ public class SOAPTests {
     @Test
     @Ignore
     public void testConsultaLoteDe() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaLoteDE("109051592123694");
+        RespuestaSifen ret = Sifen.consultaLoteDE("109051592123784");
         logger.info(ret.toString());
     }
 }
