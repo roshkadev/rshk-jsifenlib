@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    runtimeOnly group: 'com.roshka.sifen', name: 'rshk-jsifenlib', version: '0.1.1'
+    implementation 'com.roshka.sifen:rshk-jsifenlib:0.1.1'
 }
 ```
 

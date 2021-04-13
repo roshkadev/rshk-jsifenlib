@@ -72,19 +72,33 @@ public class DocumentoElectronico extends SifenObjectBase {
         SOAPMessage message = SoapHelper.createSoapMessage();
         SOAPBody soapBody = message.getSOAPBody();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        this.obtenerCDC();
-
         // Main Element
         SOAPBodyElement rResEnviDe = soapBody.addBodyElement(new QName(Constants.SIFEN_NS_URI, "rEnviDe"));
         rResEnviDe.addChildElement("dId").setTextContent(String.valueOf(dId));
 
-        SOAPElement rDE = rResEnviDe.addChildElement("xDE").addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
+        SOAPElement xDE = rResEnviDe.addChildElement("xDE");
+        this.setupDE(xDE, sifenConfig);
+
+        return message;
+    }
+
+    /**
+     * Método interno, no usar.
+     * @param parentNode -
+     * @param sifenConfig -
+     * @throws SOAPException -
+     * @throws SifenException -
+     */
+    public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        SOAPElement rDE = parentNode.addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
 
         rDE.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
         rDE.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
-
         rDE.addChildElement("dVerFor").setTextContent(SIFEN_CURRENT_VERSION);
+
+        this.obtenerCDC();
 
         SOAPElement DE = rDE.addChildElement("DE");
         DE.setAttribute("Id", this.getId());
@@ -129,8 +143,6 @@ public class DocumentoElectronico extends SifenObjectBase {
         // Preparación de la URL del QR
         SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
         gCamFuFD.addChildElement("dCarQR").setTextContent(this.generateQRLink(signedInfo, sifenConfig));
-
-        return message;
     }
 
     /**

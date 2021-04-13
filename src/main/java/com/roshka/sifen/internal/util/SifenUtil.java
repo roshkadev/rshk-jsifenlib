@@ -2,13 +2,19 @@ package com.roshka.sifen.internal.util;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Util con propósitos generales.
@@ -125,5 +131,19 @@ public class SifenUtil {
             paramsString.append(param.getKey()).append("=").append(param.getValue()).append("&");
         }
         return paramsString.substring(0, paramsString.length() - 1);
+    }
+
+    public static byte[] compressXmlToZip(String str) throws IOException {
+        String fileName = "DE_" + new SimpleDateFormat("ddMMyyyy").format(new Date());
+        File zip = File.createTempFile(fileName, ".zip");
+        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zip));
+        ZipEntry entry = new ZipEntry(fileName + ".xml");
+        out.putNextEntry(entry);
+
+        out.write(str.getBytes(StandardCharsets.UTF_8));
+        out.closeEntry();
+        out.close();
+
+        return Files.readAllBytes(Paths.get(zip.getAbsolutePath()));
     }
 }

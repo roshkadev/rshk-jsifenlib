@@ -1,0 +1,103 @@
+package com.roshka.sifen.internal.request;
+
+import com.roshka.sifen.core.RespuestaSifen;
+import com.roshka.sifen.core.SifenConfig;
+import com.roshka.sifen.core.beans.DocumentoElectronico;
+import com.roshka.sifen.core.beans.response.RespuestaRecepcionLoteDE;
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.Constants;
+import com.roshka.sifen.internal.SOAPResponse;
+import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
+import com.roshka.sifen.internal.util.ResponseUtil;
+import com.roshka.sifen.internal.util.SifenExceptionUtil;
+import com.roshka.sifen.internal.util.SifenUtil;
+import org.w3c.dom.Node;
+
+import javax.xml.namespace.QName;
+import javax.xml.soap.*;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.List;
+import java.util.logging.Logger;
+
+/**
+ * Clase encargada de la petición de Recepción de Lote de Documentos Electrónicos.
+ */
+public class ReqRecLoteDe extends BaseRequest {
+    private List<DocumentoElectronico> DEList;
+    private final static Logger logger = Logger.getLogger(ReqRecLoteDe.class.toString());
+
+    public ReqRecLoteDe(long dId, SifenConfig sifenConfig) {
+        super(dId, sifenConfig);
+    }
+
+    @Override
+    SOAPMessage setupSoapMessage() throws SifenException {
+        try {
+            SOAPMessage message = SoapHelper.createSoapMessage();
+            SOAPBody soapBody = message.getSOAPBody();
+
+            // Main Element
+            SOAPBodyElement rEnvioLote = soapBody.addBodyElement(new QName(Constants.SIFEN_NS_URI, "rEnvioLote"));
+            rEnvioLote.addChildElement("dId").setTextContent(String.valueOf(this.getdId()));
+            SOAPElement xDE = rEnvioLote.addChildElement("xDE");
+
+            SOAPElement rLoteDE = rEnvioLote.addChildElement("rLoteDE");
+            for (DocumentoElectronico DE : DEList) {
+                DE.setupDE(rLoteDE, this.getSifenConfig());
+            }
+
+            // Obtenemos el XML
+            final StringWriter sw = new StringWriter();
+            try {
+                TransformerFactory.newInstance().newTransformer().transform(new DOMSource(rLoteDE), new StreamResult(sw));
+            } catch (TransformerException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Comprimimos a un archivo zip
+            byte[] zipFile = SifenUtil.compressXmlToZip(sw.toString());
+
+            // Convertimos el zip a Base64
+            String rLoteDEBase64 = new String(Base64.getEncoder().encode(zipFile), StandardCharsets.UTF_8);
+            xDE.setTextContent(rLoteDEBase64);
+            rEnvioLote.removeChild(rLoteDE);
+
+            return message;
+        } catch (SOAPException | IOException e) {
+            throw SifenExceptionUtil.requestPreparationError("Ocurrió un error al preparar el cuerpo de la petición SOAP", e);
+        }
+    }
+
+    @Override
+    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+        Node rResEnviLoteDe = null;
+        try {
+            rResEnviLoteDe = ResponseUtil.getMainNode(soapResponse.getSoapResponse(), "rResEnviLoteDe");
+        } catch (SifenException e) {
+            logger.warning(e.getMessage());
+        }
+
+        RespuestaRecepcionLoteDE respuestaRecepcionLoteDE = null;
+        if (rResEnviLoteDe != null) {
+            respuestaRecepcionLoteDE = SifenObjectFactory.getFromNode(rResEnviLoteDe, RespuestaRecepcionLoteDE.class);
+        }
+
+        RespuestaSifen respuestaSifen = new RespuestaSifen();
+        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
+        respuestaSifen.setRespuesta(respuestaRecepcionLoteDE);
+        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaSifen;
+    }
+
+    public void setDEList(List<DocumentoElectronico> DEList) {
+        this.DEList = DEList;
+    }
+}

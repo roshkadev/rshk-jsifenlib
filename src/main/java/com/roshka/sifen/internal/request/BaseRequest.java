@@ -1,12 +1,12 @@
 package com.roshka.sifen.internal.request;
 
+import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
-import com.roshka.sifen.core.RespuestaSifen;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
@@ -34,8 +34,8 @@ abstract class BaseRequest {
             message.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
             logger.info("XML generado, se realiza la petición");
 
-            /*// Para obtener el xml
-            final StringWriter sw = new StringWriter();
+            // Para obtener el xml
+            /*final StringWriter sw = new StringWriter();
 
             try {
                 TransformerFactory.newInstance().newTransformer().transform(

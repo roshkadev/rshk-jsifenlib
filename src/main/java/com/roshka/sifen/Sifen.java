@@ -3,14 +3,12 @@ package com.roshka.sifen;
 import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.request.*;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
-import com.roshka.sifen.internal.request.ReqConsDe;
-import com.roshka.sifen.internal.request.ReqConsRuc;
-import com.roshka.sifen.internal.request.ReqRecDe;
-import com.roshka.sifen.internal.request.ReqRecEventoDe;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.EventosDE;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -68,6 +66,26 @@ public class Sifen {
         reqRecDe.setDE(de);
 
         return reqRecDe.makeRequest(sifenConfig.getUrlRecibe());
+    }
+
+    /**
+     * Realiza un envío de un lote de Documentos Electrónicos a Sifen para su correspondiente aprobación. La respuesta
+     * de la aprobación o rechazo de cada DE es asíncrono, es decir, no se encuentra en la respuesta de esta petición.
+     * @param deList Listado de los objetos que hacen referencia a los Documentos Electrónicos, con todos los datos.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario de algún DE
+     * no pudo ser encontrado o, si la forma digital de algún DE falla o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaSifen recepcionLoteDE(List<DocumentoElectronico> deList) throws SifenException {
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+
+        logger.info("Preparando petición 'Recepción de Lote de DE'");
+        ReqRecLoteDe reqRecLoteDe = new ReqRecLoteDe(dId++, sifenConfig);
+        reqRecLoteDe.setDEList(deList);
+
+        return reqRecLoteDe.makeRequest(sifenConfig.getUrlRecibeLote());
     }
 
     /**
