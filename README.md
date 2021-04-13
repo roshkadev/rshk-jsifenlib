@@ -12,7 +12,7 @@ Integrado de Factura Electrónica Nacional) a través de un SDK para lenguaje Ja
     <dependency>
         <groupId>com.roshka.sifen</groupId>
         <artifactId>rshk-jsifenlib</artifactId>
-        <version>0.1.0</version>
+        <version>0.1.1</version>
     </dependency>
 </dependencies>
 ```
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    runtimeOnly group: 'com.roshka.sifen', name: 'rshk-jsifenlib', version: '0.1.0'
+    runtimeOnly group: 'com.roshka.sifen', name: 'rshk-jsifenlib', version: '0.1.1'
 }
 ```
 
