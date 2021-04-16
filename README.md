@@ -12,7 +12,7 @@ Integrado de Factura Electrónica Nacional) a través de un SDK para lenguaje Ja
     <dependency>
         <groupId>com.roshka.sifen</groupId>
         <artifactId>rshk-jsifenlib</artifactId>
-        <version>0.1.2</version>
+        <version>0.1.3</version>
     </dependency>
 </dependencies>
 ```
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.roshka.sifen:rshk-jsifenlib:0.1.2'
+    implementation 'com.roshka.sifen:rshk-jsifenlib:0.1.3'
 }
 ```
 
@@ -34,11 +34,9 @@ dependencies {
 - Consulta de RUC
 - Recepción de Documento Electrónico - Síncrono
 - Consulta de Documentos Electrónicos
-- Recepción de Lote de Documentos Electrónicos - Asíncrono (*)
-- Consulta de Estado de Documentos Electrónicos (Lote) (*)
+- Recepción de Lote de Documentos Electrónicos - Asíncrono
+- Consulta de Estado de Documentos Electrónicos (Lote)
 - Recepción de Eventos
-
-(*) Aún no soportado.
 
 ## Uso
 
