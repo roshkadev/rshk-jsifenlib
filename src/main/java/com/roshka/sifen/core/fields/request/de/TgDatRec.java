@@ -334,6 +334,6 @@ public class TgDatRec extends SifenObjectBase {
     }
 
     public void setdCodCliente(String dCodCliente) {
-        this.dCodCliente = dCodCliente;
+        this.dCodCliente = SifenUtil.leftPad(dCodCliente, '0', 3);
     }
 }

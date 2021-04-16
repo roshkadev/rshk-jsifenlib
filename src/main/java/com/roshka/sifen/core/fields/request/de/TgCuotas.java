@@ -19,7 +19,7 @@ public class TgCuotas extends SifenObjectBase {
     public void setupSOAPElements(SOAPElement gPagCred) throws SOAPException {
         SOAPElement gCuotas = gPagCred.addChildElement("gCuotas");
         gCuotas.addChildElement("cMoneCuo").setTextContent(this.cMoneCuo.toString());
-        gCuotas.addChildElement("dDMoneCuo").setTextContent(this.cMoneCuo.getDescripcion());
+        gCuotas.addChildElement("dDMoneCuo").setTextContent(this.cMoneCuo.getDescription());
         gCuotas.addChildElement("dMonCuota").setTextContent(String.valueOf(this.dMonCuota));
 
         if (this.dVencCuo != null)

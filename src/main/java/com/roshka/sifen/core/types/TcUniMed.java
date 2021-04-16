@@ -69,4 +69,9 @@ public enum TcUniMed {
     public String getDescripcion() {
         return descripcion;
     }
+
+    @Override
+    public String toString() {
+        return "{\"abreviatura\": \"" + abreviatura + "\", \"val\": " + val + ", \"documentacion\": \"" + documentacion + "\", \"descripcion\": \"" + descripcion + "\"}";
+    }
 }

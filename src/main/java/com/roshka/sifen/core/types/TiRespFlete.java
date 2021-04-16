@@ -22,4 +22,9 @@ public enum TiRespFlete {
     public short getVal() {
         return val;
     }
+
+    @Override
+    public String toString() {
+        return "{\"val\": " + val + "}";
+    }
 }

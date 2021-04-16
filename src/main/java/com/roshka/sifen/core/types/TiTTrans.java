@@ -25,4 +25,9 @@ public enum TiTTrans {
     public String getDescripcion() {
         return descripcion;
     }
+
+    @Override
+    public String toString() {
+        return "{\"val\": " + val + ", \"descripcion\": \"" + descripcion + "\"}";
+    }
 }

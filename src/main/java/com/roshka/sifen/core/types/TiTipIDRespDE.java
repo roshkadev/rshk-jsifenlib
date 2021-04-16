@@ -28,4 +28,9 @@ public enum TiTipIDRespDE {
     public String getDescripcion() {
         return descripcion;
     }
+
+    @Override
+    public String toString() {
+        return "{\"val\": " + val + ", \"descripcion\": \"" + descripcion + "\"}";
+    }
 }

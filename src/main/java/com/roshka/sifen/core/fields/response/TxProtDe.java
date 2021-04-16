@@ -21,7 +21,7 @@ public class TxProtDe extends SifenObjectBase {
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
         switch (value.getLocalName()) {
-            case "id":
+            case "Id":
                 id = ResponseUtil.getTextValue(value);
                 break;
             case "dFecProc":

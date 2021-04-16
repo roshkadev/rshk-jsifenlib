@@ -269,4 +269,9 @@ public enum PaisType {
     public String getNombre() {
         return nombre;
     }
+
+    @Override
+    public String toString() {
+        return "{\"nombre\":\"" + nombre + "\"}";
+    }
 }
