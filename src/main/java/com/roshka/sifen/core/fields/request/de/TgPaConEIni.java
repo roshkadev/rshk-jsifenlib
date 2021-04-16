@@ -27,7 +27,7 @@ public class TgPaConEIni extends SifenObjectBase {
         gPaConEIni.addChildElement("dDesTiPag").setTextContent(this.iTiPago.getDescripcion());
         gPaConEIni.addChildElement("dMonTiPag").setTextContent(String.valueOf(this.dMonTiPag));
         gPaConEIni.addChildElement("cMoneTiPag").setTextContent(this.cMoneTiPag.toString());
-        gPaConEIni.addChildElement("dDMoneTiPag").setTextContent(this.cMoneTiPag.getDescription());
+        gPaConEIni.addChildElement("dDMoneTiPag").setTextContent(this.cMoneTiPag.getDescripcion());
 
         if (this.dTiCamTiPag != null || !this.cMoneTiPag.toString().equals("PYG"))
             gPaConEIni.addChildElement("dTiCamTiPag").setTextContent(String.valueOf(this.dTiCamTiPag));
