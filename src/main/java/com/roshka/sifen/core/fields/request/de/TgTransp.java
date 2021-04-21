@@ -42,7 +42,7 @@ public class TgTransp extends SifenObjectBase {
         gTransp.addChildElement("iRespFlete").setTextContent(String.valueOf(this.iRespFlete.getVal()));
 
         if (this.cCondNeg != null)
-            gTransp.addChildElement("cCondNeg").setTextContent(this.cCondNeg.toString());
+            gTransp.addChildElement("cCondNeg").setTextContent(this.cCondNeg.name());
 
         if (this.dNuManif != null)
             gTransp.addChildElement("dNuManif").setTextContent(this.dNuManif);
@@ -56,7 +56,7 @@ public class TgTransp extends SifenObjectBase {
         }
 
         if (this.cPaisDest != null) {
-            gTransp.addChildElement("cPaisDest").setTextContent(this.cPaisDest.toString());
+            gTransp.addChildElement("cPaisDest").setTextContent(this.cPaisDest.name());
             gTransp.addChildElement("dDesPaisDest").setTextContent(this.cPaisDest.getNombre());
         }
 

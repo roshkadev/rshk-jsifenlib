@@ -26,10 +26,10 @@ public class TgPaConEIni extends SifenObjectBase {
         gPaConEIni.addChildElement("iTiPago").setTextContent(String.valueOf(this.iTiPago.getVal()));
         gPaConEIni.addChildElement("dDesTiPag").setTextContent(this.iTiPago.getDescripcion());
         gPaConEIni.addChildElement("dMonTiPag").setTextContent(String.valueOf(this.dMonTiPag));
-        gPaConEIni.addChildElement("cMoneTiPag").setTextContent(this.cMoneTiPag.toString());
+        gPaConEIni.addChildElement("cMoneTiPag").setTextContent(this.cMoneTiPag.name());
         gPaConEIni.addChildElement("dDMoneTiPag").setTextContent(this.cMoneTiPag.getDescripcion());
 
-        if (this.dTiCamTiPag != null || !this.cMoneTiPag.toString().equals("PYG"))
+        if (this.dTiCamTiPag != null || !this.cMoneTiPag.name().equals("PYG"))
             gPaConEIni.addChildElement("dTiCamTiPag").setTextContent(String.valueOf(this.dTiCamTiPag));
 
         if (this.iTiPago.getVal() == 3 || this.iTiPago.getVal() == 4)

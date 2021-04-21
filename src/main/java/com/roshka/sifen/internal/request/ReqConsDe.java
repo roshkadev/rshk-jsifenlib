@@ -52,9 +52,11 @@ public class ReqConsDe extends BaseRequest {
     @Override
     RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
         Node rEnviConsDe = null;
+        String rawResponse = null;
         try {
             SOAPMessage soapMessage = ResponseUtil.parseSoapMessage(soapResponse.getSoapResponse());
             rEnviConsDe = ResponseUtil.getMainNode(soapMessage, "rEnviConsDeResponse");
+            rawResponse = ResponseUtil.getXmlFromMessage(soapMessage, false);
         } catch (SifenException e) {
             logger.warning(e.getMessage());
         }
@@ -67,7 +69,7 @@ public class ReqConsDe extends BaseRequest {
         RespuestaSifen respuestaSifen = new RespuestaSifen();
         respuestaSifen.setCodigoEstado(soapResponse.getStatus());
         respuestaSifen.setRespuesta(respuestaConsultaDE);
-        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        respuestaSifen.setRespuestaBruta(rawResponse);
         return respuestaSifen;
     }
 

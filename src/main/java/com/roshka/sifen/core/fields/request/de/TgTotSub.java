@@ -82,7 +82,7 @@ public class TgTotSub extends SifenObjectBase {
             this.dTotAntItem = this.dTotAntItem.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntPreUniIt(), BigDecimal.ZERO));
             this.dTotAnt = this.dTotAnt.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntGloPreUniIt(), BigDecimal.ZERO));
 
-            if (!cMoneOpe.toString().equals("PYG") && dCondTiCam.getVal() == 2)
+            if (!cMoneOpe.name().equals("PYG") && dCondTiCam.getVal() == 2)
                 this.dTotalGs = this.dTotalGs.add(gCamItem.getgValorItem().getgValorRestaItem().getdTotOpeGs());
         }
 
@@ -96,14 +96,14 @@ public class TgTotSub extends SifenObjectBase {
         this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(SifenUtil.coalesce(this.dComi, BigDecimal.ZERO));
 
         if (this.dComi != null) {
-            int scale = cMoneOpe.toString().equals("PYG") ? 0 : 2;
+            int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
             this.dIVAComi = this.dComi.divide(BigDecimal.valueOf(1.1), scale, RoundingMode.HALF_UP);
         }
 
         this.dTotIVA = this.dIVA5.add(this.dIVA10).subtract(this.dLiqTotIVA5).subtract(this.dLiqTotIVA10).add(this.dIVAComi);
         this.dTBasGraIVA = this.dBaseGrav5.add(this.dBaseGrav10);
 
-        if (!cMoneOpe.toString().equals("PYG") && dCondTiCam.getVal() == 1)
+        if (!cMoneOpe.name().equals("PYG") && dCondTiCam.getVal() == 1)
             this.dTotalGs = this.dTotGralOpe.multiply(dTiCam);
 
         // INSERCIONES
@@ -157,7 +157,7 @@ public class TgTotSub extends SifenObjectBase {
                 gTotSub.addChildElement("dTBasGraIVA").setTextContent(String.valueOf(this.dTBasGraIVA));
             }
 
-            if (!cMoneOpe.toString().equals("PYG"))
+            if (!cMoneOpe.name().equals("PYG"))
                 gTotSub.addChildElement("dTotalGs").setTextContent(String.valueOf(this.dTotalGs));
         }
     }

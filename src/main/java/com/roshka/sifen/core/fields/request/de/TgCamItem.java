@@ -66,11 +66,11 @@ public class TgCamItem extends SifenObjectBase {
 
         gCamItem.addChildElement("dDesProSer").setTextContent(this.dDesProSer);
         gCamItem.addChildElement("cUniMed").setTextContent(String.valueOf(this.cUniMed.getVal()));
-        gCamItem.addChildElement("dDesUniMed").setTextContent(this.cUniMed.toString());
+        gCamItem.addChildElement("dDesUniMed").setTextContent(this.cUniMed.getAbreviatura());
         gCamItem.addChildElement("dCantProSer").setTextContent(String.valueOf(this.dCantProSer));
 
         if (this.cPaisOrig != null) {
-            gCamItem.addChildElement("cPaisOrig").setTextContent(this.cPaisOrig.toString());
+            gCamItem.addChildElement("cPaisOrig").setTextContent(this.cPaisOrig.name());
             gCamItem.addChildElement("dDesPaisOrig").setTextContent(this.cPaisOrig.getNombre());
         }
 

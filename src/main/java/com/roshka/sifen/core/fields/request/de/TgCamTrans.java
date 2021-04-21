@@ -43,7 +43,7 @@ public class TgCamTrans extends SifenObjectBase {
         }
 
         if (this.cNacTrans != null) {
-            gCamTrans.addChildElement("cNacTrans").setTextContent(this.cNacTrans.toString());
+            gCamTrans.addChildElement("cNacTrans").setTextContent(this.cNacTrans.name());
             gCamTrans.addChildElement("dDesNacTrans").setTextContent(this.cNacTrans.getNombre());
         }
 

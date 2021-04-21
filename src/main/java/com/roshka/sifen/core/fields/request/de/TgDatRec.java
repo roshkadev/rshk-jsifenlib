@@ -40,7 +40,7 @@ public class TgDatRec extends SifenObjectBase {
         SOAPElement gDatRec = gDatGralOpe.addChildElement("gDatRec");
         gDatRec.addChildElement("iNatRec").setTextContent(String.valueOf(this.iNatRec.getVal()));
         gDatRec.addChildElement("iTiOpe").setTextContent(String.valueOf(this.iTiOpe.getVal()));
-        gDatRec.addChildElement("cPaisRec").setTextContent(this.cPaisRec.toString());
+        gDatRec.addChildElement("cPaisRec").setTextContent(this.cPaisRec.name());
         gDatRec.addChildElement("dDesPaisRe").setTextContent(this.cPaisRec.getNombre());
 
         if (this.iNatRec.getVal() == 1) {

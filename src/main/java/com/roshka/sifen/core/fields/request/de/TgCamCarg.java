@@ -24,14 +24,14 @@ public class TgCamCarg extends SifenObjectBase {
         SOAPElement gCamCarg = gCamGen.addChildElement("gCamCarg");
         if (this.cUniMedTotVol != null) {
             gCamCarg.addChildElement("cUniMedTotVol").setTextContent(String.valueOf(this.cUniMedTotVol.getVal()));
-            gCamCarg.addChildElement("dDesUniMedTotVol").setTextContent(this.cUniMedTotVol.getDescripcion());
+            gCamCarg.addChildElement("dDesUniMedTotVol").setTextContent(this.cUniMedTotVol.getAbreviatura());
         }
         if (this.dTotVolMerc != null)
             gCamCarg.addChildElement("dTotVolMerc").setTextContent(String.valueOf(this.dTotVolMerc));
 
         if (this.cUniMedTotPes != null) {
             gCamCarg.addChildElement("cUniMedTotPes").setTextContent(String.valueOf(this.cUniMedTotPes.getVal()));
-            gCamCarg.addChildElement("dDesUniMedTotPes").setTextContent(this.cUniMedTotPes.getDescripcion());
+            gCamCarg.addChildElement("dDesUniMedTotPes").setTextContent(this.cUniMedTotPes.getAbreviatura());
         }
         if (this.dTotPesMerc != null)
             gCamCarg.addChildElement("dTotPesMerc").setTextContent(String.valueOf(this.dTotPesMerc));

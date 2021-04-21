@@ -211,7 +211,7 @@ public enum CMondT {
     }
 
     public static CMondT getByName(String name) {
-        return Arrays.stream(CMondT.values()).filter(e -> e.toString().equalsIgnoreCase(name)).findFirst().orElse(null);
+        return Arrays.stream(CMondT.values()).filter(e -> e.name().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public String getDescripcion() {

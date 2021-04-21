@@ -49,7 +49,9 @@ abstract class BaseRequest {
 
             // Realizamos la consulta
             String requestUrl = SifenUtil.coalesce(sifenConfig.getUrlBase(), sifenConfig.getUrlBaseLocal()) + url;
-            return this.processResponse(SoapHelper.makeSoapRequest(sifenConfig, requestUrl, message));
+            RespuestaSifen response = this.processResponse(SoapHelper.makeSoapRequest(sifenConfig, requestUrl, message));
+            logger.info("Petición realizada, se formatea la respuesta");
+            return response;
         } catch (SOAPException e) {
             String msg = "Ocurrió un error al realizan la petición a: " + url + ". Mensaje: " + e.getLocalizedMessage();
             throw SifenExceptionUtil.invalidSOAPRequest(msg, e);

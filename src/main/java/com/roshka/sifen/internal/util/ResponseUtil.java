@@ -51,14 +51,7 @@ public class ResponseUtil {
     }
 
     public static SOAPMessage parseSoapMessage(SOAPMessage soapMessage) {
-        final StringWriter sw = new StringWriter();
-        try {
-            TransformerFactory.newInstance().newTransformer().transform(new DOMSource(soapMessage.getSOAPPart()), new StreamResult(sw));
-        } catch (TransformerException e) {
-            throw new RuntimeException(e);
-        }
-
-        String xml = sw.toString();
+        String xml = getXmlFromMessage(soapMessage, false);
         xml = SifenUtil.unescapeXML(xml)
                 .replaceAll("<\\?xml version=\"1.0\" encoding=\"UTF-8\"\\?>", "")
                 .replaceAll(">[\\s\r\n]*<", "><");
@@ -70,6 +63,21 @@ public class ResponseUtil {
         }
 
         return soapMessage;
+    }
+
+    public static String getXmlFromMessage(SOAPMessage soapMessage, boolean removeSpaces) {
+        final StringWriter sw = new StringWriter();
+        try {
+            TransformerFactory.newInstance().newTransformer().transform(new DOMSource(soapMessage.getSOAPPart()), new StreamResult(sw));
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
+
+        String xml = sw.toString();
+        if (removeSpaces) {
+            xml = xml.replaceAll(">[\\s\r\n]*<", "><");
+        }
+        return xml;
     }
 
     public static String getTextValue(Node node) {

@@ -28,10 +28,10 @@ public class TgOpeCom extends SifenObjectBase {
 
         gOpeCom.addChildElement("iTImp").setTextContent(String.valueOf(this.iTImp.getVal()));
         gOpeCom.addChildElement("dDesTImp").setTextContent(this.iTImp.getDescripcion());
-        gOpeCom.addChildElement("cMoneOpe").setTextContent(this.cMoneOpe.toString());
+        gOpeCom.addChildElement("cMoneOpe").setTextContent(this.cMoneOpe.name());
         gOpeCom.addChildElement("dDesMoneOpe").setTextContent(this.cMoneOpe.getDescripcion());
 
-        if (!this.cMoneOpe.toString().equals("PYG")) {
+        if (!this.cMoneOpe.name().equals("PYG")) {
             gOpeCom.addChildElement("dCondTiCam").setTextContent(String.valueOf(this.dCondTiCam.getVal()));
             if (this.dCondTiCam.getVal() == 1) {
                 gOpeCom.addChildElement("dTiCam").setTextContent(String.valueOf(this.dTiCam));

@@ -22,7 +22,7 @@ public enum TcCondNeg {
     }
 
     public static TcCondNeg getByDescription(String description) {
-        return Arrays.stream(TcCondNeg.values()).filter(e -> e.toString().equalsIgnoreCase(description)).findFirst().orElse(null);
+        return Arrays.stream(TcCondNeg.values()).filter(e -> e.name().equalsIgnoreCase(description)).findFirst().orElse(null);
     }
 
     public String getDescripcion() {

@@ -263,7 +263,7 @@ public enum PaisType {
     }
 
     public static PaisType getByName(String name) {
-        return Arrays.stream(PaisType.values()).filter(e -> e.toString().equalsIgnoreCase(name)).findFirst().orElse(null);
+        return Arrays.stream(PaisType.values()).filter(e -> e.name().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public String getNombre() {

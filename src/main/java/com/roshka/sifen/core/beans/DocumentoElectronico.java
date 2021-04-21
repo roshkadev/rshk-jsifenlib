@@ -1,17 +1,18 @@
 package com.roshka.sifen.core.beans;
 
+import com.roshka.sifen.Sifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.core.fields.request.de.*;
+import com.roshka.sifen.core.types.TTiDE;
+import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.helpers.SignatureHelper;
 import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
-import com.roshka.sifen.internal.Constants;
-import com.roshka.sifen.internal.response.SifenObjectBase;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.fields.request.de.*;
-import com.roshka.sifen.core.types.TTiDE;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -25,11 +26,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.*;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -58,14 +57,129 @@ public class DocumentoElectronico extends SifenObjectBase {
     private TgCamGen gCamGen;
     private List<TgCamDEAsoc> gCamDEAsocList;
 
+    private String enlaceQR;
     private final static Logger logger = Logger.getLogger(DocumentoElectronico.class.toString());
 
     /**
+     * Genera un objeto de tipo Documento Electrónico en base a un XML.
+     *
+     * @param xml XML a ser convertido a un objeto del tipo Documento Electrónico.
+     * @return El objeto generado en base al XML.
+     * @throws SifenException Si el XML tiene un formato inválido o, si algún dato necesario para la generación del DE
+     *                        no pudo ser encontrado.
+     */
+    public static DocumentoElectronico convertirXml(String xml) throws SifenException {
+        xml = xml.replaceAll(">[\\s\r\n]*<", "><");
+
+        // Parseamos el xml
+        Document xmlDocument;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            xmlDocument = builder.parse(new InputSource(new StringReader(xml)));
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw SifenExceptionUtil.xmlParsingError("Se produjo un error al parsear el archivo XML. Formato incorrecto.");
+        }
+
+        // Obtenemos el nodo principal
+        Node mainNode = xmlDocument.getElementsByTagName("DE").item(0);
+
+        DocumentoElectronico DE = SifenObjectFactory.getFromNode(mainNode, DocumentoElectronico.class);
+        DE.obtenerCDC();
+        return DE;
+    }
+
+    /**
+     * Calcula el CDC del Documento Electrónico en cuestión y lo retorna. Además de lo anterior, también establece los
+     * valores en el lugar correspondiente dentro del objeto.
+     * @return CDC calculado del Documento Electrónico.
+     * @throws SifenException Si alguno de los campos necesarios para el cálculo del CDC no se encuentra.
+     */
+    public String obtenerCDC() throws SifenException {
+        // Se intenta la generación del CDC
+        String CDC;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+            CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getiTiDE().getVal()), '0', 2) +
+                    SifenUtil.leftPad(this.getgDatGralOpe().getgEmis().getdRucEm(), '0', 8) +
+                    this.getgDatGralOpe().getgEmis().getdDVEmi() +
+                    this.getgTimb().getdEst() +
+                    this.getgTimb().getdPunExp() +
+                    SifenUtil.leftPad(String.valueOf(this.getgTimb().getdNumDoc()), '0', 7) +
+                    this.getgDatGralOpe().getgEmis().getiTipCont().getVal() +
+                    this.getgDatGralOpe().getdFeEmiDE().format(formatter) +
+                    this.getgOpeDE().getiTipEmi().getVal() +
+                    this.getgOpeDE().getdCodSeg();
+        } catch (Exception e) {
+            throw SifenExceptionUtil.fieldNotFound("Se produjo un error al generar el CDC. Verificar si todos los campos necesarios están presentes.");
+        }
+
+        // Se setean los valores generados en sus lugares correspondientes dentro de la clase
+        this.dDVId = SifenUtil.generateDv(CDC);
+        this.Id = CDC + this.dDVId;
+
+        return this.Id;
+    }
+
+    /**
+     * Genera un XML completo en base al Documento Electrónico actual.
+     * @return XML del Documento Electrónico.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
+     */
+    public String generarXml() throws SifenException {
+        SifenConfig sifenConfig = Sifen.getSifenConfig();
+        if (sifenConfig == null) {
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+        }
+
+        String xml = null;
+        try {
+            SOAPMessage message = this.setupSOAPElements(1, sifenConfig);
+            xml = ResponseUtil.getXmlFromMessage(message, true);
+        } catch (SOAPException e) {
+            logger.warning("Se produjo un error al generar el XML.");
+            e.printStackTrace();
+        }
+
+        return xml;
+    }
+
+    /**
+     * Genera un XML completo en base al Documento Electrónico actual, y lo guarda como archivo en la ruta definida.
+     * @param rutaDestino Ruta absoluta (con nombre de archivo y extensión incluidos) en la que será creada el archivo
+     *                    XML.<br> Ejemplo: "C:\Users\Roshka\Documents\de.xml"
+     * @return <strong>true</strong> si el archivo fue creado correctamente, <strong>false</strong> de lo contrario.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
+     */
+    public boolean generarXml(String rutaDestino) throws SifenException {
+        // Obtenemos el xml en string
+        String xml = this.generarXml();
+
+        // Creamos o modificamos el archivo, y escribimos en él el xml.
+        boolean res = false;
+        try {
+            FileWriter fileWriter = new FileWriter(rutaDestino, false);
+            fileWriter.write(xml);
+            fileWriter.close();
+            res = true;
+        } catch (IOException e) {
+            logger.warning("Se produjo un error al escribir en el archivo especificado.");
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    /**
      * Método interno, no usar.
-     * @param dId -
+     *
+     * @param dId         -
      * @param sifenConfig -
      * @return -
-     * @throws SOAPException -
+     * @throws SOAPException  -
      * @throws SifenException -
      */
     public SOAPMessage setupSOAPElements(long dId, SifenConfig sifenConfig) throws SOAPException, SifenException {
@@ -84,9 +198,10 @@ public class DocumentoElectronico extends SifenObjectBase {
 
     /**
      * Método interno, no usar.
-     * @param parentNode -
+     *
+     * @param parentNode  -
      * @param sifenConfig -
-     * @throws SOAPException -
+     * @throws SOAPException  -
      * @throws SifenException -
      */
     public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
@@ -141,12 +256,14 @@ public class DocumentoElectronico extends SifenObjectBase {
         SignedInfo signedInfo = SignatureHelper.signDocument(sifenConfig, rDE, this.getId());
 
         // Preparación de la URL del QR
+        this.enlaceQR = this.generateQRLink(signedInfo, sifenConfig);
         SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
-        gCamFuFD.addChildElement("dCarQR").setTextContent(this.generateQRLink(signedInfo, sifenConfig));
+        gCamFuFD.addChildElement("dCarQR").setTextContent(this.enlaceQR);
     }
 
     /**
      * Método interno, no usar.
+     *
      * @param value -
      * @throws SifenException -
      */
@@ -187,122 +304,6 @@ public class DocumentoElectronico extends SifenObjectBase {
                 this.gCamDEAsocList.add(SifenObjectFactory.getFromNode(value, TgCamDEAsoc.class));
                 break;
         }
-    }
-
-    /**
-     * Calcula el CDC del Documento Electrónico en cuestión y lo retorna. Además de lo anterior, también establece los
-     * valores en el lugar correspondiente dentro del objeto.
-     * @return CDC calculado del Documento Electrónico.
-     * @throws SifenException Si alguno de los campos necesarios para el cálculo del CDC no se encuentra.
-     */
-    public String obtenerCDC() throws SifenException {
-        // Se intenta la generación del CDC
-        String CDC;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-            CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getiTiDE().getVal()), '0', 2) +
-                    SifenUtil.leftPad(this.getgDatGralOpe().getgEmis().getdRucEm(), '0', 8) +
-                    this.getgDatGralOpe().getgEmis().getdDVEmi() +
-                    this.getgTimb().getdEst() +
-                    this.getgTimb().getdPunExp() +
-                    SifenUtil.leftPad(String.valueOf(this.getgTimb().getdNumDoc()), '0', 7) +
-                    this.getgDatGralOpe().getgEmis().getiTipCont().getVal() +
-                    this.getgDatGralOpe().getdFeEmiDE().format(formatter) +
-                    this.getgOpeDE().getiTipEmi().getVal() +
-                    this.getgOpeDE().getdCodSeg();
-        } catch (Exception e) {
-            throw SifenExceptionUtil.fieldNotFound("Se produjo un error al generar el CDC. Verificar si todos los campos necesarios están presentes.");
-        }
-
-        // Se setean los valores generados en sus lugares correspondientes dentro de la clase
-        this.dDVId = SifenUtil.generateDv(CDC);
-        this.Id = CDC + this.dDVId;
-
-        return this.Id;
-    }
-
-    /**
-     * Método interno, no usar.
-     * @param dId -
-     * @param sifenConfig -
-     * @return -
-     * @throws SifenException -
-     */
-    public String getXmlString(long dId, SifenConfig sifenConfig) throws SifenException {
-        String xml = null;
-        try {
-            SOAPMessage message = this.setupSOAPElements(dId, sifenConfig);
-
-            final StringWriter sw = new StringWriter();
-            try {
-                TransformerFactory.newInstance().newTransformer().transform(new DOMSource(message.getSOAPPart()), new StreamResult(sw));
-            } catch (TransformerException e) {
-                throw new RuntimeException(e);
-            }
-
-            xml = sw.toString().replaceAll(">[\\s\r\n]*<", "><");
-        } catch (SOAPException e) {
-            logger.warning("Se produjo un error al generar el XML.");
-            e.printStackTrace();
-        }
-
-        return xml;
-    }
-
-    /**
-     * Método interno, no usar.
-     * @param dId -
-     * @param sifenConfig -
-     * @param filePath -
-     * @return -
-     * @throws SifenException -
-     */
-    public boolean saveXml(long dId, SifenConfig sifenConfig, String filePath) throws SifenException {
-        // Obtenemos el xml en string
-        String xml = this.getXmlString(dId, sifenConfig);
-
-        // Creamos o modificamos el archivo, y escribimos en él el xml.
-        boolean res = false;
-        try {
-
-            FileWriter fileWriter = new FileWriter(filePath, false);
-            fileWriter.write(xml);
-            fileWriter.close();
-            res = true;
-        } catch (IOException e) {
-            logger.warning("Se produjo un error al escribir en el archivo especificado.");
-            e.printStackTrace();
-        }
-
-        return res;
-    }
-
-    /**
-     * Método interno, no usar.
-     * @param xml -
-     * @return -
-     * @throws SifenException -
-     */
-    public static DocumentoElectronico parseXml(String xml) throws SifenException {
-        xml = xml.replaceAll(">[\\s\r\n]*<", "><");
-
-        // Parseamos el xml
-        Document xmlDocument;
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            xmlDocument = builder.parse(new InputSource(new StringReader(xml)));
-        } catch (ParserConfigurationException | IOException | SAXException e) {
-            throw SifenExceptionUtil.xmlParsingError("Se produjo un error al parsear el archivo XML. Formato incorrecto.");
-        }
-
-        // Obtenemos el nodo principal
-        Node mainNode = xmlDocument.getElementsByTagName("DE").item(0);
-
-        DocumentoElectronico DE = SifenObjectFactory.getFromNode(mainNode, DocumentoElectronico.class);
-        DE.obtenerCDC();
-        return DE;
     }
 
     private String generateQRLink(SignedInfo signedInfo, SifenConfig sifenConfig) {
@@ -423,5 +424,13 @@ public class DocumentoElectronico extends SifenObjectBase {
 
     public void setgCamDEAsocList(List<TgCamDEAsoc> gCamDEAsocList) {
         this.gCamDEAsocList = gCamDEAsocList;
+    }
+
+    public String getEnlaceQR() {
+        return enlaceQR;
+    }
+
+    public void setEnlaceQR(String enlaceQR) {
+        this.enlaceQR = enlaceQR;
     }
 }

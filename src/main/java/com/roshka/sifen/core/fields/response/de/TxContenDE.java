@@ -23,7 +23,8 @@ public class TxContenDE extends SifenObjectBase {
                     if (node.getLocalName().equals("DE")) {
                         DE = SifenObjectFactory.getFromNode(node, DocumentoElectronico.class);
                         DE.obtenerCDC();
-                        break;
+                    } else if (node.getLocalName().equals("gCamFuFD")) {
+                        getQrLink(node);
                     }
                 }
                 break;
@@ -46,5 +47,15 @@ public class TxContenDE extends SifenObjectBase {
 
     public TxContenEv getxContEv() {
         return xContEv;
+    }
+
+    private void getQrLink(Node gCamFuFD) {
+        NodeList childNodes = gCamFuFD.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node node = childNodes.item(i);
+            if (node.getLocalName().equals("dCarQR")) {
+                DE.setEnlaceQR(ResponseUtil.getTextValue(node));
+            }
+        }
     }
 }
