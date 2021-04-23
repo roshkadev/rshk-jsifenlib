@@ -15,7 +15,7 @@ public class TgPagCheq extends SifenObjectBase {
 
     public void setupSOAPElements(SOAPElement gPaConEIni) throws SOAPException {
         SOAPElement gPagCheq = gPaConEIni.addChildElement("gPagCheq");
-        gPagCheq.addChildElement("dNumCheq").setTextContent(SifenUtil.leftPad(this.dNumCheq, '0', 8));
+        gPagCheq.addChildElement("dNumCheq").setTextContent(this.dNumCheq);
         gPagCheq.addChildElement("dBcoEmi").setTextContent(this.dBcoEmi);
     }
 
@@ -33,7 +33,7 @@ public class TgPagCheq extends SifenObjectBase {
     }
 
     public void setdNumCheq(String dNumCheq) {
-        this.dNumCheq = dNumCheq;
+        this.dNumCheq = SifenUtil.leftPad(dNumCheq, '0', 8);
     }
 
     public String getdBcoEmi() {

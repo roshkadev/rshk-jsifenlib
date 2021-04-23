@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class TgCamCond extends SifenObjectBase {
     private TiCondOpe iCondOpe;
-    private List<TgPaConEIni> gPaCondEIniList;
+    private List<TgPaConEIni> gPaConEIniList;
     private TgPagCred gPagCred;
 
     public void setupSOAPElements(SOAPElement gDtipDE) throws SOAPException {
@@ -23,8 +23,8 @@ public class TgCamCond extends SifenObjectBase {
         gCamCond.addChildElement("iCondOpe").setTextContent(String.valueOf(this.iCondOpe.getVal()));
         gCamCond.addChildElement("dDCondOpe").setTextContent(this.iCondOpe.getDescripcion());
 
-        if (gPaCondEIniList != null || this.iCondOpe.getVal() == 1 || this.gPagCred.getdMonEnt() != null) {
-            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(gPaCondEIniList)) {
+        if (gPaConEIniList != null || this.iCondOpe.getVal() == 1 || this.gPagCred.getdMonEnt() != null) {
+            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(gPaConEIniList)) {
                 gPaConEIni.setupSOAPElements(gCamCond);
             }
         }
@@ -40,10 +40,10 @@ public class TgCamCond extends SifenObjectBase {
                 this.iCondOpe = TiCondOpe.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
                 break;
             case "gPaConEIni":
-                if (this.gPaCondEIniList == null) {
-                    this.gPaCondEIniList = new ArrayList<>();
+                if (this.gPaConEIniList == null) {
+                    this.gPaConEIniList = new ArrayList<>();
                 }
-                this.gPaCondEIniList.add(SifenObjectFactory.getFromNode(value, TgPaConEIni.class));
+                this.gPaConEIniList.add(SifenObjectFactory.getFromNode(value, TgPaConEIni.class));
                 break;
             case "gPagCred":
                 this.gPagCred = SifenObjectFactory.getFromNode(value, TgPagCred.class);
@@ -67,11 +67,11 @@ public class TgCamCond extends SifenObjectBase {
         this.gPagCred = gPagCred;
     }
 
-    public List<TgPaConEIni> getgPaCondEIniList() {
-        return gPaCondEIniList;
+    public List<TgPaConEIni> getgPaConEIniList() {
+        return gPaConEIniList;
     }
 
-    public void setgPaCondEIniList(List<TgPaConEIni> gPaCondEIniList) {
-        this.gPaCondEIniList = gPaCondEIniList;
+    public void setgPaConEIniList(List<TgPaConEIni> gPaConEIniList) {
+        this.gPaConEIniList = gPaConEIniList;
     }
 }

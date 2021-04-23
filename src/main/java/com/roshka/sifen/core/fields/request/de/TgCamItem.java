@@ -54,7 +54,7 @@ public class TgCamItem extends SifenObjectBase {
             gCamItem.addChildElement("dNCM").setTextContent(String.valueOf(this.dNCM));
 
         if (this.dDncpG != null || iTiOpe.getVal() == 3) {
-            gCamItem.addChildElement("dDncpG").setTextContent(SifenUtil.leftPad(this.dDncpG, '0', 8));
+            gCamItem.addChildElement("dDncpG").setTextContent(this.dDncpG);
             gCamItem.addChildElement("dDncpE").setTextContent(this.dDncpE);
         }
 
@@ -199,7 +199,7 @@ public class TgCamItem extends SifenObjectBase {
     }
 
     public void setdDncpG(String dDncpG) {
-        this.dDncpG = dDncpG;
+        this.dDncpG = SifenUtil.leftPad(dDncpG, '0', 8);
     }
 
     public String getdDncpE() {

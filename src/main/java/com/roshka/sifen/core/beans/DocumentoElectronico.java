@@ -102,11 +102,11 @@ public class DocumentoElectronico extends SifenObjectBase {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getiTiDE().getVal()), '0', 2) +
-                    SifenUtil.leftPad(this.getgDatGralOpe().getgEmis().getdRucEm(), '0', 8) +
+                    this.getgDatGralOpe().getgEmis().getdRucEm() +
                     this.getgDatGralOpe().getgEmis().getdDVEmi() +
                     this.getgTimb().getdEst() +
                     this.getgTimb().getdPunExp() +
-                    SifenUtil.leftPad(String.valueOf(this.getgTimb().getdNumDoc()), '0', 7) +
+                    this.getgTimb().getdNumDoc() +
                     this.getgDatGralOpe().getgEmis().getiTipCont().getVal() +
                     this.getgDatGralOpe().getdFeEmiDE().format(formatter) +
                     this.getgOpeDE().getiTipEmi().getVal() +
@@ -239,16 +239,18 @@ public class DocumentoElectronico extends SifenObjectBase {
             this.gCamGen.setupSOAPElements(DE, iTiDE);
 
         if (iTiDE.getVal() == 4 || iTiDE.getVal() == 5 || iTiDE.getVal() == 6 || ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.gCamDEAsocList != null)) {
-            boolean retencionExists = false;
-            for (TgPaConEIni gPaCondEIni : this.gDtipDE.getgCamCond().getgPaCondEIniList()) {
-                if (gPaCondEIni.getiTiPago().getVal() == 10) {
-                    retencionExists = true;
-                    break;
+            boolean withholdingExists = false; // Retención
+            if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 4) && this.gDtipDE.getgCamCond().getgPaConEIniList() != null) {
+                for (TgPaConEIni gPaConEIni : this.gDtipDE.getgCamCond().getgPaConEIniList()) {
+                    if (gPaConEIni.getiTiPago().getVal() == 10) {
+                        withholdingExists = true;
+                        break;
+                    }
                 }
             }
 
             for (TgCamDEAsoc gCamDEAsoc : this.gCamDEAsocList) {
-                gCamDEAsoc.setupSOAPElements(DE, this.gDatGralOpe.getgOpeCom().getiTipTra(), retencionExists);
+                gCamDEAsoc.setupSOAPElements(DE, this.gDatGralOpe.getgOpeCom().getiTipTra(), withholdingExists);
             }
         }
 

@@ -30,7 +30,7 @@ public class TgCamDEAsoc extends SifenObjectBase {
     private BigInteger dNumCons;
     private String dNumControl;
 
-    public void setupSOAPElements(SOAPElement DE, TTipTra iTipTra, boolean retencionExists) throws SOAPException {
+    public void setupSOAPElements(SOAPElement DE, TTipTra iTipTra, boolean withholdingExists) throws SOAPException {
         SOAPElement gCamDEAsoc = DE.addChildElement("gCamDEAsoc");
         gCamDEAsoc.addChildElement("iTipDocAso").setTextContent(String.valueOf(this.iTipDocAso.getVal()));
         gCamDEAsoc.addChildElement("dDesTipDocAso").setTextContent(this.iTipDocAso.getDescripcion());
@@ -39,9 +39,9 @@ public class TgCamDEAsoc extends SifenObjectBase {
             gCamDEAsoc.addChildElement("dCdCDERef").setTextContent(this.dCdCDERef);
         else if (this.iTipDocAso.getVal() == 2) {
             gCamDEAsoc.addChildElement("dNTimDI").setTextContent(this.dNTimDI);
-            gCamDEAsoc.addChildElement("dEstDocAso").setTextContent(SifenUtil.leftPad(this.dEstDocAso, '0', 3));
-            gCamDEAsoc.addChildElement("dPExpDocAso").setTextContent(SifenUtil.leftPad(this.dPExpDocAso, '0', 3));
-            gCamDEAsoc.addChildElement("dNumDocAso").setTextContent(SifenUtil.leftPad(this.dNumDocAso, '0', 7));
+            gCamDEAsoc.addChildElement("dEstDocAso").setTextContent(this.dEstDocAso);
+            gCamDEAsoc.addChildElement("dPExpDocAso").setTextContent(this.dPExpDocAso);
+            gCamDEAsoc.addChildElement("dNumDocAso").setTextContent(this.dNumDocAso);
             gCamDEAsoc.addChildElement("iTipoDocAso").setTextContent(String.valueOf(this.iTipoDocAso.getVal()));
             gCamDEAsoc.addChildElement("dDTipoDocAso").setTextContent(this.iTipoDocAso.getDescripcion());
             gCamDEAsoc.addChildElement("dFecEmiDI").setTextContent(this.dFecEmiDI.toString());
@@ -58,7 +58,7 @@ public class TgCamDEAsoc extends SifenObjectBase {
         if (iTipTra.getVal() == 12)
             gCamDEAsoc.addChildElement("dNumResCF").setTextContent(this.dNumResCF);
 
-        if (retencionExists)
+        if (withholdingExists)
             gCamDEAsoc.addChildElement("dNumComRet").setTextContent(this.dNumComRet);
     }
 
@@ -136,7 +136,7 @@ public class TgCamDEAsoc extends SifenObjectBase {
     }
 
     public void setdEstDocAso(String dEstDocAso) {
-        this.dEstDocAso = dEstDocAso;
+        this.dEstDocAso = SifenUtil.leftPad(dEstDocAso, '0', 3);
     }
 
     public String getdPExpDocAso() {
@@ -144,7 +144,7 @@ public class TgCamDEAsoc extends SifenObjectBase {
     }
 
     public void setdPExpDocAso(String dPExpDocAso) {
-        this.dPExpDocAso = dPExpDocAso;
+        this.dPExpDocAso = SifenUtil.leftPad(dPExpDocAso, '0', 3);
     }
 
     public String getdNumDocAso() {
@@ -152,7 +152,7 @@ public class TgCamDEAsoc extends SifenObjectBase {
     }
 
     public void setdNumDocAso(String dNumDocAso) {
-        this.dNumDocAso = dNumDocAso;
+        this.dNumDocAso = SifenUtil.leftPad(dNumDocAso, '0', 7);
     }
 
     public TiTIpoDoc getiTipoDocAso() {
