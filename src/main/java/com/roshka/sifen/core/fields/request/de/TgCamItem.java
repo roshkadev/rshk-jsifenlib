@@ -39,10 +39,16 @@ public class TgCamItem extends SifenObjectBase {
 
     public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
-        TTipTra iTipTra = gDatGralOpe.getgOpeCom().getiTipTra();
-        TdCondTiCam dCondTiCam = gDatGralOpe.getgOpeCom().getdCondTiCam();
-        TTImp iTImp = gDatGralOpe.getgOpeCom().getiTImp();
-        CMondT cMoneOpe = gDatGralOpe.getgOpeCom().getcMoneOpe();
+        TTipTra iTipTra = null;
+        TdCondTiCam dCondTiCam = null;
+        TTImp iTImp = null;
+        CMondT cMoneOpe = null;
+        if (gDatGralOpe.getgOpeCom() != null) {
+            iTipTra = gDatGralOpe.getgOpeCom().getiTipTra();
+            dCondTiCam = gDatGralOpe.getgOpeCom().getdCondTiCam();
+            iTImp = gDatGralOpe.getgOpeCom().getiTImp();
+            cMoneOpe = gDatGralOpe.getgOpeCom().getcMoneOpe();
+        }
 
         SOAPElement gCamItem = gDtipDE.addChildElement("gCamItem");
         gCamItem.addChildElement("dCodInt").setTextContent(this.dCodInt);
@@ -88,13 +94,14 @@ public class TgCamItem extends SifenObjectBase {
         if ((iTiDE.getVal() == 7 && this.cRelMerc != null) || this.dPorQuiMer != null)
             gCamItem.addChildElement("dPorQuiMer").setTextContent(String.valueOf(this.dPorQuiMer));
 
-        if (iTipTra.getVal() == 9 || this.dCDCAnticipo != null)
+        if ((iTipTra != null && iTipTra.getVal() == 9) || this.dCDCAnticipo != null)
             gCamItem.addChildElement("dCDCAnticipo").setTextContent(this.dCDCAnticipo);
 
-        if (iTiDE.getVal() != 7)
+        if (iTiDE.getVal() != 7) {
             this.gValorItem.setupSOAPElements(gCamItem, iTiDE, dCondTiCam, iTImp, this.dCantProSer);
+        }
 
-        if (((iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) && (iTiDE.getVal() != 4 && iTiDE.getVal() != 7)) || iTImp.getVal() != 2)
+        if (((iTiDE.getVal() != 4 && iTiDE.getVal() != 7) && iTImp != null && (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5)) || (iTImp != null && iTImp.getVal() != 2))
             this.gCamIVA.setupSOAPElements(gCamItem, cMoneOpe, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
 
         if (this.gRasMerc != null)

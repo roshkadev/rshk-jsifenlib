@@ -20,7 +20,7 @@ public class TgGrupSeg extends SifenObjectBase {
         if (this.dCodEmpSeg != null)
             gGrupSeg.addChildElement("dCodEmpSeg").setTextContent(this.dCodEmpSeg);
 
-        for (TgGrupPolSeg gGrupPolSeg : gGrupPolSegList) {
+        for (TgGrupPolSeg gGrupPolSeg : this.gGrupPolSegList) {
             gGrupPolSeg.setupSOAPElements(gGrupSeg);
         }
     }

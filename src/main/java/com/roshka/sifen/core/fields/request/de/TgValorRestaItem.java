@@ -38,12 +38,11 @@ public class TgValorRestaItem extends SifenObjectBase {
             gValorRestaItem.addChildElement("dDescGloItem").setTextContent(String.valueOf(this.dDescGloItem));
 
         gValorRestaItem.addChildElement("dAntPreUniIt").setTextContent(String.valueOf(SifenUtil.coalesce(this.dAntPreUniIt, BigDecimal.ZERO)));
-
         gValorRestaItem.addChildElement("dAntGloPreUniIt").setTextContent(String.valueOf(SifenUtil.coalesce(this.dAntGloPreUniIt, BigDecimal.ZERO)));
 
         if (iTiDE.getVal() == 4) {
             this.dTotOpeItem = dPUniProSer.multiply(dCantProSer);
-        } else if (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) {
+        } else if (iTImp != null && (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5)) {
             this.dTotOpeItem = (dPUniProSer.subtract(SifenUtil.coalesce(this.dDescItem, BigDecimal.ZERO))
                     .subtract(SifenUtil.coalesce(this.dDescGloItem, BigDecimal.ZERO))
                     .subtract(SifenUtil.coalesce(this.dAntPreUniIt, BigDecimal.ZERO))

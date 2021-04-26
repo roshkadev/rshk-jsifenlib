@@ -30,7 +30,7 @@ public class TgCamNRE extends SifenObjectBase {
         if (this.dKmR != 0)
             gCamNRE.addChildElement("dKmR").setTextContent(String.valueOf(this.dKmR));
 
-        if (dFecEm != null)
+        if (this.dFecEm != null)
             gCamNRE.addChildElement("dFecEm").setTextContent(this.dFecEm.toString());
     }
 

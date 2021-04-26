@@ -55,7 +55,7 @@ public class TgCamDEAsoc extends SifenObjectBase {
             }
         }
 
-        if (iTipTra.getVal() == 12)
+        if (iTipTra != null && iTipTra.getVal() == 12)
             gCamDEAsoc.addChildElement("dNumResCF").setTextContent(this.dNumResCF);
 
         if (withholdingExists)

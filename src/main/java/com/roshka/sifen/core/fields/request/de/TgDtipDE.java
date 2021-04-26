@@ -38,7 +38,7 @@ public class TgDtipDE extends SifenObjectBase {
         if (iTiDE.getVal() == 1 || iTiDE.getVal() == 4)
             this.gCamCond.setupSOAPElements(gDtipDE);
 
-        for (TgCamItem gCamItem : gCamItemList) {
+        for (TgCamItem gCamItem : this.gCamItemList) {
             gCamItem.setupSOAPElements(gDtipDE, iTiDE, gDatGralOpe);
         }
 
@@ -46,7 +46,7 @@ public class TgDtipDE extends SifenObjectBase {
             this.gCamEsp.setupSOAPElements(gDtipDE);
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.gTransp != null))
-            this.gTransp.setupSOAPElements(gDtipDE, iTiDE, this.gCamNRE.getiMotEmiNR());
+            this.gTransp.setupSOAPElements(gDtipDE, iTiDE, this.gCamNRE != null ? this.gCamNRE.getiMotEmiNR() : null);
     }
 
     @Override

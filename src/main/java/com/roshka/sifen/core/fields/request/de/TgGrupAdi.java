@@ -28,8 +28,8 @@ public class TgGrupAdi extends SifenObjectBase {
             gGrupAdi.addChildElement("dFecFinC").setTextContent(this.dFecFinC.toString());
         }
 
-        if (dVencPagList != null) {
-            for (LocalDate dVencPag : dVencPagList) {
+        if (this.dVencPagList != null) {
+            for (LocalDate dVencPag : this.dVencPagList) {
                 gGrupAdi.addChildElement("dVencPag").setTextContent(dVencPag.toString());
             }
         }

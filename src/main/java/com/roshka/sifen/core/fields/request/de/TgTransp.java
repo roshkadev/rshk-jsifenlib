@@ -47,7 +47,7 @@ public class TgTransp extends SifenObjectBase {
         if (this.dNuManif != null)
             gTransp.addChildElement("dNuManif").setTextContent(this.dNuManif);
 
-        if (iMotEmiNR.getVal() == 5)
+        if (iMotEmiNR != null && iMotEmiNR.getVal() == 5)
             gTransp.addChildElement("dNuDespImp").setTextContent(this.dNuDespImp);
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() == 1 && this.dIniTras != null)) {
@@ -64,13 +64,13 @@ public class TgTransp extends SifenObjectBase {
             this.gCamSal.setupSOAPElements(gTransp);
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gCamEntList != null)) {
-            for (TgCamEnt gCamEnt : gCamEntList) {
+            for (TgCamEnt gCamEnt : this.gCamEntList) {
                 gCamEnt.setupSOAPElements(gTransp);
             }
         }
 
         if (iTiDE.getVal() == 7 || (iTiDE.getVal() != 4 && iTiDE.getVal() != 5 && iTiDE.getVal() != 6 && this.gVehTrasList != null)) {
-            for (TgVehTras gVehTras : gVehTrasList) {
+            for (TgVehTras gVehTras : this.gVehTrasList) {
                 gVehTras.setupSOAPElements(gTransp, this.iModTrans);
             }
         }

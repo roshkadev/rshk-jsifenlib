@@ -23,8 +23,8 @@ public class TgCamCond extends SifenObjectBase {
         gCamCond.addChildElement("iCondOpe").setTextContent(String.valueOf(this.iCondOpe.getVal()));
         gCamCond.addChildElement("dDCondOpe").setTextContent(this.iCondOpe.getDescripcion());
 
-        if (gPaConEIniList != null || this.iCondOpe.getVal() == 1 || this.gPagCred.getdMonEnt() != null) {
-            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(gPaConEIniList)) {
+        if (this.iCondOpe.getVal() == 1 || this.gPagCred.getdMonEnt() != null || this.gPaConEIniList != null) {
+            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(this.gPaConEIniList)) {
                 gPaConEIni.setupSOAPElements(gCamCond);
             }
         }

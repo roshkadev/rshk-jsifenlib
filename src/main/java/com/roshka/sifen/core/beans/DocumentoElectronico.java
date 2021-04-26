@@ -250,7 +250,7 @@ public class DocumentoElectronico extends SifenObjectBase {
             }
 
             for (TgCamDEAsoc gCamDEAsoc : this.gCamDEAsocList) {
-                gCamDEAsoc.setupSOAPElements(DE, this.gDatGralOpe.getgOpeCom().getiTipTra(), withholdingExists);
+                gCamDEAsoc.setupSOAPElements(DE, this.gDatGralOpe.getgOpeCom() != null ? this.gDatGralOpe.getgOpeCom().getiTipTra() : null, withholdingExists);
             }
         }
 
