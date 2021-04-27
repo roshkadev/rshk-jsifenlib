@@ -111,7 +111,7 @@ public class TgTotSub extends SifenObjectBase {
             gTotSub.addChildElement("dSubExe").setTextContent(String.valueOf(this.dSubExe));
             gTotSub.addChildElement("dSubExo").setTextContent(String.valueOf(this.dSubExo));
 
-            if (iTImp.getVal() == 1) {
+            if (iTImp.getVal() == 1 || iTImp.getVal() == 5) {
                 gTotSub.addChildElement("dSub5").setTextContent(String.valueOf(this.dSub5));
                 gTotSub.addChildElement("dSub10").setTextContent(String.valueOf(this.dSub10));
             }
