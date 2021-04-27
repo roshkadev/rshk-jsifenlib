@@ -101,7 +101,7 @@ public class TgCamItem extends SifenObjectBase {
             this.gValorItem.setupSOAPElements(gCamItem, iTiDE, dCondTiCam, iTImp, this.dCantProSer);
         }
 
-        if (((iTiDE.getVal() != 4 && iTiDE.getVal() != 7) && iTImp != null && (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5)) || (iTImp != null && iTImp.getVal() != 2))
+        if (iTImp != null && (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) && iTiDE.getVal() != 4 && iTiDE.getVal() != 7)
             this.gCamIVA.setupSOAPElements(gCamItem, cMoneOpe, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
 
         if (this.gRasMerc != null)
