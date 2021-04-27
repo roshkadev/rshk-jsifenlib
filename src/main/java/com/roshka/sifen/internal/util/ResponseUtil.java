@@ -57,7 +57,7 @@ public class ResponseUtil {
                 .replaceAll(">[\\s\r\n]*<", "><");
 
         try {
-            soapMessage = SoapHelper.parseSoapMessage(soapMessage.getMimeHeaders(), new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+            soapMessage = SoapHelper.parseSoapMessage(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
         } catch (SOAPException | IOException e) {
             logger.info("Se produjo un error al parsear la respuesta XML. Ignorando.");
         }
