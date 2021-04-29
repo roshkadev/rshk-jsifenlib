@@ -69,7 +69,7 @@ public class ReqConsDe extends BaseRequest {
         RespuestaSifen respuestaSifen = new RespuestaSifen();
         respuestaSifen.setCodigoEstado(soapResponse.getStatus());
         respuestaSifen.setRespuesta(respuestaConsultaDE);
-        respuestaSifen.setRespuestaBruta(rawResponse);
+        respuestaSifen.setRespuestaBruta(rawResponse != null ? rawResponse : new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
         return respuestaSifen;
     }
 

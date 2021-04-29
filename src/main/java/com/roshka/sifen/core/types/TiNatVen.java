@@ -3,8 +3,8 @@ package com.roshka.sifen.core.types;
 import java.util.Arrays;
 
 public enum TiNatVen {
-    NO_CONTRIBUYENTE((short) 1, "No Contribuyente"),
-    EXRANJERO((short) 2, "Extranjero");
+    NO_CONTRIBUYENTE((short) 1, "No contribuyente"),
+    EXTRANJERO((short) 2, "Extranjero");
 
     private short val;
     private String descripcion;

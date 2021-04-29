@@ -238,7 +238,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         if (this.gCamGen != null)
             this.gCamGen.setupSOAPElements(DE, iTiDE);
 
-        if (iTiDE.getVal() == 4 || iTiDE.getVal() == 5 || iTiDE.getVal() == 6 || ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7) && this.gCamDEAsocList != null)) {
+        if (iTiDE.getVal() == 4 || iTiDE.getVal() == 5 || iTiDE.getVal() == 6 || ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7 || iTiDE.getVal() == 8) && this.gCamDEAsocList != null)) {
             boolean withholdingExists = false; // Retención
             if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 4) && this.gDtipDE.getgCamCond().getgPaConEIniList() != null) {
                 for (TgPaConEIni gPaConEIni : this.gDtipDE.getgCamCond().getgPaConEIniList()) {
