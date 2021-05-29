@@ -113,7 +113,9 @@ realizados.
 
 `RSHK jsifenlib` está licenciada bajo el MIT License. Ver el archivo [LICENCIA.md](LICENCIA.md) para más detalles.
 
-## Algunas empresas que usan en producción esta librería para sus implementaciones de SIFEN (*)
+## Empresas usuarias de jsifenlib
+
+Algunas empresas que usan en producción esta librería para sus implementaciones de SIFEN (*) son:
 
 1. [Taxare S.A.](https://www.taxit.com.py) para su producto TAXit! (2021-05)
 
