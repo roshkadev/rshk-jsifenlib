@@ -17,7 +17,7 @@ public class TgPagTarCD extends SifenObjectBase {
     private String dRUCProTar;
     private short dDVProTar;
     private TiForProPa iForProPa;
-    private int dCodAuOpe;
+    private long dCodAuOpe;
     private String dNomTit;
     private short dNumTarj;
 
@@ -69,7 +69,7 @@ public class TgPagTarCD extends SifenObjectBase {
                 this.iForProPa = TiForProPa.getByVal(Short.parseShort(ResponseUtil.getTextValue(value)));
                 break;
             case "dCodAuOpe":
-                this.dCodAuOpe = Integer.parseInt(ResponseUtil.getTextValue(value));
+                this.dCodAuOpe = Long.parseLong(ResponseUtil.getTextValue(value));
                 break;
             case "dNomTit":
                 this.dNomTit = ResponseUtil.getTextValue(value);
@@ -128,7 +128,7 @@ public class TgPagTarCD extends SifenObjectBase {
         this.iForProPa = iForProPa;
     }
 
-    public int getdCodAuOpe() {
+    public long getdCodAuOpe() {
         return dCodAuOpe;
     }
 
