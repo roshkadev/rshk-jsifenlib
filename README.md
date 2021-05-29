@@ -121,7 +121,8 @@ Algunas empresas que usan en producción esta librería para sus implementacione
 
 (*) Querés agregar la tuya? Envianos un [email](mailto:pablo@roshka.com.py) para incluirla 
 
-## Autores
+## Autores y Responsables
 
 - Pablo Santa Cruz ([github/pablo](https://github.com/pablo))
 - Martin Zarza ([github/martinzarza](https://github.com/martinzarza))
+- David Ayala ([github/david-ayala](https://github.com/david-ayala))
