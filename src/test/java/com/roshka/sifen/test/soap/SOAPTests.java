@@ -1,10 +1,10 @@
 package com.roshka.sifen.test.soap;
 
 import com.roshka.sifen.Sifen;
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.core.beans.response.*;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.fields.request.de.*;
 import com.roshka.sifen.core.fields.request.event.TgGroupTiEvt;
@@ -56,7 +56,7 @@ public class SOAPTests {
     @Test
     @Ignore
     public void testConsultaRUC() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaRUC("788643");
+        RespuestaConsultaRuc ret = Sifen.consultaRUC("788643");
         logger.info(ret.toString());
     }
 
@@ -181,14 +181,14 @@ public class SOAPTests {
 
         logger.info("CDC del Documento Electrónico -> " + DE.obtenerCDC());
 
-        RespuestaSifen ret = Sifen.recepcionDE(DE);
+        RespuestaRecepcionDE ret = Sifen.recepcionDE(DE);
         logger.info(ret.toString());
     }
 
     @Test
     @Ignore
     public void testConsultaDE() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaDE("01800805534001002000000722021040613265708133");
+        RespuestaConsultaDE ret = Sifen.consultaDE("01800805534001002000000722021040613265708133");
         logger.info(ret.toString());
     }
 
@@ -230,7 +230,7 @@ public class SOAPTests {
         EventosDE eventosDE = new EventosDE();
         eventosDE.setrGesEveList(Collections.singletonList(rGesEve1));
 
-        RespuestaSifen ret = Sifen.recepcionEvento(eventosDE);
+        RespuestaRecepcionEv ret = Sifen.recepcionEvento(eventosDE);
         logger.info(ret.toString());
     }
 
@@ -361,14 +361,14 @@ public class SOAPTests {
         // Grupo E
         DE.setgTotSub(new TgTotSub());
 
-        RespuestaSifen ret = Sifen.recepcionLoteDE(Collections.singletonList(DE));
+        RespuestaRecepcionLoteDE ret = Sifen.recepcionLoteDE(Collections.singletonList(DE));
         logger.info(ret.toString());
     }
 
     @Test
     @Ignore
     public void testConsultaLoteDe() throws SifenException {
-        RespuestaSifen ret = Sifen.consultaLoteDE("109051592123784");
+        RespuestaConsultaLoteDE ret = Sifen.consultaLoteDE("109051592123784");
         logger.info(ret.toString());
     }
 }

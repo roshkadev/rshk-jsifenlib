@@ -1,7 +1,7 @@
 package com.roshka.sifen;
 
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
+import com.roshka.sifen.core.beans.response.*;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.request.*;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
@@ -46,7 +46,7 @@ public class Sifen {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
-    public static RespuestaSifen consultaRUC(String ruc) throws SifenException {
+    public static RespuestaConsultaRuc consultaRUC(String ruc) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
@@ -55,7 +55,7 @@ public class Sifen {
         ReqConsRuc reqConsRuc = new ReqConsRuc(dId++, sifenConfig);
         reqConsRuc.setdRUCCons(ruc);
 
-        return reqConsRuc.makeRequest(sifenConfig.getUrlConsultaRUC());
+        return (RespuestaConsultaRuc) reqConsRuc.makeRequest(sifenConfig.getUrlConsultaRUC());
     }
 
     /**
@@ -66,7 +66,7 @@ public class Sifen {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
-    public static RespuestaSifen consultaDE(String cdc) throws SifenException {
+    public static RespuestaConsultaDE consultaDE(String cdc) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
@@ -75,7 +75,7 @@ public class Sifen {
         ReqConsDe reqConsDe = new ReqConsDe(dId++, sifenConfig);
         reqConsDe.setdCDC(cdc);
 
-        return reqConsDe.makeRequest(sifenConfig.getUrlConsulta());
+        return (RespuestaConsultaDE) reqConsDe.makeRequest(sifenConfig.getUrlConsulta());
     }
 
     /**
@@ -86,7 +86,7 @@ public class Sifen {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
-    public static RespuestaSifen consultaLoteDE(String nroLote) throws SifenException {
+    public static RespuestaConsultaLoteDE consultaLoteDE(String nroLote) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
@@ -95,7 +95,7 @@ public class Sifen {
         ReqConsLoteDe reqConsLoteDe = new ReqConsLoteDe(dId++, sifenConfig);
         reqConsLoteDe.setdProtConsLote(nroLote);
 
-        return reqConsLoteDe.makeRequest(sifenConfig.getUrlConsultaLote());
+        return (RespuestaConsultaLoteDE) reqConsLoteDe.makeRequest(sifenConfig.getUrlConsultaLote());
     }
 
     /**
@@ -106,7 +106,7 @@ public class Sifen {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la firma digital del DE falla o, si la consulta no pudo ser realizada.
      */
-    public static RespuestaSifen recepcionDE(DocumentoElectronico de) throws SifenException {
+    public static RespuestaRecepcionDE recepcionDE(DocumentoElectronico de) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
@@ -115,7 +115,7 @@ public class Sifen {
         ReqRecDe reqRecDe = new ReqRecDe(dId++, sifenConfig);
         reqRecDe.setDE(de);
 
-        return reqRecDe.makeRequest(sifenConfig.getUrlRecibe());
+        return (RespuestaRecepcionDE) reqRecDe.makeRequest(sifenConfig.getUrlRecibe());
     }
 
     /**
@@ -127,7 +127,7 @@ public class Sifen {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario de algún DE
      *                        no pudo ser encontrado o, si la forma digital de algún DE falla o, si la consulta no pudo ser realizada.
      */
-    public static RespuestaSifen recepcionLoteDE(List<DocumentoElectronico> deList) throws SifenException {
+    public static RespuestaRecepcionLoteDE recepcionLoteDE(List<DocumentoElectronico> deList) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
@@ -136,7 +136,7 @@ public class Sifen {
         ReqRecLoteDe reqRecLoteDe = new ReqRecLoteDe(dId++, sifenConfig);
         reqRecLoteDe.setDEList(deList);
 
-        return reqRecLoteDe.makeRequest(sifenConfig.getUrlRecibeLote());
+        return (RespuestaRecepcionLoteDE) reqRecLoteDe.makeRequest(sifenConfig.getUrlRecibeLote());
     }
 
     /**
@@ -148,7 +148,7 @@ public class Sifen {
      *                        consulta no pudo ser encontrado o, si la firma digital de algún evento falla o, si la consulta no pudo ser
      *                        realizada.
      */
-    public static RespuestaSifen recepcionEvento(EventosDE eventosDE) throws SifenException {
+    public static RespuestaRecepcionEv recepcionEvento(EventosDE eventosDE) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
@@ -157,6 +157,6 @@ public class Sifen {
         ReqRecEventoDe reqRecEventoDe = new ReqRecEventoDe(dId++, sifenConfig);
         reqRecEventoDe.setEventoDE(eventosDE);
 
-        return reqRecEventoDe.makeRequest(sifenConfig.getUrlEvento());
+        return (RespuestaRecepcionEv) reqRecEventoDe.makeRequest(sifenConfig.getUrlEvento());
     }
 }

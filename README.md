@@ -91,7 +91,7 @@ actualizada, simplemente invocar de vuelta.
 El uso del servicio web de Consulta de RUC se puede realizar de la siguiente forma:
 
 ```java
-RespuestaSifen respuesta = Sifen.consultaRUC("80089752");
+RespuestaConsultaRuc respuesta = Sifen.consultaRUC("80089752");
 ```
 
 El parámetro es el RUC del contribuyente a consultar, sin el DV (Dígito Verificador).
@@ -115,11 +115,11 @@ realizados.
 
 ## Empresas usuarias de jsifenlib
 
-Algunas empresas que usan en producción esta librería para sus implementaciones de SIFEN (*) son:
+Algunas empresas que utilizan esta librería en producción para sus implementaciones de SIFEN (*) son:
 
 1. [Taxare S.A.](https://www.taxit.com.py) para su producto TAXit! (2021-05)
 
-(*) Querés agregar la tuya? Envianos un [email](mailto:pablo@roshka.com.py) para incluirla 
+(*) ¿Querés agregar la tuya? Envianos un [email](mailto:pablo@roshka.com.py) para incluirla. 
 
 ## Autores y Responsables
 

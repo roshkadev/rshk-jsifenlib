@@ -4,11 +4,11 @@ import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.beans.response.RespuestaConsultaRuc;
 import org.w3c.dom.Node;
 
@@ -50,7 +50,7 @@ public class ReqConsRuc extends BaseRequest {
     }
 
     @Override
-    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+    BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException {
         Node rResEnviConsRuc = null;
         try {
             rResEnviConsRuc = ResponseUtil.getMainNode(soapResponse.getSoapResponse(), "rResEnviConsRuc");
@@ -58,16 +58,14 @@ public class ReqConsRuc extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaConsultaRuc respuestaConsultaRuc = null;
+        RespuestaConsultaRuc respuestaConsultaRuc = new RespuestaConsultaRuc();
         if (rResEnviConsRuc != null) {
             respuestaConsultaRuc = SifenObjectFactory.getFromNode(rResEnviConsRuc, RespuestaConsultaRuc.class);
         }
 
-        RespuestaSifen respuestaSifen = new RespuestaSifen();
-        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
-        respuestaSifen.setRespuesta(respuestaConsultaRuc);
-        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaSifen;
+        respuestaConsultaRuc.setCodigoEstado(soapResponse.getStatus());
+        respuestaConsultaRuc.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaConsultaRuc;
     }
 
     public void setdRUCCons(String dRUCCons) {

@@ -1,12 +1,12 @@
 package com.roshka.sifen.internal.request;
 
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.beans.response.RespuestaConsultaLoteDE;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
@@ -50,7 +50,7 @@ public class ReqConsLoteDe extends BaseRequest {
     }
 
     @Override
-    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+    BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException {
         Node rResEnviConsLoteDe = null;
         try {
             SOAPMessage soapMessage = ResponseUtil.parseSoapMessage(soapResponse.getSoapResponse());
@@ -59,16 +59,14 @@ public class ReqConsLoteDe extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaConsultaLoteDE respuestaConsultaLoteDE = null;
+        RespuestaConsultaLoteDE respuestaConsultaLoteDE = new RespuestaConsultaLoteDE();
         if (rResEnviConsLoteDe != null) {
             respuestaConsultaLoteDE = SifenObjectFactory.getFromNode(rResEnviConsLoteDe, RespuestaConsultaLoteDE.class);
         }
 
-        RespuestaSifen respuestaSifen = new RespuestaSifen();
-        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
-        respuestaSifen.setRespuesta(respuestaConsultaLoteDE);
-        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaSifen;
+        respuestaConsultaLoteDE.setCodigoEstado(soapResponse.getStatus());
+        respuestaConsultaLoteDE.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaConsultaLoteDE;
     }
 
     public void setdProtConsLote(String dProtConsLote) {

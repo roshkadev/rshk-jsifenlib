@@ -4,10 +4,10 @@ import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.beans.response.RespuestaRecepcionEv;
 import com.roshka.sifen.core.beans.EventosDE;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
@@ -54,7 +54,7 @@ public class ReqRecEventoDe extends BaseRequest {
     }
 
     @Override
-    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+    BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException {
         Node rRetEnviEventoDe = null;
         try {
             rRetEnviEventoDe = ResponseUtil.getMainNode(soapResponse.getSoapResponse(), "rRetEnviEventoDe");
@@ -62,16 +62,14 @@ public class ReqRecEventoDe extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaRecepcionEv respuestaRecepcionEv = null;
+        RespuestaRecepcionEv respuestaRecepcionEv = new RespuestaRecepcionEv();
         if (rRetEnviEventoDe != null) {
             respuestaRecepcionEv = SifenObjectFactory.getFromNode(rRetEnviEventoDe, RespuestaRecepcionEv.class);
         }
 
-        RespuestaSifen respuestaSifen = new RespuestaSifen();
-        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
-        respuestaSifen.setRespuesta(respuestaRecepcionEv);
-        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaSifen;
+        respuestaRecepcionEv.setCodigoEstado(soapResponse.getStatus());
+        respuestaRecepcionEv.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaRecepcionEv;
     }
 
     public void setEventoDE(EventosDE eventosDE) {

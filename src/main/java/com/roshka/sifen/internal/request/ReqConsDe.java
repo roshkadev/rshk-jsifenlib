@@ -4,11 +4,11 @@ import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.beans.response.RespuestaConsultaDE;
 import org.w3c.dom.Node;
 
@@ -50,7 +50,7 @@ public class ReqConsDe extends BaseRequest {
     }
 
     @Override
-    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+    BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException {
         Node rEnviConsDe = null;
         String rawResponse = null;
         try {
@@ -61,16 +61,14 @@ public class ReqConsDe extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaConsultaDE respuestaConsultaDE = null;
+        RespuestaConsultaDE respuestaConsultaDE = new RespuestaConsultaDE();
         if (rEnviConsDe != null) {
             respuestaConsultaDE = SifenObjectFactory.getFromNode(rEnviConsDe, RespuestaConsultaDE.class);
         }
 
-        RespuestaSifen respuestaSifen = new RespuestaSifen();
-        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
-        respuestaSifen.setRespuesta(respuestaConsultaDE);
-        respuestaSifen.setRespuestaBruta(rawResponse != null ? rawResponse : new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaSifen;
+        respuestaConsultaDE.setCodigoEstado(soapResponse.getStatus());
+        respuestaConsultaDE.setRespuestaBruta(rawResponse != null ? rawResponse : new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaConsultaDE;
     }
 
     public void setdCDC(String dCDC) {

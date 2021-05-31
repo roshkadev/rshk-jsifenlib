@@ -1,10 +1,10 @@
 package com.roshka.sifen.internal.request;
 
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 
@@ -24,9 +24,9 @@ abstract class BaseRequest {
 
     abstract SOAPMessage setupSoapMessage() throws SifenException;
 
-    abstract RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException;
+    abstract BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException;
 
-    public RespuestaSifen makeRequest(String url) throws SifenException {
+    public BaseResponse makeRequest(String url) throws SifenException {
         try {
             // Preparamos el mensaje
             SOAPMessage message = this.setupSoapMessage();
@@ -49,7 +49,7 @@ abstract class BaseRequest {
 
             // Realizamos la consulta
             String requestUrl = SifenUtil.coalesce(sifenConfig.getUrlBase(), sifenConfig.getUrlBaseLocal()) + url;
-            RespuestaSifen response = this.processResponse(SoapHelper.makeSoapRequest(sifenConfig, requestUrl, message));
+            BaseResponse response = this.processResponse(SoapHelper.makeSoapRequest(sifenConfig, requestUrl, message));
             logger.info("Petición realizada, se formatea la respuesta");
             return response;
         } catch (SOAPException e) {

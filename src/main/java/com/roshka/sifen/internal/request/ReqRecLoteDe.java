@@ -1,6 +1,5 @@
 package com.roshka.sifen.internal.request;
 
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.response.RespuestaRecepcionLoteDE;
@@ -8,6 +7,7 @@ import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.SOAPResponse;
 import com.roshka.sifen.internal.helpers.SoapHelper;
+import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
@@ -76,7 +76,7 @@ public class ReqRecLoteDe extends BaseRequest {
     }
 
     @Override
-    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+    BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException {
         Node rResEnviLoteDe = null;
         try {
             rResEnviLoteDe = ResponseUtil.getMainNode(soapResponse.getSoapResponse(), "rResEnviLoteDe");
@@ -84,16 +84,14 @@ public class ReqRecLoteDe extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaRecepcionLoteDE respuestaRecepcionLoteDE = null;
+        RespuestaRecepcionLoteDE respuestaRecepcionLoteDE = new RespuestaRecepcionLoteDE();
         if (rResEnviLoteDe != null) {
             respuestaRecepcionLoteDE = SifenObjectFactory.getFromNode(rResEnviLoteDe, RespuestaRecepcionLoteDE.class);
         }
 
-        RespuestaSifen respuestaSifen = new RespuestaSifen();
-        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
-        respuestaSifen.setRespuesta(respuestaRecepcionLoteDE);
-        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaSifen;
+        respuestaRecepcionLoteDE.setCodigoEstado(soapResponse.getStatus());
+        respuestaRecepcionLoteDE.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaRecepcionLoteDE;
     }
 
     public void setDEList(List<DocumentoElectronico> DEList) {

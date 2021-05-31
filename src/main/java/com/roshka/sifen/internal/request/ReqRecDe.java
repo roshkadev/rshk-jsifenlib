@@ -3,10 +3,10 @@ package com.roshka.sifen.internal.request;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
+import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.RespuestaSifen;
 import com.roshka.sifen.core.beans.response.RespuestaRecepcionDE;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import org.w3c.dom.Node;
@@ -37,7 +37,7 @@ public class ReqRecDe extends BaseRequest {
     }
 
     @Override
-    RespuestaSifen processResponse(SOAPResponse soapResponse) throws SifenException {
+    BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException {
         Node rRetEnviDe = null;
         try {
             rRetEnviDe = ResponseUtil.getMainNode(soapResponse.getSoapResponse(), "rRetEnviDe");
@@ -45,16 +45,14 @@ public class ReqRecDe extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaRecepcionDE respuestaRecepcionDE = null;
+        RespuestaRecepcionDE respuestaRecepcionDE = new RespuestaRecepcionDE();
         if (rRetEnviDe != null) {
             respuestaRecepcionDE = SifenObjectFactory.getFromNode(rRetEnviDe, RespuestaRecepcionDE.class);
         }
 
-        RespuestaSifen respuestaSifen = new RespuestaSifen();
-        respuestaSifen.setCodigoEstado(soapResponse.getStatus());
-        respuestaSifen.setRespuesta(respuestaRecepcionDE);
-        respuestaSifen.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaSifen;
+        respuestaRecepcionDE.setCodigoEstado(soapResponse.getStatus());
+        respuestaRecepcionDE.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaRecepcionDE;
     }
 
     public void setDE(DocumentoElectronico DE) {
