@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Clase principal que contiene la respuesta de Sifen al envío de eventos relacionados a los Documentos Electrónicos.
  */
-public class RespuestaRecepcionEv extends BaseResponse {
+public class RespuestaRecepcionEvento extends BaseResponse {
     private LocalDateTime dFecProc;
     private final List<TgResProcEVe> gResProcEVe = new ArrayList<>();
 

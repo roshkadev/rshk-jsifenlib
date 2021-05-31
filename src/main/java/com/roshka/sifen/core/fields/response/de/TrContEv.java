@@ -4,13 +4,13 @@ import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.beans.EventosDE;
-import com.roshka.sifen.core.beans.response.RespuestaRecepcionEv;
+import com.roshka.sifen.core.beans.response.RespuestaRecepcionEvento;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class TrContEv extends SifenObjectBase {
     private EventosDE xEvento;
-    private RespuestaRecepcionEv rResEnviEventoDe;
+    private RespuestaRecepcionEvento rResEnviEventoDe;
 
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
@@ -23,7 +23,7 @@ public class TrContEv extends SifenObjectBase {
                 for (int i = 0; i < childNodes.getLength(); i++) {
                     Node node = childNodes.item(i);
                     if (node.getLocalName().equals("rRetEnviEventoDe")) {
-                        rResEnviEventoDe = SifenObjectFactory.getFromNode(node, RespuestaRecepcionEv.class);
+                        rResEnviEventoDe = SifenObjectFactory.getFromNode(node, RespuestaRecepcionEvento.class);
                     }
                 }
                 break;
@@ -34,7 +34,7 @@ public class TrContEv extends SifenObjectBase {
         return xEvento;
     }
 
-    public RespuestaRecepcionEv getrResEnviEventoDe() {
+    public RespuestaRecepcionEvento getrResEnviEventoDe() {
         return rResEnviEventoDe;
     }
 }

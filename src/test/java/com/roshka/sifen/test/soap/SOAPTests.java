@@ -56,7 +56,7 @@ public class SOAPTests {
     @Test
     @Ignore
     public void testConsultaRUC() throws SifenException {
-        RespuestaConsultaRuc ret = Sifen.consultaRUC("788643");
+        RespuestaConsultaRUC ret = Sifen.consultaRUC("788643");
         logger.info(ret.toString());
     }
 
@@ -230,7 +230,7 @@ public class SOAPTests {
         EventosDE eventosDE = new EventosDE();
         eventosDE.setrGesEveList(Collections.singletonList(rGesEve1));
 
-        RespuestaRecepcionEv ret = Sifen.recepcionEvento(eventosDE);
+        RespuestaRecepcionEvento ret = Sifen.recepcionEvento(eventosDE);
         logger.info(ret.toString());
     }
 

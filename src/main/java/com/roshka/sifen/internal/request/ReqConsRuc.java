@@ -9,7 +9,7 @@ import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.beans.response.RespuestaConsultaRuc;
+import com.roshka.sifen.core.beans.response.RespuestaConsultaRUC;
 import org.w3c.dom.Node;
 
 import javax.xml.namespace.QName;
@@ -58,14 +58,14 @@ public class ReqConsRuc extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaConsultaRuc respuestaConsultaRuc = new RespuestaConsultaRuc();
+        RespuestaConsultaRUC respuestaConsultaRUC = new RespuestaConsultaRUC();
         if (rResEnviConsRuc != null) {
-            respuestaConsultaRuc = SifenObjectFactory.getFromNode(rResEnviConsRuc, RespuestaConsultaRuc.class);
+            respuestaConsultaRUC = SifenObjectFactory.getFromNode(rResEnviConsRuc, RespuestaConsultaRUC.class);
         }
 
-        respuestaConsultaRuc.setCodigoEstado(soapResponse.getStatus());
-        respuestaConsultaRuc.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaConsultaRuc;
+        respuestaConsultaRUC.setCodigoEstado(soapResponse.getStatus());
+        respuestaConsultaRUC.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaConsultaRUC;
     }
 
     public void setdRUCCons(String dRUCCons) {

@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 /**
  * Clase principal que contiene la respuesta de Sifen a la consulta de un RUC de un contribuyente.
  */
-public class RespuestaConsultaRuc extends BaseResponse {
+public class RespuestaConsultaRUC extends BaseResponse {
     private TxContRuc xContRUC;
 
     /**

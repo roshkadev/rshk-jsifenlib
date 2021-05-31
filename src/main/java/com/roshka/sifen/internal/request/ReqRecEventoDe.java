@@ -8,7 +8,7 @@ import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.beans.response.RespuestaRecepcionEv;
+import com.roshka.sifen.core.beans.response.RespuestaRecepcionEvento;
 import com.roshka.sifen.core.beans.EventosDE;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import org.w3c.dom.Node;
@@ -62,14 +62,14 @@ public class ReqRecEventoDe extends BaseRequest {
             logger.warning(e.getMessage());
         }
 
-        RespuestaRecepcionEv respuestaRecepcionEv = new RespuestaRecepcionEv();
+        RespuestaRecepcionEvento respuestaRecepcionEvento = new RespuestaRecepcionEvento();
         if (rRetEnviEventoDe != null) {
-            respuestaRecepcionEv = SifenObjectFactory.getFromNode(rRetEnviEventoDe, RespuestaRecepcionEv.class);
+            respuestaRecepcionEvento = SifenObjectFactory.getFromNode(rRetEnviEventoDe, RespuestaRecepcionEvento.class);
         }
 
-        respuestaRecepcionEv.setCodigoEstado(soapResponse.getStatus());
-        respuestaRecepcionEv.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
-        return respuestaRecepcionEv;
+        respuestaRecepcionEvento.setCodigoEstado(soapResponse.getStatus());
+        respuestaRecepcionEvento.setRespuestaBruta(new String(soapResponse.getRawData(), StandardCharsets.UTF_8));
+        return respuestaRecepcionEvento;
     }
 
     public void setEventoDE(EventosDE eventosDE) {

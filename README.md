@@ -91,7 +91,7 @@ actualizada, simplemente invocar de vuelta.
 El uso del servicio web de Consulta de RUC se puede realizar de la siguiente forma:
 
 ```java
-RespuestaConsultaRuc respuesta = Sifen.consultaRUC("80089752");
+RespuestaConsultaRUC respuesta = Sifen.consultaRUC("80089752");
 ```
 
 El parámetro es el RUC del contribuyente a consultar, sin el DV (Dígito Verificador).
