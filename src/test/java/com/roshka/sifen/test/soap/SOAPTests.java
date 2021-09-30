@@ -238,7 +238,7 @@ public class SOAPTests {
     @Ignore
     public void testConversionXml() throws SifenException, IOException {
         String xml = new String(Files.readAllBytes(Paths.get("C:\\Users\\mzarz\\Desktop\\de.xml")), StandardCharsets.UTF_8);
-        DocumentoElectronico DE = DocumentoElectronico.convertirXml(xml);
+        DocumentoElectronico DE = new DocumentoElectronico(xml);
         logger.info(DE.toString());
     }
 

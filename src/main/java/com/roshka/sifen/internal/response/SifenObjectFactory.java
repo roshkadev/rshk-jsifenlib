@@ -15,23 +15,22 @@ public class SifenObjectFactory {
 
     public static <T extends SifenObjectBase> T getFromNode(Node mainNode, Class<T> sifenObjectBase) throws SifenException {
         try {
-            T ret = sifenObjectBase.newInstance();
-            NodeList childNodes = mainNode.getChildNodes();
-            for (int i = 0; i < childNodes.getLength(); i++) {
-                Node node = childNodes.item(i);
-                ret.setValueFromChildNode(node);
-            }
-            return ret;
-        } catch (InstantiationException e) {
+            T object = sifenObjectBase.newInstance();
+            getFromNode(mainNode, object);
+            return object;
+        } catch (InstantiationException | IllegalAccessException e) {
             logger.throwing(SifenObjectFactory.class.getCanonicalName(), "getFromNode", e);
             throw SifenExceptionUtil.unexpectedError(
                     "Error de instanciación al intentar crear un objeto de clase: " + sifenObjectBase.getCanonicalName() + " -> " + e.getLocalizedMessage(), e
             );
-        } catch (IllegalAccessException e) {
-            logger.throwing(SifenObjectFactory.class.getCanonicalName(), "getFromNode", e);
-            throw SifenExceptionUtil.unexpectedError(
-                    "Acceso ilegal al intentar crear un objeto de clase: " + sifenObjectBase.getCanonicalName() + " -> " + e.getLocalizedMessage(), e
-            );
+        }
+    }
+
+    public static <T extends SifenObjectBase> void getFromNode(Node mainNode, T object) throws SifenException {
+        NodeList childNodes = mainNode.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node node = childNodes.item(i);
+            object.setValueFromChildNode(node);
         }
     }
 }

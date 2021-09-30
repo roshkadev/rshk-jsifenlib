@@ -61,14 +61,19 @@ public class DocumentoElectronico extends SifenObjectBase {
     private final static Logger logger = Logger.getLogger(DocumentoElectronico.class.toString());
 
     /**
-     * Genera un objeto de tipo Documento Electrónico en base a un XML.
+     * Constructor base del Documento Electrónico.
+     */
+    public DocumentoElectronico() {
+    }
+
+    /**
+     * Construye un Documento Electrónico en base a un XML.
      *
-     * @param xml XML a ser convertido a un objeto del tipo Documento Electrónico.
-     * @return El objeto generado en base al XML.
+     * @param xml XML a ser utilizado para la generación del Documento Electrónico.
      * @throws SifenException Si el XML tiene un formato inválido o, si algún dato necesario para la generación del DE
      *                        no pudo ser encontrado.
      */
-    public static DocumentoElectronico convertirXml(String xml) throws SifenException {
+    public DocumentoElectronico(String xml) throws SifenException {
         xml = xml.replaceAll(">[\\s\r\n]*<", "><");
 
         // Parseamos el xml
@@ -85,14 +90,14 @@ public class DocumentoElectronico extends SifenObjectBase {
         // Obtenemos el nodo principal
         Node mainNode = xmlDocument.getElementsByTagName("DE").item(0);
 
-        DocumentoElectronico DE = SifenObjectFactory.getFromNode(mainNode, DocumentoElectronico.class);
-        DE.obtenerCDC();
-        return DE;
+        SifenObjectFactory.getFromNode(mainNode, this);
+        this.obtenerCDC();
     }
 
     /**
      * Calcula el CDC del Documento Electrónico en cuestión y lo retorna. Además de lo anterior, también establece los
      * valores en el lugar correspondiente dentro del objeto.
+     *
      * @return CDC calculado del Documento Electrónico.
      * @throws SifenException Si alguno de los campos necesarios para el cálculo del CDC no se encuentra.
      */
@@ -124,6 +129,7 @@ public class DocumentoElectronico extends SifenObjectBase {
 
     /**
      * Genera un XML completo en base al Documento Electrónico actual.
+     *
      * @return XML del Documento Electrónico.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
@@ -148,6 +154,7 @@ public class DocumentoElectronico extends SifenObjectBase {
 
     /**
      * Genera un XML completo en base al Documento Electrónico actual, y lo guarda como archivo en la ruta definida.
+     *
      * @param rutaDestino Ruta absoluta (con nombre de archivo y extensión incluidos) en la que será creada el archivo
      *                    XML.<br> Ejemplo: "C:\Users\Roshka\Documents\de.xml"
      * @return <strong>true</strong> si el archivo fue creado correctamente, <strong>false</strong> de lo contrario.
