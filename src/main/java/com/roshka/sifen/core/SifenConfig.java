@@ -20,8 +20,8 @@ import static com.roshka.sifen.internal.Constants.SDK_CURRENT_VERSION;
  *      Se recomienda utilizar el valor por defecto (true), pero es posible sobreescribirlo en caso de estar
  *      realizando a otro nivel la autenticación por certificado (Ej.: Forward Proxy).</li>
  *
- *      <li>rutaCertificadoCliente, contrasenaCertificadoCliente (String): Ruta del certificado a utilizar,
- *      junto a la contraseña.</li>
+ *      <li>certificadoCliente, contrasenaCertificadoCliente (String): Certificado a utilizar (ruta del archivo o
+ *      archivo codificado en Base64), junto a la contraseña.</li>
  *
  *      <li>tipoCertificadoCliente (TipoCertificadoCliente): Tipo de archivo del certificado. Solo PFX es soportado
  *      actualmente.</li>
@@ -53,7 +53,7 @@ public class SifenConfig {
     private String urlConsulta;
 
     private boolean usarCertificadoCliente;
-    private String rutaCertificadoCliente;
+    private String certificadoCliente;
     private String contrasenaCertificadoCliente;
     private TipoCertificadoCliente tipoCertificadoCliente;
 
@@ -92,19 +92,20 @@ public class SifenConfig {
         this.userAgent = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
     }
 
-    public SifenConfig(TipoAmbiente tipoAmbiente, TipoCertificadoCliente tipoCertificadoCliente, String rutaCertificadoCliente, String contrasenaCertificadoCliente) {
+    public SifenConfig(TipoAmbiente tipoAmbiente, TipoCertificadoCliente tipoCertificadoCliente, String certificadoCliente,
+                       String contrasenaCertificadoCliente) {
         this();
         this.setAmbiente(tipoAmbiente);
 
         this.usarCertificadoCliente = true;
-        this.rutaCertificadoCliente = rutaCertificadoCliente;
+        this.certificadoCliente = certificadoCliente;
         this.contrasenaCertificadoCliente = contrasenaCertificadoCliente;
         this.tipoCertificadoCliente = tipoCertificadoCliente;
     }
 
     public SifenConfig(TipoAmbiente tipoAmbiente, String idCSC, String CSC, TipoCertificadoCliente tipoCertificadoCliente,
-                       String rutaCertificadoCliente, String contrasenaCertificadoCliente) {
-        this(tipoAmbiente, tipoCertificadoCliente, rutaCertificadoCliente, contrasenaCertificadoCliente);
+                       String certificadoCliente, String contrasenaCertificadoCliente) {
+        this(tipoAmbiente, tipoCertificadoCliente, certificadoCliente, contrasenaCertificadoCliente);
 
         this.setIdCSC(idCSC);
         this.CSC = CSC;
@@ -114,7 +115,7 @@ public class SifenConfig {
     public void setAmbiente(TipoAmbiente ambiente) {
         this.ambiente = ambiente;
 
-        if (this.ambiente == TipoAmbiente.DEV){
+        if (this.ambiente == TipoAmbiente.DEV) {
             this.urlBaseLocal = urlBaseDesarrollo;
             this.urlConsultaQr = urlConsultaQrDesarrollo;
         } else if (this.ambiente == TipoAmbiente.PROD) {
@@ -195,12 +196,12 @@ public class SifenConfig {
         this.usarCertificadoCliente = usarCertificadoCliente;
     }
 
-    public String getRutaCertificadoCliente() {
-        return rutaCertificadoCliente;
+    public String getCertificadoCliente() {
+        return certificadoCliente;
     }
 
-    public void setRutaCertificadoCliente(String rutaCertificadoCliente) {
-        this.rutaCertificadoCliente = rutaCertificadoCliente;
+    public void setCertificadoCliente(String certificadoCliente) {
+        this.certificadoCliente = certificadoCliente;
     }
 
     public String getContrasenaCertificadoCliente() {

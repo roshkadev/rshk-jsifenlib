@@ -6,10 +6,10 @@ import com.roshka.sifen.internal.util.SifenExceptionUtil;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.*;
 import java.security.cert.CertificateException;
+import java.util.Base64;
 import java.util.logging.Logger;
 
 import static java.util.logging.Logger.getLogger;
@@ -35,9 +35,7 @@ public class SSLContextHelper {
             }
         }
 
-        logger.info("Archivo de certificado cliente: " + sifenConfig.getRutaCertificadoCliente());
-
-        KeyStore keyStore = getCertificateKeyStore(sifenConfig.getRutaCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
+        KeyStore keyStore = getCertificateKeyStore(sifenConfig.getCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
         KeyManagerFactory keyManagerFactory;
         try {
             keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
@@ -71,10 +69,10 @@ public class SSLContextHelper {
             throw SifenExceptionUtil.invalidConfiguration("Configuración del certificado no establecida. No se puede obtener la clave para la firma.");
         }
 
-        return getCertificateKeyStore(sifenConfig.getRutaCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
+        return getCertificateKeyStore(sifenConfig.getCertificadoCliente(), sifenConfig.getContrasenaCertificadoCliente());
     }
 
-    private static KeyStore getCertificateKeyStore(String certificatePath, String password) throws SifenException {
+    private static KeyStore getCertificateKeyStore(String certificate, String password) throws SifenException {
         KeyStore keyStore;
         try {
             keyStore = KeyStore.getInstance("PKCS12");
@@ -83,9 +81,17 @@ public class SSLContextHelper {
         }
 
         try {
-            keyStore.load(new FileInputStream(certificatePath), password.toCharArray());
-        } catch (IOException | NoSuchAlgorithmException | CertificateException e) {
-            throw SifenExceptionUtil.invalidSSLContext("No se puede cargar archivo del certificado de cliente: " + e.getLocalizedMessage(), e);
+            InputStream certInputStream;
+            try {
+                certInputStream = new FileInputStream(certificate);
+            } catch (FileNotFoundException e) {
+                logger.info("El certificado no es un archivo. Intentando decodificar...");
+                certInputStream = new ByteArrayInputStream(Base64.getDecoder().decode(certificate));
+            }
+
+            keyStore.load(certInputStream, password.toCharArray());
+        } catch (IOException | NoSuchAlgorithmException | CertificateException | IllegalArgumentException e) {
+            throw SifenExceptionUtil.invalidSSLContext("No se puede cargar el certificado de cliente: " + e.getLocalizedMessage(), e);
         }
 
         return keyStore;
@@ -94,13 +100,13 @@ public class SSLContextHelper {
     private static boolean isCertificateConfigurationValid(SifenConfig sifenConfig) {
         if (sifenConfig.isUsarCertificadoCliente()) {
             if (sifenConfig.getTipoCertificadoCliente() == SifenConfig.TipoCertificadoCliente.PFX) {
-                if (sifenConfig.getRutaCertificadoCliente() == null || sifenConfig.getContrasenaCertificadoCliente() == null) {
+                if (sifenConfig.getCertificadoCliente() == null || sifenConfig.getContrasenaCertificadoCliente() == null) {
                     logger.warning("Configuración del certificado no establecida.");
                     return false;
                 }
                 return true;
             } else {
-                logger.warning("Tipo de archivo aún no soportado");
+                logger.warning("Tipo de certificado aún no soportado");
                 return false;
             }
         }

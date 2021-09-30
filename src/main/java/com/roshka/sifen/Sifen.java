@@ -28,7 +28,7 @@ public class Sifen {
      */
     public static void setSifenConfig(SifenConfig newSifenConfig) {
         sifenConfig = newSifenConfig;
-        logger.info("Configuración del Sifen guardada correctamente");
+        logger.info("Configuración de Sifen guardada correctamente");
     }
 
     /**
@@ -48,7 +48,7 @@ public class Sifen {
      */
     public static RespuestaConsultaRUC consultaRUC(String ruc) throws SifenException {
         if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
 
         logger.info("Preparando petición 'Consulta de RUC'");
@@ -68,7 +68,7 @@ public class Sifen {
      */
     public static RespuestaConsultaDE consultaDE(String cdc) throws SifenException {
         if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
 
         logger.info("Preparando petición 'Consulta de DE'");
@@ -88,7 +88,7 @@ public class Sifen {
      */
     public static RespuestaConsultaLoteDE consultaLoteDE(String nroLote) throws SifenException {
         if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
 
         logger.info("Preparando petición 'Consulta de Resultado de Lote de DE'");
@@ -108,7 +108,7 @@ public class Sifen {
      */
     public static RespuestaRecepcionDE recepcionDE(DocumentoElectronico de) throws SifenException {
         if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
 
         logger.info("Preparando petición 'Recepción de DE'");
@@ -129,7 +129,7 @@ public class Sifen {
      */
     public static RespuestaRecepcionLoteDE recepcionLoteDE(List<DocumentoElectronico> deList) throws SifenException {
         if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
 
         logger.info("Preparando petición 'Recepción de Lote de DE'");
@@ -150,7 +150,7 @@ public class Sifen {
      */
     public static RespuestaRecepcionEvento recepcionEvento(EventosDE eventosDE) throws SifenException {
         if (sifenConfig == null) {
-            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
+            throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
 
         logger.info("Preparando petición 'Recepción de Eventos'");
