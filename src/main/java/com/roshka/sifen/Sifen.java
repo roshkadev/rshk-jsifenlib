@@ -40,13 +40,24 @@ public class Sifen {
 
     /**
      * Realiza una consulta a Sifen y devuelve como resultado los datos y el estado del RUC de un contribuyente.
-     *
      * @param ruc RUC de un contribuyente a ser consultado en Sifen, sin el DV.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
     public static RespuestaConsultaRUC consultaRUC(String ruc) throws SifenException {
+        return consultaRUC(ruc, sifenConfig);
+    }
+
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado los datos y el estado del RUC de un contribuyente.
+     * @param ruc RUC de un contribuyente a ser consultado en Sifen, sin el DV.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaConsultaRUC consultaRUC(String ruc, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -60,13 +71,24 @@ public class Sifen {
 
     /**
      * Realiza una consulta a Sifen y devuelve como resultado el Documento Electrónico encontrado y todos sus eventos asociados.
-     *
      * @param cdc Código de Control, que es el identificador único de un Documento Electrónico.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
     public static RespuestaConsultaDE consultaDE(String cdc) throws SifenException {
+        return consultaDE(cdc, sifenConfig);
+    }
+
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado el Documento Electrónico encontrado y todos sus eventos asociados.
+     * @param cdc Código de Control, que es el identificador único de un Documento Electrónico.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaConsultaDE consultaDE(String cdc, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -80,13 +102,24 @@ public class Sifen {
 
     /**
      * Realiza una consulta a Sifen y devuelve como resultado el estado del lote consultado.
-     *
      * @param nroLote Número de Lote recibido como respuesta en el envío del mismo.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
     public static RespuestaConsultaLoteDE consultaLoteDE(String nroLote) throws SifenException {
+        return consultaLoteDE(nroLote, sifenConfig);
+    }
+
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado el estado del lote consultado.
+     * @param nroLote Número de Lote recibido como respuesta en el envío del mismo.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaConsultaLoteDE consultaLoteDE(String nroLote, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -100,13 +133,24 @@ public class Sifen {
 
     /**
      * Realiza un envío del Documento Electrónico a Sifen para su correspondiente aprobación.
-     *
      * @param de Objeto que hace referencia a un Documento Electrónico, con todos sus datos.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la firma digital del DE falla o, si la consulta no pudo ser realizada.
      */
     public static RespuestaRecepcionDE recepcionDE(DocumentoElectronico de) throws SifenException {
+        return recepcionDE(de, sifenConfig);
+    }
+
+    /**
+     * Realiza un envío del Documento Electrónico a Sifen para su correspondiente aprobación.
+     * @param de Objeto que hace referencia a un Documento Electrónico, con todos sus datos.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        consulta no pudo ser encontrado o, si la firma digital del DE falla o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaRecepcionDE recepcionDE(DocumentoElectronico de, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -121,13 +165,25 @@ public class Sifen {
     /**
      * Realiza un envío de un lote de Documentos Electrónicos a Sifen para su correspondiente aprobación. La respuesta
      * de la aprobación o rechazo de cada DE es asíncrono, es decir, no se encuentra en la respuesta de esta petición.
-     *
      * @param deList Listado de los objetos que hacen referencia a los Documentos Electrónicos, con todos los datos.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario de algún DE
      *                        no pudo ser encontrado o, si la forma digital de algún DE falla o, si la consulta no pudo ser realizada.
      */
     public static RespuestaRecepcionLoteDE recepcionLoteDE(List<DocumentoElectronico> deList) throws SifenException {
+        return recepcionLoteDE(deList, sifenConfig);
+    }
+
+    /**
+     * Realiza un envío de un lote de Documentos Electrónicos a Sifen para su correspondiente aprobación. La respuesta
+     * de la aprobación o rechazo de cada DE es asíncrono, es decir, no se encuentra en la respuesta de esta petición.
+     * @param deList Listado de los objetos que hacen referencia a los Documentos Electrónicos, con todos los datos.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario de algún DE
+     *                        no pudo ser encontrado o, si la forma digital de algún DE falla o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaRecepcionLoteDE recepcionLoteDE(List<DocumentoElectronico> deList, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -141,7 +197,6 @@ public class Sifen {
 
     /**
      * Realiza un envío a Sifen de los eventos agregados en el objeto recibido como argumento.
-     *
      * @param eventosDE Objeto que contiene el listado de eventos a ser enviados a Sifen.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
@@ -149,6 +204,19 @@ public class Sifen {
      *                        realizada.
      */
     public static RespuestaRecepcionEvento recepcionEvento(EventosDE eventosDE) throws SifenException {
+        return recepcionEvento(eventosDE, sifenConfig);
+    }
+
+    /**
+     * Realiza un envío a Sifen de los eventos agregados en el objeto recibido como argumento.
+     * @param eventosDE Objeto que contiene el listado de eventos a ser enviados a Sifen.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        consulta no pudo ser encontrado o, si la firma digital de algún evento falla o, si la consulta no pudo ser
+     *                        realizada.
+     */
+    public static RespuestaRecepcionEvento recepcionEvento(EventosDE eventosDE, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
