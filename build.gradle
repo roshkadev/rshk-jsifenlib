@@ -37,7 +37,7 @@ publishing {
 
             pom {
                 name = "RSHK jsifenlib"
-                description = "Librería de código abierto, sin dependencias externas, para interactuar con SIFEN (Sistema Integrado de Factura Electrónica Nacional)."
+                description = "Librería de código abierto, sin dependencias externas, para interactuar con SIFEN (Sistema Integrado de Facturación Electrónica Nacional)."
                 url = "https://github.com/roshkadev/rshk-jsifenlib/"
                 licenses {
                     license {
@@ -49,7 +49,12 @@ publishing {
                     developer {
                         id = "pablo"
                         name = "Pablo Santa Cruz"
-                        email = "pablo@roshka.com.py"
+                        email = "pablo@roshka.com"
+                    }
+                    developer {
+                        id = "david-ayala"
+                        name = "David Ayala"
+                        email = "dayala@taxit.com.py"
                     }
                     developer {
                         id = "martinzarza"
