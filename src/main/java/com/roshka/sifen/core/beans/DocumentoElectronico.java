@@ -135,7 +135,18 @@ public class DocumentoElectronico extends SifenObjectBase {
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
     public String generarXml() throws SifenException {
-        SifenConfig sifenConfig = Sifen.getSifenConfig();
+        return this.generarXml(Sifen.getSifenConfig());
+    }
+
+    /**
+     * Genera un XML completo en base al Documento Electrónico actual.
+     *
+     * @param sifenConfig Configuración de Sifen a ser utilizada para la generación del XML.
+     * @return XML del Documento Electrónico.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
+     */
+    public String generarXml(SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
@@ -162,8 +173,22 @@ public class DocumentoElectronico extends SifenObjectBase {
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
     public boolean generarXml(String rutaDestino) throws SifenException {
+        return this.generarXml(rutaDestino, Sifen.getSifenConfig());
+    }
+
+    /**
+     * Genera un XML completo en base al Documento Electrónico actual, y lo guarda como archivo en la ruta definida.
+     *
+     * @param rutaDestino Ruta absoluta (con nombre de archivo y extensión incluidos) en la que será creada el archivo
+     *                    XML.<br> Ejemplo: "C:\Users\Roshka\Documents\de.xml"
+     * @param sifenConfig Configuración de Sifen a ser utilizada para la generación del XML.
+     * @return <strong>true</strong> si el archivo fue creado correctamente, <strong>false</strong> de lo contrario.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
+     */
+    public boolean generarXml(String rutaDestino, SifenConfig sifenConfig) throws SifenException {
         // Obtenemos el xml en string
-        String xml = this.generarXml();
+        String xml = this.generarXml(sifenConfig);
 
         // Creamos o modificamos el archivo, y escribimos en él el xml.
         boolean res = false;
