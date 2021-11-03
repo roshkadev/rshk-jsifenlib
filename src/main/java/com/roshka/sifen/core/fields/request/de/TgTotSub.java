@@ -43,6 +43,8 @@ public class TgTotSub extends SifenObjectBase {
     private BigDecimal dTotalGs = BigDecimal.ZERO;
 
     public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TgDtipDE gDtipDE, TgOpeCom gOpeCom) throws SOAPException {
+        resetValues();
+
         TTImp iTImp = gOpeCom.getiTImp();
         CMondT cMoneOpe = gOpeCom.getcMoneOpe();
         TdCondTiCam dCondTiCam = gOpeCom.getdCondTiCam();
@@ -245,6 +247,34 @@ public class TgTotSub extends SifenObjectBase {
                 this.dTotalGs = new BigDecimal(ResponseUtil.getTextValue(value));
                 break;
         }
+    }
+
+    private void resetValues() {
+        dSubExe = BigDecimal.ZERO;
+        dSubExo = BigDecimal.ZERO;
+        dSub5 = BigDecimal.ZERO;
+        dSub10 = BigDecimal.ZERO;
+        dTotOpe = BigDecimal.ZERO;
+        dTotDesc = BigDecimal.ZERO;
+        dTotDescGlotem = BigDecimal.ZERO;
+        dTotAntItem = BigDecimal.ZERO;
+        dTotAnt = BigDecimal.ZERO;
+        dPorcDescTotal = BigDecimal.ZERO;
+        dDescTotal = BigDecimal.ZERO;
+        dAnticipo = BigDecimal.ZERO;
+        dRedon = BigDecimal.ZERO;
+        dComi = BigDecimal.ZERO;
+        dTotGralOpe = BigDecimal.ZERO;
+        dIVA5 = BigDecimal.ZERO;
+        dIVA10 = BigDecimal.ZERO;
+        dLiqTotIVA5 = BigDecimal.ZERO;
+        dLiqTotIVA10 = BigDecimal.ZERO;
+        dIVAComi = BigDecimal.ZERO;
+        dTotIVA = BigDecimal.ZERO;
+        dBaseGrav5 = BigDecimal.ZERO;
+        dBaseGrav10 = BigDecimal.ZERO;
+        dTBasGraIVA = BigDecimal.ZERO;
+        dTotalGs = BigDecimal.ZERO;
     }
 
     public BigDecimal getdSubExe() {
