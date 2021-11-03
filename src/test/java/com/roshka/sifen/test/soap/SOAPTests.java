@@ -37,12 +37,8 @@ public class SOAPTests {
 
     @BeforeClass
     public static void setupSifenConfig() throws IOException {
-        Properties prop = new Properties();
-        prop.load(new FileReader("test.properties"));
-
-        SifenConfig sifenConfig = new SifenConfig(SifenConfig.TipoAmbiente.DEV, SifenConfig.TipoCertificadoCliente.PFX,
-                prop.getProperty("cert.path"), prop.getProperty("cert.password"));
-
+        SifenConfig sifenConfig = SifenConfig.loadFromFileName("test.properties");
+        logger.info("Using CONFIG: " + sifenConfig);
         Sifen.setSifenConfig(sifenConfig);
     }
 
@@ -54,7 +50,6 @@ public class SOAPTests {
     }
 
     @Test
-    @Ignore
     public void testConsultaRUC() throws SifenException {
         RespuestaConsultaRUC ret = Sifen.consultaRUC("788643");
         logger.info(ret.toString());

@@ -12,7 +12,7 @@ Integrado de Factura Electrónica Nacional) a través de un SDK para lenguaje Ja
     <dependency>
         <groupId>com.roshka.sifen</groupId>
         <artifactId>rshk-jsifenlib</artifactId>
-        <version>0.1.12</version>
+        <version>0.1.13</version>
     </dependency>
 </dependencies>
 ```
@@ -25,7 +25,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.roshka.sifen:rshk-jsifenlib:0.1.12'
+    implementation 'com.roshka.sifen:rshk-jsifenlib:0.1.13'
 }
 ```
 
@@ -77,6 +77,37 @@ SifenConfig config = new SifenConfig(
 );
 ```
 
+La clase `SifenConfig` también se puede crear a partir de un método de construcción que toma los datos de un
+archivo de propiedades de la siguiente maneta:
+
+```java
+SifenConfig sifenConfig = SifenConfig.loadFromFileName("conf/sifen.properties");
+```
+
+Este archivo tiene que tener el siguiente formato:
+
+```properties
+# esto puede ser:
+# DEV (apunta al ambiente de desarrollo/test de SIFEN)
+# PROD (apunta al ambiente de producción de SIFEN)
+sifen.ambiente=DEV
+
+# NO USAR a menos que uno sepa bien lo que está haciendo
+# sifen.url_base=
+
+# Si se va a usar el certificado cliente.
+# Este valor en el 99.99% de las veces va a ser true
+# a menos que uno sepa bien lo que está haciendo
+sifen.certificado_cliente.usar=true
+# Por ahora, el único valor aceptado es PFX
+sifen.certificado_cliente.tipo=PFX
+
+## RUTA APUNTANDO AL ARCHIVO PFX
+sifen.certificado_cliente.archivo=/home/charly/garcia.pfx
+
+## PASSWORD del ARCHIVO PFX
+sifen.certificado_cliente.password=my_password
+```
 Luego de preparar la configuración, establecer la misma para usarla con las diferentes consultas.
 
 ```java

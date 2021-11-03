@@ -1,6 +1,6 @@
 # Licencia RSHK jsifenlib
 
-##  Copyright 2020 - Roshka S.A.
+##  Copyright 2020 - Roshka S.A. + TAXARE S.A.
 
 Por la presente se concede permiso, libre de cargos, a cualquier persona que obtenga una copia de este software y de 
 los archivos de documentación asociados (el "Software"), a utilizar el Software sin restricción, incluyendo sin 

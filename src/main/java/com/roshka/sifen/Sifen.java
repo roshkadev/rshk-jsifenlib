@@ -66,7 +66,7 @@ public class Sifen {
         ReqConsRuc reqConsRuc = new ReqConsRuc(dId++, sifenConfig);
         reqConsRuc.setdRUCCons(ruc);
 
-        return (RespuestaConsultaRUC) reqConsRuc.makeRequest(sifenConfig.getUrlConsultaRUC());
+        return (RespuestaConsultaRUC) reqConsRuc.makeRequest(sifenConfig.getPathConsultaRUC());
     }
 
     /**
@@ -97,7 +97,7 @@ public class Sifen {
         ReqConsDe reqConsDe = new ReqConsDe(dId++, sifenConfig);
         reqConsDe.setdCDC(cdc);
 
-        return (RespuestaConsultaDE) reqConsDe.makeRequest(sifenConfig.getUrlConsulta());
+        return (RespuestaConsultaDE) reqConsDe.makeRequest(sifenConfig.getPathConsulta());
     }
 
     /**
@@ -128,7 +128,7 @@ public class Sifen {
         ReqConsLoteDe reqConsLoteDe = new ReqConsLoteDe(dId++, sifenConfig);
         reqConsLoteDe.setdProtConsLote(nroLote);
 
-        return (RespuestaConsultaLoteDE) reqConsLoteDe.makeRequest(sifenConfig.getUrlConsultaLote());
+        return (RespuestaConsultaLoteDE) reqConsLoteDe.makeRequest(sifenConfig.getPathConsultaLote());
     }
 
     /**
@@ -159,7 +159,7 @@ public class Sifen {
         ReqRecDe reqRecDe = new ReqRecDe(dId++, sifenConfig);
         reqRecDe.setDE(de);
 
-        return (RespuestaRecepcionDE) reqRecDe.makeRequest(sifenConfig.getUrlRecibe());
+        return (RespuestaRecepcionDE) reqRecDe.makeRequest(sifenConfig.getPathRecibe());
     }
 
     /**
@@ -192,7 +192,7 @@ public class Sifen {
         ReqRecLoteDe reqRecLoteDe = new ReqRecLoteDe(dId++, sifenConfig);
         reqRecLoteDe.setDEList(deList);
 
-        return (RespuestaRecepcionLoteDE) reqRecLoteDe.makeRequest(sifenConfig.getUrlRecibeLote());
+        return (RespuestaRecepcionLoteDE) reqRecLoteDe.makeRequest(sifenConfig.getPathRecibeLote());
     }
 
     /**
@@ -225,6 +225,6 @@ public class Sifen {
         ReqRecEventoDe reqRecEventoDe = new ReqRecEventoDe(dId++, sifenConfig);
         reqRecEventoDe.setEventoDE(eventosDE);
 
-        return (RespuestaRecepcionEvento) reqRecEventoDe.makeRequest(sifenConfig.getUrlEvento());
+        return (RespuestaRecepcionEvento) reqRecEventoDe.makeRequest(sifenConfig.getPathEvento());
     }
 }

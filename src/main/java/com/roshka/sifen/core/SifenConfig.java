@@ -2,6 +2,12 @@ package com.roshka.sifen.core;
 
 import com.roshka.sifen.internal.util.SifenUtil;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Properties;
+
 import static com.roshka.sifen.internal.Constants.SDK_CURRENT_VERSION;
 
 /**
@@ -41,23 +47,36 @@ public class SifenConfig {
     public enum TipoAmbiente {DEV, PROD}
 
     // Atributos
+    public static final String SIFEN_AMBIENTE_KEY = "sifen.ambiente";
     private TipoAmbiente ambiente;
+
+
+    public static final String SIFEN_URL_BASE_KEY = "sifen.url_base";
     private String urlBase;
+
     private String urlBaseLocal;
     private String urlConsultaQr;
-    private String urlRecibe;
-    private String urlRecibeLote;
-    private String urlEvento;
-    private String urlConsultaLote;
-    private String urlConsultaRUC;
-    private String urlConsulta;
 
+    private String pathRecibe;
+    private String pathRecibeLote;
+    private String pathEvento;
+    private String pathConsultaLote;
+    private String pathConsultaRUC;
+    private String pathConsulta;
+
+
+    public static final String SIFEN_USAR_CERTIFICATO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
     private boolean usarCertificadoCliente;
-    private String certificadoCliente;
-    private String contrasenaCertificadoCliente;
+    public static final String SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.tipo";
     private TipoCertificadoCliente tipoCertificadoCliente;
+    public static final String SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.archivo";
+    private String certificadoCliente;
+    public static final String SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.password";
+    private String contrasenaCertificadoCliente;
 
+    public static final String SIFEN_ID_CSC_KEY = "sifen.id_csc";
     private String idCSC;
+    public static final String SIFEN_CSC_KEY = "sifen.csc";
     private String CSC;
 
     private final int httpConnectTimeout;
@@ -65,23 +84,25 @@ public class SifenConfig {
     private final String userAgent;
 
     // Valores Finales
-    private final String urlBaseDesarrollo = "https://sifen-test.set.gov.py";
-    private final String urlBaseProduccion = "https://sifen.set.gov.py";
+    private final String URL_BASE_DEV = "https://sifen-test.set.gov.py";
+    private final String URL_BASE_PROD = "https://sifen.set.gov.py";
 
-    private final String urlConsultaQrDesarrollo = "https://ekuatia.set.gov.py/consultas-test/qr?";
-    private final String urlConsultaQrProduccion = "https://ekuatia.set.gov.py/consultas/qr?";
+    private final String URL_CONSULTA_QR_DEV = "https://ekuatia.set.gov.py/consultas-test/qr?";
+    private final String URL_CONSULTA_QR_PROD = "https://ekuatia.set.gov.py/consultas/qr?";
 
     // Constructores
     public SifenConfig() {
+
         this.ambiente = TipoAmbiente.DEV;
-        this.urlBaseLocal = urlBaseDesarrollo;
-        this.urlConsultaQr = urlConsultaQrDesarrollo;
-        this.urlRecibe = "/de/ws/sync/recibe.wsdl";
-        this.urlRecibeLote = "/de/ws/async/recibe-lote.wsdl";
-        this.urlEvento = "/de/ws/eventos/evento.wsdl";
-        this.urlConsultaLote = "/de/ws/consultas/consulta-lote.wsdl";
-        this.urlConsultaRUC = "/de/ws/consultas/consulta-ruc.wsdl";
-        this.urlConsulta = "/de/ws/consultas/consulta.wsdl";
+        this.urlBaseLocal = URL_BASE_DEV;
+        this.urlConsultaQr = URL_CONSULTA_QR_DEV;
+
+        this.pathRecibe = "/de/ws/sync/recibe.wsdl";
+        this.pathRecibeLote = "/de/ws/async/recibe-lote.wsdl";
+        this.pathEvento = "/de/ws/eventos/evento.wsdl";
+        this.pathConsultaLote = "/de/ws/consultas/consulta-lote.wsdl";
+        this.pathConsultaRUC = "/de/ws/consultas/consulta-ruc.wsdl";
+        this.pathConsulta = "/de/ws/consultas/consulta.wsdl";
         this.usarCertificadoCliente = true;
 
         this.idCSC = "0002";
@@ -116,12 +137,16 @@ public class SifenConfig {
         this.ambiente = ambiente;
 
         if (this.ambiente == TipoAmbiente.DEV) {
-            this.urlBaseLocal = urlBaseDesarrollo;
-            this.urlConsultaQr = urlConsultaQrDesarrollo;
+            this.urlBaseLocal = URL_BASE_DEV;
+            this.urlConsultaQr = URL_CONSULTA_QR_DEV;
         } else if (this.ambiente == TipoAmbiente.PROD) {
-            this.urlBaseLocal = urlBaseProduccion;
-            this.urlConsultaQr = urlConsultaQrProduccion;
+            this.urlBaseLocal = URL_BASE_PROD;
+            this.urlConsultaQr = URL_CONSULTA_QR_PROD;
         }
+    }
+
+    public TipoAmbiente getAmbiente() {
+        return ambiente;
     }
 
     public String getUrlBase() {
@@ -140,52 +165,52 @@ public class SifenConfig {
         return urlConsultaQr;
     }
 
-    public String getUrlRecibe() {
-        return urlRecibe;
+    public String getPathRecibe() {
+        return pathRecibe;
     }
 
-    public void setUrlRecibe(String urlRecibe) {
-        this.urlRecibe = urlRecibe;
+    public void setPathRecibe(String pathRecibe) {
+        this.pathRecibe = pathRecibe;
     }
 
-    public String getUrlRecibeLote() {
-        return urlRecibeLote;
+    public String getPathRecibeLote() {
+        return pathRecibeLote;
     }
 
-    public void setUrlRecibeLote(String urlRecibeLote) {
-        this.urlRecibeLote = urlRecibeLote;
+    public void setPathRecibeLote(String pathRecibeLote) {
+        this.pathRecibeLote = pathRecibeLote;
     }
 
-    public String getUrlEvento() {
-        return urlEvento;
+    public String getPathEvento() {
+        return pathEvento;
     }
 
-    public void setUrlEvento(String urlEvento) {
-        this.urlEvento = urlEvento;
+    public void setPathEvento(String pathEvento) {
+        this.pathEvento = pathEvento;
     }
 
-    public String getUrlConsultaLote() {
-        return urlConsultaLote;
+    public String getPathConsultaLote() {
+        return pathConsultaLote;
     }
 
-    public void setUrlConsultaLote(String urlConsultaLote) {
-        this.urlConsultaLote = urlConsultaLote;
+    public void setPathConsultaLote(String pathConsultaLote) {
+        this.pathConsultaLote = pathConsultaLote;
     }
 
-    public String getUrlConsultaRUC() {
-        return urlConsultaRUC;
+    public String getPathConsultaRUC() {
+        return pathConsultaRUC;
     }
 
-    public void setUrlConsultaRUC(String urlConsultaRUC) {
-        this.urlConsultaRUC = urlConsultaRUC;
+    public void setPathConsultaRUC(String pathConsultaRUC) {
+        this.pathConsultaRUC = pathConsultaRUC;
     }
 
-    public String getUrlConsulta() {
-        return urlConsulta;
+    public String getPathConsulta() {
+        return pathConsulta;
     }
 
-    public void setUrlConsulta(String urlConsulta) {
-        this.urlConsulta = urlConsulta;
+    public void setPathConsulta(String pathConsulta) {
+        this.pathConsulta = pathConsulta;
     }
 
     public boolean isUsarCertificadoCliente() {
@@ -247,4 +272,86 @@ public class SifenConfig {
     public void setCSC(String CSC) {
         this.CSC = CSC;
     }
+
+    @Override
+    public String toString() {
+        return "SifenConfig{" +
+                "ambiente=" + ambiente +
+                ", urlBase='" + urlBase + '\'' +
+                ", urlBaseLocal='" + urlBaseLocal + '\'' +
+                ", urlConsultaQr='" + urlConsultaQr + '\'' +
+                ", pathRecibe='" + pathRecibe + '\'' +
+                ", pathRecibeLote='" + pathRecibeLote + '\'' +
+                ", pathEvento='" + pathEvento + '\'' +
+                ", pathConsultaLote='" + pathConsultaLote + '\'' +
+                ", pathConsultaRUC='" + pathConsultaRUC + '\'' +
+                ", pathConsulta='" + pathConsulta + '\'' +
+                ", usarCertificadoCliente=" + usarCertificadoCliente +
+                ", tipoCertificadoCliente=" + tipoCertificadoCliente +
+                ", certificadoCliente='" + certificadoCliente + '\'' +
+                ", contrasenaCertificadoCliente='" + contrasenaCertificadoCliente + '\'' +
+                ", idCSC='" + idCSC + '\'' +
+                ", CSC='" + CSC + '\'' +
+                ", httpConnectTimeout=" + httpConnectTimeout +
+                ", httpReadTimeout=" + httpReadTimeout +
+                ", userAgent='" + userAgent + '\'' +
+                ", URL_BASE_DEV='" + URL_BASE_DEV + '\'' +
+                ", URL_BASE_PROD='" + URL_BASE_PROD + '\'' +
+                ", URL_CONSULTA_QR_DEV='" + URL_CONSULTA_QR_DEV + '\'' +
+                ", URL_CONSULTA_QR_PROD='" + URL_CONSULTA_QR_PROD + '\'' +
+                '}';
+    }
+
+    public static SifenConfig loadFromProperties(Properties properties) {
+        SifenConfig sifenConfig = new SifenConfig();
+
+        try {
+            sifenConfig.setAmbiente(TipoAmbiente.valueOf(properties.getProperty(SIFEN_AMBIENTE_KEY)));
+        } catch (Throwable t) {
+            // do nothing
+        }
+
+        if (properties.containsKey(SIFEN_URL_BASE_KEY)) {
+            sifenConfig.setUrlBase(properties.getProperty(SIFEN_URL_BASE_KEY));
+        }
+
+        if (properties.containsKey(SIFEN_USAR_CERTIFICATO_CLIENTE_KEY)) {
+            sifenConfig.setUsarCertificadoCliente(Boolean.parseBoolean(properties.getProperty(SIFEN_USAR_CERTIFICATO_CLIENTE_KEY)));
+        }
+
+        try {
+            sifenConfig.setTipoCertificadoCliente(TipoCertificadoCliente.valueOf(properties.getProperty(SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY)));
+        } catch (Throwable t) {
+            // do nothing
+        }
+
+        sifenConfig.setCertificadoCliente(properties.getProperty(SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY));
+        sifenConfig.setContrasenaCertificadoCliente(properties.getProperty(SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY));
+
+        if (properties.containsKey(SIFEN_CSC_KEY)) {
+            sifenConfig.setCSC(properties.getProperty(SIFEN_CSC_KEY));
+        }
+
+        if (properties.containsKey(SIFEN_ID_CSC_KEY)) {
+            sifenConfig.setIdCSC(properties.getProperty(SIFEN_ID_CSC_KEY));
+        }
+
+        return sifenConfig;
+    }
+
+    public static SifenConfig loadFromFile(File file) throws IOException {
+        Properties props = new Properties();
+        props.load(new FileReader(file));
+        return SifenConfig.loadFromProperties(props);
+    }
+
+    public static SifenConfig loadFromFileName(String fileName) throws IOException {
+        return SifenConfig.loadFromFile(new File(fileName));
+    }
+
+
+    public SifenConfig loadFromPath(Path path) throws IOException {
+        return SifenConfig.loadFromFile(path.toFile());
+    }
+
 }

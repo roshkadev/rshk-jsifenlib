@@ -5,7 +5,8 @@ plugins {
 }
 
 group "com.roshka.sifen"
-version "0.1.12"
+version "0.1.13"
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 sourceCompatibility = 1.8
 java {
@@ -85,6 +86,7 @@ publishing {
 }
 
 signing {
+    required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
     useInMemoryPgpKeys(System.getenv("GPG_KEY"), System.getenv("GPG_PASSWORD"))
     sign publishing.publications.mavenJava
 }
