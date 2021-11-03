@@ -5,7 +5,7 @@ plugins {
 }
 
 group "com.roshka.sifen"
-version "0.1.13"
+version "0.1.14"
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 sourceCompatibility = 1.8
