@@ -1,5 +1,7 @@
 package com.roshka.sifen.core;
 
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 
 import java.io.File;
@@ -47,11 +49,11 @@ public class SifenConfig {
     public enum TipoAmbiente {DEV, PROD}
 
     // Atributos
-    public static final String SIFEN_AMBIENTE_KEY = "sifen.ambiente";
+    private static final String SIFEN_AMBIENTE_KEY = "sifen.ambiente";
     private TipoAmbiente ambiente;
 
 
-    public static final String SIFEN_URL_BASE_KEY = "sifen.url_base";
+    private static final String SIFEN_URL_BASE_KEY = "sifen.url_base";
     private String urlBase;
 
     private String urlBaseLocal;
@@ -65,18 +67,18 @@ public class SifenConfig {
     private String pathConsulta;
 
 
-    public static final String SIFEN_USAR_CERTIFICATO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
+    private static final String SIFEN_USAR_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
     private boolean usarCertificadoCliente;
-    public static final String SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.tipo";
+    private static final String SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.tipo";
     private TipoCertificadoCliente tipoCertificadoCliente;
-    public static final String SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.archivo";
+    private static final String SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.archivo";
     private String certificadoCliente;
-    public static final String SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.password";
+    private static final String SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.contrasena";
     private String contrasenaCertificadoCliente;
 
-    public static final String SIFEN_ID_CSC_KEY = "sifen.id_csc";
+    private static final String SIFEN_ID_CSC_KEY = "sifen.csc.id";
     private String idCSC;
-    public static final String SIFEN_CSC_KEY = "sifen.csc";
+    private static final String SIFEN_CSC_KEY = "sifen.csc";
     private String CSC;
 
     private final int httpConnectTimeout;
@@ -92,7 +94,6 @@ public class SifenConfig {
 
     // Constructores
     public SifenConfig() {
-
         this.ambiente = TipoAmbiente.DEV;
         this.urlBaseLocal = URL_BASE_DEV;
         this.urlConsultaQr = URL_CONSULTA_QR_DEV;
@@ -130,6 +131,122 @@ public class SifenConfig {
 
         this.setIdCSC(idCSC);
         this.CSC = CSC;
+    }
+
+    /**
+     * Carga la configuración de Sifen a ser utilizada desde un conjunto de propiedades.
+     *
+     * @param properties Properties que contengan las configuraciones a ser utilizadas.
+     * @return La clase de configuración de Sifen con los datos obtenidos de las propiedades.
+     * @throws SifenException Si los valores proveídos son incorrectos.
+     */
+    public static SifenConfig cargarConfiguracion(Properties properties) throws SifenException {
+        SifenConfig sifenConfig = new SifenConfig();
+
+        try {
+            sifenConfig.setAmbiente(TipoAmbiente.valueOf(properties.getProperty(SIFEN_AMBIENTE_KEY)));
+        } catch (IllegalArgumentException e) {
+            throw SifenExceptionUtil.invalidConfiguration("El tipo de ambiente especificado no existe.", e);
+        }
+
+        if (properties.containsKey(SIFEN_URL_BASE_KEY)) {
+            sifenConfig.setUrlBase(properties.getProperty(SIFEN_URL_BASE_KEY));
+        }
+
+        if (properties.containsKey(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)) {
+            sifenConfig.setUsarCertificadoCliente(Boolean.parseBoolean(properties.getProperty(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)));
+        }
+
+        try {
+            sifenConfig.setTipoCertificadoCliente(TipoCertificadoCliente.valueOf(properties.getProperty(SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY)));
+        } catch (IllegalArgumentException e) {
+            throw SifenExceptionUtil.invalidConfiguration("El tipo de ambiente especificado no existe.", e);
+        }
+
+        sifenConfig.setCertificadoCliente(properties.getProperty(SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY));
+        sifenConfig.setContrasenaCertificadoCliente(properties.getProperty(SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY));
+
+        if (properties.containsKey(SIFEN_CSC_KEY)) {
+            sifenConfig.setCSC(properties.getProperty(SIFEN_CSC_KEY));
+        }
+
+        if (properties.containsKey(SIFEN_ID_CSC_KEY)) {
+            sifenConfig.setIdCSC(properties.getProperty(SIFEN_ID_CSC_KEY));
+        }
+
+        return sifenConfig;
+    }
+
+    /**
+     * Carga la configuración de Sifen a ser utilizada desde un archivo de propiedades.
+     *
+     * @param file File referenciando al archivo de propiedades a ser utilizado como configuración.
+     * @return La clase de configuración de Sifen con los datos obtenidos del archivo de propiedades.
+     * @throws SifenException Si el archivo utilizado no existe, no pudo ser abierto o es un directorio.
+     *                        Si los valores proveídos son incorrectos.
+     */
+    public static SifenConfig cargarConfiguracion(File file) throws SifenException {
+        Properties props;
+        try {
+            props = new Properties();
+            props.load(new FileReader(file));
+        } catch (IOException e) {
+            throw SifenExceptionUtil.invalidConfiguration("El archivo utilizado no existe, no pudo ser abierto o es un directorio.");
+        }
+        return SifenConfig.cargarConfiguracion(props);
+    }
+
+    /**
+     * Carga la configuración de Sifen a ser utilizada desde la ruta de un archivo de propiedades.
+     *
+     * @param fileName Ruta del archivo de propiedades a ser utilizado como configuración.
+     * @return La clase de configuración de Sifen con los datos obtenidos del archivo de propiedades.
+     * @throws SifenException Si el archivo utilizado no existe, no pudo ser abierto o es un directorio.
+     *                        Si los valores proveídos son incorrectos.
+     */
+    public static SifenConfig cargarConfiguracion(String fileName) throws SifenException {
+        return SifenConfig.cargarConfiguracion(new File(fileName));
+    }
+
+    /**
+     * Carga la configuración de Sifen a ser utilizada desde un archivo de propiedades ubicado en la ruta Path.
+     *
+     * @param path Path referenciando al archivo de propiedades a ser utilizado como configuración.
+     * @return La clase de configuración de Sifen con los datos obtenidos del archivo de propiedades.
+     * @throws SifenException Si el archivo utilizado no existe, no pudo ser abierto o es un directorio.
+     *                        Si los valores proveídos son incorrectos.
+     */
+    public SifenConfig cargarConfiguracion(Path path) throws SifenException {
+        return SifenConfig.cargarConfiguracion(path.toFile());
+    }
+
+    @Override
+    public String toString() {
+        return "SifenConfig{" +
+                "ambiente=" + ambiente +
+                ", urlBase='" + urlBase + '\'' +
+                ", urlBaseLocal='" + urlBaseLocal + '\'' +
+                ", urlConsultaQr='" + urlConsultaQr + '\'' +
+                ", pathRecibe='" + pathRecibe + '\'' +
+                ", pathRecibeLote='" + pathRecibeLote + '\'' +
+                ", pathEvento='" + pathEvento + '\'' +
+                ", pathConsultaLote='" + pathConsultaLote + '\'' +
+                ", pathConsultaRUC='" + pathConsultaRUC + '\'' +
+                ", pathConsulta='" + pathConsulta + '\'' +
+                ", usarCertificadoCliente=" + usarCertificadoCliente +
+                ", tipoCertificadoCliente=" + tipoCertificadoCliente +
+                ", certificadoCliente='" + certificadoCliente + '\'' +
+                ", contrasenaCertificadoCliente='" + contrasenaCertificadoCliente + '\'' +
+                ", idCSC='" + idCSC + '\'' +
+                ", CSC='" + CSC + '\'' +
+                ", httpConnectTimeout=" + httpConnectTimeout +
+                ", httpReadTimeout=" + httpReadTimeout +
+                ", userAgent='" + userAgent + '\'' +
+                ", URL_BASE_DEV='" + URL_BASE_DEV + '\'' +
+                ", URL_BASE_PROD='" + URL_BASE_PROD + '\'' +
+                ", URL_CONSULTA_QR_DEV='" + URL_CONSULTA_QR_DEV + '\'' +
+                ", URL_CONSULTA_QR_PROD='" + URL_CONSULTA_QR_PROD + '\'' +
+                '}';
     }
 
     // Getters y Setters
@@ -272,86 +389,4 @@ public class SifenConfig {
     public void setCSC(String CSC) {
         this.CSC = CSC;
     }
-
-    @Override
-    public String toString() {
-        return "SifenConfig{" +
-                "ambiente=" + ambiente +
-                ", urlBase='" + urlBase + '\'' +
-                ", urlBaseLocal='" + urlBaseLocal + '\'' +
-                ", urlConsultaQr='" + urlConsultaQr + '\'' +
-                ", pathRecibe='" + pathRecibe + '\'' +
-                ", pathRecibeLote='" + pathRecibeLote + '\'' +
-                ", pathEvento='" + pathEvento + '\'' +
-                ", pathConsultaLote='" + pathConsultaLote + '\'' +
-                ", pathConsultaRUC='" + pathConsultaRUC + '\'' +
-                ", pathConsulta='" + pathConsulta + '\'' +
-                ", usarCertificadoCliente=" + usarCertificadoCliente +
-                ", tipoCertificadoCliente=" + tipoCertificadoCliente +
-                ", certificadoCliente='" + certificadoCliente + '\'' +
-                ", contrasenaCertificadoCliente='" + contrasenaCertificadoCliente + '\'' +
-                ", idCSC='" + idCSC + '\'' +
-                ", CSC='" + CSC + '\'' +
-                ", httpConnectTimeout=" + httpConnectTimeout +
-                ", httpReadTimeout=" + httpReadTimeout +
-                ", userAgent='" + userAgent + '\'' +
-                ", URL_BASE_DEV='" + URL_BASE_DEV + '\'' +
-                ", URL_BASE_PROD='" + URL_BASE_PROD + '\'' +
-                ", URL_CONSULTA_QR_DEV='" + URL_CONSULTA_QR_DEV + '\'' +
-                ", URL_CONSULTA_QR_PROD='" + URL_CONSULTA_QR_PROD + '\'' +
-                '}';
-    }
-
-    public static SifenConfig loadFromProperties(Properties properties) {
-        SifenConfig sifenConfig = new SifenConfig();
-
-        try {
-            sifenConfig.setAmbiente(TipoAmbiente.valueOf(properties.getProperty(SIFEN_AMBIENTE_KEY)));
-        } catch (Throwable t) {
-            // do nothing
-        }
-
-        if (properties.containsKey(SIFEN_URL_BASE_KEY)) {
-            sifenConfig.setUrlBase(properties.getProperty(SIFEN_URL_BASE_KEY));
-        }
-
-        if (properties.containsKey(SIFEN_USAR_CERTIFICATO_CLIENTE_KEY)) {
-            sifenConfig.setUsarCertificadoCliente(Boolean.parseBoolean(properties.getProperty(SIFEN_USAR_CERTIFICATO_CLIENTE_KEY)));
-        }
-
-        try {
-            sifenConfig.setTipoCertificadoCliente(TipoCertificadoCliente.valueOf(properties.getProperty(SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY)));
-        } catch (Throwable t) {
-            // do nothing
-        }
-
-        sifenConfig.setCertificadoCliente(properties.getProperty(SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY));
-        sifenConfig.setContrasenaCertificadoCliente(properties.getProperty(SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY));
-
-        if (properties.containsKey(SIFEN_CSC_KEY)) {
-            sifenConfig.setCSC(properties.getProperty(SIFEN_CSC_KEY));
-        }
-
-        if (properties.containsKey(SIFEN_ID_CSC_KEY)) {
-            sifenConfig.setIdCSC(properties.getProperty(SIFEN_ID_CSC_KEY));
-        }
-
-        return sifenConfig;
-    }
-
-    public static SifenConfig loadFromFile(File file) throws IOException {
-        Properties props = new Properties();
-        props.load(new FileReader(file));
-        return SifenConfig.loadFromProperties(props);
-    }
-
-    public static SifenConfig loadFromFileName(String fileName) throws IOException {
-        return SifenConfig.loadFromFile(new File(fileName));
-    }
-
-
-    public SifenConfig loadFromPath(Path path) throws IOException {
-        return SifenConfig.loadFromFile(path.toFile());
-    }
-
 }

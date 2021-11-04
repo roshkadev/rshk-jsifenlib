@@ -146,4 +146,12 @@ public class SifenUtil {
 
         return Files.readAllBytes(Paths.get(zip.getAbsolutePath()));
     }
+
+    public static boolean isBlank(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
+    public static boolean isNotBlank(String str) {
+        return str != null && !str.trim().isEmpty();
+    }
 }

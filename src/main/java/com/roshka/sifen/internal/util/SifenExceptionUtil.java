@@ -8,9 +8,14 @@ import com.roshka.sifen.core.exceptions.SifenExceptionCodes;
  */
 public class SifenExceptionUtil {
     public static SifenException invalidConfiguration(String message) {
+        return SifenExceptionUtil.invalidConfiguration(message, null);
+    }
+
+    public static SifenException invalidConfiguration(String message, Throwable t) {
         return new SifenException(
                 SifenExceptionCodes.INVALID_CONFIGURATION_CODE,
-                message
+                message,
+                t
         );
     }
 

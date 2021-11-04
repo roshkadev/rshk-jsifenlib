@@ -18,7 +18,6 @@ import org.junit.Test;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -29,15 +28,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 public class SOAPTests {
     private final static Logger logger = Logger.getLogger(SOAPTests.class.toString());
 
     @BeforeClass
-    public static void setupSifenConfig() throws IOException {
-        SifenConfig sifenConfig = SifenConfig.loadFromFileName("test.properties");
+    public static void setupSifenConfig() throws SifenException {
+        SifenConfig sifenConfig = SifenConfig.cargarConfiguracion("test.properties");
         logger.info("Using CONFIG: " + sifenConfig);
         Sifen.setSifenConfig(sifenConfig);
     }

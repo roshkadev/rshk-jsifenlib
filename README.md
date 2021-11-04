@@ -78,21 +78,21 @@ SifenConfig config = new SifenConfig(
 ```
 
 La clase `SifenConfig` también se puede crear a partir de un método de construcción que toma los datos de un
-archivo de propiedades de la siguiente maneta:
+archivo de propiedades de la siguiente manera:
 
 ```java
 SifenConfig sifenConfig = SifenConfig.loadFromFileName("conf/sifen.properties");
 ```
 
-Este archivo tiene que tener el siguiente formato:
+Este archivo debe tener el siguiente formato, dependiendo de las necesidades:
 
 ```properties
-# esto puede ser:
+# Esto puede ser:
 # DEV (apunta al ambiente de desarrollo/test de SIFEN)
 # PROD (apunta al ambiente de producción de SIFEN)
 sifen.ambiente=DEV
 
-# NO USAR a menos que uno sepa bien lo que está haciendo
+# NO modificar a menos que uno sepa bien lo que está haciendo
 # sifen.url_base=
 
 # Si se va a usar el certificado cliente.
@@ -106,7 +106,11 @@ sifen.certificado_cliente.tipo=PFX
 sifen.certificado_cliente.archivo=/home/charly/garcia.pfx
 
 ## PASSWORD del ARCHIVO PFX
-sifen.certificado_cliente.password=my_password
+sifen.certificado_cliente.contrasena=my_password
+
+## CSC
+sifen.csc=ABCD0000000000000000000000000000
+sifen.csc.id=0001
 ```
 Luego de preparar la configuración, establecer la misma para usarla con las diferentes consultas.
 
