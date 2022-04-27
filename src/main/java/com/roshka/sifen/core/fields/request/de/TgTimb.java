@@ -12,11 +12,11 @@ import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
 
 public class TgTimb extends SifenObjectBase {
-    private TTiDE iTiDE;         // este campo engloba a iTiDE y a dDesTiDE
+    private TTiDE iTiDE;        // este campo engloba a iTiDE y a dDesTiDE
     private int dNumTim;        // número de timbrado
-    private String dEst;         // código de establecimiento: patron ej: 001
-    private String dPunExp;      // punto de expedición: patron ej: 001
-    private String dNumDoc;      // número de documento: patron ej: 0192312
+    private String dEst;        // código de establecimiento: patron ej: 001
+    private String dPunExp;     // punto de expedición: patron ej: 001
+    private String dNumDoc;     // número de documento: patron ej: 0192312
     private String dSerieNum;   // número de serie del timbrado (opcional)
     private LocalDate dFeIniT;  // fecha de inicio de vigencia del timbrado
 

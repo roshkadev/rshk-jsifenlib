@@ -21,8 +21,8 @@ public class TgCamItem extends SifenObjectBase {
     private int dNCM;
     private String dDncpG;
     private String dDncpE;
-    private int dGtin;
-    private int dGtinPq;
+    private long dGtin;
+    private long dGtinPq;
     private String dDesProSer;
     private TcUniMed cUniMed;
     private BigDecimal dCantProSer;
@@ -130,10 +130,10 @@ public class TgCamItem extends SifenObjectBase {
                 this.dDncpE = ResponseUtil.getTextValue(value);
                 break;
             case "dGtin":
-                this.dGtin = Integer.parseInt(ResponseUtil.getTextValue(value));
+                this.dGtin = Long.parseLong(ResponseUtil.getTextValue(value));
                 break;
             case "dGtinPq":
-                this.dGtinPq = Integer.parseInt(ResponseUtil.getTextValue(value));
+                this.dGtinPq = Long.parseLong(ResponseUtil.getTextValue(value));
                 break;
             case "dDesProSer":
                 this.dDesProSer = ResponseUtil.getTextValue(value);
@@ -217,19 +217,19 @@ public class TgCamItem extends SifenObjectBase {
         this.dDncpE = dDncpE;
     }
 
-    public int getdGtin() {
+    public long getdGtin() {
         return dGtin;
     }
 
-    public void setdGtin(int dGtin) {
+    public void setdGtin(long dGtin) {
         this.dGtin = dGtin;
     }
 
-    public int getdGtinPq() {
+    public long getdGtinPq() {
         return dGtinPq;
     }
 
-    public void setdGtinPq(int dGtinPq) {
+    public void setdGtinPq(long dGtinPq) {
         this.dGtinPq = dGtinPq;
     }
 
