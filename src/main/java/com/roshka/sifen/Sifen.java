@@ -1,14 +1,16 @@
 package com.roshka.sifen;
 
 import com.roshka.sifen.core.SifenConfig;
-import com.roshka.sifen.core.beans.response.*;
-import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.request.*;
-import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.core.beans.response.*;
+import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.helpers.SignatureHelper;
+import com.roshka.sifen.internal.request.*;
+import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 
+import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -252,6 +254,29 @@ public class Sifen {
         return (RespuestaRecepcionEvento) reqRecEventoDe.makeRequest(sifenConfig.getPathEvento());
     }
 
+    /**
+     * Verifica si la firma digital del Documento Electrónico recibido como argumento es válida.
+     *
+     * @param xml Cadena de texto correspondiente al Documento Electrónico a validar en formato XML.
+     * @return True si la firma digital del DE es válida. De lo contrario, False.
+     * @throws SifenException Si no se encontró ninguna firma digital en el DE o, si no se pudo crear el archivo XML o,
+     *                        si ocurrió un error en la validación.
+     */
+    public static boolean validarFirmaDE(String xml) throws SifenException {
+        return SignatureHelper.validateSignature(xml);
+    }
+
+    /**
+     * Verifica si la firma digital del Documento Electrónico recibido como argumento es válida.
+     *
+     * @param xml Instancia de un archivo correspondiente al Documento Electrónico a validar en formato XML.
+     * @return True si la firma digital del DE es válida. De lo contrario, False.
+     * @throws SifenException Si no se encontró ninguna firma digital en el DE o, si ocurrió un error en la validación.
+     */
+    public static boolean validarFirmaDE(File xml) throws SifenException {
+        return SignatureHelper.validateSignature(xml);
+    }
+
     private static void validateConfiguration(SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig.getAmbiente() == null) {
             throw SifenExceptionUtil.invalidConfiguration("Error en la configuración de Sifen: Tipo de ambiente no establecido.");
@@ -317,7 +342,8 @@ public class Sifen {
             if (sifenConfig.getIdCSC().equals("0001") && sifenConfig.getCSC().equals("ABCD0000000000000000000000000000") ||
                     sifenConfig.getIdCSC().equals("0002") && sifenConfig.getCSC().equals("EFGH0000000000000000000000000000")) {
                 throw SifenExceptionUtil.invalidConfiguration("Error en la configuración de Sifen: El CSC establecido solo " +
-                        "es utilizable en el ambiente de desarrollo. Solicitar a la SET el del producción, en caso de no tenerlo.");
+                        "es utilizable en el ambiente de desarrollo. Solicitar a la SET el correspondiente a producción, " +
+                        "en caso de no poseerlo.");
             }
         }
     }

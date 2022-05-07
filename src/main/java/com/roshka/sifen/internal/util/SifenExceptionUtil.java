@@ -98,4 +98,16 @@ public class SifenExceptionUtil {
                 t
         );
     }
+
+    public static SifenException invalidSignatureError(String message) {
+        return xmlParsingError(message, null);
+    }
+
+    public static SifenException invalidSignatureError(String message, Throwable t) {
+        return new SifenException(
+                SifenExceptionCodes.INVALID_SIGNATURE_ERROR_CODE,
+                message,
+                t
+        );
+    }
 }

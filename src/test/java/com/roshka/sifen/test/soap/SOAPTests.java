@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -363,5 +364,13 @@ public class SOAPTests {
     public void testConsultaLoteDe() throws SifenException {
         RespuestaConsultaLoteDE ret = Sifen.consultaLoteDE("109051592123784");
         logger.info(ret.toString());
+    }
+
+    @Test
+    @Ignore
+    public void testValidacionDE() throws SifenException {
+        File xml = new File("de.xml");
+        boolean isValid = Sifen.validarFirmaDE(xml);
+        logger.info(isValid ? "Firma digital válida" : "Firma digital inválida");
     }
 }
