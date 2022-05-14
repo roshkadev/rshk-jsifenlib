@@ -3,6 +3,7 @@ package com.roshka.sifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.core.beans.ValidezFirmaDigital;
 import com.roshka.sifen.core.beans.response.*;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.helpers.SignatureHelper;
@@ -257,24 +258,34 @@ public class Sifen {
     /**
      * Verifica si la firma digital del Documento Electrónico recibido como argumento es válida.
      *
-     * @param xml Cadena de texto correspondiente al Documento Electrónico a validar en formato XML.
-     * @return True si la firma digital del DE es válida. De lo contrario, False.
-     * @throws SifenException Si no se encontró ninguna firma digital en el DE o, si no se pudo crear el archivo XML o,
-     *                        si ocurrió un error en la validación.
+     * @param xml Cadena de texto correspondiente al Documento Electrónico a validar, en formato XML.
+     * @return Instancia del objeto <i>ValidezFirmaDigital</i>, especificando si la firma es válida, el
+     * motivo en caso de que no lo sea, y los datos del sujeto encontrados en el certificado.
      */
-    public static boolean validarFirmaDE(String xml) throws SifenException {
-        return SignatureHelper.validateSignature(xml);
+    public static ValidezFirmaDigital validarFirmaDEDesdeXml(String xml) {
+        return SignatureHelper.validateSignature(xml, "XML");
     }
 
     /**
      * Verifica si la firma digital del Documento Electrónico recibido como argumento es válida.
      *
-     * @param xml Instancia de un archivo correspondiente al Documento Electrónico a validar en formato XML.
-     * @return True si la firma digital del DE es válida. De lo contrario, False.
-     * @throws SifenException Si no se encontró ninguna firma digital en el DE o, si ocurrió un error en la validación.
+     * @param rutaArchivo Ruta del archivo correspondiente al Documento Electrónico a validar, en formato XML.
+     * @return Instancia del objeto <i>ValidezFirmaDigital</i>, especificando si la firma es válida, el
+     * motivo en caso de que no lo sea, y los datos del sujeto encontrados en el certificado.
      */
-    public static boolean validarFirmaDE(File xml) throws SifenException {
-        return SignatureHelper.validateSignature(xml);
+    public static ValidezFirmaDigital validarFirmaDE(String rutaArchivo) {
+        return SignatureHelper.validateSignature(rutaArchivo, "PATH");
+    }
+
+    /**
+     * Verifica si la firma digital del Documento Electrónico recibido como argumento es válida.
+     *
+     * @param archivoXml Instancia de un archivo correspondiente al Documento Electrónico a validar, en formato XML.
+     * @return Instancia del objeto <i>ValidezFirmaDigital</i>, especificando si la firma es válida, el
+     * motivo en caso de que no lo sea, y los datos del sujeto encontrados en el certificado.
+     */
+    public static ValidezFirmaDigital validarFirmaDE(File archivoXml) {
+        return SignatureHelper.validateSignature(archivoXml);
     }
 
     private static void validateConfiguration(SifenConfig sifenConfig) throws SifenException {

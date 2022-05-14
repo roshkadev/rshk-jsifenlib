@@ -4,6 +4,7 @@ import com.roshka.sifen.Sifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.core.beans.ValidezFirmaDigital;
 import com.roshka.sifen.core.beans.response.*;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.fields.request.de.*;
@@ -18,7 +19,6 @@ import org.junit.Test;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -368,9 +368,8 @@ public class SOAPTests {
 
     @Test
     @Ignore
-    public void testValidacionDE() throws SifenException {
-        File xml = new File("de.xml");
-        boolean isValid = Sifen.validarFirmaDE(xml);
-        logger.info(isValid ? "Firma digital válida" : "Firma digital inválida");
+    public void testValidacionDE() {
+        ValidezFirmaDigital validity = Sifen.validarFirmaDE("D:\\de.xml");
+        logger.info(validity.isValido() ? "Firma digital válida" : "Firma digital inválida");
     }
 }

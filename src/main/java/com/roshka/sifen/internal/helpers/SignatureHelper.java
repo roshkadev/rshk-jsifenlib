@@ -1,13 +1,18 @@
 package com.roshka.sifen.internal.helpers;
 
 import com.roshka.sifen.core.SifenConfig;
+import com.roshka.sifen.core.beans.ValidezFirmaDigital;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
+import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import sun.security.x509.GeneralName;
+import sun.security.x509.X500Name;
+import sun.security.x509.X509CertImpl;
 
 import javax.xml.crypto.*;
 import javax.xml.crypto.dsig.*;
@@ -30,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Helper encargado de la firma digital de los documentos XML.
@@ -82,7 +89,31 @@ public class SignatureHelper {
         }
     }
 
-    public static boolean validateSignature(File xml) throws SifenException {
+    public static ValidezFirmaDigital validateSignature(String xml, String type) {
+        File xmlFile;
+        if (type.equals("XML")) {
+            try {
+                // Create file from xml string
+                xmlFile = File.createTempFile(String.valueOf(UUID.randomUUID()), ".xml");
+
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                        Files.newOutputStream(xmlFile.toPath()), StandardCharsets.UTF_8
+                ));
+                writer.write(xml);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ValidezFirmaDigital.create(false, "Ocurrió un error al crear el archivo XML.");
+            }
+        } else {
+            xmlFile = new File(xml);
+        }
+
+        // Validate signature
+        return validateSignature(xmlFile);
+    }
+
+    public static ValidezFirmaDigital validateSignature(File xml) {
         try {
             // Parse the document to be validated
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -91,69 +122,146 @@ public class SignatureHelper {
             try {
                 document = builderFactory.newDocumentBuilder().parse(xml);
             } catch (SAXException e) {
-                throw SifenExceptionUtil.invalidSignatureError("Ocurrió un error al formatear el XML. Revisar que el " +
-                        "archivo sea un XML válido, y que tenga un solo nodo raíz.");
+                e.printStackTrace();
+                return ValidezFirmaDigital.create(false, "Ocurrió un error al parsear el " +
+                        "archivo XML. Revise que el archivo sea un XML válido, y que tenga un solo nodo raíz.");
             }
 
             // Find Signature
             NodeList signatureNodes = document.getElementsByTagName("Signature");
             if (signatureNodes.getLength() == 0) {
-                throw SifenExceptionUtil.invalidSignatureError("No se encontró la firma digital en el Documento Electrónico");
+                return ValidezFirmaDigital.create(false, "No se encontró la firma digital en " +
+                        "el Documento Electrónico.");
             }
 
-            // Validate the Signature
+            // Get signed element from document
             DOMValidateContext valContext = new DOMValidateContext(new X509KeySelector(), signatureNodes.item(0));
             NodeList DENodes = document.getElementsByTagName("DE");
             if (DENodes.getLength() > 0) {
                 valContext.setIdAttributeNS((Element) DENodes.item(0), null, "Id");
             } else {
-                throw SifenExceptionUtil.invalidSignatureError("No se encontró el nodo 'DE' en el Documento Electrónico");
+                return ValidezFirmaDigital.create(false, "No se encontró el nodo 'DE' en el " +
+                        "Documento Electrónico.");
             }
-
             XMLSignature signature = _xmlSignatureFactory.unmarshalXMLSignature(valContext);
 
-            return signature.validate(valContext);
+            // Get subjects from certificate for further validation
+            List<ValidezFirmaDigital.SujetoCertificado> certificateSubjects = getCertificateSubjects(signature.getKeyInfo());
+
+            // Validate the Signature
+            boolean isValid = signature.validate(valContext);
+            if (!isValid) {
+                return ValidezFirmaDigital.create(false, "La firma digital es inválida.",
+                        certificateSubjects);
+            }
+
+            return checkDocumentIssuer(document, certificateSubjects);
         } catch (MarshalException | XMLSignatureException | ParserConfigurationException | IOException e) {
-            throw SifenExceptionUtil.invalidSignatureError("Ocurrió un error al validar la firma digital del Documento Electrónico");
+            e.printStackTrace();
+            return ValidezFirmaDigital.create(false, "Ocurrió un error al validar la firma " +
+                    "digital del Documento Electrónico.");
         }
     }
 
-    public static boolean validateSignature(String xml) throws SifenException {
-        try {
-            // Create file from string
-            File xmlFile = File.createTempFile(String.valueOf(UUID.randomUUID()), ".xml");
-
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-                    Files.newOutputStream(xmlFile.toPath()), StandardCharsets.UTF_8
-            ));
-            writer.write(xml);
-            writer.close();
-
-            // Validate signature
-            return validateSignature(xmlFile);
-        } catch (IOException e) {
-            throw SifenExceptionUtil.invalidSignatureError("Ocurrió un error al validar la firma digital del Documento Electrónico");
+    private static ValidezFirmaDigital checkDocumentIssuer(Document document, List<ValidezFirmaDigital.SujetoCertificado> certificateSubjects) {
+        // Get Issuer RUC from Electronic Document
+        NodeList dRucEmNodes = document.getElementsByTagName("dRucEm");
+        if (dRucEmNodes.getLength() == 0) {
+            return ValidezFirmaDigital.create(false, "No se encontró el nodo 'dRucEm' en " +
+                    "el Documento Electrónico.", certificateSubjects);
         }
+
+        NodeList dDVEmiNodes = document.getElementsByTagName("dDVEmi");
+        if (dRucEmNodes.getLength() == 0) {
+            return ValidezFirmaDigital.create(false, "No se encontró el nodo 'dDVEmi' en " +
+                    "el Documento Electrónico.", certificateSubjects);
+        }
+
+        String issuerRuc = dRucEmNodes.item(0).getTextContent();
+        String issuerDv = dDVEmiNodes.item(0).getTextContent();
+
+        for (ValidezFirmaDigital.SujetoCertificado subject : certificateSubjects) {
+            if (subject.getNumeroDocumento().equals(issuerRuc + "-" + issuerDv)) {
+                return ValidezFirmaDigital.create(true, certificateSubjects);
+            }
+        }
+
+        return ValidezFirmaDigital.create(false, "El RUC emisor del Documento Electrónico " +
+                "no coincide con el encontrado en la firma digital.", certificateSubjects);
+    }
+
+    private static List<ValidezFirmaDigital.SujetoCertificado> getCertificateSubjects(KeyInfo keyInfo) {
+        List<ValidezFirmaDigital.SujetoCertificado> certificateSubjects = new ArrayList<>();
+
+        // Get certificate from Electronic Document
+        X509CertImpl certificate = (X509CertImpl) X509KeySelector.getCertificate(keyInfo);
+        if (certificate == null) return certificateSubjects;
+
+        // Get main subject information from certificate
+        try {
+            String subject = certificate.getSubjectDN().getName();
+
+            certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
+                    getAttributeFromSubject(subject, "SERIALNUMBER"),
+                    SifenUtil.coalesce(getAttributeFromSubject(subject, "CN"), getAttributeFromSubject(subject, "O"))
+            ));
+        } catch (Exception ignored) {
+        }
+
+        // Get alternatives subjects from certificate
+        try {
+            List<GeneralName> names = certificate.getSubjectAlternativeNameExtension().get("subject_name").names();
+            for (GeneralName name : names) {
+                if (!(name.getName() instanceof X500Name)) continue;
+
+                String subject = name.getName().toString();
+
+                certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
+                        getAttributeFromSubject(subject, "SERIALNUMBER"),
+                        SifenUtil.coalesce(getAttributeFromSubject(subject, "CN"), getAttributeFromSubject(subject, "O"))
+                ));
+            }
+        } catch (Exception ignored) {
+        }
+
+        return certificateSubjects;
+    }
+
+    private static String getAttributeFromSubject(String subject, String attributeName) {
+        Pattern pattern = Pattern.compile("(?<=" + attributeName + "=)[\\w\\s-]+");
+        Matcher matcher = pattern.matcher(subject);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
     }
 
     private static class X509KeySelector extends KeySelector {
         public KeySelectorResult select(KeyInfo keyInfo, KeySelector.Purpose purpose, AlgorithmMethod method,
                                         XMLCryptoContext context) throws KeySelectorException {
+            X509Certificate certificate = getCertificate(keyInfo);
+            if (certificate != null) {
+                final PublicKey key = certificate.getPublicKey();
+                if (key.getAlgorithm().equalsIgnoreCase("RSA") && method.getAlgorithm().equalsIgnoreCase(Constants.RSA_SHA256)) {
+                    return () -> key;
+                }
+            }
+            throw new KeySelectorException("No key was found");
+        }
+
+        public static X509Certificate getCertificate(KeyInfo keyInfo) {
             for (Object value : keyInfo.getContent()) {
                 XMLStructure info = (XMLStructure) value;
                 if (!(info instanceof X509Data)) continue;
 
                 X509Data x509Data = (X509Data) info;
-                for (Object o : x509Data.getContent()) {
-                    if (!(o instanceof X509Certificate)) continue;
+                for (Object certificate : x509Data.getContent()) {
+                    if (!(certificate instanceof X509Certificate)) continue;
 
-                    final PublicKey key = ((X509Certificate) o).getPublicKey();
-                    if (key.getAlgorithm().equalsIgnoreCase("RSA") && method.getAlgorithm().equalsIgnoreCase(Constants.RSA_SHA256)) {
-                        return () -> key;
-                    }
+                    return ((X509Certificate) certificate);
                 }
             }
-            throw new KeySelectorException("No key was found");
+            return null;
         }
     }
 }

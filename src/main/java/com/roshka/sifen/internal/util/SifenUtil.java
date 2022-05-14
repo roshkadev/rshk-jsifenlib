@@ -50,14 +50,14 @@ public class SifenUtil {
     }
 
     public static String generateDv(String ruc) {
-        int basemax = 11, k = 2, total = 0;
+        int baseMax = 11, k = 2, total = 0;
 
         if (ruc.equals("88888801")) {
             return "5";
         }
 
         for (int i = ruc.length() - 1; i >= 0; i--) {
-            k = k > basemax ? 2 : k;
+            k = k > baseMax ? 2 : k;
             int n = Integer.parseInt(ruc.substring(i, i + 1));
             total += n * k;
             k++;
@@ -136,7 +136,7 @@ public class SifenUtil {
     public static byte[] compressXmlToZip(String str) throws IOException {
         String fileName = "DE_" + new SimpleDateFormat("ddMMyyyy").format(new Date());
         File zip = File.createTempFile(fileName, ".zip");
-        ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zip));
+        ZipOutputStream out = new ZipOutputStream(Files.newOutputStream(zip.toPath()));
         ZipEntry entry = new ZipEntry(fileName + ".xml");
         out.putNextEntry(entry);
 
