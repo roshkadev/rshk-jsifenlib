@@ -136,42 +136,42 @@ public class SifenConfig {
     /**
      * Carga la configuración de Sifen a ser utilizada desde un conjunto de propiedades.
      *
-     * @param properties Properties que contengan las configuraciones a ser utilizadas.
+     * @param propiedades Properties que contengan las configuraciones a ser utilizadas.
      * @return La clase de configuración de Sifen con los datos obtenidos de las propiedades.
      * @throws SifenException Si los valores proveídos son incorrectos.
      */
-    public static SifenConfig cargarConfiguracion(Properties properties) throws SifenException {
+    public static SifenConfig cargarConfiguracion(Properties propiedades) throws SifenException {
         SifenConfig sifenConfig = new SifenConfig();
 
         try {
-            sifenConfig.setAmbiente(TipoAmbiente.valueOf(properties.getProperty(SIFEN_AMBIENTE_KEY)));
+            sifenConfig.setAmbiente(TipoAmbiente.valueOf(propiedades.getProperty(SIFEN_AMBIENTE_KEY)));
         } catch (IllegalArgumentException e) {
             throw SifenExceptionUtil.invalidConfiguration("El tipo de ambiente especificado no existe.", e);
         }
 
-        if (properties.containsKey(SIFEN_URL_BASE_KEY)) {
-            sifenConfig.setUrlBase(properties.getProperty(SIFEN_URL_BASE_KEY));
+        if (propiedades.containsKey(SIFEN_URL_BASE_KEY)) {
+            sifenConfig.setUrlBase(propiedades.getProperty(SIFEN_URL_BASE_KEY));
         }
 
-        if (properties.containsKey(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)) {
-            sifenConfig.setUsarCertificadoCliente(Boolean.parseBoolean(properties.getProperty(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)));
+        if (propiedades.containsKey(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)) {
+            sifenConfig.setUsarCertificadoCliente(Boolean.parseBoolean(propiedades.getProperty(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)));
         }
 
         try {
-            sifenConfig.setTipoCertificadoCliente(TipoCertificadoCliente.valueOf(properties.getProperty(SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY)));
+            sifenConfig.setTipoCertificadoCliente(TipoCertificadoCliente.valueOf(propiedades.getProperty(SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY)));
         } catch (IllegalArgumentException e) {
             throw SifenExceptionUtil.invalidConfiguration("El tipo de ambiente especificado no existe.", e);
         }
 
-        sifenConfig.setCertificadoCliente(properties.getProperty(SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY));
-        sifenConfig.setContrasenaCertificadoCliente(properties.getProperty(SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY));
+        sifenConfig.setCertificadoCliente(propiedades.getProperty(SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY));
+        sifenConfig.setContrasenaCertificadoCliente(propiedades.getProperty(SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY));
 
-        if (properties.containsKey(SIFEN_CSC_KEY)) {
-            sifenConfig.setCSC(properties.getProperty(SIFEN_CSC_KEY));
+        if (propiedades.containsKey(SIFEN_CSC_KEY)) {
+            sifenConfig.setCSC(propiedades.getProperty(SIFEN_CSC_KEY));
         }
 
-        if (properties.containsKey(SIFEN_ID_CSC_KEY)) {
-            sifenConfig.setIdCSC(properties.getProperty(SIFEN_ID_CSC_KEY));
+        if (propiedades.containsKey(SIFEN_ID_CSC_KEY)) {
+            sifenConfig.setIdCSC(propiedades.getProperty(SIFEN_ID_CSC_KEY));
         }
 
         return sifenConfig;
@@ -180,16 +180,16 @@ public class SifenConfig {
     /**
      * Carga la configuración de Sifen a ser utilizada desde un archivo de propiedades.
      *
-     * @param file File referenciando al archivo de propiedades a ser utilizado como configuración.
+     * @param archivo File referenciando al archivo de propiedades a ser utilizado como configuración.
      * @return La clase de configuración de Sifen con los datos obtenidos del archivo de propiedades.
      * @throws SifenException Si el archivo utilizado no existe, no pudo ser abierto o es un directorio.
      *                        Si los valores proveídos son incorrectos.
      */
-    public static SifenConfig cargarConfiguracion(File file) throws SifenException {
+    public static SifenConfig cargarConfiguracion(File archivo) throws SifenException {
         Properties props;
         try {
             props = new Properties();
-            props.load(new FileReader(file));
+            props.load(new FileReader(archivo));
         } catch (IOException e) {
             throw SifenExceptionUtil.invalidConfiguration("El archivo utilizado no existe, no pudo ser abierto o es un directorio.");
         }
@@ -199,25 +199,25 @@ public class SifenConfig {
     /**
      * Carga la configuración de Sifen a ser utilizada desde la ruta de un archivo de propiedades.
      *
-     * @param fileName Ruta del archivo de propiedades a ser utilizado como configuración.
+     * @param rutaArchivo Ruta del archivo de propiedades a ser utilizado como configuración.
      * @return La clase de configuración de Sifen con los datos obtenidos del archivo de propiedades.
      * @throws SifenException Si el archivo utilizado no existe, no pudo ser abierto o es un directorio.
      *                        Si los valores proveídos son incorrectos.
      */
-    public static SifenConfig cargarConfiguracion(String fileName) throws SifenException {
-        return SifenConfig.cargarConfiguracion(new File(fileName));
+    public static SifenConfig cargarConfiguracion(String rutaArchivo) throws SifenException {
+        return SifenConfig.cargarConfiguracion(new File(rutaArchivo));
     }
 
     /**
      * Carga la configuración de Sifen a ser utilizada desde un archivo de propiedades ubicado en la ruta Path.
      *
-     * @param path Path referenciando al archivo de propiedades a ser utilizado como configuración.
+     * @param ruta Path referenciando al archivo de propiedades a ser utilizado como configuración.
      * @return La clase de configuración de Sifen con los datos obtenidos del archivo de propiedades.
      * @throws SifenException Si el archivo utilizado no existe, no pudo ser abierto o es un directorio.
      *                        Si los valores proveídos son incorrectos.
      */
-    public SifenConfig cargarConfiguracion(Path path) throws SifenException {
-        return SifenConfig.cargarConfiguracion(path.toFile());
+    public SifenConfig cargarConfiguracion(Path ruta) throws SifenException {
+        return SifenConfig.cargarConfiguracion(ruta.toFile());
     }
 
     @Override
