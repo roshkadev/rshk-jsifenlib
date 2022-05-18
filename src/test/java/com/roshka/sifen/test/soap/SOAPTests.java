@@ -4,6 +4,7 @@ import com.roshka.sifen.Sifen;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.core.beans.ValidezFirmaDigital;
 import com.roshka.sifen.core.beans.response.*;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.fields.request.de.*;
@@ -363,5 +364,12 @@ public class SOAPTests {
     public void testConsultaLoteDe() throws SifenException {
         RespuestaConsultaLoteDE ret = Sifen.consultaLoteDE("109051592123784");
         logger.info(ret.toString());
+    }
+
+    @Test
+    @Ignore
+    public void testValidacionDE() {
+        ValidezFirmaDigital validity = Sifen.validarFirmaDE("D:\\de.xml");
+        logger.info(validity.isValido() ? "Firma digital válida" : "Firma digital inválida");
     }
 }
