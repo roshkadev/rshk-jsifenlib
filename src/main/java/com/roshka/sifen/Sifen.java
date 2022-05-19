@@ -29,6 +29,7 @@ public class Sifen {
      * actualizada, simplemente invocar de vuelta.
      *
      * @param newSifenConfig El objeto de configuración que será utilizado.
+     * @throws SifenException Si la configuración es nula o, si existe algún error en los valores de la configuración.
      */
     public static void setSifenConfig(SifenConfig newSifenConfig) throws SifenException {
         if (newSifenConfig == null) {
