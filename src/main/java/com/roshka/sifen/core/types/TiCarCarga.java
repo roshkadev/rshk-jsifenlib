@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum TiCarCarga {
     MERCADERIA_CON_CADENA_DE_FRIO((short) 1, "Mercaderías con cadena de frío"),
     CARGA_PELIGROSA((short) 2, "Carga peligrosa"),
-    OTRO((short) 3, null);
+    OTRO((short) 3, "Otro");
 
     private short val;
     private String descripcion;

@@ -9,7 +9,7 @@ public enum TiIndPres {
     VENTA_A_DOMICILIO((short) 4, "Venta a domicilio"),
     OPERACION_BANCARIA((short) 5, "Operación bancaria"),
     OPERACION_CICLICA((short) 6, "Operación cíclica"),
-    OTRO((short) 9, null);
+    OTRO((short) 9, "Otro");
 
     private short val;
     private String descripcion;

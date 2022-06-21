@@ -8,7 +8,7 @@ public enum TiTipCom {
     ETANOL((short) 2, "Etanol"),
     GNV((short) 2, "GNV"),
     FLEX((short) 2, "Flex"),
-    OTRO((short) 9, null);
+    OTRO((short) 9, "Otro");
 
     private short val;
     private String descripcion;

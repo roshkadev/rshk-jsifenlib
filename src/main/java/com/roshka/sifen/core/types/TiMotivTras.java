@@ -17,7 +17,7 @@ public enum TiMotivTras {
     PARTICIPACION_EN_FERIAS((short) 12, "Participación en ferias"),
     TRASLADO_DE_ENCOMIENDAS((short) 13, "Traslado de encomienda"),
     DECOMISO((short) 14, "Decomiso"),
-    OTRO((short) 99, null);
+    OTRO((short) 99, "Otro");
 
     private short val;
     private String descripcion;

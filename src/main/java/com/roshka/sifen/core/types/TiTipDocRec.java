@@ -9,7 +9,7 @@ public enum TiTipDocRec {
     CARNET_DE_RESIDENCIA((short) 4, "Carnet de residencia"),
     INNOMINADO((short) 5, "Innominado"),
     TARJETA_DIPLOMATICA((short) 6, "Tarjeta Diplomática de exoneración fiscal"),
-    OTRO((short) 9, null);
+    OTRO((short) 9, "Otro");
 
     private short val;
     private String descripcion;

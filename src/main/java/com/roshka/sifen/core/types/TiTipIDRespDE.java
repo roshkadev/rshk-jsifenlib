@@ -7,7 +7,7 @@ public enum TiTipIDRespDE {
     PASAPORTE((short) 2, "Pasaporte"),
     CEDULA_EXTRANJERA((short) 3, "Cédula extranjera"),
     CARNET_DE_RESIDENCIA((short) 4, "Carnet de residencia"),
-    OTRO((short) 9, null);
+    OTRO((short) 9, "Otro");
 
     private short val;
     private String descripcion;

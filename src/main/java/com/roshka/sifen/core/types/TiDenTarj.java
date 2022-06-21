@@ -9,7 +9,7 @@ public enum TiDenTarj {
     MAESTRO((short) 4, "Maestro"),
     PANAL((short) 5, "Panal"),
     CABAL((short) 6, "Cabal"),
-    OTRO((short) 99, null);
+    OTRO((short) 99, "Otro");
 
     private short val;
     private String descripcion;
