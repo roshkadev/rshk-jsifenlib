@@ -24,7 +24,7 @@ public enum TiTiPago {
     PROMOCION((short) 19, "Promoción"),
     CONSUMO_INTERNO((short) 20, "Consumo Interno"),
     PAGO_ELECTRONICO((short) 21, "Pago Electrónico"),
-    OTRO((short) 99, null);
+    OTRO((short) 99, "Otro");
 
     private short val;
     private String descripcion;
