@@ -204,7 +204,7 @@ public enum CMondT {
     ZMK("Kwacha"),
     ZWD("Zimbabwe Dollar");
 
-    private String descripcion;
+    private final String descripcion;
 
     CMondT(String descripcion) {
         this.descripcion = descripcion;
