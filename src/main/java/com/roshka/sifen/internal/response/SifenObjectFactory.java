@@ -2,6 +2,7 @@ package com.roshka.sifen.internal.response;
 
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
+import java.lang.reflect.InvocationTargetException;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -15,10 +16,10 @@ public class SifenObjectFactory {
 
     public static <T extends SifenObjectBase> T getFromNode(Node mainNode, Class<T> sifenObjectBase) throws SifenException {
         try {
-            T object = sifenObjectBase.newInstance();
+            T object = sifenObjectBase.getDeclaredConstructor().newInstance();
             getFromNode(mainNode, object);
             return object;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch ( IllegalArgumentException | InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
             logger.throwing(SifenObjectFactory.class.getCanonicalName(), "getFromNode", e);
             throw SifenExceptionUtil.unexpectedError(
                     "Error de instanciación al intentar crear un objeto de clase: " + sifenObjectBase.getCanonicalName() + " -> " + e.getLocalizedMessage(), e
