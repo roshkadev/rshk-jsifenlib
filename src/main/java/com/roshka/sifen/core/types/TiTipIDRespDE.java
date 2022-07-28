@@ -9,8 +9,8 @@ public enum TiTipIDRespDE {
     CARNET_DE_RESIDENCIA((short) 4, "Carnet de residencia"),
     OTRO((short) 9, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTipIDRespDE(short val, String descripcion) {
         this.val = val;

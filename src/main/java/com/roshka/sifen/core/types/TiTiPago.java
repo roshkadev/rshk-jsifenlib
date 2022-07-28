@@ -26,8 +26,8 @@ public enum TiTiPago {
     PAGO_ELECTRONICO((short) 21, "Pago Electrónico"),
     OTRO((short) 99, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTiPago(short val, String descripcion) {
         this.val = val;

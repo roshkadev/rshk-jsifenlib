@@ -6,8 +6,8 @@ public enum TiTipCont {
     PERSONA_FISICA((short) 1, "Persona Física"),
     PERSONA_JURIDICA((short) 2, "Persona Jurídica");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTipCont(short val, String descripcion) {
         this.val = val;

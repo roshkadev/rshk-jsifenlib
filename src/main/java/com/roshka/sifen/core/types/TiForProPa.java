@@ -7,8 +7,8 @@ public enum TiForProPa {
     PAGO_ELECTRONICO((short) 2, "Pago Electrónico"),
     OTRO((short) 9, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiForProPa(short val, String descripcion) {
         this.val = val;

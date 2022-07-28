@@ -6,8 +6,8 @@ public enum TiCondCred {
     PLAZO((short) 1, "Plazo"),
     CUOTA((short) 2, "Cuota");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiCondCred(short val, String descripcion) {
         this.val = val;

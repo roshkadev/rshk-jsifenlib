@@ -6,8 +6,8 @@ public enum TiCondOpe {
     CONTADO((short) 1, "Contado"),
     CREDITO((short) 2, "Crédito");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiCondOpe(short val, String descripcion) {
         this.val = val;

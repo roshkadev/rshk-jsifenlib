@@ -8,8 +8,8 @@ public enum TiModTrans {
     AEREO((short) 3, "Aéreo"),
     MULTIMODAL((short) 4, "Multimodal");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiModTrans(short val, String descripcion) {
         this.val = val;

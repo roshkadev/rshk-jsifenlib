@@ -6,8 +6,8 @@ public enum TdCondTiCam {
     GLOBAL((short) 1, "Global"),
     POR_ITEM((short) 2, "Por ítem");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TdCondTiCam(short val, String descripcion) {
         this.val = val;

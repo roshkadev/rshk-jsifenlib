@@ -9,8 +9,8 @@ public enum TiRespEmiNR {
     DESPACHANTE_DE_ADUANAS((short) 4, "Despachante de Aduanas"),
     AGENTE_DE_TRANSPORTE_O_INTERMEDIARIO((short) 5, "Agente de transporte o intermediario");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiRespEmiNR(short val, String descripcion) {
         this.val = val;

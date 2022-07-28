@@ -11,8 +11,8 @@ public enum TiDenTarj {
     CABAL((short) 6, "Cabal"),
     OTRO((short) 99, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiDenTarj(short val, String descripcion) {
         this.val = val;

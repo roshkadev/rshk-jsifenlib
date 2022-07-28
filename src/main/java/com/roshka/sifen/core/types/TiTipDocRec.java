@@ -11,8 +11,8 @@ public enum TiTipDocRec {
     TARJETA_DIPLOMATICA((short) 6, "Tarjeta Diplomática de exoneración fiscal"),
     OTRO((short) 9, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTipDocRec(short val, String descripcion) {
         this.val = val;

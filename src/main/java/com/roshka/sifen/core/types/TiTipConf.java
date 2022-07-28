@@ -6,8 +6,8 @@ public enum TiTipConf {
     CONFORMIDAD_TOTAL((short) 1, "Conformidad Total del DTE"),
     CONFORMIDAD_PARCIAL((short) 2, "Conformidad Parcial del DTE");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTipConf(short val, String descripcion) {
         this.val = val;

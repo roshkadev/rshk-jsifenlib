@@ -9,8 +9,8 @@ public enum TTipEmi {
     NORMAL((short) 1, "Normal"),
     CONTINGENCIA((short) 2, "Contingencia");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TTipEmi(short val, String descripcion) {
         this.val = val;

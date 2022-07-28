@@ -12,8 +12,8 @@ public enum TiMotEmi {
     RECUPERO_DE_GASTO((short) 7, "Recupero de gasto"),
     AJUSTE_DE_PRECIO((short) 8, "Ajuste de precio");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiMotEmi(short val, String descripcion) {
         this.val = val;

@@ -15,7 +15,7 @@ public enum TcCondNeg {
     FCA("Franco transportista"),
     FOB("Franco a bordo");
 
-    private String descripcion;
+    private final String descripcion;
 
     TcCondNeg(String descripcion) {
         this.descripcion = descripcion;

@@ -9,8 +9,8 @@ public enum TiTIpoDoc {
     NOTA_DE_REMISION((short) 4, "Nota de remisión"),
     COMPROBANTE_DE_RETENCION((short) 5, "Comprobante de retención");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTIpoDoc(short val, String descripcion) {
         this.val = val;

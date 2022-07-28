@@ -19,8 +19,8 @@ public enum TiMotivTras {
     DECOMISO((short) 14, "Decomiso"),
     OTRO((short) 99, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiMotivTras(short val, String descripcion) {
         this.val = val;

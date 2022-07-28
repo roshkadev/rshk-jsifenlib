@@ -10,9 +10,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-//import sun.security.x509.GeneralName;
-//import sun.security.x509.X500Name;
-//import sun.security.x509.X509CertImpl;
+
 import javax.xml.crypto.*;
 import javax.xml.crypto.dsig.*;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
@@ -190,55 +188,11 @@ public class SignatureHelper {
                 "no coincide con el encontrado en la firma digital.", certificateSubjects);
     }
 
-    /* 
-     * Permanece comentado como referencia
-     * Este método usa clases del package sun.security.x509
-     * no disponibles en versiones posteriores a JDK 8
-     * X509CertImpl, GeneralName, X500Name
-     */
-//    private static List<ValidezFirmaDigital.SujetoCertificado> getCertificateSubjects(KeyInfo keyInfo) {
-//        List<ValidezFirmaDigital.SujetoCertificado> certificateSubjects = new ArrayList<>();
-//
-//        // Get certificate from Electronic Document
-//        X509CertImpl certificate = (X509CertImpl) X509KeySelector.getCertificate(keyInfo);
-//        if (certificate == null) return certificateSubjects;
-//
-//        // Get main subject information from certificate
-//        try {
-//            String subject = certificate.getSubjectDN().getName();
-//
-//            certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
-//                    getAttributeFromSubject(subject, "SERIALNUMBER"),
-//                    SifenUtil.coalesce(getAttributeFromSubject(subject, "CN"), getAttributeFromSubject(subject, "O"))
-//            ));
-//        } catch (Exception ignored) {
-//        }
-//
-//        // Get alternatives subjects from certificate
-//        try {
-//            List<GeneralName> names = certificate.getSubjectAlternativeNameExtension().get("subject_name").names();
-//            for (GeneralName name : names) {
-//                if (!(name.getName() instanceof X500Name)) continue;
-//
-//                String subject = name.getName().toString();
-//
-//                certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
-//                        getAttributeFromSubject(subject, "SERIALNUMBER"),
-//                        SifenUtil.coalesce(getAttributeFromSubject(subject, "CN"), getAttributeFromSubject(subject, "O"))
-//                ));
-//            }
-//        } catch (Exception ignored) {
-//        }
-//
-//        return certificateSubjects;
-//    }
-    
-
-        private static List<ValidezFirmaDigital.SujetoCertificado> getCertificateSubjects(KeyInfo keyInfo) {
+    private static List<ValidezFirmaDigital.SujetoCertificado> getCertificateSubjects(KeyInfo keyInfo) {
         List<ValidezFirmaDigital.SujetoCertificado> certificateSubjects = new ArrayList<>();
 
         // Get certificate from Electronic Document
-        X509Certificate certificate =   X509KeySelector.getCertificate(keyInfo);
+        X509Certificate certificate = X509KeySelector.getCertificate(keyInfo);
         if (certificate == null) return certificateSubjects;
 
         // Get main subject information from certificate
@@ -252,31 +206,28 @@ public class SignatureHelper {
         } catch (Exception ignored) {
         }
 
-        // Obtener SANs desde el certificado
+        // Get alternatives subjects from certificate
         try {
-            
-            final Collection<List<?>> sans = certificate.getSubjectAlternativeNames(); 
-            
+            Collection<List<?>> alternativeNames = certificate.getSubjectAlternativeNames();
+            if (alternativeNames == null) return certificateSubjects;
+
             String altNameStr = null;
-            
-            if(sans != null){
-                for(final List<?> san : sans){
-                   if((Integer) san.get(0) == 1) // rfc822 name
-                      altNameStr = (String) san.get(1);
-                   certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
+            int RFC822_NAME = 1;
+            for (List<?> name : alternativeNames) {
+                if ((Integer) name.get(0) == RFC822_NAME) {
+                    altNameStr = (String) name.get(1);
+                }
+
+                certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
                         getAttributeFromSubject(altNameStr, "SERIALNUMBER"),
                         SifenUtil.coalesce(getAttributeFromSubject(altNameStr, "CN"), getAttributeFromSubject(altNameStr, "O"))
                 ));
-                   
-                }
             }
-            
         } catch (Exception ignored) {
         }
 
         return certificateSubjects;
     }
-    
 
     private static String getAttributeFromSubject(String subject, String attributeName) {
         Pattern pattern = Pattern.compile("(?<=" + attributeName + "=)[\\w\\s-]+");
@@ -301,8 +252,7 @@ public class SignatureHelper {
         }
 
         public static X509Certificate getCertificate(KeyInfo keyInfo) {
-            for (Object value : keyInfo.getContent()) {
-                XMLStructure info = (XMLStructure) value;
+            for (XMLStructure info : keyInfo.getContent()) {
                 if (!(info instanceof X509Data)) continue;
 
                 X509Data x509Data = (X509Data) info;

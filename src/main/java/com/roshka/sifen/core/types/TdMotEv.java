@@ -8,8 +8,8 @@ public enum TdMotEv {
     CAMBIO_TRANSPORTISTA((short) 3, "Cambio del transportista"),
     CAMBIO_VEHICULO((short) 4, "Cambio de vehículo");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TdMotEv(short val, String descripcion) {
         this.val = val;

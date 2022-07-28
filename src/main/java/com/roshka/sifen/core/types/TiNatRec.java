@@ -6,8 +6,8 @@ public enum TiNatRec {
     CONTRIBUYENTE((short) 1, "Contribuyente"),
     NO_CONTRIBUYENTE((short) 2, "No Contribuyente");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiNatRec(short val, String descripcion) {
         this.val = val;

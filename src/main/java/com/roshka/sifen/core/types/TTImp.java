@@ -12,8 +12,8 @@ public enum TTImp {
     NINGUNO((short) 4, "Ninguno"),
     IVA_RENTA((short) 5, "IVA - Renta");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TTImp(short val, String descripcion) {
         this.val = val;

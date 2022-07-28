@@ -6,8 +6,8 @@ public enum TdTipIdenVeh {
     NRO_IDENTIFICACION((short) 1, "Número de identificación del vehículo"),
     NRO_MATRICULA((short) 2, "Número de matrícula del vehículo");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TdTipIdenVeh(short val, String descripcion) {
         this.val = val;

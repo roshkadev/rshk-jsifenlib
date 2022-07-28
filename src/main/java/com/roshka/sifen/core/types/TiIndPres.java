@@ -11,8 +11,8 @@ public enum TiIndPres {
     OPERACION_CICLICA((short) 6, "Operación cíclica"),
     OTRO((short) 9, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiIndPres(short val, String descripcion) {
         this.val = val;

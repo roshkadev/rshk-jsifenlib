@@ -8,8 +8,8 @@ public enum TiTipDoc {
     CEDULA_EXTRANJERA((short) 3, "Cédula extranjera"),
     CARNET_DE_RESIDENCIA((short) 4, "Carnet de residencia");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTipDoc(short val, String descripcion) {
         this.val = val;

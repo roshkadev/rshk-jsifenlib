@@ -256,7 +256,7 @@ public enum PaisType {
     WLF("Islas Wallis y Futuna"),
     NN("NO EXISTE");
 
-    private String nombre;
+    private final String nombre;
 
     PaisType(String nombre) {
         this.nombre = nombre;

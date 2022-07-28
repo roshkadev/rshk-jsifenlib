@@ -20,8 +20,8 @@ public enum TTipTra {
     VENTA_CREDITO_FISCAL((short) 12, "Venta de crédito fiscal"),
     MUESTRAS_MEDICAS((short) 13, "Muestras médicas (Art. 3 RG 24/2014)");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TTipTra(short val, String descripcion) {
         this.val = val;

@@ -27,8 +27,8 @@ public enum TDepartamento {
     CHACO((short) 19, "CHACO"),
     NUEVA_ASUNCION((short) 20, "NUEVA ASUNCION");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TDepartamento(short val, String descripcion) {
         this.val = val;

@@ -6,8 +6,8 @@ public enum TdTipCons {
     CONSTANCIA_NO_CONTRIBUYENTE((short) 1, "Constancia de no ser contribuyente"),
     CONSTANCIA_MICROPRODUCTORES((short) 2, "Constancia de microproductores");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TdTipCons(short val, String descripcion) {
         this.val = val;

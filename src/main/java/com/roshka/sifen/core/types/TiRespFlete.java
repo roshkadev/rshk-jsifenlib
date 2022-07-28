@@ -9,7 +9,7 @@ public enum TiRespFlete {
     AGENTE_INTERMEDIARIO((short) 4),
     TRANSPORTE_PROPIO((short) 5);
 
-    private short val;
+    private final short val;
 
     TiRespFlete(short val) {
         this.val = val;

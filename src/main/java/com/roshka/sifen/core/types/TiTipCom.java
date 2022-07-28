@@ -10,8 +10,8 @@ public enum TiTipCom {
     FLEX((short) 2, "Flex"),
     OTRO((short) 9, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTipCom(short val, String descripcion) {
         this.val = val;

@@ -6,8 +6,8 @@ public enum TiNatVen {
     NO_CONTRIBUYENTE((short) 1, "No contribuyente"),
     EXTRANJERO((short) 2, "Extranjero");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiNatVen(short val, String descripcion) {
         this.val = val;

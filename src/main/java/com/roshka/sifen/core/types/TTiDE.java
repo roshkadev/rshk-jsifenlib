@@ -15,8 +15,8 @@ public enum TTiDE {
     NOTA_DE_REMISION_ELECTRONICA((short) 7, "Nota de remisión electrónica"),
     COMPROBANTE_RETENCION_ELECTRONICO((short) 8, "Comprobante de retención electrónico");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TTiDE(short val, String descripcion) {
         this.val = val;

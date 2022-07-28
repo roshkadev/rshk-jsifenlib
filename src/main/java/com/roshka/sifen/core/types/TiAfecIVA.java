@@ -8,8 +8,8 @@ public enum TiAfecIVA {
     EXENTO((short) 3, "Exento"),
     GRAVADO_PARCIAL((short) 4, "Gravado parcial (Grav- Exento)");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiAfecIVA(short val, String descripcion) {
         this.val = val;

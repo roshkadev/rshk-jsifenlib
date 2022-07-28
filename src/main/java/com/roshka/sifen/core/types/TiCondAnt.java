@@ -9,8 +9,8 @@ public enum TiCondAnt {
     ANTICIPO_GLOBAL((short) 1, "Anticipo Global"),
     ANTICIPO_POR_ITEM((short) 2, "Anticipo por Ítem");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiCondAnt(short val, String descripcion) {
         this.val = val;

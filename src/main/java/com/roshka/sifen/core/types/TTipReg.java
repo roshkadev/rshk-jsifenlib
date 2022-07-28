@@ -12,8 +12,8 @@ public enum TTipReg {
     REGIMEN_MEDIANO_PRODUCTOR((short) 7, "Régimen del Mediano Productor"),
     REGIMEN_CONTABLE((short) 8, "Régimen Contable");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TTipReg(short val, String descripcion) {
         this.val = val;

@@ -7,8 +7,8 @@ public enum TiCarCarga {
     CARGA_PELIGROSA((short) 2, "Carga peligrosa"),
     OTRO((short) 3, "Otro");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiCarCarga(short val, String descripcion) {
         this.val = val;

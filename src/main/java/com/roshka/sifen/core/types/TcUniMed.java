@@ -38,10 +38,10 @@ public enum TcUniMed {
     ha("ha", (short) 869, "Hectáreas - ha", "Hectáreas"),
     racion("ración", (short) 569, "Ración - ración", "Ración");
 
-    private String abreviatura;
-    private short val;
-    private String documentacion;
-    private String descripcion;
+    private final String abreviatura;
+    private final short val;
+    private final String documentacion;
+    private final String descripcion;
 
     TcUniMed(String abreviatura, short val, String documentacion, String descripcion) {
         this.abreviatura = abreviatura;

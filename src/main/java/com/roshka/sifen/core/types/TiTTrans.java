@@ -6,8 +6,8 @@ public enum TiTTrans {
     PROPIO((short) 1, "Propio"),
     TERCERO((short) 2, "Tercero");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTTrans(short val, String descripcion) {
         this.val = val;

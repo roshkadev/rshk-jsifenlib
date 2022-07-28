@@ -8,8 +8,8 @@ public enum TiTiOpe {
     B2G((short) 3, "Business To Government"),
     B2F((short) 4, "Business To Freelancer");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTiOpe(short val, String descripcion) {
         this.val = val;

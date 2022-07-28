@@ -7,8 +7,8 @@ public enum TiTipDocAso {
     IMPRESO((short) 2, "Impreso"),
     CONSTANCIA_ELECTRONICA((short) 3, "Constancia Electrónica");
 
-    private short val;
-    private String descripcion;
+    private final short val;
+    private final String descripcion;
 
     TiTipDocAso(short val, String descripcion) {
         this.val = val;
