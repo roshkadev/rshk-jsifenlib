@@ -107,7 +107,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getiTiDE().getVal()), '0', 2) +
-                    this.getgDatGralOpe().getgEmis().getdRucEm() +
+                    SifenUtil.leftPad(this.getgDatGralOpe().getgEmis().getdRucEm(), '0', 8) +
                     this.getgDatGralOpe().getgEmis().getdDVEmi() +
                     this.getgTimb().getdEst() +
                     this.getgTimb().getdPunExp() +

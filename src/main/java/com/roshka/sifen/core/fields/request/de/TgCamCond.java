@@ -24,7 +24,7 @@ public class TgCamCond extends SifenObjectBase {
         gCamCond.addChildElement("dDCondOpe").setTextContent(this.iCondOpe.getDescripcion());
 
         if (this.iCondOpe.getVal() == 1 || this.gPagCred.getdMonEnt() != null || this.gPaConEIniList != null) {
-            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(this.gPaConEIniList)) {
+            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(this.gPaConEIniList, "Campo 'gPaConEIni' requerido cuando la condición de la operación es 'Contado'")) {
                 gPaConEIni.setupSOAPElements(gCamCond);
             }
         }

@@ -29,7 +29,7 @@ public class TgCamFE extends SifenObjectBase {
             gCamFE.addChildElement("dFecEmNR").setTextContent(this.dFecEmNR.toString());
 
         if (this.gCompPub != null || iTiOpe.getVal() == 3) {
-            Objects.requireNonNull(this.gCompPub).setupSOAPElements(gCamFE);
+            Objects.requireNonNull(this.gCompPub, "Campo 'gCompPub' requerido para el Tipo de Operación 'B2G'").setupSOAPElements(gCamFE);
         }
     }
 

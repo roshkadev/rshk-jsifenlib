@@ -152,7 +152,7 @@ public class TgEmis extends SifenObjectBase {
     }
 
     public void setdRucEm(String dRucEm) {
-        this.dRucEm = SifenUtil.leftPad(dRucEm, '0', 8);
+        this.dRucEm = dRucEm;
     }
 
     public String getdDVEmi() {
