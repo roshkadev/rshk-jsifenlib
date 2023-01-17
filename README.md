@@ -156,6 +156,9 @@ Algunas empresas que utilizan esta librería en producción para sus implementac
 2. [NEXO S.A.E.C.A](http://www.nexo.com.py) (2022-03)
 3. [Roshka S.A.](https://www.roshka.com) (2022-04)
 4. [SIFAMERICA S.A.](https://www.sif.com.py) (2022-11)
+5. [Despachos Aduaneros Cacavelos](http://www.despachoscacavelos.com.py/) (2022-11)
+6. [Biggie S.A.](https://www.biggie.com.py/) (2023-01)
+7. [Banco de la Nación Argentina](https://www.bna.com.py/) (2023-01)
 
 (*) ¿Querés agregar la tuya? Envianos un [email](mailto:pablo@roshka.com.py) para incluirla. 
 
