@@ -159,6 +159,7 @@ Algunas empresas que utilizan esta librería en producción para sus implementac
 5. [Despachos Aduaneros Cacavelos](http://www.despachoscacavelos.com.py/) (2022-11)
 6. [Biggie S.A.](https://www.biggie.com.py/) (2023-01)
 7. [Banco de la Nación Argentina](https://www.bna.com.py/) (2023-01)
+8. [VIDRIO LUZ SRL](http://www.vidrioluz.com.py/web/) (2023-01)
 
 (*) ¿Querés agregar la tuya? Envianos un [email](mailto:pablo@roshka.com.py) para incluirla. 
 
