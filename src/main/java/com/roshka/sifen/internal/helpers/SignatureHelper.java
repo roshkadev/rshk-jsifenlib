@@ -10,10 +10,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import sun.security.x509.GeneralName;
-import sun.security.x509.X500Name;
-import sun.security.x509.X509CertImpl;
 
+import javax.security.auth.x500.X500Principal;
 import javax.xml.crypto.*;
 import javax.xml.crypto.dsig.*;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
@@ -31,10 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.*;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -194,12 +189,16 @@ public class SignatureHelper {
         List<ValidezFirmaDigital.SujetoCertificado> certificateSubjects = new ArrayList<>();
 
         // Get certificate from Electronic Document
-        X509CertImpl certificate = (X509CertImpl) X509KeySelector.getCertificate(keyInfo);
+        X509Certificate certificate = X509KeySelector.getCertificate(keyInfo);
         if (certificate == null) return certificateSubjects;
+
+        X500Principal subjectX500Principal = certificate.getSubjectX500Principal();
+
+        if (subjectX500Principal == null) return certificateSubjects;
 
         // Get main subject information from certificate
         try {
-            String subject = certificate.getSubjectDN().getName();
+            String subject = subjectX500Principal.getName();
 
             certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
                     getAttributeFromSubject(subject, "SERIALNUMBER"),
@@ -210,6 +209,12 @@ public class SignatureHelper {
 
         // Get alternatives subjects from certificate
         try {
+
+            Collection<List<?>> subjectAlternativeNames = certificate.getSubjectAlternativeNames();
+
+
+            /*
+            TODO: TEST it
             List<GeneralName> names = certificate.getSubjectAlternativeNameExtension().get("subject_name").names();
             for (GeneralName name : names) {
                 if (!(name.getName() instanceof X500Name)) continue;
@@ -221,6 +226,8 @@ public class SignatureHelper {
                         SifenUtil.coalesce(getAttributeFromSubject(subject, "CN"), getAttributeFromSubject(subject, "O"))
                 ));
             }
+
+             */
         } catch (Exception ignored) {
         }
 

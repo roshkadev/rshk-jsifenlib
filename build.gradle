@@ -5,11 +5,18 @@ plugins {
 }
 
 group "com.roshka.sifen"
-version "0.2.2"
+version "0.5.0"
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
-sourceCompatibility = 1.8
 java {
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+
     withJavadocJar()
     withSourcesJar()
 }
@@ -19,7 +26,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: "junit", name: "junit", version: "4.12"
+
+    implementation group: "javax.xml.soap", name: "javax.xml.soap-api", version: "1.4.0"
+    implementation group: "javax.activation", name: "javax.activation-api", version: "1.2.0"
+
+    testImplementation group: "junit", name: "junit", version: "4.13.2"
     testImplementation "org.hamcrest:hamcrest:2.2"
 }
 
