@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import static com.roshka.sifen.internal.Constants.SDK_CURRENT_VERSION;
@@ -36,6 +38,24 @@ import static com.roshka.sifen.internal.Constants.SDK_CURRENT_VERSION;
  * </ul>
  */
 public class SifenConfig {
+
+    static final Map<String, String> propertyToEnvMap = new HashMap<>();
+
+    static final Map<String, String> env = System.getenv();
+
+    static {
+        propertyToEnvMap.put("sifen.ambiente", "SIFEN_AMBIENTE");
+        propertyToEnvMap.put("sifen.url_base", "SIFEN_URL_BASE");
+        propertyToEnvMap.put("sifen.certificado_cliente.usar", "SIFEN_CERTIFICADO_CLIENTE_USAR");
+        propertyToEnvMap.put("sifen.certificado_cliente.tipo", "SIFEN_CERTIFICADO_CLIENTE_TIPO");
+        propertyToEnvMap.put("sifen.certificado_cliente.archivo", "SIFEN_CERTIFICADO_CLIENTE_ARCHIVO");
+        propertyToEnvMap.put("sifen.certificado_cliente.contrasena", "SIFEN_CERTIFICADO_CLIENTE_CONTRASENA");
+        propertyToEnvMap.put("sifen.csc.id", "SIFEN_CSC_ID");
+        propertyToEnvMap.put("sifen.csc", "SIFEN_CSC");
+        propertyToEnvMap.put("sifen.server.port", "SIFEN_SERVER_PORT");
+
+    }
+
     // Enums
 
     /**
@@ -65,6 +85,8 @@ public class SifenConfig {
     private String pathConsultaLote;
     private String pathConsultaRUC;
     private String pathConsulta;
+    private static final String SIFEN_SERVER_PORT_KEY = "sifen.server.port";
+    private int serverPort;
 
 
     private static final String SIFEN_USAR_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
@@ -133,6 +155,15 @@ public class SifenConfig {
         this.CSC = CSC;
     }
 
+    private String getFromEnvOrProperty(Properties propiedades, String key) {
+        String envKey = propertyToEnvMap.get(key);
+        if (envKey != null && env.containsKey(envKey)) {
+            return env.get(envKey);
+        } else {
+            return propiedades.getProperty(key);
+        }
+    }
+
     /**
      * Carga la configuración de Sifen a ser utilizada desde un conjunto de propiedades.
      *
@@ -144,35 +175,53 @@ public class SifenConfig {
         SifenConfig sifenConfig = new SifenConfig();
 
         try {
-            sifenConfig.setAmbiente(TipoAmbiente.valueOf(propiedades.getProperty(SIFEN_AMBIENTE_KEY)));
+            String ambienteStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_AMBIENTE_KEY);
+            sifenConfig.setAmbiente(TipoAmbiente.valueOf(ambienteStr));
         } catch (IllegalArgumentException e) {
             throw SifenExceptionUtil.invalidConfiguration("El tipo de ambiente especificado no existe.", e);
         }
 
         if (propiedades.containsKey(SIFEN_URL_BASE_KEY)) {
-            sifenConfig.setUrlBase(propiedades.getProperty(SIFEN_URL_BASE_KEY));
+            String urlBaseStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_URL_BASE_KEY);
+            sifenConfig.setUrlBase(urlBaseStr);
         }
 
         if (propiedades.containsKey(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)) {
-            sifenConfig.setUsarCertificadoCliente(Boolean.parseBoolean(propiedades.getProperty(SIFEN_USAR_CERTIFICADO_CLIENTE_KEY)));
+            String usarCertificadoClienteStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_USAR_CERTIFICADO_CLIENTE_KEY);
+            sifenConfig.setUsarCertificadoCliente(Boolean.parseBoolean(usarCertificadoClienteStr));
         }
 
         try {
-            sifenConfig.setTipoCertificadoCliente(TipoCertificadoCliente.valueOf(propiedades.getProperty(SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY)));
+            String tipoCertificadoClienteStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_TIPO_CERTIFICADO_CLIENTE_KEY);
+            sifenConfig.setTipoCertificadoCliente(TipoCertificadoCliente.valueOf(tipoCertificadoClienteStr));
         } catch (IllegalArgumentException e) {
             throw SifenExceptionUtil.invalidConfiguration("El tipo de ambiente especificado no existe.", e);
         }
 
-        sifenConfig.setCertificadoCliente(propiedades.getProperty(SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY));
-        sifenConfig.setContrasenaCertificadoCliente(propiedades.getProperty(SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY));
+        String certificadoClienteStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_ARCHIVO_CERTIFICADO_CLIENTE_KEY);
+        sifenConfig.setCertificadoCliente(certificadoClienteStr);
+        String contrasenhaCertificadoClienteStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_PASSWORD_CERTIFICADO_CLIENTE_KEY);
+        sifenConfig.setContrasenaCertificadoCliente(contrasenhaCertificadoClienteStr);
 
-        if (propiedades.containsKey(SIFEN_CSC_KEY)) {
-            sifenConfig.setCSC(propiedades.getProperty(SIFEN_CSC_KEY));
-        }
+        String sifenCSCStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_CSC_KEY);
+        if (sifenCSCStr != null)
+            sifenConfig.setCSC(sifenCSCStr);
 
-        if (propiedades.containsKey(SIFEN_ID_CSC_KEY)) {
+        String idCSCStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_ID_CSC_KEY);
+        if (idCSCStr != null) {
             sifenConfig.setIdCSC(propiedades.getProperty(SIFEN_ID_CSC_KEY));
         }
+
+        String serverPortStr = sifenConfig.getFromEnvOrProperty(propiedades, SIFEN_SERVER_PORT_KEY);
+        if (serverPortStr != null) {
+            try {
+                sifenConfig.setServerPort(Integer.parseInt(serverPortStr));
+            } catch (NumberFormatException e) {
+                throw SifenExceptionUtil.invalidConfiguration("El número de puerto especificado [" + serverPortStr + "] es inválido", e);
+            }
+        }
+
+
 
         return sifenConfig;
     }
@@ -242,6 +291,7 @@ public class SifenConfig {
                 ", httpConnectTimeout=" + httpConnectTimeout +
                 ", httpReadTimeout=" + httpReadTimeout +
                 ", userAgent='" + userAgent + '\'' +
+                ", serverPort='" + serverPort + '\'' +
                 ", URL_BASE_DEV='" + URL_BASE_DEV + '\'' +
                 ", URL_BASE_PROD='" + URL_BASE_PROD + '\'' +
                 ", URL_CONSULTA_QR_DEV='" + URL_CONSULTA_QR_DEV + '\'' +
@@ -388,5 +438,13 @@ public class SifenConfig {
 
     public void setCSC(String CSC) {
         this.CSC = CSC;
+    }
+
+    public int getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
     }
 }

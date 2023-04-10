@@ -1,18 +1,30 @@
 plugins {
+    id "java"
     id "java-library"
+    id "application"
     id "maven-publish"
     id "signing"
 }
 
 group "com.roshka.sifen"
-version "0.5.0-SNAPSHOT"
+version "0.5.0"
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
-sourceCompatibility = 11
-
 java {
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+
     withJavadocJar()
     withSourcesJar()
+}
+
+mainClassName = "com.roshka.sifen.server.Main"
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
 }
 
 repositories {
@@ -21,11 +33,9 @@ repositories {
 
 dependencies {
 
-    // Se agrega esta dependencia ahora porque en Java 11 (versión mínima requerida para
-    // esta versión de rshk-jsifenlib) ya no está presente en el SDK
-    implementation group: 'javax.xml.soap', name: 'javax.xml.soap-api', version: '1.4.0'
+    implementation group: 'com.sun.xml.messaging.saaj', name: 'saaj-impl', version: '2.0.1'
 
-    testImplementation group: "junit", name: "junit", version: "4.13.1"
+    testImplementation group: "junit", name: "junit", version: "4.13.2"
     testImplementation "org.hamcrest:hamcrest:2.2"
 }
 

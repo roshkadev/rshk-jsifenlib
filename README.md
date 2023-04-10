@@ -148,6 +148,10 @@ realizados.
 
 `RSHK jsifenlib` está licenciada bajo el MIT License. Ver el archivo [LICENCIA.md](LICENCIA.md) para más detalles.
 
+Para parsear objetos JSON, se utilizó la librería [minimal-json](https://github.com/ralfstx/minimal-json) que 
+también está liberado bajo la reglamentación de la [licencia de MIT](http://opensource.org/licenses/MIT). Para 
+simplicidad de los despliegues, se metió la librería dentro del propio proyecto de JSIFEN-LIB.
+
 ## Empresas usuarias de jsifenlib
 
 Algunas empresas que utilizan esta librería en producción para sus implementaciones de SIFEN (*) son:
@@ -160,6 +164,7 @@ Algunas empresas que utilizan esta librería en producción para sus implementac
 6. [Biggie S.A.](https://www.biggie.com.py/) (2023-01)
 7. [Banco de la Nación Argentina](https://www.bna.com.py/) (2023-01)
 8. [VIDRIO LUZ SRL](http://www.vidrioluz.com.py/web/) (2023-01)
+9. [UNION SRL](http://www.unionsrl.com.py) (2023-04)
 
 (*) ¿Querés agregar la tuya? Envianos un [email](mailto:pablo@roshka.com.py) para incluirla. 
 

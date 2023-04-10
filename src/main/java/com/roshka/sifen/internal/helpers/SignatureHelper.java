@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.security.auth.x500.X500Principal;
 import javax.xml.crypto.*;
 import javax.xml.crypto.dsig.*;
 import javax.xml.crypto.dsig.dom.DOMSignContext;
@@ -22,7 +23,7 @@ import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.SOAPElement;
+import jakarta.xml.soap.SOAPElement;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -191,9 +192,13 @@ public class SignatureHelper {
         X509Certificate certificate = X509KeySelector.getCertificate(keyInfo);
         if (certificate == null) return certificateSubjects;
 
+        X500Principal subjectX500Principal = certificate.getSubjectX500Principal();
+
+        if (subjectX500Principal == null) return certificateSubjects;
+
         // Get main subject information from certificate
         try {
-            String subject = certificate.getSubjectX500Principal().getName();
+            String subject = subjectX500Principal.getName();
 
             certificateSubjects.add(ValidezFirmaDigital.SujetoCertificado.create(
                     getAttributeFromSubject(subject, "SERIALNUMBER"),
@@ -205,8 +210,11 @@ public class SignatureHelper {
         // Get alternatives subjects from certificate
         try {
 
+            Collection<List<?>> subjectAlternativeNames = certificate.getSubjectAlternativeNames();
+
 
             /*
+            TODO: TEST it
             List<GeneralName> names = certificate.getSubjectAlternativeNameExtension().get("subject_name").names();
             for (GeneralName name : names) {
                 if (!(name.getName() instanceof X500Name)) continue;
@@ -220,9 +228,6 @@ public class SignatureHelper {
             }
 
              */
-
-            // TODO: cambiar esta implementación por una que funcione con Java 11 ó superior, sin usar
-            // paquetes con visibilidad cortada
         } catch (Exception ignored) {
         }
 

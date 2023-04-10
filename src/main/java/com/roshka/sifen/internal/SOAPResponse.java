@@ -1,6 +1,6 @@
 package com.roshka.sifen.internal;
 
-import javax.xml.soap.SOAPMessage;
+import jakarta.xml.soap.SOAPMessage;
 import java.net.HttpURLConnection;
 
 /**
