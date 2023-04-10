@@ -9,8 +9,8 @@ import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
-import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPElement;
+import jakarta.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 

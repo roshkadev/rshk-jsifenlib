@@ -15,7 +15,7 @@ import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
 import javax.xml.namespace.QName;
-import javax.xml.soap.*;
+import jakarta.xml.soap.*;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;

@@ -6,8 +6,8 @@ module com.roshka.jsifenlib {
     // Para el manejo de SOAP
     requires java.xml;
     requires java.xml.crypto;
-    requires java.xml.soap;
-
+    requires jakarta.xml.soap;
+    requires jakarta.activation;
 
     // Logging
     requires java.logging;

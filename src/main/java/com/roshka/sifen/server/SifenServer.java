@@ -1,8 +1,7 @@
 package com.roshka.sifen.server;
 
 import com.roshka.sifen.core.SifenConfig;
-import com.roshka.sifen.server.handlers.EmptyHandler;
-import com.roshka.sifen.server.handlers.SifenServerBaseHandler;
+import com.roshka.sifen.server.handlers.SifenServerMainHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -46,18 +45,24 @@ public class SifenServer {
 
             logger.info("Creando servidor HTTP en el puerto: " + sifenConfig.getServerPort());
 
-            HttpServer server = HttpServer.create(new InetSocketAddress(sifenConfig.getServerPort()), 0);
+            httpServer = HttpServer.create(new InetSocketAddress(sifenConfig.getServerPort()), 0);
 
             // setup paths
-            server.createContext("/", new SifenServerBaseHandler(sifenConfig));
+            httpServer.createContext("/", new SifenServerMainHandler(sifenConfig));
 
-            server.setExecutor(executor);
-            server.start();
+            httpServer.setExecutor(executor);
+            httpServer.start();
 
         } catch (IOException e) {
             logger.throwing(SifenServer.class.toString(), "launchServer", e);
         }
 
+    }
+
+    public void stop() {
+        logger.info("Parando el servidor. Se van a esperar hasta 60 segundos antes de forzar el cierre de las peticiones");
+        httpServer.stop(60);
+        logger.info("Servidor HTTP en el pueto " + sifenConfig.getServerPort() + " ya no está en ejecución");
     }
 
 }

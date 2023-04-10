@@ -1,5 +1,7 @@
 plugins {
+    id "java"
     id "java-library"
+    id "application"
     id "maven-publish"
     id "signing"
 }
@@ -21,14 +23,21 @@ java {
     withSourcesJar()
 }
 
+mainClassName = "com.roshka.sifen.server.Main"
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
 
-    implementation group: "javax.xml.soap", name: "javax.xml.soap-api", version: "1.4.0"
-    implementation group: "javax.activation", name: "javax.activation-api", version: "1.2.0"
+    implementation group: 'com.sun.xml.messaging.saaj', name: 'saaj-impl', version: '2.0.1'
 
     testImplementation group: "junit", name: "junit", version: "4.13.2"
     testImplementation "org.hamcrest:hamcrest:2.2"

@@ -3,14 +3,24 @@ package com.roshka.sifen.server;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class Main {
+
+    enum Status {
+        STARTING,
+        SERVER_RUNNING,
+        STOP_REQUESTED,
+        STOPPING,
+        STOPPED
+    }
 
     public static final String SIFEN_CONFIG_LOCATION_ENV = "SIFEN_CONFIG_LOCATION";
     public static final String SIFEN_CONFIG_DEFAULT_LOCATION = "config/sifen.properties";
@@ -19,11 +29,13 @@ public class Main {
 
     private SifenConfig sifenConfig;
 
-    public Main() {
+    private Status status;
 
+    public Main() {
+        this.status = Status.STARTING;
     }
 
-    private void loadConfig(String configFileNameArgument) throws IOException {
+    private void loadConfig(CmdLineArgs args) throws IOException {
 
         Map<String, String> env = System.getenv();
         List<String> configFiles = new ArrayList<>();
@@ -40,12 +52,10 @@ public class Main {
         }
 
         logger.info("2. parámetros por la línea de comandos");
-        if (configFileNameArgument != null) {
-            logger.info("ARGUMENTO de LÍNEA DE COMANDO: " + configFileNameArgument);
-            configFiles.add(configFileNameArgument);
+        if (args.configFileName != null) {
+            logger.info("ARGUMENTO de LÍNEA DE COMANDO: " + args.configFileName);
+            configFiles.add(args.configFileName);
         }
-
-
 
         String currentPath = new java.io.File(".").getCanonicalPath();
         String configFileNameDefault = currentPath + FileSystems.getDefault().getSeparator() + SIFEN_CONFIG_DEFAULT_LOCATION;
@@ -67,17 +77,59 @@ public class Main {
 
     }
 
+    private void setupLogger(CmdLineArgs cmdLineArgs) {
+        boolean readConfiguration = false;
+        if (cmdLineArgs.loggingConfigFileName != null) {
+            logger.info("Leyendo configuración de logger desde archivo [" + cmdLineArgs.loggingConfigFileName + "]");
+            try {
+                LogManager.getLogManager().readConfiguration(
+                        new FileInputStream((cmdLineArgs.loggingConfigFileName))
+                );
+                readConfiguration = true;
+            } catch (IOException e) {
+                logger.warning("No se pudo leer configuración del archivo: " + e.getMessage());
+            }
+        }
+
+        if (!readConfiguration) {
+            try {
+                LogManager.getLogManager().readConfiguration(
+                        Main.class.getResourceAsStream("/logging.properties")
+                );
+            } catch (IOException e) {
+                logger.warning("No se pudo leer configuración del archivo: " + e.getMessage() + " que debería estar en la librería");
+            }
+        }
+    }
+
     private void run() {
+
+        logger.info("Ejecutando SIFEN SERVER");
 
         SifenServer sifenServer = new SifenServer(sifenConfig);
         sifenServer.launchServer();
+
+        status = Status.SERVER_RUNNING;
+
+        while (status == Status.SERVER_RUNNING) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                status = Status.STOP_REQUESTED;
+                // stop server and exit
+                sifenServer.stop();
+                status = Status.STOPPED;
+            }
+        }
+
+        logger.info("Parando SIFEN SERVER");
 
     }
 
     public static void main(String[] args) {
         logger.info("Parseando línea de comandos");
 
-        String configFileName = null;
+        CmdLineArgs cmdLineArgs = new CmdLineArgs();
 
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
@@ -85,7 +137,14 @@ public class Main {
                 case "-c":
                 case "--config":
                     if (i + 1 < args.length) {
-                        configFileName = args[i + 1];
+                        cmdLineArgs.configFileName = args[i + 1];
+                        i++;
+                    }
+                    break;
+                case "-l":
+                case "--logging-config":
+                    if (i + 1 < args.length) {
+                        cmdLineArgs.loggingConfigFileName = args[i + 1];
                         i++;
                     }
                     break;
@@ -98,11 +157,20 @@ public class Main {
         Main main = new Main();
         try {
             logger.info("Cargando configuración de SIFEN");
-            main.loadConfig(configFileName);
+            main.loadConfig(cmdLineArgs);
+            logger.info("Configurando logger");
+            main.setupLogger(cmdLineArgs);
             logger.info("Ejecutando el servidor SIFEN");
             main.run();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+    static class CmdLineArgs {
+        private String configFileName;
+        private String loggingConfigFileName;
+    }
+
 }

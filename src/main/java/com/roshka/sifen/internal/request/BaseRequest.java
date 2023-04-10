@@ -8,8 +8,8 @@ import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
+import jakarta.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPMessage;
 import java.util.logging.Logger;
 
 abstract class BaseRequest {

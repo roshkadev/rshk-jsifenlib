@@ -11,8 +11,8 @@ import com.roshka.sifen.core.beans.response.RespuestaRecepcionDE;
 import com.roshka.sifen.core.beans.DocumentoElectronico;
 import org.w3c.dom.Node;
 
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
+import jakarta.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 

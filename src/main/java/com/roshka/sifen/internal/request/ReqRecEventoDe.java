@@ -14,7 +14,7 @@ import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import org.w3c.dom.Node;
 
 import javax.xml.namespace.QName;
-import javax.xml.soap.*;
+import jakarta.xml.soap.*;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 

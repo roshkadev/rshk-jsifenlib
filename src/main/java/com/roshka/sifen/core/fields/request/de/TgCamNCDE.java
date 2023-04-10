@@ -6,8 +6,8 @@ import com.roshka.sifen.core.types.TiMotEmi;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
 
-import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPException;
+import jakarta.xml.soap.SOAPElement;
+import jakarta.xml.soap.SOAPException;
 
 public class TgCamNCDE extends SifenObjectBase {
     private TiMotEmi iMotEmi;

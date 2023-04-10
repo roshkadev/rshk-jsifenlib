@@ -23,7 +23,7 @@ import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.SOAPElement;
+import jakarta.xml.soap.SOAPElement;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
