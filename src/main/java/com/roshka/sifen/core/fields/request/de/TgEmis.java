@@ -1,13 +1,13 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.types.TDepartamento;
-import com.roshka.sifen.internal.util.ResponseUtil;
-import com.roshka.sifen.internal.util.SifenUtil;
 import com.roshka.sifen.core.types.TTipReg;
 import com.roshka.sifen.core.types.TiTipCont;
+import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
+import com.roshka.sifen.internal.util.ResponseUtil;
+import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
@@ -152,7 +152,7 @@ public class TgEmis extends SifenObjectBase {
     }
 
     public void setdRucEm(String dRucEm) {
-        this.dRucEm = dRucEm;
+        this.dRucEm = SifenUtil.leftPad(dRucEm, '0', 8);
     }
 
     public String getdDVEmi() {

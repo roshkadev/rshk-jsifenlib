@@ -1,11 +1,11 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.core.types.CMondT;
 import com.roshka.sifen.core.types.TTImp;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.core.types.TdCondTiCam;
-import com.roshka.sifen.core.types.CMondT;
+import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
@@ -56,7 +56,9 @@ public class TgTotSub extends SifenObjectBase {
         for (TgCamItem gCamItem : gDtipDE.getgCamItemList()) {
             TgCamIVA gCamIVA = gCamItem.getgCamIVA();
             BigDecimal dTotOpeItem = gCamItem.getgValorItem().getgValorRestaItem().getdTotOpeItem();
-
+//            am22_11
+            int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
+            dTotOpeItem = dTotOpeItem.setScale(scale, RoundingMode.HALF_UP);
             if (gCamIVA != null) {
                 BigDecimal dLiqIVAItem = gCamIVA.getdLiqIVAItem();
                 BigDecimal dBasGravIVA = gCamIVA.getdBasGravIVA();
@@ -83,7 +85,7 @@ public class TgTotSub extends SifenObjectBase {
             if (iTiDE.getVal() == 4)
                 this.dTotOpe = this.dTotOpe.add(dTotOpeItem);
 
-            this.dTotDesc = this.dTotDesc.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescItem(), BigDecimal.ZERO));
+            this.dTotDesc = this.dTotDesc.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescItem().multiply(gCamItem.getdCantProSer()), BigDecimal.ZERO));
             this.dTotDescGlotem = this.dTotDescGlotem.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescGloItem(), BigDecimal.ZERO));
             this.dTotAntItem = this.dTotAntItem.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntPreUniIt(), BigDecimal.ZERO));
             this.dTotAnt = this.dTotAnt.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntGloPreUniIt(), BigDecimal.ZERO));
@@ -96,9 +98,11 @@ public class TgTotSub extends SifenObjectBase {
             this.dTotOpe = this.dSub10.add(this.dSub5).add(this.dSubExo).add(this.dSubExe);
         }
         this.dDescTotal = this.dTotDesc.add(this.dTotDescGlotem);
-        this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), 2, RoundingMode.HALF_UP);
+        // this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), 2, RoundingMode.HALF_UP);
+        this.dPorcDescTotal = BigDecimal.valueOf(0);
         this.dAnticipo = this.dTotAntItem.add(this.dTotAnt);
-        this.dRedon = this.dTotOpe.subtract(BigDecimal.valueOf(Math.round(this.dTotOpe.doubleValue() * 50) / 50));
+
+        this.dRedon = cMoneOpe.name().equals("PYG") ? this.dTotOpe.subtract(BigDecimal.valueOf(Math.round(this.dTotOpe.doubleValue() * 50) / 50)) : BigDecimal.valueOf(0);
         this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(SifenUtil.coalesce(this.dComi, BigDecimal.ZERO));
 
         if (this.dComi != null) {

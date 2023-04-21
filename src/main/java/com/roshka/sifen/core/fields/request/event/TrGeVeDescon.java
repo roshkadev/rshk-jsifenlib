@@ -1,9 +1,9 @@
 package com.roshka.sifen.core.fields.request.event;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.core.types.TiNatRec;
 import com.roshka.sifen.core.types.TiTipDocRec;
+import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
 

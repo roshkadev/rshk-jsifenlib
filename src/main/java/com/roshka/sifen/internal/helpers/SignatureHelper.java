@@ -26,7 +26,10 @@ import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.SOAPElement;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.*;
@@ -237,7 +240,7 @@ public class SignatureHelper {
     }
 
     private static class X509KeySelector extends KeySelector {
-        public KeySelectorResult select(KeyInfo keyInfo, KeySelector.Purpose purpose, AlgorithmMethod method,
+        public KeySelectorResult select(KeyInfo keyInfo, Purpose purpose, AlgorithmMethod method,
                                         XMLCryptoContext context) throws KeySelectorException {
             X509Certificate certificate = getCertificate(keyInfo);
             if (certificate != null) {

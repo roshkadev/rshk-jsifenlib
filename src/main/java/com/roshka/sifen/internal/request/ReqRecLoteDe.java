@@ -12,6 +12,8 @@ import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Node;
 
 import javax.xml.namespace.QName;
@@ -20,11 +22,16 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 /**
@@ -33,6 +40,9 @@ import java.util.logging.Logger;
 public class ReqRecLoteDe extends BaseRequest {
     private List<DocumentoElectronico> DEList;
     private final static Logger logger = Logger.getLogger(ReqRecLoteDe.class.toString());
+//    @Value("#{new Boolean('${useReceivedCDC}')}")
+//    public Boolean useReceivedCDC;
+//    private Boolean useReceivedCDC = true;
 
     public ReqRecLoteDe(long dId, SifenConfig sifenConfig) {
         super(dId, sifenConfig);
@@ -51,8 +61,21 @@ public class ReqRecLoteDe extends BaseRequest {
 
             SOAPElement rLoteDE = SoapHelper.createSoapMessage().getSOAPBody().addChildElement("rLoteDE");
             for (DocumentoElectronico DE : DEList) {
-                DE.setupDE(rLoteDE, this.getSifenConfig());
+                //INICIO CAMBIO AM
+                //setting de prometeoV2 esta en usar cdc recibido
+                FileReader reader=new FileReader(Paths.get("./config/application.properties").toString());
+                Properties config = new Properties();
+                config.load(reader);
+                boolean useReceivedCDCconfig = Boolean.parseBoolean(config.getProperty("useReceivedCDC"));
+
+                if(useReceivedCDCconfig){
+                DE.setupDE(rLoteDE, this.getSifenConfig(), DE.getId());
+                }
+                else {
+                    DE.setupDE(rLoteDE, this.getSifenConfig());
+                }
             }
+//            FIN CAMBIO
 
             // Obtenemos el XML
             final StringWriter sw = new StringWriter();

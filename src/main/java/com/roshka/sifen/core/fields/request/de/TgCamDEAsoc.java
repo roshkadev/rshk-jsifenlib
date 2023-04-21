@@ -1,11 +1,11 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.core.types.TTipTra;
 import com.roshka.sifen.core.types.TdTipCons;
 import com.roshka.sifen.core.types.TiTIpoDoc;
 import com.roshka.sifen.core.types.TiTipDocAso;
+import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;

@@ -1,10 +1,10 @@
 package com.roshka.sifen.core.fields.response.de;
 
+import com.roshka.sifen.core.beans.EventosDE;
+import com.roshka.sifen.core.beans.response.RespuestaRecepcionEvento;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.beans.EventosDE;
-import com.roshka.sifen.core.beans.response.RespuestaRecepcionEvento;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 

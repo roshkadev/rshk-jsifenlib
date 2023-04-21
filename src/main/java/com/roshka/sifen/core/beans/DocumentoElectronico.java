@@ -13,6 +13,7 @@ import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -93,6 +94,26 @@ public class DocumentoElectronico extends SifenObjectBase {
         SifenObjectFactory.getFromNode(mainNode, this);
         this.obtenerCDC();
     }
+    public DocumentoElectronico(String xml, String CDCrecibido) throws SifenException {
+        xml = xml.replaceAll(">[\\s\r\n]*<", "><");
+
+        // Parseamos el xml
+        Document xmlDocument;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            xmlDocument = builder.parse(new InputSource(new StringReader(xml)));
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw SifenExceptionUtil.xmlParsingError("Se produjo un error al parsear el archivo XML. Formato incorrecto.");
+        }
+
+        // Obtenemos el nodo principal
+        Node mainNode = xmlDocument.getElementsByTagName("DE").item(0);
+
+        SifenObjectFactory.getFromNode(mainNode, this);
+        this.obtenerCDC(CDCrecibido);
+    }
 
     /**
      * Calcula el CDC del Documento Electrónico en cuestión y lo retorna. Además de lo anterior, también establece los
@@ -107,7 +128,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getiTiDE().getVal()), '0', 2) +
-                    SifenUtil.leftPad(this.getgDatGralOpe().getgEmis().getdRucEm(), '0', 8) +
+                    this.getgDatGralOpe().getgEmis().getdRucEm() +
                     this.getgDatGralOpe().getgEmis().getdDVEmi() +
                     this.getgTimb().getdEst() +
                     this.getgTimb().getdPunExp() +
@@ -126,6 +147,14 @@ public class DocumentoElectronico extends SifenObjectBase {
 
         return this.Id;
     }
+
+//    INICIO CAMBIO AM
+//    se agrego un overload del metodo obtener CDC para que reciba el parametro ReceivedCDC
+    public String obtenerCDC(String ReceivedCDC) throws SifenException {
+        this.Id = ReceivedCDC;
+        return this.Id;
+    }
+//            FIN CAMBIO
 
     /**
      * Genera un XML completo en base al Documento Electrónico actual.
@@ -236,6 +265,67 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SOAPException  -
      * @throws SifenException -
      */
+//    INICIO CAMBIO AM
+//    se realizo un overload del metodo  setupDE para que reciba receivedCDC
+    public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig, String receivedCDC) throws SOAPException, SifenException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+        SOAPElement rDE = parentNode.addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
+
+        rDE.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+        rDE.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
+        rDE.addChildElement("dVerFor").setTextContent(SIFEN_CURRENT_VERSION);
+
+        this.obtenerCDC(receivedCDC);
+
+        SOAPElement DE = rDE.addChildElement("DE");
+        DE.setAttribute("Id", this.getId());
+        Attr idAttribute = DE.getAttributeNode("Id");
+        DE.setIdAttributeNode(idAttribute, true);
+
+        DE.addChildElement("dDVId").setTextContent(this.getdDVId());
+        DE.addChildElement("dFecFirma").setTextContent(this.getdFecFirma().format(formatter));
+        DE.addChildElement("dSisFact").setTextContent(String.valueOf(this.getdSisFact()));
+
+        // Se prepara el cuerpo del documento electrónico
+        TTiDE iTiDE = this.gTimb.getiTiDE();
+
+        this.gOpeDE.setupSOAPElements(DE, iTiDE);
+        this.gTimb.setupSOAPElements(DE);
+        this.gDatGralOpe.setupSOAPElements(DE, iTiDE);
+        this.gDtipDE.setupSOAPElements(DE, iTiDE, this.gDatGralOpe);
+
+        if (iTiDE.getVal() != 7)
+            this.gTotSub.setupSOAPElements(DE, iTiDE, this.getgDtipDE(), this.gDatGralOpe.getgOpeCom());
+
+        if (this.gCamGen != null)
+            this.gCamGen.setupSOAPElements(DE, iTiDE);
+
+        if (iTiDE.getVal() == 4 || iTiDE.getVal() == 5 || iTiDE.getVal() == 6 || ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7 || iTiDE.getVal() == 8) && this.gCamDEAsocList != null)) {
+            boolean withholdingExists = false; // Retención
+            if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 4) && this.gDtipDE.getgCamCond().getgPaConEIniList() != null) {
+                for (TgPaConEIni gPaConEIni : this.gDtipDE.getgCamCond().getgPaConEIniList()) {
+                    if (gPaConEIni.getiTiPago().getVal() == 10) {
+                        withholdingExists = true;
+                        break;
+                    }
+                }
+            }
+
+            for (TgCamDEAsoc gCamDEAsoc : this.gCamDEAsocList) {
+                gCamDEAsoc.setupSOAPElements(DE, this.gDatGralOpe.getgOpeCom() != null ? this.gDatGralOpe.getgOpeCom().getiTipTra() : null, withholdingExists);
+            }
+        }
+
+        // Firma Digital del XML
+        SignedInfo signedInfo = SignatureHelper.signDocument(sifenConfig, rDE, this.getId());
+
+        // Preparación de la URL del QR
+        this.enlaceQR = this.generateQRLink(signedInfo, sifenConfig);
+        SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
+        gCamFuFD.addChildElement("dCarQR").setTextContent(this.enlaceQR);
+    }
+    //    FIN CAMBIO
     public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
@@ -382,6 +472,10 @@ public class DocumentoElectronico extends SifenObjectBase {
 
     public String getId() {
         return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 
     public String getdDVId() {

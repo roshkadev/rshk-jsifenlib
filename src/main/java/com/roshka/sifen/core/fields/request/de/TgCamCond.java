@@ -1,9 +1,9 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.core.types.TiCondOpe;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.types.TiCondOpe;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
 
@@ -24,7 +24,7 @@ public class TgCamCond extends SifenObjectBase {
         gCamCond.addChildElement("dDCondOpe").setTextContent(this.iCondOpe.getDescripcion());
 
         if (this.iCondOpe.getVal() == 1 || this.gPagCred.getdMonEnt() != null || this.gPaConEIniList != null) {
-            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(this.gPaConEIniList, "Campo 'gPaConEIni' requerido cuando la condición de la operación es 'Contado'")) {
+            for (TgPaConEIni gPaConEIni : Objects.requireNonNull(this.gPaConEIniList)) {
                 gPaConEIni.setupSOAPElements(gCamCond);
             }
         }

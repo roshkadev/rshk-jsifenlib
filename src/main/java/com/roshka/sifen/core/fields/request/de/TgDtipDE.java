@@ -1,10 +1,10 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.core.types.TiTiOpe;
+import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
 import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;

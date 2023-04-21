@@ -1,9 +1,9 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.core.types.TiCondCred;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.types.TiCondCred;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
 

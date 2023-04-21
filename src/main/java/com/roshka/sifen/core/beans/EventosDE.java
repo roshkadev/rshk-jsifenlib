@@ -2,9 +2,9 @@ package com.roshka.sifen.core.beans;
 
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.core.fields.request.event.TrGesEve;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.fields.request.event.TrGesEve;
 import org.w3c.dom.Node;
 
 import javax.xml.soap.SOAPElement;
