@@ -7,7 +7,7 @@ plugins {
 }
 
 group "com.roshka.sifen"
-version "0.5.0"
+version "0.5.0-SNAPSHOT"
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 java {

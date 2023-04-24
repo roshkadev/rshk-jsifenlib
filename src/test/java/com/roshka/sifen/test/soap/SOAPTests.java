@@ -49,10 +49,11 @@ public class SOAPTests {
     }
 
     @Test
-    @Ignore
     public void testConsultaRUC() throws SifenException {
-        RespuestaConsultaRUC ret = Sifen.consultaRUC("788643");
-        logger.info(ret.toString());
+        String ruc = "788643";
+        RespuestaConsultaRUC ret = Sifen.consultaRUC(ruc);
+        assert ret.getxContRUC().getdRUCCons().equals(ruc);
+        logger.info(ret.getxContRUC().getdRazCons());
     }
 
     @Test
