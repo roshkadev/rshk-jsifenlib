@@ -12,8 +12,6 @@ import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.w3c.dom.Node;
 
 import javax.xml.namespace.QName;
@@ -24,10 +22,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
@@ -63,15 +59,14 @@ public class ReqRecLoteDe extends BaseRequest {
             for (DocumentoElectronico DE : DEList) {
                 //INICIO CAMBIO AM
                 //setting de prometeoV2 esta en usar cdc recibido
-                FileReader reader=new FileReader(Paths.get("./config/application.properties").toString());
+                FileReader reader = new FileReader(Paths.get("./config/application.properties").toString());
                 Properties config = new Properties();
                 config.load(reader);
                 boolean useReceivedCDCconfig = Boolean.parseBoolean(config.getProperty("useReceivedCDC"));
 
-                if(useReceivedCDCconfig){
-                DE.setupDE(rLoteDE, this.getSifenConfig(), DE.getId());
-                }
-                else {
+                if (useReceivedCDCconfig) {
+                    DE.setupDE(rLoteDE, this.getSifenConfig(), DE.getId());
+                } else {
                     DE.setupDE(rLoteDE, this.getSifenConfig());
                 }
             }
@@ -120,4 +115,5 @@ public class ReqRecLoteDe extends BaseRequest {
     public void setDEList(List<DocumentoElectronico> DEList) {
         this.DEList = DEList;
     }
+
 }

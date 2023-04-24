@@ -13,7 +13,6 @@ import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -94,6 +93,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         SifenObjectFactory.getFromNode(mainNode, this);
         this.obtenerCDC();
     }
+
     public DocumentoElectronico(String xml, String CDCrecibido) throws SifenException {
         xml = xml.replaceAll(">[\\s\r\n]*<", "><");
 
@@ -148,7 +148,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         return this.Id;
     }
 
-//    INICIO CAMBIO AM
+    //    INICIO CAMBIO AM
 //    se agrego un overload del metodo obtener CDC para que reciba el parametro ReceivedCDC
     public String obtenerCDC(String ReceivedCDC) throws SifenException {
         this.Id = ReceivedCDC;
@@ -325,6 +325,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
         gCamFuFD.addChildElement("dCarQR").setTextContent(this.enlaceQR);
     }
+
     //    FIN CAMBIO
     public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -561,4 +562,5 @@ public class DocumentoElectronico extends SifenObjectBase {
     public void setEnlaceQR(String enlaceQR) {
         this.enlaceQR = enlaceQR;
     }
+
 }
