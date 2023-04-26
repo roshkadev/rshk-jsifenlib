@@ -134,6 +134,22 @@ El parámetro es el RUC del contribuyente a consultar, sin el DV (Dígito Verifi
 Para ver la estructura de la respuesta a esta consulta, revisar el Manual Técnico de Sifen, cuyo enlace se encuentra al
 principio de esta sección.
 
+## Ejecutando los TESTs
+
+Para ejecutar los tests, es necesario crear la siguiente carpeta: `src/test/resources` y dentro poner un archivo
+llamado `test.properties` que tengas mínimamente las siguientes propiedades:
+
+```properties
+sifen.ambiente=DEV
+sifen.certificado_cliente.usar=true
+sifen.certificado_cliente.tipo=PFX
+sifen.certificado_cliente.archivo=/path/al/archivo/certificado.pfx
+sifen.certificado_cliente.contrasena=password_del_pfx
+```
+
+Una vez que esto está creado, se puede intentar ejecutar los tests. El más sencillo 
+de todos es `com.roshka.sifen.test.SifenTest.testConsultaRUC`, que solo hace una consulta de RUC y muestra la respuesta.
+
 ## Sugerencias
 
 Si tenés alguna duda o consulta, o encontraste un comportamiento incorrecto dentro de la librería, no dudes en crear
