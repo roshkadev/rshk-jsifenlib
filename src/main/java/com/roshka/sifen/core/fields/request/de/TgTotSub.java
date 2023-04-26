@@ -15,6 +15,8 @@ import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import static com.roshka.sifen.core.fields.util.FieldFormatUtil.formattdCRed;
+
 public class TgTotSub extends SifenObjectBase {
     private BigDecimal dSubExe = BigDecimal.ZERO;
     private BigDecimal dSubExo = BigDecimal.ZERO;
@@ -135,7 +137,8 @@ public class TgTotSub extends SifenObjectBase {
         gTotSub.addChildElement("dPorcDescTotal").setTextContent(String.valueOf(this.dPorcDescTotal));
         gTotSub.addChildElement("dDescTotal").setTextContent(String.valueOf(this.dDescTotal));
         gTotSub.addChildElement("dAnticipo").setTextContent(String.valueOf(this.dAnticipo));
-        gTotSub.addChildElement("dRedon").setTextContent(String.valueOf(this.dRedon));
+        // se agregó control para formatear con 4 decimales
+        gTotSub.addChildElement("dRedon").setTextContent(formattdCRed(this.dRedon));
 
         if (iTiDE.getVal() != 4) {
             if (this.dComi != null)

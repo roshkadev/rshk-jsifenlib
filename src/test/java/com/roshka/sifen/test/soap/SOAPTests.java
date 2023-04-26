@@ -51,6 +51,7 @@ public class SOAPTests {
     }
 
     @Test
+    @Ignore
     public void testConsultaRUC() throws SifenException {
         RespuestaConsultaRUC ret = Sifen.consultaRUC("788643");
         logger.info(ret.toString());
