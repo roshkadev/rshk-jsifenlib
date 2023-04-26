@@ -57,18 +57,7 @@ public class ReqRecLoteDe extends BaseRequest {
 
             SOAPElement rLoteDE = SoapHelper.createSoapMessage().getSOAPBody().addChildElement("rLoteDE");
             for (DocumentoElectronico DE : DEList) {
-                //INICIO CAMBIO AM
-                //setting de prometeoV2 esta en usar cdc recibido
-                FileReader reader = new FileReader(Paths.get("./config/application.properties").toString());
-                Properties config = new Properties();
-                config.load(reader);
-                boolean useReceivedCDCconfig = Boolean.parseBoolean(config.getProperty("useReceivedCDC"));
-
-                if (useReceivedCDCconfig) {
-                    DE.setupDE(rLoteDE, this.getSifenConfig(), DE.getId());
-                } else {
-                    DE.setupDE(rLoteDE, this.getSifenConfig());
-                }
+                DE.setupDE(rLoteDE, this.getSifenConfig());
             }
 //            FIN CAMBIO
 
