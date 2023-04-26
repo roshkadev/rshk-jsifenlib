@@ -20,6 +20,7 @@ import org.junit.Test;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,7 +37,8 @@ public class SOAPTests {
 
     @BeforeClass
     public static void setupSifenConfig() throws SifenException {
-        SifenConfig sifenConfig = SifenConfig.cargarConfiguracion("test.properties");
+        InputStream testProperties = SOAPTests.class.getClassLoader().getResourceAsStream("test.properties");
+        SifenConfig sifenConfig = SifenConfig.cargarConfiguracion(testProperties);
         logger.info("Using CONFIG: " + sifenConfig);
         Sifen.setSifenConfig(sifenConfig);
     }

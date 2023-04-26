@@ -7,6 +7,7 @@ import com.roshka.sifen.internal.util.SifenUtil;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Properties;
 
@@ -192,6 +193,17 @@ public class SifenConfig {
             props.load(new FileReader(archivo));
         } catch (IOException e) {
             throw SifenExceptionUtil.invalidConfiguration("El archivo utilizado no existe, no pudo ser abierto o es un directorio.");
+        }
+        return SifenConfig.cargarConfiguracion(props);
+    }
+
+    public static SifenConfig cargarConfiguracion(InputStream inputStream) throws SifenException {
+        Properties props;
+        try {
+            props = new Properties();
+            props.load(inputStream);
+        } catch (IOException e) {
+            throw SifenExceptionUtil.invalidConfiguration("InputStream es inválido");
         }
         return SifenConfig.cargarConfiguracion(props);
     }

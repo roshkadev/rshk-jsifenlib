@@ -5,7 +5,8 @@ plugins {
 }
 
 group "com.roshka.sifen"
-version "0.2.2"
+version "0.2.3-SNAPSHOT"
+
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 sourceCompatibility = 1.8
@@ -19,12 +20,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: "junit", name: "junit", version: "4.12"
+    testImplementation group: "junit", name: "junit", version: "4.13.1"
     testImplementation "org.hamcrest:hamcrest:2.2"
 }
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
+
 javadoc {
     options.charSet = "UTF-8"
     options.encoding = "UTF-8"
