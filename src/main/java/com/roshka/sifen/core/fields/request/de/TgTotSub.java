@@ -50,14 +50,15 @@ public class TgTotSub extends SifenObjectBase {
         TdCondTiCam dCondTiCam = gOpeCom.getdCondTiCam();
         BigDecimal dTiCam = gOpeCom.getdTiCam();
 
+        int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
+
         SOAPElement gTotSub = DE.addChildElement("gTotSub");
 
         // CALCULOS
         for (TgCamItem gCamItem : gDtipDE.getgCamItemList()) {
             TgCamIVA gCamIVA = gCamItem.getgCamIVA();
             BigDecimal dTotOpeItem = gCamItem.getgValorItem().getgValorRestaItem().getdTotOpeItem();
-//            am22_11
-            int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
+
             dTotOpeItem = dTotOpeItem.setScale(scale, RoundingMode.HALF_UP);
             if (gCamIVA != null) {
                 BigDecimal dLiqIVAItem = gCamIVA.getdLiqIVAItem();
@@ -98,15 +99,13 @@ public class TgTotSub extends SifenObjectBase {
             this.dTotOpe = this.dSub10.add(this.dSub5).add(this.dSubExo).add(this.dSubExe);
         }
         this.dDescTotal = this.dTotDesc.add(this.dTotDescGlotem);
-        // this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), 2, RoundingMode.HALF_UP);
-        this.dPorcDescTotal = BigDecimal.valueOf(0);
+        this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), scale, RoundingMode.HALF_UP);
         this.dAnticipo = this.dTotAntItem.add(this.dTotAnt);
 
         this.dRedon = cMoneOpe.name().equals("PYG") ? this.dTotOpe.subtract(BigDecimal.valueOf(Math.round(this.dTotOpe.doubleValue() * 50) / 50)) : BigDecimal.valueOf(0);
         this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(SifenUtil.coalesce(this.dComi, BigDecimal.ZERO));
 
         if (this.dComi != null) {
-            int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
             this.dIVAComi = this.dComi.divide(BigDecimal.valueOf(1.1), scale, RoundingMode.HALF_UP);
         }
 
