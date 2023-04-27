@@ -114,11 +114,11 @@ public class DEMonedaExtranjeraTest extends DETestBase {
         TgCamItem gCamItem = new TgCamItem();
         gCamItem.setdCodInt("001");
         gCamItem.setdDesProSer("Horas de Programación de Software");
-        gCamItem.setcUniMed(TcUniMed.UNI);
-        gCamItem.setdCantProSer(BigDecimal.valueOf(1.382773));
+        gCamItem.setcUniMed(TcUniMed.M2);
+        gCamItem.setdCantProSer(BigDecimal.valueOf(13.6647));
 
         TgValorItem gValorItem = new TgValorItem();
-        gValorItem.setdPUniProSer(BigDecimal.valueOf(12.35));
+        gValorItem.setdPUniProSer(BigDecimal.valueOf(95.847));
 
         TgValorRestaItem gValorRestaItem = new TgValorRestaItem();
         gValorRestaItem.setdDescItem(BigDecimal.valueOf(5.3));

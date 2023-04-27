@@ -100,11 +100,10 @@ public class TgTotSub extends SifenObjectBase {
             this.dTotOpe = this.dSub10.add(this.dSub5).add(this.dSubExo).add(this.dSubExe);
         }
         this.dDescTotal = this.dTotDesc.add(this.dTotDescGlotem);
-        // this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), 2, RoundingMode.HALF_UP);
-        this.dPorcDescTotal = BigDecimal.valueOf(0);
+        this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), 2, RoundingMode.HALF_UP);
         this.dAnticipo = this.dTotAntItem.add(this.dTotAnt);
 
-        this.dRedon = cMoneOpe.name().equals("PYG") ? this.dTotOpe.subtract(BigDecimal.valueOf(Math.round(this.dTotOpe.doubleValue() * 50) / 50)) : BigDecimal.valueOf(0);
+        this.dRedon = this.dTotOpe.subtract(BigDecimal.valueOf(Math.round(this.dTotOpe.doubleValue() * 50) / 50));
         this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(SifenUtil.coalesce(this.dComi, BigDecimal.ZERO));
 
         if (this.dComi != null) {
