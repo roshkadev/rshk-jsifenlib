@@ -121,6 +121,7 @@ public class DEMonedaExtranjeraTest extends DETestBase {
         gValorItem.setdPUniProSer(BigDecimal.valueOf(12.35));
 
         TgValorRestaItem gValorRestaItem = new TgValorRestaItem();
+        gValorRestaItem.setdDescItem(BigDecimal.valueOf(5.3));
         gValorItem.setgValorRestaItem(gValorRestaItem);
         gCamItem.setgValorItem(gValorItem);
 

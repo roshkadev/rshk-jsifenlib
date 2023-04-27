@@ -24,6 +24,10 @@ public class TgValorRestaItem extends SifenObjectBase {
     private BigDecimal dTotOpeItem;
     private BigDecimal dTotOpeGs;
 
+    public TgValorRestaItem() {
+        this.dDescItem = BigDecimal.ZERO;
+    }
+
     public void setupSOAPElements(SOAPElement gValorItem, TTiDE iTiDE, TTImp iTImp, TdCondTiCam dCondTiCam, BigDecimal dTiCamIt,
                                   BigDecimal dPUniProSer, BigDecimal dCantProSer, CMondT cMoneOpe) throws SOAPException {
         SOAPElement gValorRestaItem = gValorItem.addChildElement("gValorRestaItem");

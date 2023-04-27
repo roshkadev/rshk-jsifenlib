@@ -208,20 +208,18 @@ public class DETest extends DETestBase {
         logger.info(DE.toString());
     }
 
-    @Test
-    @Ignore
-    public void testRecepcionLoteDE() throws SifenException {
+    private DocumentoElectronico setupDocumentoElectronico() {
         LocalDateTime currentDate = LocalDateTime.now();
 
         // Grupo A
-        DocumentoElectronico DE = new DocumentoElectronico();
-        DE.setdFecFirma(currentDate);
-        DE.setdSisFact((short) 1);
+        DocumentoElectronico de = new DocumentoElectronico();
+        de.setdFecFirma(currentDate);
+        de.setdSisFact((short) 1);
 
         // Grupo B
         TgOpeDE gOpeDE = new TgOpeDE();
         gOpeDE.setiTipEmi(TTipEmi.NORMAL);
-        DE.setgOpeDE(gOpeDE);
+        de.setgOpeDE(gOpeDE);
 
         // Grupo C
         TgTimb gTimb = new TgTimb();
@@ -231,7 +229,7 @@ public class DETest extends DETestBase {
         gTimb.setdPunExp("002");
         gTimb.setdNumDoc("0000008");
         gTimb.setdFeIniT(LocalDate.parse("2019-07-31"));
-        DE.setgTimb(gTimb);
+        de.setgTimb(gTimb);
 
         // Grupo D
         TdDatGralOpe dDatGralOpe = new TdDatGralOpe();
@@ -247,7 +245,7 @@ public class DETest extends DETestBase {
         gEmis.setdRucEm("80080553");
         gEmis.setdDVEmi("4");
         gEmis.setiTipCont(TiTipCont.PERSONA_JURIDICA);
-        gEmis.setdNomEmi("DE generado en ambiente de prueba - sin valor comercial ni fiscal");
+        gEmis.setdNomEmi("de generado en ambiente de prueba - sin valor comercial ni fiscal");
         gEmis.setdDirEmi("Mayor Bullo");
         gEmis.setdNumCas("670");
         gEmis.setcDepEmi(TDepartamento.CAPITAL);
@@ -259,12 +257,12 @@ public class DETest extends DETestBase {
         List<TgActEco> gActEcoList = new ArrayList<>();
         TgActEco gActEco = new TgActEco();
         gActEco.setcActEco("69209");
-        gActEco.setdDesActEco("ACTIVIDADES DE CONTABILIDAD, TENEDURÍA DE LIBROS, AUDITORIA Y ASESORIA FISCAL N.C.P.");
+        gActEco.setdDesActEco("ACTIVIDADES de CONTABILIDAD, TENEDURÍA de LIBROS, AUDITORIA Y ASESORIA FISCAL N.C.P.");
         gActEcoList.add(gActEco);
 
         TgActEco gActEco2 = new TgActEco();
         gActEco2.setcActEco("62090");
-        gActEco2.setdDesActEco("OTRAS ACTIVIDADES DE TECNOLOGÍA DE LA INFORMACIÓN Y SERVICIOS INFORMÁTICOS");
+        gActEco2.setdDesActEco("OTRAS ACTIVIDADES de TECNOLOGÍA de LA INFORMACIÓN Y SERVICIOS INFORMÁTICOS");
         gActEcoList.add(gActEco2);
 
         gEmis.setgActEcoList(gActEcoList);
@@ -278,7 +276,7 @@ public class DETest extends DETestBase {
         gDatRec.setdNumIDRec("4579993");
         gDatRec.setdNomRec("Martin Zarza");
         dDatGralOpe.setgDatRec(gDatRec);
-        DE.setgDatGralOpe(dDatGralOpe);
+        de.setgDatGralOpe(dDatGralOpe);
 
         // Grupo E
         TgDtipDE gDtipDE = new TgDtipDE();
@@ -297,37 +295,77 @@ public class DETest extends DETestBase {
         gCamCond.setgPagCred(gPagCred);
         gDtipDE.setgCamCond(gCamCond);
 
-        List<TgCamItem> gCamItemList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            TgCamItem gCamItem = new TgCamItem();
-            gCamItem.setdCodInt(i == 0 ? "001" : "002");
-            gCamItem.setdDesProSer(i == 0 ? "Servicio de Liquidación de IVA" : "Servicio de Liquidación de IRP");
-            gCamItem.setcUniMed(TcUniMed.UNI);
-            gCamItem.setdCantProSer(BigDecimal.valueOf(1));
 
-            TgValorItem gValorItem = new TgValorItem();
-            gValorItem.setdPUniProSer(BigDecimal.valueOf(120000));
-
-            TgValorRestaItem gValorRestaItem = new TgValorRestaItem();
-            gValorItem.setgValorRestaItem(gValorRestaItem);
-            gCamItem.setgValorItem(gValorItem);
-
-            TgCamIVA gCamIVA = new TgCamIVA();
-            gCamIVA.setiAfecIVA(TiAfecIVA.GRAVADO);
-            gCamIVA.setdPropIVA(BigDecimal.valueOf(100));
-            gCamIVA.setdTasaIVA(BigDecimal.valueOf(10));
-            gCamItem.setgCamIVA(gCamIVA);
-
-            gCamItemList.add(gCamItem);
-        }
-
-        gDtipDE.setgCamItemList(gCamItemList);
-        DE.setgDtipDE(gDtipDE);
+        gDtipDE.setgCamItemList(new ArrayList<>());
+        de.setgDtipDE(gDtipDE);
 
         // Grupo E
-        DE.setgTotSub(new TgTotSub());
+        de.setgTotSub(new TgTotSub());
 
-        RespuestaRecepcionLoteDE ret = Sifen.recepcionLoteDE(Collections.singletonList(DE));
+        return de;
+
+    }
+
+    private TgCamItem createTgCamItem(
+            String codigo,
+            String descripcion,
+            BigDecimal cantidad,
+            BigDecimal precioUnitario,
+            TcUniMed uniMed,
+            BigDecimal pctDescuento
+    ) {
+        TgCamItem gCamItem = new TgCamItem();
+
+        gCamItem.setdCodInt(codigo);
+        gCamItem.setdDesProSer(descripcion);
+        gCamItem.setcUniMed(uniMed);
+        gCamItem.setdCantProSer(cantidad);
+
+        TgValorItem gValorItem = new TgValorItem();
+        gValorItem.setdPUniProSer(precioUnitario);
+
+        TgValorRestaItem gValorRestaItem = new TgValorRestaItem();
+        gValorItem.setgValorRestaItem(gValorRestaItem);
+        gValorRestaItem.setdDescItem(pctDescuento);
+        gCamItem.setgValorItem(gValorItem);
+
+        TgCamIVA gCamIVA = new TgCamIVA();
+        gCamIVA.setiAfecIVA(TiAfecIVA.GRAVADO);
+        gCamIVA.setdPropIVA(BigDecimal.valueOf(100));
+        gCamIVA.setdTasaIVA(BigDecimal.valueOf(10));
+        gCamItem.setgCamIVA(gCamIVA);
+
+        return gCamItem;
+    }
+
+    @Test
+    public void testRecepcionLoteDE() throws SifenException {
+
+        DocumentoElectronico de = setupDocumentoElectronico();
+
+        TgCamItem tgCamItem00 = createTgCamItem(
+                "001",
+                "Servicio de Liquidación de IVA",
+                BigDecimal.valueOf(1),
+                BigDecimal.valueOf(120000),
+                TcUniMed.UNI,
+                BigDecimal.valueOf(0)
+        );
+
+        TgCamItem tgCamItem01 = createTgCamItem(
+                "002",
+                "Servicio de Liquidación de IRP",
+                BigDecimal.valueOf(1),
+                BigDecimal.valueOf(88000),
+                TcUniMed.UNI,
+                BigDecimal.valueOf(1.3)
+        );
+
+        TgDtipDE tgDtipDE = de.getgDtipDE();
+        tgDtipDE.getgCamItemList().add(tgCamItem00);
+        tgDtipDE.getgCamItemList().add(tgCamItem01);
+
+        RespuestaRecepcionLoteDE ret = Sifen.recepcionLoteDE(Collections.singletonList(de));
         logger.info(ret.toString());
     }
 

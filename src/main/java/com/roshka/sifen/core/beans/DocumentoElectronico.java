@@ -328,62 +328,7 @@ public class DocumentoElectronico extends SifenObjectBase {
 
     //    FIN CAMBIO
     public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-        SOAPElement rDE = parentNode.addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
-
-        rDE.addNamespaceDeclaration("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        rDE.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
-        rDE.addChildElement("dVerFor").setTextContent(SIFEN_CURRENT_VERSION);
-
-        this.obtenerCDC();
-
-        SOAPElement DE = rDE.addChildElement("DE");
-        DE.setAttribute("Id", this.getId());
-        Attr idAttribute = DE.getAttributeNode("Id");
-        DE.setIdAttributeNode(idAttribute, true);
-
-        DE.addChildElement("dDVId").setTextContent(this.getdDVId());
-        DE.addChildElement("dFecFirma").setTextContent(this.getdFecFirma().format(formatter));
-        DE.addChildElement("dSisFact").setTextContent(String.valueOf(this.getdSisFact()));
-
-        // Se prepara el cuerpo del documento electrónico
-        TTiDE iTiDE = this.gTimb.getiTiDE();
-
-        this.gOpeDE.setupSOAPElements(DE, iTiDE);
-        this.gTimb.setupSOAPElements(DE);
-        this.gDatGralOpe.setupSOAPElements(DE, iTiDE);
-        this.gDtipDE.setupSOAPElements(DE, iTiDE, this.gDatGralOpe);
-
-        if (iTiDE.getVal() != 7)
-            this.gTotSub.setupSOAPElements(DE, iTiDE, this.getgDtipDE(), this.gDatGralOpe.getgOpeCom());
-
-        if (this.gCamGen != null)
-            this.gCamGen.setupSOAPElements(DE, iTiDE);
-
-        if (iTiDE.getVal() == 4 || iTiDE.getVal() == 5 || iTiDE.getVal() == 6 || ((iTiDE.getVal() == 1 || iTiDE.getVal() == 7 || iTiDE.getVal() == 8) && this.gCamDEAsocList != null)) {
-            boolean withholdingExists = false; // Retención
-            if ((iTiDE.getVal() == 1 || iTiDE.getVal() == 4) && this.gDtipDE.getgCamCond().getgPaConEIniList() != null) {
-                for (TgPaConEIni gPaConEIni : this.gDtipDE.getgCamCond().getgPaConEIniList()) {
-                    if (gPaConEIni.getiTiPago().getVal() == 10) {
-                        withholdingExists = true;
-                        break;
-                    }
-                }
-            }
-
-            for (TgCamDEAsoc gCamDEAsoc : this.gCamDEAsocList) {
-                gCamDEAsoc.setupSOAPElements(DE, this.gDatGralOpe.getgOpeCom() != null ? this.gDatGralOpe.getgOpeCom().getiTipTra() : null, withholdingExists);
-            }
-        }
-
-        // Firma Digital del XML
-        SignedInfo signedInfo = SignatureHelper.signDocument(sifenConfig, rDE, this.getId());
-
-        // Preparación de la URL del QR
-        this.enlaceQR = this.generateQRLink(signedInfo, sifenConfig);
-        SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
-        gCamFuFD.addChildElement("dCarQR").setTextContent(this.enlaceQR);
+        this.setupDE(parentNode, sifenConfig, this.obtenerCDC());
     }
 
     /**
