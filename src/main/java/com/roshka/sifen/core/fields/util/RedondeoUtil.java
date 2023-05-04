@@ -16,8 +16,8 @@ public class RedondeoUtil {
     /**
      * En consideración a la Resolución 314 del 2014 (Secretaría de Defensa del Consumidor-SEDECO). Las
      * reglas de redondeo aplican a múltiplos de 50 guaraníes de la siguiente manera:
-     * Guaraníes 107.437 -> Redondeo 37 -> 107.400
-     * Guaraníes 47.789 -> Redondeo 39 -> 47.750
+     * Guaraníes 107.437  | Redondeo | 37 |  107.400
+     * Guaraníes  47.789  | Redondeo | 39 |   47.750
      *
      * Observación: Para monedas extranjeras o cualquier otro cálculo que contenga decimales, las reglas
      * de validación aceptarán redondeos de 50 céntimos (por encima o por debajo).
