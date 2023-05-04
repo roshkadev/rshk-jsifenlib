@@ -27,6 +27,7 @@ public class TgCamIVA extends SifenObjectBase {
         gCamIVA.addChildElement("dPropIVA").setTextContent(String.valueOf(this.dPropIVA));
         gCamIVA.addChildElement("dTasaIVA").setTextContent(String.valueOf(this.dTasaIVA));
         int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
+        dTotOpeItem = dTotOpeItem.setScale(scale, RoundingMode.HALF_UP);
 
         BigDecimal hundred = BigDecimal.valueOf(100);
         BigDecimal propIVA = this.dPropIVA.divide(hundred, scale, RoundingMode.HALF_UP);
