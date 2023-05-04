@@ -6,6 +6,7 @@ import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.fields.request.de.*;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.internal.Constants;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SignatureHelper;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.response.SifenObjectBase;
@@ -163,8 +164,8 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public String generarXml() throws SifenException {
-        return this.generarXml(Sifen.getSifenConfig());
+    public String generarXml(GenerationCtx generationCtx) throws SifenException {
+        return this.generarXml(generationCtx, Sifen.getSifenConfig());
     }
 
     /**
@@ -175,14 +176,14 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public String generarXml(SifenConfig sifenConfig) throws SifenException {
+    public String generarXml(GenerationCtx generationCtx, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
 
         String xml = null;
         try {
-            SOAPMessage message = this.setupSOAPElements(1, sifenConfig);
+            SOAPMessage message = this.setupSOAPElements(generationCtx, 1, sifenConfig);
             xml = ResponseUtil.getXmlFromMessage(message, true);
         } catch (SOAPException e) {
             logger.warning("Se produjo un error al generar el XML.");
@@ -201,8 +202,8 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public boolean generarXml(String rutaDestino) throws SifenException {
-        return this.generarXml(rutaDestino, Sifen.getSifenConfig());
+    public boolean generarXml(GenerationCtx generationCtx, String rutaDestino) throws SifenException {
+        return this.generarXml(generationCtx, rutaDestino, Sifen.getSifenConfig());
     }
 
     /**
@@ -215,9 +216,9 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public boolean generarXml(String rutaDestino, SifenConfig sifenConfig) throws SifenException {
+    public boolean generarXml(GenerationCtx generationCtx, String rutaDestino, SifenConfig sifenConfig) throws SifenException {
         // Obtenemos el xml en string
-        String xml = this.generarXml(sifenConfig);
+        String xml = this.generarXml(generationCtx, sifenConfig);
 
         // Creamos o modificamos el archivo, y escribimos en él el xml.
         boolean res = false;
@@ -243,7 +244,7 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SOAPException  -
      * @throws SifenException -
      */
-    public SOAPMessage setupSOAPElements(long dId, SifenConfig sifenConfig) throws SOAPException, SifenException {
+    public SOAPMessage setupSOAPElements(GenerationCtx generationCtx, long dId, SifenConfig sifenConfig) throws SOAPException, SifenException {
         SOAPMessage message = SoapHelper.createSoapMessage();
         SOAPBody soapBody = message.getSOAPBody();
 
@@ -252,7 +253,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         rResEnviDe.addChildElement("dId").setTextContent(String.valueOf(dId));
 
         SOAPElement xDE = rResEnviDe.addChildElement("xDE");
-        this.setupDE(xDE, sifenConfig);
+        this.setupDE(generationCtx, xDE, sifenConfig);
 
         return message;
     }
@@ -267,7 +268,7 @@ public class DocumentoElectronico extends SifenObjectBase {
      */
 //    INICIO CAMBIO AM
 //    se realizo un overload del metodo  setupDE para que reciba receivedCDC
-    public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig, String receivedCDC) throws SOAPException, SifenException {
+    public void setupDE(GenerationCtx generationCtx, SOAPElement parentNode, SifenConfig sifenConfig, String receivedCDC) throws SOAPException, SifenException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         SOAPElement rDE = parentNode.addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
@@ -293,7 +294,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         this.gOpeDE.setupSOAPElements(DE, iTiDE);
         this.gTimb.setupSOAPElements(DE);
         this.gDatGralOpe.setupSOAPElements(DE, iTiDE);
-        this.gDtipDE.setupSOAPElements(DE, iTiDE, this.gDatGralOpe);
+        this.gDtipDE.setupSOAPElements(generationCtx, DE, iTiDE, this.gDatGralOpe);
 
         if (iTiDE.getVal() != 7)
             this.gTotSub.setupSOAPElements(DE, iTiDE, this.getgDtipDE(), this.gDatGralOpe.getgOpeCom());
@@ -327,8 +328,8 @@ public class DocumentoElectronico extends SifenObjectBase {
     }
 
     //    FIN CAMBIO
-    public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
-        this.setupDE(parentNode, sifenConfig, this.obtenerCDC());
+    public void setupDE(GenerationCtx generationCtx, SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
+        this.setupDE(generationCtx, parentNode, sifenConfig, this.obtenerCDC());
     }
 
     /**

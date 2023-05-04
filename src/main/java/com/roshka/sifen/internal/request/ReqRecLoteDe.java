@@ -6,6 +6,7 @@ import com.roshka.sifen.core.beans.response.RespuestaRecepcionLoteDE;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.SOAPResponse;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
@@ -45,7 +46,7 @@ public class ReqRecLoteDe extends BaseRequest {
     }
 
     @Override
-    SOAPMessage setupSoapMessage() throws SifenException {
+    SOAPMessage setupSoapMessage(GenerationCtx generationCtx) throws SifenException {
         try {
             SOAPMessage message = SoapHelper.createSoapMessage();
             SOAPBody soapBody = message.getSOAPBody();
@@ -57,7 +58,7 @@ public class ReqRecLoteDe extends BaseRequest {
 
             SOAPElement rLoteDE = SoapHelper.createSoapMessage().getSOAPBody().addChildElement("rLoteDE");
             for (DocumentoElectronico DE : DEList) {
-                DE.setupDE(rLoteDE, this.getSifenConfig());
+                DE.setupDE(generationCtx, rLoteDE, this.getSifenConfig());
             }
 //            FIN CAMBIO
 

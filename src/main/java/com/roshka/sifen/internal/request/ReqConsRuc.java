@@ -5,6 +5,7 @@ import com.roshka.sifen.core.beans.response.RespuestaConsultaRUC;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.SOAPResponse;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
@@ -32,7 +33,7 @@ public class ReqConsRuc extends BaseRequest {
     }
 
     @Override
-    SOAPMessage setupSoapMessage() throws SifenException {
+    SOAPMessage setupSoapMessage(GenerationCtx generationCtx) throws SifenException {
         try {
             // Main Element
             SOAPMessage message = SoapHelper.createSoapMessage();

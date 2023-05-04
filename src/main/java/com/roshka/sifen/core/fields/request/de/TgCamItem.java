@@ -2,6 +2,7 @@ package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.types.*;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
@@ -34,7 +35,7 @@ public class TgCamItem extends SifenObjectBase {
     private TgRasMerc gRasMerc;
     private TgVehNuevo gVehNuevo;
 
-    public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
+    public void setupSOAPElements(GenerationCtx generationCtx, SOAPElement gDtipDE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
         TTipTra iTipTra = null;
         TdCondTiCam dCondTiCam = null;
@@ -99,7 +100,7 @@ public class TgCamItem extends SifenObjectBase {
         }
 
         if (iTImp != null && (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) && iTiDE.getVal() != 4 && iTiDE.getVal() != 7)
-            this.gCamIVA.setupSOAPElements(gCamItem, cMoneOpe, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
+            this.gCamIVA.setupSOAPElements(generationCtx, gCamItem, cMoneOpe, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
 
         if (this.gRasMerc != null)
             this.gRasMerc.setupSOAPElements(gCamItem);

@@ -3,6 +3,7 @@ package com.roshka.sifen.core.fields.request.de;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.types.CMondT;
 import com.roshka.sifen.core.types.TiAfecIVA;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
@@ -20,7 +21,7 @@ public class TgCamIVA extends SifenObjectBase {
     private BigDecimal dLiqIVAItem;
     private BigDecimal dBasExe;
 
-    public void setupSOAPElements(SOAPElement gCamItem, CMondT cMoneOpe, BigDecimal dTotOpeItem) throws SOAPException {
+    public void setupSOAPElements(GenerationCtx generationCtx, SOAPElement gCamItem, CMondT cMoneOpe, BigDecimal dTotOpeItem) throws SOAPException {
         SOAPElement gCamIVA = gCamItem.addChildElement("gCamIVA");
         gCamIVA.addChildElement("iAfecIVA").setTextContent(String.valueOf(this.iAfecIVA.getVal()));
         gCamIVA.addChildElement("dDesAfecIVA").setTextContent(this.iAfecIVA.getDescripcion());
@@ -42,17 +43,21 @@ public class TgCamIVA extends SifenObjectBase {
             this.dLiqIVAItem = BigDecimal.ZERO;
         }
 
-        if (this.iAfecIVA.getVal() == 4) {
-            // Actualización: https://ekuatia.set.gov.py/portal/ekuatia/detail?content-id=/repository/collaboration/sites/ekuatia/documents/documentacion/documentacion-tecnica/NT_E_KUATIA_013_MT_V150.pdf
-            // E737 = [100 * EA008 * (100 – E733)] / [10000 + (E734 * E733)]
-            this.dBasExe = (dTotOpeItem.multiply(hundred.subtract(propIVA)).multiply(hundred)).divide((this.dTasaIVA.multiply(dPropIVA)).add(BigDecimal.valueOf(10000)), scale, RoundingMode.HALF_UP);
-        } else {
-            this.dBasExe = BigDecimal.valueOf(0);
-        }
 
         gCamIVA.addChildElement("dBasGravIVA").setTextContent(String.valueOf(this.dBasGravIVA));
         gCamIVA.addChildElement("dLiqIVAItem").setTextContent(String.valueOf(this.dLiqIVAItem));
-        gCamIVA.addChildElement("dBasExe").setTextContent(String.valueOf(this.dBasExe));
+
+        if (generationCtx.isHabilitarNotaTecnica13()) {
+            if (this.iAfecIVA.getVal() == 4) {
+                // Actualización: https://ekuatia.set.gov.py/portal/ekuatia/detail?content-id=/repository/collaboration/sites/ekuatia/documents/documentacion/documentacion-tecnica/NT_E_KUATIA_013_MT_V150.pdf
+                // E737 = [100 * EA008 * (100 – E733)] / [10000 + (E734 * E733)]
+                this.dBasExe = (dTotOpeItem.multiply(hundred.subtract(propIVA)).multiply(hundred)).divide((this.dTasaIVA.multiply(dPropIVA)).add(BigDecimal.valueOf(10000)), scale, RoundingMode.HALF_UP);
+            } else {
+                this.dBasExe = BigDecimal.valueOf(0);
+            }
+            gCamIVA.addChildElement("dBasExe").setTextContent(String.valueOf(this.dBasExe));
+        }
+
     }
 
     @Override

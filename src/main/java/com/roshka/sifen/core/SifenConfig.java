@@ -67,6 +67,9 @@ public class SifenConfig {
     private String pathConsultaRUC;
     private String pathConsulta;
 
+    private static final String SIFEN_HABILITAR_NOTA_TECNICA_13_KEY = "sifen.habilitar_nota_tecnica_13";
+    private boolean habilitarNotaTecnica13;
+
 
     private static final String SIFEN_USAR_CERTIFICADO_CLIENTE_KEY = "sifen.certificado_cliente.usar";
     private boolean usarCertificadoCliente;
@@ -113,6 +116,8 @@ public class SifenConfig {
         this.httpConnectTimeout = 15 * 1000; // 15 Segundos
         this.httpReadTimeout = 45 * 1000; // 45 Segundos
         this.userAgent = "rshk-jsifenlib" + "/" + SDK_CURRENT_VERSION + " (LVEA)";
+
+        this.habilitarNotaTecnica13 = false;
     }
 
     public SifenConfig(TipoAmbiente tipoAmbiente, TipoCertificadoCliente tipoCertificadoCliente, String certificadoCliente,
@@ -173,6 +178,12 @@ public class SifenConfig {
 
         if (propiedades.containsKey(SIFEN_ID_CSC_KEY)) {
             sifenConfig.setIdCSC(propiedades.getProperty(SIFEN_ID_CSC_KEY));
+        }
+
+        try {
+            sifenConfig.habilitarNotaTecnica13 = Boolean.parseBoolean(propiedades.getProperty(SIFEN_HABILITAR_NOTA_TECNICA_13_KEY));
+        } catch (IllegalArgumentException e) {
+            throw SifenExceptionUtil.invalidConfiguration("El valor de la propiedad " + SIFEN_HABILITAR_NOTA_TECNICA_13_KEY + " no es válido.", e);
         }
 
         return sifenConfig;
@@ -254,6 +265,7 @@ public class SifenConfig {
                 ", httpConnectTimeout=" + httpConnectTimeout +
                 ", httpReadTimeout=" + httpReadTimeout +
                 ", userAgent='" + userAgent + '\'' +
+                ", habilitarNotaTecnica13=" + habilitarNotaTecnica13 +
                 ", URL_BASE_DEV='" + URL_BASE_DEV + '\'' +
                 ", URL_BASE_PROD='" + URL_BASE_PROD + '\'' +
                 ", URL_CONSULTA_QR_DEV='" + URL_CONSULTA_QR_DEV + '\'' +
@@ -400,5 +412,13 @@ public class SifenConfig {
 
     public void setCSC(String CSC) {
         this.CSC = CSC;
+    }
+
+    public boolean isHabilitarNotaTecnica13() {
+        return habilitarNotaTecnica13;
+    }
+
+    public void setHabilitarNotaTecnica13(boolean habilitarNotaTecnica13) {
+        this.habilitarNotaTecnica13 = habilitarNotaTecnica13;
     }
 }

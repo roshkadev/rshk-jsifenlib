@@ -3,6 +3,7 @@ package com.roshka.sifen.internal.request;
 import com.roshka.sifen.core.SifenConfig;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.SOAPResponse;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
@@ -27,14 +28,14 @@ abstract class BaseRequest {
         this.sifenConfig = sifenConfig;
     }
 
-    abstract SOAPMessage setupSoapMessage() throws SifenException;
+    abstract SOAPMessage setupSoapMessage(GenerationCtx generationCtx) throws SifenException;
 
     abstract BaseResponse processResponse(SOAPResponse soapResponse) throws SifenException;
     
-    public BaseResponse makeRequest(String url) throws SifenException {
+    public BaseResponse makeRequest(GenerationCtx generationCtx,String url) throws SifenException {
         try {
             // Preparamos el mensaje
-            SOAPMessage message = this.setupSoapMessage();
+            SOAPMessage message = this.setupSoapMessage(generationCtx);
             message.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
             message.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
             logger.info("XML generado, se realiza la petición");
