@@ -33,11 +33,11 @@ public class TgCamIVA extends SifenObjectBase {
         if (this.iAfecIVA.getVal() == 1 || this.iAfecIVA.getVal() == 4) {
             if (this.dTasaIVA.equals(BigDecimal.valueOf(10))) {
                 this.dBasGravIVA = dTotOpeItem.multiply(propIVA).divide(BigDecimal.valueOf(1.1), scale, RoundingMode.HALF_UP);
+                this.dLiqIVAItem = dTotOpeItem.multiply(propIVA).divide(BigDecimal.valueOf(11), scale, RoundingMode.HALF_UP);
             } else if (this.dTasaIVA.equals(BigDecimal.valueOf(5))) {
                 this.dBasGravIVA = dTotOpeItem.multiply(propIVA).divide(BigDecimal.valueOf(1.05), scale, RoundingMode.HALF_UP);
+                this.dLiqIVAItem = dTotOpeItem.multiply(propIVA).divide(BigDecimal.valueOf(21), scale, RoundingMode.HALF_UP);
             }
-
-            this.dLiqIVAItem = dTotOpeItem.subtract(this.dBasGravIVA);
         } else {
             this.dBasGravIVA = BigDecimal.ZERO;
             this.dLiqIVAItem = BigDecimal.ZERO;
