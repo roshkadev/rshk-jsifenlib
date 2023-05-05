@@ -126,6 +126,10 @@ sifen.certificado_cliente.archivo=/home/charly/garcia.pfx
 ## PASSWORD del ARCHIVO PFX
 sifen.certificado_cliente.contrasena=my_password
 
+## Nota técnica 13 (23/04/2023)
+## Para habilitar los campos nuevos de esta nota técnica, cambiar a true
+sifen.habilitar_nota_tecnica_13=false
+
 ## CSC
 sifen.csc=ABCD0000000000000000000000000000
 sifen.csc.id=0001
@@ -152,21 +156,20 @@ El parámetro es el RUC del contribuyente a consultar, sin el DV (Dígito Verifi
 Para ver la estructura de la respuesta a esta consulta, revisar el Manual Técnico de Sifen, cuyo enlace se encuentra al
 principio de esta sección.
 
-## Ejecutando los TESTs
+## Nota Técnica Nº 13 (23/04/2023)
 
-Para ejecutar los tests, es necesario crear la siguiente carpeta: `src/test/resources` y dentro poner un archivo
-llamado `test.properties` que tengas mínimamente las siguientes propiedades:
+La Nota Técnica Nº 13 establece cambios en los campos de IVA de los documentos electrónicos. Las fechas de implementación de estos campos son las siguientes:
 
-```properties
-sifen.ambiente=DEV
-sifen.certificado_cliente.usar=true
-sifen.certificado_cliente.tipo=PFX
-sifen.certificado_cliente.archivo=/path/al/archivo/certificado.pfx
-sifen.certificado_cliente.contrasena=password_del_pfx
-```
+* Ambiente de desarrollo: 21/04/2023
+* Ambiente de producción: 21/05/2023
 
-Una vez que esto está creado, se puede intentar ejecutar los tests. El más sencillo 
-de todos es `com.roshka.sifen.test.SifenTest.testConsultaRUC`, que solo hace una consulta de RUC y muestra la respuesta.
+Para esto se agrega una propiedad en el archivo de configuración `sifen.habilitar_nota_tecnica_13`. Esta propiedad es booleana,
+si el valor es verdadero, entonces se agregará el nuevo elemento XML al documento electrónico correspondiente. Lo lógico sería
+que este valor luego de la fecha de puesta en producción, sea *siempre* `true`.
+
+## Nota Técnica Nº 14 (23/04/2023)
+
+La Nota Técnica Nº 14 aun no está soportada en esta versión.
 
 ## Sugerencias
 
