@@ -6,6 +6,7 @@ import com.roshka.sifen.core.beans.response.RespuestaRecepcionLoteDE;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.SOAPResponse;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
@@ -15,16 +16,19 @@ import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
 import javax.xml.namespace.QName;
-import jakarta.xml.soap.*;
+import javax.xml.soap.*;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 /**
@@ -33,13 +37,16 @@ import java.util.logging.Logger;
 public class ReqRecLoteDe extends BaseRequest {
     private List<DocumentoElectronico> DEList;
     private final static Logger logger = Logger.getLogger(ReqRecLoteDe.class.toString());
+//    @Value("#{new Boolean('${useReceivedCDC}')}")
+//    public Boolean useReceivedCDC;
+//    private Boolean useReceivedCDC = true;
 
     public ReqRecLoteDe(long dId, SifenConfig sifenConfig) {
         super(dId, sifenConfig);
     }
 
     @Override
-    SOAPMessage setupSoapMessage() throws SifenException {
+    SOAPMessage setupSoapMessage(GenerationCtx generationCtx) throws SifenException {
         try {
             SOAPMessage message = SoapHelper.createSoapMessage();
             SOAPBody soapBody = message.getSOAPBody();
@@ -51,8 +58,9 @@ public class ReqRecLoteDe extends BaseRequest {
 
             SOAPElement rLoteDE = SoapHelper.createSoapMessage().getSOAPBody().addChildElement("rLoteDE");
             for (DocumentoElectronico DE : DEList) {
-                DE.setupDE(rLoteDE, this.getSifenConfig());
+                DE.setupDE(generationCtx, rLoteDE, this.getSifenConfig());
             }
+//            FIN CAMBIO
 
             // Obtenemos el XML
             final StringWriter sw = new StringWriter();
@@ -97,4 +105,5 @@ public class ReqRecLoteDe extends BaseRequest {
     public void setDEList(List<DocumentoElectronico> DEList) {
         this.DEList = DEList;
     }
+
 }

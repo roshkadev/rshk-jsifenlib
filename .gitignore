@@ -3,4 +3,4 @@ build/
 gradle/
 .idea/
 tmp/
-test.properties
+src/test/resources/test.properties

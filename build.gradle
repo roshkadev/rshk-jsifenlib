@@ -1,34 +1,18 @@
 plugins {
-    id "java"
     id "java-library"
-    id "application"
     id "maven-publish"
     id "signing"
 }
 
 group "com.roshka.sifen"
-version "0.5.0"
+version "0.2.3"
+
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
+sourceCompatibility = 1.8
 java {
-
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-
     withJavadocJar()
     withSourcesJar()
-}
-
-mainClassName = "com.roshka.sifen.server.Main"
-
-jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
 }
 
 repositories {
@@ -36,15 +20,13 @@ repositories {
 }
 
 dependencies {
-
-    implementation group: 'com.sun.xml.messaging.saaj', name: 'saaj-impl', version: '2.0.1'
-
-    testImplementation group: "junit", name: "junit", version: "4.13.2"
+    testImplementation group: "junit", name: "junit", version: "4.13.1"
     testImplementation "org.hamcrest:hamcrest:2.2"
 }
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
+
 javadoc {
     options.charSet = "UTF-8"
     options.encoding = "UTF-8"

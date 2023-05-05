@@ -1,14 +1,14 @@
 package com.roshka.sifen.core.fields.request.event;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.core.types.TTiDE;
+import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 
 public class TrGeVeInu extends SifenObjectBase {
     private int dNumTim;

@@ -1,17 +1,19 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.types.TTImp;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.core.types.TdCondTiCam;
+import com.roshka.sifen.core.types.CMondT;
+import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class TgValorItem extends SifenObjectBase {
     private BigDecimal dPUniProSer;
@@ -19,7 +21,7 @@ public class TgValorItem extends SifenObjectBase {
     private BigDecimal dTotBruOpeItem;
     private TgValorRestaItem gValorRestaItem;
 
-    public void setupSOAPElements(SOAPElement gCamItem, TTiDE iTiDE, TdCondTiCam dCondTiCam, TTImp iTImp, BigDecimal dCantProSer) throws SOAPException {
+    public void setupSOAPElements(SOAPElement gCamItem, TTiDE iTiDE, TdCondTiCam dCondTiCam, TTImp iTImp, BigDecimal dCantProSer, CMondT cMoneOpe) throws SOAPException {
         SOAPElement gValorItem = gCamItem.addChildElement("gValorItem");
         gValorItem.addChildElement("dPUniProSer").setTextContent(String.valueOf(this.dPUniProSer));
 
@@ -27,9 +29,12 @@ public class TgValorItem extends SifenObjectBase {
             gValorItem.addChildElement("dTiCamIt").setTextContent(String.valueOf(this.dTiCamIt));
 
         this.dTotBruOpeItem = this.dPUniProSer.multiply(dCantProSer);
+        // am2811
+        int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
+        this.dTotBruOpeItem = this.dTotBruOpeItem.setScale(scale, RoundingMode.HALF_UP);
         gValorItem.addChildElement("dTotBruOpeItem").setTextContent(String.valueOf(this.dTotBruOpeItem));
 
-        this.gValorRestaItem.setupSOAPElements(gValorItem, iTiDE, iTImp, dCondTiCam, this.dTiCamIt, this.dPUniProSer, dCantProSer);
+        this.gValorRestaItem.setupSOAPElements(gValorItem, iTiDE, iTImp, dCondTiCam, this.dTiCamIt, this.dPUniProSer, dCantProSer, cMoneOpe);
     }
 
     @Override

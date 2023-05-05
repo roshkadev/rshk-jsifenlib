@@ -1,18 +1,16 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.core.types.*;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.core.types.CMondT;
-import com.roshka.sifen.core.types.PaisType;
-import com.roshka.sifen.core.types.TcUniMed;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
-import com.roshka.sifen.core.types.*;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 
 public class TgCamItem extends SifenObjectBase {
@@ -37,7 +35,7 @@ public class TgCamItem extends SifenObjectBase {
     private TgRasMerc gRasMerc;
     private TgVehNuevo gVehNuevo;
 
-    public void setupSOAPElements(SOAPElement gDtipDE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
+    public void setupSOAPElements(GenerationCtx generationCtx, SOAPElement gDtipDE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
         TTipTra iTipTra = null;
         TdCondTiCam dCondTiCam = null;
@@ -98,11 +96,11 @@ public class TgCamItem extends SifenObjectBase {
             gCamItem.addChildElement("dCDCAnticipo").setTextContent(this.dCDCAnticipo);
 
         if (iTiDE.getVal() != 7) {
-            this.gValorItem.setupSOAPElements(gCamItem, iTiDE, dCondTiCam, iTImp, this.dCantProSer);
+            this.gValorItem.setupSOAPElements(gCamItem, iTiDE, dCondTiCam, iTImp, this.dCantProSer, cMoneOpe);
         }
 
         if (iTImp != null && (iTImp.getVal() == 1 || iTImp.getVal() == 3 || iTImp.getVal() == 4 || iTImp.getVal() == 5) && iTiDE.getVal() != 4 && iTiDE.getVal() != 7)
-            this.gCamIVA.setupSOAPElements(gCamItem, cMoneOpe, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
+            this.gCamIVA.setupSOAPElements(generationCtx, gCamItem, cMoneOpe, this.gValorItem.getgValorRestaItem().getdTotOpeItem());
 
         if (this.gRasMerc != null)
             this.gRasMerc.setupSOAPElements(gCamItem);

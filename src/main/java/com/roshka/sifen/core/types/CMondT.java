@@ -641,7 +641,7 @@ public enum CMondT {
      */
     TMT("Turkmenistan New Manat"),
     /**
-     * Pa&apos;anga
+     * Página
      */
     TOP("Pa&apos;anga"),
     /**

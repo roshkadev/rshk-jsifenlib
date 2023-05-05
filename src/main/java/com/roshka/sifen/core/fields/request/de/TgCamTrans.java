@@ -1,15 +1,15 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.core.types.PaisType;
 import com.roshka.sifen.core.types.TiNatRec;
 import com.roshka.sifen.core.types.TiTipDoc;
-import com.roshka.sifen.core.types.PaisType;
+import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 
 public class TgCamTrans extends SifenObjectBase {
     private TiNatRec iNatTrans;

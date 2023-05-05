@@ -6,6 +6,7 @@ import com.roshka.sifen.core.beans.EventosDE;
 import com.roshka.sifen.core.beans.ValidezFirmaDigital;
 import com.roshka.sifen.core.beans.response.*;
 import com.roshka.sifen.core.exceptions.SifenException;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SignatureHelper;
 import com.roshka.sifen.internal.request.*;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
@@ -61,15 +62,28 @@ public class Sifen {
     }
 
     /**
+     *
+     * @param ruc RUc de un contribuyente a ser consultado en Sifen, sin el DV.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @return
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     * consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaConsultaRUC consultaRUC(String ruc, SifenConfig sifenConfig) throws SifenException {
+        return consultaRUC(ruc, sifenConfig, GenerationCtx.getDefaultFromConfig(sifenConfig));
+    }
+
+    /**
      * Realiza una consulta a Sifen y devuelve como resultado los datos y el estado del RUC de un contribuyente.
      *
      * @param ruc         RUC de un contribuyente a ser consultado en Sifen, sin el DV.
      * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @param generationCtx Contexto de generación de la petición.
      * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
-    public static RespuestaConsultaRUC consultaRUC(String ruc, SifenConfig sifenConfig) throws SifenException {
+    public static RespuestaConsultaRUC consultaRUC(String ruc, SifenConfig sifenConfig, GenerationCtx generationCtx) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -79,7 +93,7 @@ public class Sifen {
         ReqConsRuc reqConsRuc = new ReqConsRuc(dId++, sifenConfig);
         reqConsRuc.setdRUCCons(ruc);
 
-        return (RespuestaConsultaRUC) reqConsRuc.makeRequest(sifenConfig.getPathConsultaRUC());
+        return (RespuestaConsultaRUC) reqConsRuc.makeRequest(generationCtx, sifenConfig.getPathConsultaRUC());
     }
 
     /**
@@ -104,6 +118,20 @@ public class Sifen {
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
     public static RespuestaConsultaDE consultaDE(String cdc, SifenConfig sifenConfig) throws SifenException {
+        return consultaDE(cdc, sifenConfig, GenerationCtx.getDefaultFromConfig(sifenConfig));
+    }
+
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado el Documento Electrónico encontrado y todos sus eventos asociados.
+     *
+     * @param cdc         Código de Control, que es el identificador único de un Documento Electrónico.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @param generationCtx Contexto de generación de la petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaConsultaDE consultaDE(String cdc, SifenConfig sifenConfig, GenerationCtx generationCtx) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -113,7 +141,7 @@ public class Sifen {
         ReqConsDe reqConsDe = new ReqConsDe(dId++, sifenConfig);
         reqConsDe.setdCDC(cdc);
 
-        return (RespuestaConsultaDE) reqConsDe.makeRequest(sifenConfig.getPathConsulta());
+        return (RespuestaConsultaDE) reqConsDe.makeRequest(generationCtx, sifenConfig.getPathConsulta());
     }
 
     /**
@@ -138,6 +166,20 @@ public class Sifen {
      *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
      */
     public static RespuestaConsultaLoteDE consultaLoteDE(String nroLote, SifenConfig sifenConfig) throws SifenException {
+        return consultaLoteDE(nroLote, sifenConfig, GenerationCtx.getDefaultFromConfig(sifenConfig));
+    }
+
+    /**
+     * Realiza una consulta a Sifen y devuelve como resultado el estado del lote consultado.
+     *
+     * @param nroLote     Número de Lote recibido como respuesta en el envío del mismo.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @param generationCtx Contexto de generación de la petición.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
+     *                        consulta no pudo ser encontrado o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaConsultaLoteDE consultaLoteDE(String nroLote, SifenConfig sifenConfig, GenerationCtx generationCtx) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -147,7 +189,7 @@ public class Sifen {
         ReqConsLoteDe reqConsLoteDe = new ReqConsLoteDe(dId++, sifenConfig);
         reqConsLoteDe.setdProtConsLote(nroLote);
 
-        return (RespuestaConsultaLoteDE) reqConsLoteDe.makeRequest(sifenConfig.getPathConsultaLote());
+        return (RespuestaConsultaLoteDE) reqConsLoteDe.makeRequest(generationCtx, sifenConfig.getPathConsultaLote());
     }
 
     /**
@@ -162,6 +204,10 @@ public class Sifen {
         return recepcionDE(de, sifenConfig);
     }
 
+    public static RespuestaRecepcionDE recepcionDE(DocumentoElectronico de, SifenConfig sifenConfig) throws SifenException {
+        return recepcionDE(de, sifenConfig, GenerationCtx.getDefaultFromConfig(sifenConfig));
+    }
+
     /**
      * Realiza un envío del Documento Electrónico a Sifen para su correspondiente aprobación.
      *
@@ -171,7 +217,7 @@ public class Sifen {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        consulta no pudo ser encontrado o, si la firma digital del DE falla o, si la consulta no pudo ser realizada.
      */
-    public static RespuestaRecepcionDE recepcionDE(DocumentoElectronico de, SifenConfig sifenConfig) throws SifenException {
+    public static RespuestaRecepcionDE recepcionDE(DocumentoElectronico de, SifenConfig sifenConfig, GenerationCtx generationCtx) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -181,7 +227,7 @@ public class Sifen {
         ReqRecDe reqRecDe = new ReqRecDe(dId++, sifenConfig);
         reqRecDe.setDE(de);
 
-        return (RespuestaRecepcionDE) reqRecDe.makeRequest(sifenConfig.getPathRecibe());
+        return (RespuestaRecepcionDE) reqRecDe.makeRequest(generationCtx, sifenConfig.getPathRecibe());
     }
 
     /**
@@ -208,6 +254,21 @@ public class Sifen {
      *                        no pudo ser encontrado o, si la forma digital de algún DE falla o, si la consulta no pudo ser realizada.
      */
     public static RespuestaRecepcionLoteDE recepcionLoteDE(List<DocumentoElectronico> deList, SifenConfig sifenConfig) throws SifenException {
+        return recepcionLoteDE(deList, sifenConfig, GenerationCtx.getDefaultFromConfig(sifenConfig));
+    }
+
+    /**
+     * Realiza un envío de un lote de Documentos Electrónicos a Sifen para su correspondiente aprobación. La respuesta
+     * de la aprobación o rechazo de cada DE es asíncrono, es decir, no se encuentra en la respuesta de esta petición.
+     *
+     * @param deList      Listado de los objetos que hacen referencia a los Documentos Electrónicos, con todos los datos.
+     * @param sifenConfig Configuración de Sifen a ser utilizada en esta petición.
+     * @param generationCtx Contexto de generación de los documentos electrónicos.
+     * @return La respuesta a la consulta proveída por Sifen, en forma de clase.
+     * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario de algún DE
+     *                        no pudo ser encontrado o, si la forma digital de algún DE falla o, si la consulta no pudo ser realizada.
+     */
+    public static RespuestaRecepcionLoteDE recepcionLoteDE(List<DocumentoElectronico> deList, SifenConfig sifenConfig, GenerationCtx generationCtx) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -217,7 +278,7 @@ public class Sifen {
         ReqRecLoteDe reqRecLoteDe = new ReqRecLoteDe(dId++, sifenConfig);
         reqRecLoteDe.setDEList(deList);
 
-        return (RespuestaRecepcionLoteDE) reqRecLoteDe.makeRequest(sifenConfig.getPathRecibeLote());
+        return (RespuestaRecepcionLoteDE) reqRecLoteDe.makeRequest(generationCtx, sifenConfig.getPathRecibeLote());
     }
 
     /**
@@ -233,6 +294,10 @@ public class Sifen {
         return recepcionEvento(eventosDE, sifenConfig);
     }
 
+    public static RespuestaRecepcionEvento recepcionEvento(EventosDE eventosDE, SifenConfig sifenConfig) throws SifenException {
+        return recepcionEvento(eventosDE, sifenConfig, GenerationCtx.getDefaultFromConfig(sifenConfig));
+    }
+
     /**
      * Realiza un envío a Sifen de los eventos agregados en el objeto recibido como argumento.
      *
@@ -243,7 +308,7 @@ public class Sifen {
      *                        consulta no pudo ser encontrado o, si la firma digital de algún evento falla o, si la consulta no pudo ser
      *                        realizada.
      */
-    public static RespuestaRecepcionEvento recepcionEvento(EventosDE eventosDE, SifenConfig sifenConfig) throws SifenException {
+    public static RespuestaRecepcionEvento recepcionEvento(EventosDE eventosDE, SifenConfig sifenConfig, GenerationCtx generationCtx) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración de Sifen.");
         }
@@ -253,7 +318,7 @@ public class Sifen {
         ReqRecEventoDe reqRecEventoDe = new ReqRecEventoDe(dId++, sifenConfig);
         reqRecEventoDe.setEventoDE(eventosDE);
 
-        return (RespuestaRecepcionEvento) reqRecEventoDe.makeRequest(sifenConfig.getPathEvento());
+        return (RespuestaRecepcionEvento) reqRecEventoDe.makeRequest(generationCtx, sifenConfig.getPathEvento());
     }
 
     /**

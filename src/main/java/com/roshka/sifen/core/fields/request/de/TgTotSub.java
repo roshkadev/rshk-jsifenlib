@@ -1,19 +1,22 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.core.fields.util.RedondeoUtil;
+import com.roshka.sifen.core.types.CMondT;
 import com.roshka.sifen.core.types.TTImp;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.core.types.TdCondTiCam;
-import com.roshka.sifen.core.types.CMondT;
+import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import static com.roshka.sifen.core.fields.util.FieldFormatUtil.formattdCRed;
 
 public class TgTotSub extends SifenObjectBase {
     private BigDecimal dSubExe = BigDecimal.ZERO;
@@ -50,6 +53,8 @@ public class TgTotSub extends SifenObjectBase {
         TdCondTiCam dCondTiCam = gOpeCom.getdCondTiCam();
         BigDecimal dTiCam = gOpeCom.getdTiCam();
 
+        int scale = cMoneOpe == CMondT.PYG ? 0 : 2;
+
         SOAPElement gTotSub = DE.addChildElement("gTotSub");
 
         // CALCULOS
@@ -57,6 +62,7 @@ public class TgTotSub extends SifenObjectBase {
             TgCamIVA gCamIVA = gCamItem.getgCamIVA();
             BigDecimal dTotOpeItem = gCamItem.getgValorItem().getgValorRestaItem().getdTotOpeItem();
 
+            dTotOpeItem = dTotOpeItem.setScale(scale, RoundingMode.HALF_UP);
             if (gCamIVA != null) {
                 BigDecimal dLiqIVAItem = gCamIVA.getdLiqIVAItem();
                 BigDecimal dBasGravIVA = gCamIVA.getdBasGravIVA();
@@ -83,7 +89,7 @@ public class TgTotSub extends SifenObjectBase {
             if (iTiDE.getVal() == 4)
                 this.dTotOpe = this.dTotOpe.add(dTotOpeItem);
 
-            this.dTotDesc = this.dTotDesc.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescItem(), BigDecimal.ZERO));
+            this.dTotDesc = this.dTotDesc.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescItem().multiply(gCamItem.getdCantProSer()), BigDecimal.ZERO));
             this.dTotDescGlotem = this.dTotDescGlotem.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdDescGloItem(), BigDecimal.ZERO));
             this.dTotAntItem = this.dTotAntItem.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntPreUniIt(), BigDecimal.ZERO));
             this.dTotAnt = this.dTotAnt.add(SifenUtil.coalesce(gCamItem.getgValorItem().getgValorRestaItem().getdAntGloPreUniIt(), BigDecimal.ZERO));
@@ -98,11 +104,11 @@ public class TgTotSub extends SifenObjectBase {
         this.dDescTotal = this.dTotDesc.add(this.dTotDescGlotem);
         this.dPorcDescTotal = this.dDescTotal.multiply(BigDecimal.valueOf(100)).divide(this.dTotOpe.add(this.dDescTotal), 2, RoundingMode.HALF_UP);
         this.dAnticipo = this.dTotAntItem.add(this.dTotAnt);
-        this.dRedon = this.dTotOpe.subtract(BigDecimal.valueOf(Math.round(this.dTotOpe.doubleValue() * 50) / 50));
+
+        this.dRedon = RedondeoUtil.redondeoOficialSET(cMoneOpe, this.dTotOpe);
         this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(SifenUtil.coalesce(this.dComi, BigDecimal.ZERO));
 
         if (this.dComi != null) {
-            int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
             this.dIVAComi = this.dComi.divide(BigDecimal.valueOf(1.1), scale, RoundingMode.HALF_UP);
         }
 
@@ -131,7 +137,8 @@ public class TgTotSub extends SifenObjectBase {
         gTotSub.addChildElement("dPorcDescTotal").setTextContent(String.valueOf(this.dPorcDescTotal));
         gTotSub.addChildElement("dDescTotal").setTextContent(String.valueOf(this.dDescTotal));
         gTotSub.addChildElement("dAnticipo").setTextContent(String.valueOf(this.dAnticipo));
-        gTotSub.addChildElement("dRedon").setTextContent(String.valueOf(this.dRedon));
+        // se agregó control para formatear con 4 decimales
+        gTotSub.addChildElement("dRedon").setTextContent(formattdCRed(this.dRedon));
 
         if (iTiDE.getVal() != 4) {
             if (this.dComi != null)

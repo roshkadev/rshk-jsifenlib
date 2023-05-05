@@ -1,9 +1,9 @@
 package com.roshka.sifen.core.beans.response;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.core.fields.response.TxProtDe;
+import com.roshka.sifen.internal.response.BaseResponse;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
 import org.w3c.dom.Node;
 
 /**

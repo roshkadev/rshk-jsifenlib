@@ -1,16 +1,17 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.core.types.TTImp;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.core.types.TdCondTiCam;
+import com.roshka.sifen.core.types.CMondT;
+import com.roshka.sifen.internal.response.SifenObjectBase;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -23,8 +24,12 @@ public class TgValorRestaItem extends SifenObjectBase {
     private BigDecimal dTotOpeItem;
     private BigDecimal dTotOpeGs;
 
+    public TgValorRestaItem() {
+        this.dDescItem = BigDecimal.ZERO;
+    }
+
     public void setupSOAPElements(SOAPElement gValorItem, TTiDE iTiDE, TTImp iTImp, TdCondTiCam dCondTiCam, BigDecimal dTiCamIt,
-                                  BigDecimal dPUniProSer, BigDecimal dCantProSer) throws SOAPException {
+                                  BigDecimal dPUniProSer, BigDecimal dCantProSer, CMondT cMoneOpe) throws SOAPException {
         SOAPElement gValorRestaItem = gValorItem.addChildElement("gValorRestaItem");
 
         if (this.dDescItem != null) {
@@ -49,7 +54,10 @@ public class TgValorRestaItem extends SifenObjectBase {
                     .subtract(SifenUtil.coalesce(this.dAntGloPreUniIt, BigDecimal.ZERO)))
                     .multiply(dCantProSer);
         }
-        gValorRestaItem.addChildElement("dTotOpeItem").setTextContent(String.valueOf(this.dTotOpeItem));
+//        gValorRestaItem.addChildElement("dTotOpeItem").setTextContent(String.valueOf(this.dTotOpeItem));
+        //am 22_11
+        int scale = cMoneOpe.name().equals("PYG") ? 0 : 2;
+        gValorRestaItem.addChildElement("dTotOpeItem").setTextContent(String.valueOf(this.dTotOpeItem.setScale(scale, RoundingMode.HALF_UP)));
 
         if (dCondTiCam != null && dCondTiCam.getVal() == 2) {
             this.dTotOpeGs = this.dTotOpeItem.multiply(dTiCamIt);

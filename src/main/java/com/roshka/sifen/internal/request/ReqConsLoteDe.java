@@ -5,6 +5,7 @@ import com.roshka.sifen.core.beans.response.RespuestaConsultaLoteDE;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.internal.Constants;
 import com.roshka.sifen.internal.SOAPResponse;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.response.BaseResponse;
 import com.roshka.sifen.internal.response.SifenObjectFactory;
@@ -13,10 +14,10 @@ import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import org.w3c.dom.Node;
 
 import javax.xml.namespace.QName;
-import jakarta.xml.soap.SOAPBody;
-import jakarta.xml.soap.SOAPBodyElement;
-import jakarta.xml.soap.SOAPException;
-import jakarta.xml.soap.SOAPMessage;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPBodyElement;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ public class ReqConsLoteDe extends BaseRequest {
     }
 
     @Override
-    SOAPMessage setupSoapMessage() throws SifenException {
+    SOAPMessage setupSoapMessage(GenerationCtx generationCtx) throws SifenException {
         try {
             // Main Element
             SOAPMessage message = SoapHelper.createSoapMessage();

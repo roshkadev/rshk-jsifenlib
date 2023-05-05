@@ -1,16 +1,16 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.types.TiIndPres;
 import com.roshka.sifen.core.types.TiTiOpe;
+import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenUtil;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class TgCamFE extends SifenObjectBase {
             gCamFE.addChildElement("dFecEmNR").setTextContent(this.dFecEmNR.toString());
 
         if (this.gCompPub != null || iTiOpe.getVal() == 3) {
-            Objects.requireNonNull(this.gCompPub, "Campo 'gCompPub' requerido para el Tipo de Operación 'B2G'").setupSOAPElements(gCamFE);
+            Objects.requireNonNull(this.gCompPub).setupSOAPElements(gCamFE);
         }
     }
 

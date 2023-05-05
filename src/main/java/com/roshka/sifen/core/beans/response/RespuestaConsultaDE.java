@@ -1,10 +1,10 @@
 package com.roshka.sifen.core.beans.response;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
-import com.roshka.sifen.internal.response.BaseResponse;
-import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.core.fields.response.de.TxContenDE;
+import com.roshka.sifen.internal.response.BaseResponse;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
+import com.roshka.sifen.internal.util.ResponseUtil;
 import org.w3c.dom.Node;
 
 import java.time.LocalDateTime;

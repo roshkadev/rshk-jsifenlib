@@ -1,14 +1,15 @@
 package com.roshka.sifen.core.fields.request.de;
 
 import com.roshka.sifen.core.exceptions.SifenException;
-import com.roshka.sifen.internal.response.SifenObjectBase;
-import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.core.types.TiTiOpe;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
+import com.roshka.sifen.internal.response.SifenObjectBase;
+import com.roshka.sifen.internal.response.SifenObjectFactory;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPElement;
-import jakarta.xml.soap.SOAPException;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class TgDtipDE extends SifenObjectBase {
     private TgCamEsp gCamEsp;
     private TgTransp gTransp;
 
-    public void setupSOAPElements(SOAPElement DE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
+    public void setupSOAPElements(GenerationCtx generationCtx, SOAPElement DE, TTiDE iTiDE, TdDatGralOpe gDatGralOpe) throws SOAPException {
         TiTiOpe iTiOpe = gDatGralOpe.getgDatRec().getiTiOpe();
 
         SOAPElement gDtipDE = DE.addChildElement("gDtipDE");
@@ -39,7 +40,7 @@ public class TgDtipDE extends SifenObjectBase {
             this.gCamCond.setupSOAPElements(gDtipDE);
 
         for (TgCamItem gCamItem : this.gCamItemList) {
-            gCamItem.setupSOAPElements(gDtipDE, iTiDE, gDatGralOpe);
+            gCamItem.setupSOAPElements(generationCtx, gDtipDE, iTiDE, gDatGralOpe);
         }
 
         if (this.gCamEsp != null)

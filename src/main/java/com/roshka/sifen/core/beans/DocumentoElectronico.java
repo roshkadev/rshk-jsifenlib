@@ -6,6 +6,7 @@ import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.fields.request.de.*;
 import com.roshka.sifen.core.types.TTiDE;
 import com.roshka.sifen.internal.Constants;
+import com.roshka.sifen.internal.ctx.GenerationCtx;
 import com.roshka.sifen.internal.helpers.SignatureHelper;
 import com.roshka.sifen.internal.helpers.SoapHelper;
 import com.roshka.sifen.internal.response.SifenObjectBase;
@@ -25,7 +26,7 @@ import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import jakarta.xml.soap.*;
+import javax.xml.soap.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
@@ -94,6 +95,27 @@ public class DocumentoElectronico extends SifenObjectBase {
         this.obtenerCDC();
     }
 
+    public DocumentoElectronico(String xml, String CDCrecibido) throws SifenException {
+        xml = xml.replaceAll(">[\\s\r\n]*<", "><");
+
+        // Parseamos el xml
+        Document xmlDocument;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            xmlDocument = builder.parse(new InputSource(new StringReader(xml)));
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw SifenExceptionUtil.xmlParsingError("Se produjo un error al parsear el archivo XML. Formato incorrecto.");
+        }
+
+        // Obtenemos el nodo principal
+        Node mainNode = xmlDocument.getElementsByTagName("DE").item(0);
+
+        SifenObjectFactory.getFromNode(mainNode, this);
+        this.obtenerCDC(CDCrecibido);
+    }
+
     /**
      * Calcula el CDC del Documento Electrónico en cuestión y lo retorna. Además de lo anterior, también establece los
      * valores en el lugar correspondiente dentro del objeto.
@@ -107,7 +129,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getiTiDE().getVal()), '0', 2) +
-                    SifenUtil.leftPad(this.getgDatGralOpe().getgEmis().getdRucEm(), '0', 8) +
+                    this.getgDatGralOpe().getgEmis().getdRucEm() +
                     this.getgDatGralOpe().getgEmis().getdDVEmi() +
                     this.getgTimb().getdEst() +
                     this.getgTimb().getdPunExp() +
@@ -127,6 +149,14 @@ public class DocumentoElectronico extends SifenObjectBase {
         return this.Id;
     }
 
+    //    INICIO CAMBIO AM
+//    se agrego un overload del metodo obtener CDC para que reciba el parametro ReceivedCDC
+    public String obtenerCDC(String ReceivedCDC) throws SifenException {
+        this.Id = ReceivedCDC;
+        return this.Id;
+    }
+//            FIN CAMBIO
+
     /**
      * Genera un XML completo en base al Documento Electrónico actual.
      *
@@ -134,8 +164,8 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public String generarXml() throws SifenException {
-        return this.generarXml(Sifen.getSifenConfig());
+    public String generarXml(GenerationCtx generationCtx) throws SifenException {
+        return this.generarXml(generationCtx, Sifen.getSifenConfig());
     }
 
     /**
@@ -146,14 +176,14 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public String generarXml(SifenConfig sifenConfig) throws SifenException {
+    public String generarXml(GenerationCtx generationCtx, SifenConfig sifenConfig) throws SifenException {
         if (sifenConfig == null) {
             throw SifenExceptionUtil.invalidConfiguration("Falta establecer la configuración del Sifen.");
         }
 
         String xml = null;
         try {
-            SOAPMessage message = this.setupSOAPElements(1, sifenConfig);
+            SOAPMessage message = this.setupSOAPElements(generationCtx, 1, sifenConfig);
             xml = ResponseUtil.getXmlFromMessage(message, true);
         } catch (SOAPException e) {
             logger.warning("Se produjo un error al generar el XML.");
@@ -172,8 +202,8 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public boolean generarXml(String rutaDestino) throws SifenException {
-        return this.generarXml(rutaDestino, Sifen.getSifenConfig());
+    public boolean generarXml(GenerationCtx generationCtx, String rutaDestino) throws SifenException {
+        return this.generarXml(generationCtx, rutaDestino, Sifen.getSifenConfig());
     }
 
     /**
@@ -186,9 +216,9 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SifenException Si la configuración de Sifen no fue establecida o, si algún dato necesario para la
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
-    public boolean generarXml(String rutaDestino, SifenConfig sifenConfig) throws SifenException {
+    public boolean generarXml(GenerationCtx generationCtx, String rutaDestino, SifenConfig sifenConfig) throws SifenException {
         // Obtenemos el xml en string
-        String xml = this.generarXml(sifenConfig);
+        String xml = this.generarXml(generationCtx, sifenConfig);
 
         // Creamos o modificamos el archivo, y escribimos en él el xml.
         boolean res = false;
@@ -214,7 +244,7 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SOAPException  -
      * @throws SifenException -
      */
-    public SOAPMessage setupSOAPElements(long dId, SifenConfig sifenConfig) throws SOAPException, SifenException {
+    public SOAPMessage setupSOAPElements(GenerationCtx generationCtx, long dId, SifenConfig sifenConfig) throws SOAPException, SifenException {
         SOAPMessage message = SoapHelper.createSoapMessage();
         SOAPBody soapBody = message.getSOAPBody();
 
@@ -223,7 +253,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         rResEnviDe.addChildElement("dId").setTextContent(String.valueOf(dId));
 
         SOAPElement xDE = rResEnviDe.addChildElement("xDE");
-        this.setupDE(xDE, sifenConfig);
+        this.setupDE(generationCtx, xDE, sifenConfig);
 
         return message;
     }
@@ -236,7 +266,9 @@ public class DocumentoElectronico extends SifenObjectBase {
      * @throws SOAPException  -
      * @throws SifenException -
      */
-    public void setupDE(SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
+//    INICIO CAMBIO AM
+//    se realizo un overload del metodo  setupDE para que reciba receivedCDC
+    public void setupDE(GenerationCtx generationCtx, SOAPElement parentNode, SifenConfig sifenConfig, String receivedCDC) throws SOAPException, SifenException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
         SOAPElement rDE = parentNode.addChildElement(new QName(Constants.SIFEN_NS_URI, "rDE"));
@@ -245,7 +277,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         rDE.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", Constants.SIFEN_NS_URI_RECEP_DE);
         rDE.addChildElement("dVerFor").setTextContent(SIFEN_CURRENT_VERSION);
 
-        this.obtenerCDC();
+        this.obtenerCDC(receivedCDC);
 
         SOAPElement DE = rDE.addChildElement("DE");
         DE.setAttribute("Id", this.getId());
@@ -262,7 +294,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         this.gOpeDE.setupSOAPElements(DE, iTiDE);
         this.gTimb.setupSOAPElements(DE);
         this.gDatGralOpe.setupSOAPElements(DE, iTiDE);
-        this.gDtipDE.setupSOAPElements(DE, iTiDE, this.gDatGralOpe);
+        this.gDtipDE.setupSOAPElements(generationCtx, DE, iTiDE, this.gDatGralOpe);
 
         if (iTiDE.getVal() != 7)
             this.gTotSub.setupSOAPElements(DE, iTiDE, this.getgDtipDE(), this.gDatGralOpe.getgOpeCom());
@@ -293,6 +325,11 @@ public class DocumentoElectronico extends SifenObjectBase {
         this.enlaceQR = this.generateQRLink(signedInfo, sifenConfig);
         SOAPElement gCamFuFD = rDE.addChildElement("gCamFuFD");
         gCamFuFD.addChildElement("dCarQR").setTextContent(this.enlaceQR);
+    }
+
+    //    FIN CAMBIO
+    public void setupDE(GenerationCtx generationCtx, SOAPElement parentNode, SifenConfig sifenConfig) throws SOAPException, SifenException {
+        this.setupDE(generationCtx, parentNode, sifenConfig, this.obtenerCDC());
     }
 
     /**
@@ -384,6 +421,10 @@ public class DocumentoElectronico extends SifenObjectBase {
         return Id;
     }
 
+    public void setId(String id) {
+        Id = id;
+    }
+
     public String getdDVId() {
         return dDVId;
     }
@@ -467,4 +508,5 @@ public class DocumentoElectronico extends SifenObjectBase {
     public void setEnlaceQR(String enlaceQR) {
         this.enlaceQR = enlaceQR;
     }
+
 }

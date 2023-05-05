@@ -13,6 +13,7 @@ public abstract class BaseResponse extends SifenObjectBase {
 
     private String dCodRes;
     private String dMsgRes;
+    private String requestSent;
 
     @Override
     public void setValueFromChildNode(Node value) throws SifenException {
@@ -53,5 +54,13 @@ public abstract class BaseResponse extends SifenObjectBase {
 
     public void setdMsgRes(String dMsgRes) {
         this.dMsgRes = dMsgRes;
+    }
+
+    public String getRequestSent() {
+        return requestSent;
+    }
+
+    public void setRequestSent(String requestSent) {
+        this.requestSent = requestSent;
     }
 }
