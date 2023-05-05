@@ -12,8 +12,8 @@ import com.roshka.sifen.internal.util.ResponseUtil;
 import com.roshka.sifen.internal.util.SifenExceptionUtil;
 import org.w3c.dom.Node;
 
-import jakarta.xml.soap.SOAPException;
-import jakarta.xml.soap.SOAPMessage;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 

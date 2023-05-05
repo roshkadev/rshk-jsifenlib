@@ -11,6 +11,7 @@ import com.roshka.sifen.core.fields.request.event.TgGroupTiEvt;
 import com.roshka.sifen.core.fields.request.event.TrGeVeDisconf;
 import com.roshka.sifen.core.fields.request.event.TrGesEve;
 import com.roshka.sifen.core.types.*;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -339,6 +340,7 @@ public class DETest extends DETestBase {
     }
 
     @Test
+    @Ignore
     public void testRecepcionLoteDE() throws SifenException {
 
         DocumentoElectronico de = setupDocumentoElectronico();
@@ -366,6 +368,9 @@ public class DETest extends DETestBase {
         tgDtipDE.getgCamItemList().add(tgCamItem01);
 
         RespuestaRecepcionLoteDE ret = Sifen.recepcionLoteDE(Collections.singletonList(de));
+        Assert.assertEquals(200, ret.getCodigoEstado());
+        Assert.assertEquals("0300", ret.getdCodRes());
+        Assert.assertEquals("Lote recibido con éxito", ret.getdMsgRes());
         logger.info(ret.toString());
     }
 

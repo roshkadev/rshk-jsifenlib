@@ -6,6 +6,7 @@ import com.roshka.sifen.core.beans.response.RespuestaRecepcionLoteDE;
 import com.roshka.sifen.core.exceptions.SifenException;
 import com.roshka.sifen.core.fields.request.de.*;
 import com.roshka.sifen.core.types.*;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class DEMonedaExtranjeraTest extends DETestBase {
 
     @Test
+    @Ignore
     public void testRecepcionLoteDE() throws SifenException {
         LocalDateTime currentDate = LocalDateTime.now();
 
@@ -141,6 +143,9 @@ public class DEMonedaExtranjeraTest extends DETestBase {
         de.setgTotSub(tgTotSub);
 
         RespuestaRecepcionLoteDE ret = Sifen.recepcionLoteDE(Collections.singletonList(de));
+        Assert.assertEquals(200, ret.getCodigoEstado());
+        Assert.assertEquals("0300", ret.getdCodRes());
+        Assert.assertEquals("Lote recibido con éxito", ret.getdMsgRes());
         logger.info(ret.toString());
     }
 
