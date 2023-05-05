@@ -1,0 +1,46 @@
+# Este es un archivo ejemplo de propiedades de RSHK-JSIFENLIB
+
+# SIFEN CONTEXT
+
+# ambiente:
+# valores posibles:
+# Desarrollo: DEV
+# Producción: PROD
+sifen.ambiente=DEV
+
+# url_base
+# URL base para conectarse a SIFEN. Solo poner un valor si uno
+# realmente sabe lo que hace para sobreescribir los valores por
+# defecto de los ambientes de SIFEN
+#sifen.url_base=http://mi-proxy/sifen
+
+# usar certificado cliente
+# valores posibles: true/false
+# esto casi siempre tiene que ser true (que es el valor por defecto)
+# solo poner en false si uno sabe exactamente lo que está haciendo
+# por ejemplo, si tiene un PROXY que está presentando las credenciales
+# del certificado cliente en nombre de esta conexión
+#sifen.certificado_cliente.usar=true
+
+# PFX por ahora es el único valor posible
+sifen.certificado_cliente.tipo=PFX
+
+# ruta del archivo PFX con la clave privada y el certificado firmado necesarios
+# para interactuar con SIFEN
+sifen.certificado_cliente.archivo=/tmp/file.pfx
+# contraseña del archivo PFX
+sifen.certificado_cliente.contrasena=123456
+
+# Identificador del CSC (esto debe ser proveído por la SET en producción.
+# para el ambiente de desarrollo, se puede usar los valores por defecto que están a
+# continuación
+sifen.csc.id=0001
+
+# Valor del CSC (esto debe ser proveído por la SET en producción.
+# para el ambiente de desarrollo, se puede usar los valores por defecto que están a
+# continuación
+sifen.csc=ABCD0000000000000000000000000000
+
+# SIFEN SERVER
+
+sifen.server.port=6767
