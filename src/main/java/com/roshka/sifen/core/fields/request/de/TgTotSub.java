@@ -107,6 +107,7 @@ public class TgTotSub extends SifenObjectBase {
 
         this.dRedon = RedondeoUtil.redondeoOficialSET(cMoneOpe, this.dTotOpe);
         this.dTotGralOpe = this.dTotOpe.subtract(this.dRedon).add(SifenUtil.coalesce(this.dComi, BigDecimal.ZERO));
+        this.dRedon = this.dRedon.abs();
 
         if (this.dComi != null) {
             this.dIVAComi = this.dComi.divide(BigDecimal.valueOf(1.1), scale, RoundingMode.HALF_UP);

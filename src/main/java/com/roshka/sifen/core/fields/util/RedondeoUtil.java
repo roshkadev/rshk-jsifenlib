@@ -36,13 +36,13 @@ public class RedondeoUtil {
     }
 
     public static BigDecimal redondeoOficialGuaranies(BigDecimal valor) {
-        return valor.subtract(valor.remainder(BigDecimal.valueOf(50)));
+        return valor.remainder(BigDecimal.valueOf(50));
     }
 
     public static BigDecimal redondeoOficialOtrasMonedas(BigDecimal value) {
         BigDecimal fiftyCents = new BigDecimal("0.5");
         BigDecimal dividedValue = value.divide(fiftyCents, 0, RoundingMode.HALF_UP);
         BigDecimal roundedValue = dividedValue.multiply(fiftyCents);
-        return roundedValue;
+        return roundedValue.subtract(value).multiply((new BigDecimal("-1.0")));
     }
 }
