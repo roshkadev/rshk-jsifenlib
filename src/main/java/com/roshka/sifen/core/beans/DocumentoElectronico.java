@@ -129,7 +129,7 @@ public class DocumentoElectronico extends SifenObjectBase {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
             CDC = SifenUtil.leftPad(String.valueOf(this.getgTimb().getiTiDE().getVal()), '0', 2) +
-                    this.getgDatGralOpe().getgEmis().getdRucEm() +
+                    SifenUtil.leftPad(this.getgDatGralOpe().getgEmis().getdRucEm(), '0', 8) +
                     this.getgDatGralOpe().getgEmis().getdDVEmi() +
                     this.getgTimb().getdEst() +
                     this.getgTimb().getdPunExp() +
@@ -165,7 +165,7 @@ public class DocumentoElectronico extends SifenObjectBase {
      *                        generación del XML no pudo ser encontrado o, si la firma digital del DE falla.
      */
     public String generarXml(GenerationCtx generationCtx) throws SifenException {
-        return this.generarXml(generationCtx, Sifen.getSifenConfig());
+        return this.generarXml(generationCtx, generationCtx.getSifenConfig());
     }
 
     /**

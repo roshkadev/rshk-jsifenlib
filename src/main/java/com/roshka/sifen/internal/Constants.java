@@ -5,7 +5,7 @@ package com.roshka.sifen.internal;
  */
 public class Constants {
     // Globals
-    public static final String SDK_CURRENT_VERSION = "0.2.3";
+    public static final String SDK_CURRENT_VERSION = "0.2.4";
     public static final String SIFEN_CURRENT_VERSION = "150";
 
     public static final String RSA_SHA256 = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";

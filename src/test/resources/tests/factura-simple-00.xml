@@ -1,0 +1,179 @@
+<rEnviDe xmlns="http://ekuatia.set.gov.py/sifen/xsd">
+    <dId>100</dId>
+    <iAmb>1</iAmb>
+    <xDE>
+        <rDE xmlns="http://ekuatia.set.gov.py/sifen/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://ekuatia.set.gov.py/sifen/xsd siRecepDE_v150.xsd">
+            <dVerFor>150</dVerFor>
+            <DE Id="01800138848001001123456412018121817819792239">
+                <dDVId>9</dDVId>
+                <dFecFirma>2018-12-18T17:44:36</dFecFirma>
+                <dSisFact>1</dSisFact>
+                <gOpeDE>
+                    <iTipEmi>1</iTipEmi>
+                    <dDesTipEmi>Normal</dDesTipEmi>
+                    <dCodSeg>781979223</dCodSeg>
+                    <dInfoEmi>a</dInfoEmi>
+                    <dInfoFisc>Información de interés del Fisco respecto al DE</dInfoFisc>
+                </gOpeDE>
+                <gTimb>
+                    <iTiDE>1</iTiDE>
+                    <dDesTiDE>Factura electrónica</dDesTiDE>
+                    <dNumTim>12557209</dNumTim>
+                    <dEst>001</dEst>
+                    <dPunExp>001</dPunExp>
+                    <dNumDoc>1234564</dNumDoc>
+                    <!--<dSerieNum>AA</dSerieNum>!-->
+                    <dFeIniT>2018-10-12</dFeIniT>
+                </gTimb>
+                <gDatGralOpe>
+                    <dFeEmiDE>2018-12-18T17:44:36</dFeEmiDE>
+                    <gOpeCom>
+                        <iTipTra>1</iTipTra>
+                        <dDesTipTra>Venta de mercadería</dDesTipTra>
+                        <iTImp>1</iTImp>
+                        <dDesTImp>IVA</dDesTImp>
+                        <cMoneOpe>PYG</cMoneOpe>
+                        <dDesMoneOpe>Guarani</dDesMoneOpe>
+                    </gOpeCom>
+                    <gEmis>
+                        <dRucEm>80013884</dRucEm>
+                        <dDVEmi>8</dDVEmi>
+                        <iTipCont>1</iTipCont>
+                        <dNomEmi>BANCARD S.A.</dNomEmi>
+                        <dNomFanEmi>BANCARD</dNomFanEmi>
+                        <dDirEmi>AVENIDA BRASILIA N° 765</dDirEmi>
+                        <dNumCas>1</dNumCas>
+                        <cDepEmi>1</cDepEmi>
+                        <dDesDepEmi>CAPITAL</dDesDepEmi>
+                        <cDisEmi>1</cDisEmi>
+                        <dDesDisEmi>ASUNCION (DISTRITO)</dDesDisEmi>
+                        <cCiuEmi>1</cCiuEmi>
+                        <dDesCiuEmi>ASUNCION (DISTRITO)</dDesCiuEmi>
+                        <dTelEmi>214161000</dTelEmi>
+                        <dEmailE>contabilidad@bancard.com.py</dEmailE>
+                        <gActEco>
+                            <cActEco>64990</cActEco>
+                            <dDesActEco>OTRAS ACTIVIDADES DE SERVICIOS FINANCIEROS, EXCEPTO LA FINANCIACIÓN DE
+                                PLANES DE SEGUROS Y DE PENSIONES
+                            </dDesActEco>
+                        </gActEco>
+                    </gEmis>
+                    <gDatRec>
+                        <iNatRec>1</iNatRec>
+                        <iTiOpe>1</iTiOpe>
+                        <cPaisRec>PRY</cPaisRec>
+                        <dDesPaisRe>Paraguay</dDesPaisRe>
+                        <iTiContRec>2</iTiContRec>
+                        <dRucRec>80002201</dRucRec>
+                        <dDVRec>7</dDVRec>
+                        <dNomRec>BANCO DEL PARAGUAY S.A.</dNomRec>
+                        <dDirRec>YEGROS Y MCAL. LÓPEZ</dDirRec>
+                        <dNumCasRec>123</dNumCasRec>
+                        <dTelRec>21494992</dTelRec>
+                        <dCodCliente>AAA</dCodCliente>
+                    </gDatRec>
+                </gDatGralOpe>
+                <gDtipDE>
+                    <gCamFE>
+                        <iIndPres>1</iIndPres>
+                        <dDesIndPres>Operación presencial</dDesIndPres>
+                    </gCamFE>
+                    <gCamCond>
+                        <iCondOpe>2</iCondOpe>
+                        <dDCondOpe>Crédito</dDCondOpe>
+                        <gPagCred>
+                            <iCondCred>1</iCondCred>
+                            <dDCondCred>Plazo</dDCondCred>
+                            <dPlazoCre>28</dPlazoCre>
+                        </gPagCred>
+                    </gCamCond>
+                    <gCamItem>
+                        <dCodInt>CAC/CTAC</dCodInt>
+                        <dDesProSer>CUENTAS ACTIVAS</dDesProSer>
+                        <cUniMed>77</cUniMed>
+                        <dDesUniMed>UNI</dDesUniMed>
+                        <dCantProSer>423378</dCantProSer>
+                        <dInfItem>21</dInfItem>
+                        <gValorItem>
+                            <dPUniProSer>125.94133776</dPUniProSer>
+                            <dTotBruOpeItem>0</dTotBruOpeItem>
+                            <gValorRestaItem>
+                                <dDescItem>0</dDescItem>
+                                <dPorcDesIt>100</dPorcDesIt>
+                                <dTotOpeItem>53320791.70</dTotOpeItem>
+                            </gValorRestaItem>
+                        </gValorItem>
+                        <gCamIVA>
+                            <iAfecIVA>1</iAfecIVA>
+                            <dDesAfecIVA>Gravado IVA</dDesAfecIVA>
+                            <dPropIVA>100</dPropIVA>
+                            <dTasaIVA>10</dTasaIVA>
+                            <dBasGravIVA>48473447</dBasGravIVA>
+                            <dLiqIVAItem>4847345</dLiqIVAItem>
+                        </gCamIVA>
+                    </gCamItem>
+                    <gCamItem>
+                        <dCodInt>TAU/TAUR</dCodInt>
+                        <dDesProSer>TARJETA URGENTE</dDesProSer>
+                        <cUniMed>77</cUniMed>
+                        <dDesUniMed>UNI</dDesUniMed>
+                        <dCantProSer>36</dCantProSer>
+                        <gValorItem>
+                            <dPUniProSer>92015</dPUniProSer>
+                            <dTotBruOpeItem>123</dTotBruOpeItem>
+                            <gValorRestaItem>
+                                <dDescItem>123</dDescItem>
+                                <dPorcDesIt>0</dPorcDesIt>
+                                <dTotOpeItem>3312540</dTotOpeItem>
+                            </gValorRestaItem>
+                        </gValorItem>
+                        <gCamIVA>
+                            <iAfecIVA>1</iAfecIVA>
+                            <dDesAfecIVA>Gravado IVA</dDesAfecIVA>
+                            <dPropIVA>100</dPropIVA>
+                            <dTasaIVA>10</dTasaIVA>
+                            <dBasGravIVA>3011400</dBasGravIVA>
+                            <dLiqIVAItem>301140</dLiqIVAItem>
+                        </gCamIVA>
+                    </gCamItem>
+                    <gCamEsp>
+                        <gGrupAdi>
+                            <dCiclo>DICIEMBRE</dCiclo>
+                            <dFecIniC>2018-11-23</dFecIniC>
+                            <dFecFinC>2018-12-17</dFecFinC>
+                        </gGrupAdi>
+                    </gCamEsp>
+                    <gTransp>
+                        <iModTrans>1</iModTrans>
+                        <dDesModTrans>Aéreo</dDesModTrans>
+                        <iRespFlete>2</iRespFlete>
+                        <dNuDespImp>1234567891asfdcs</dNuDespImp>
+                    </gTransp>
+                </gDtipDE>
+                <gTotSub>
+                    <dSubExe>0</dSubExe>
+                    <dSubExo>0</dSubExo>
+                    <dSub5>0</dSub5>
+                    <dSub10>0.0</dSub10>
+                    <dTotOpe>0.0</dTotOpe>
+                    <dTotDesc>0</dTotDesc>
+                    <dTotDescGlotem>0</dTotDescGlotem>
+                    <dTotAntItem>0</dTotAntItem>
+                    <dTotAnt>0</dTotAnt>
+                    <dPorcDescTotal>100</dPorcDescTotal>
+                    <dDescTotal>0.0</dDescTotal>
+                    <dAnticipo>0</dAnticipo>
+                    <dRedon>0.0</dRedon>
+                    <dTotGralOpe>0</dTotGralOpe>
+                    <dIVA5>0</dIVA5>
+                    <dIVA10>0</dIVA10>
+                    <dTotIVA>0</dTotIVA>
+                    <dBaseGrav5>0</dBaseGrav5>
+                    <dBaseGrav10>0</dBaseGrav10>
+                    <dTBasGraIVA>0</dTBasGraIVA>
+                </gTotSub>
+            </DE>
+        </rDE>
+    </xDE>
+</rEnviDe>
