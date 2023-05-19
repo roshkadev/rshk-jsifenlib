@@ -151,9 +151,9 @@ public class TgEmis extends SifenObjectBase {
         return dRucEm;
     }
 
-        public void setdRucEm(String dRucEm) {
-            this.dRucEm = dRucEm;
-        }
+    public void setdRucEm(String dRucEm) {
+        this.dRucEm = dRucEm;
+    }
 
     public String getdDVEmi() {
         return dDVEmi;

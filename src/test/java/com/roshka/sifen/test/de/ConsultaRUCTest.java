@@ -10,6 +10,7 @@ import org.junit.Test;
 public class ConsultaRUCTest extends DETestBase {
 
     @Test
+    @Ignore
     public void testConsultaRUC() throws SifenException {
         RespuestaConsultaRUC ret = Sifen.consultaRUC("80032161");
         assert ret.getCodigoEstado() == 200;

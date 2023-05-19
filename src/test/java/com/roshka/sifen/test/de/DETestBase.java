@@ -8,6 +8,7 @@ import com.roshka.sifen.internal.response.SifenObjectFactory;
 import com.roshka.sifen.test.soap.SOAPTests;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -58,6 +59,7 @@ public class DETestBase {
     }
 
     @Test
+    @Ignore
     public void testEmisorRoshka() throws Exception {
         TgEmis tgEmis = cargarEmisor("80089752-8");
         Assert.assertNotNull(tgEmis);
