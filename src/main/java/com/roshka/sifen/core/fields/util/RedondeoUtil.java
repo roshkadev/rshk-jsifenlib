@@ -43,6 +43,6 @@ public class RedondeoUtil {
         BigDecimal fiftyCents = new BigDecimal("0.5");
         BigDecimal dividedValue = value.divide(fiftyCents, 0, RoundingMode.HALF_UP);
         BigDecimal roundedValue = dividedValue.multiply(fiftyCents);
-        return roundedValue.subtract(value);
+        return roundedValue.subtract(value).multiply((new BigDecimal("-1.0")));
     }
 }
