@@ -53,7 +53,7 @@ public class TgCamIVA extends SifenObjectBase {
             if (this.iAfecIVA.getVal() == 4) {
                 // Actualización: https://ekuatia.set.gov.py/portal/ekuatia/detail?content-id=/repository/collaboration/sites/ekuatia/documents/documentacion/documentacion-tecnica/NT_E_KUATIA_013_MT_V150.pdf
                 // E737 = [100 * EA008 * (100 – E733)] / [10000 + (E734 * E733)]
-                this.dBasExe = (dTotOpeItem.multiply(hundred.subtract(propIVA)).multiply(hundred)).divide((this.dTasaIVA.multiply(dPropIVA)).add(BigDecimal.valueOf(10000)), scale, RoundingMode.HALF_UP);
+                this.dBasExe = (dTotOpeItem.multiply(hundred.subtract(dPropIVA)).multiply(hundred)).divide((this.dTasaIVA.multiply(dPropIVA)).add(BigDecimal.valueOf(10000)), scale, RoundingMode.HALF_UP);
             } else {
                 this.dBasExe = BigDecimal.valueOf(0);
             }
