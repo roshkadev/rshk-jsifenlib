@@ -30,31 +30,31 @@ public class RedondeoOficialTest {
     @Test
     public void testRedondeoDolares00() {
         BigDecimal ret = RedondeoUtil.redondeoOficialSET(CMondT.USD, BigDecimal.valueOf(1000));
-        Assert.assertEquals(BigDecimal.valueOf(0.0), ret);
+        Assert.assertTrue(BigDecimal.valueOf(0.0).compareTo(ret) == 0);
     }
 
     @Test
     public void testRedondeoDolares01() {
         BigDecimal ret = RedondeoUtil.redondeoOficialSET(CMondT.USD, BigDecimal.valueOf(1000.23));
-        Assert.assertEquals(BigDecimal.valueOf(-0.23), ret);
+        Assert.assertTrue(BigDecimal.valueOf(0.23).compareTo(ret) == 0);
     }
 
     @Test
     public void testRedondeoDolares02() {
         BigDecimal ret = RedondeoUtil.redondeoOficialSET(CMondT.USD, BigDecimal.valueOf(1000.26));
-        Assert.assertEquals(BigDecimal.valueOf(0.24), ret);
+        Assert.assertTrue(BigDecimal.valueOf(-0.24).compareTo(ret) == 0);
     }
 
     @Test
     public void testRedondeoDolares03() {
         BigDecimal ret = RedondeoUtil.redondeoOficialSET(CMondT.USD, BigDecimal.valueOf(1000.56));
-        Assert.assertEquals(BigDecimal.valueOf(-0.06), ret);
+        Assert.assertTrue(BigDecimal.valueOf(0.06).compareTo(ret) == 0);
     }
 
     @Test
     public void testRedondeoDolares04() {
         BigDecimal ret = RedondeoUtil.redondeoOficialSET(CMondT.USD, BigDecimal.valueOf(1000.76));
-        Assert.assertEquals(BigDecimal.valueOf(0.24), ret);
+        Assert.assertTrue(BigDecimal.valueOf(-0.24).compareTo(ret) == 0);
     }
 
 }
