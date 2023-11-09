@@ -503,7 +503,7 @@ public enum PaisType {
     /**
      * China, región administrativa especial de Hong Kong
      */
-    HKG("China, región administrativa especial de Hong Kong"),
+    HKG("Hong Kong"),
     /**
      * China, región administrativa especial de Macao
      */
