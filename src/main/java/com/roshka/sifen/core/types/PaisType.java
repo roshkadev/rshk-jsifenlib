@@ -399,7 +399,7 @@ public enum PaisType {
     /**
      * Bolivia (Estado Plurinacional de)
      */
-    BOL("Bolivia (Estado Plurinacional de)"),
+    BOL("Bolivia"),
     /**
      * Brasil
      */
