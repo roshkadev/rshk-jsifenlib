@@ -35,7 +35,7 @@ public enum PaisType {
     /**
      * Sáhara Occidental
      */
-    ESH("Sáhara Occidental"),
+    ESH("Sahara Occidental"),
     /**
      * Territorio Británico del Océano Índico
      */
@@ -115,7 +115,7 @@ public enum PaisType {
     /**
      * República Unida de Tanzanía
      */
-    TZA("República Unida de Tanzanía"),
+    TZA("Tanzania, República Unida de"),
     /**
      * Zambia
      */
@@ -211,7 +211,7 @@ public enum PaisType {
     /**
      * Guinea-Bissau
      */
-    GNB("Guinea-Bissau"),
+    GNB("Guinea Bissau"),
     /**
      * Liberia
      */
@@ -235,7 +235,7 @@ public enum PaisType {
     /**
      * Santa Elena
      */
-    SHN("Santa Elena"),
+    SHN("Santa Helena, Ascensión y Tristán de Acuña"),
     /**
      * Senegal
      */
@@ -275,7 +275,7 @@ public enum PaisType {
     /**
      * Islas Vírgenes Británicas
      */
-    VGB("Islas Vírgenes Británicas"),
+    VGB("Vírgenes británicas, Islas"),
     /**
      * Islas Caimán
      */
@@ -303,7 +303,7 @@ public enum PaisType {
     /**
      * Guadalupe
      */
-    GLP("Guadalupe"),
+    GLP("Guadeloupe"),
     /**
      * Haití
      */
@@ -315,7 +315,7 @@ public enum PaisType {
     /**
      * Martinica
      */
-    MTQ("Martinica"),
+    MTQ("Martinique"),
     /**
      * Montserrat
      */
@@ -327,7 +327,7 @@ public enum PaisType {
     /**
      * San Bartolomé
      */
-    BLM("San Bartolomé"),
+    BLM("Saint Barthélemy"),
     /**
      * Saint Kitts y Nevis
      */
@@ -351,7 +351,7 @@ public enum PaisType {
     /**
      * Trinidad y Tabago
      */
-    TTO("Trinidad y Tabago"),
+    TTO("Trinidad y Tobago"),
     /**
      * Islas Turcas y Caicos
      */
@@ -359,7 +359,7 @@ public enum PaisType {
     /**
      * Islas Vírgenes de los Estados Unidos
      */
-    VIR("Islas Vírgenes de los Estados Unidos"),
+    VIR("Vírgenes de los Estados Unidos, Islas"),
     /**
      * Belice
      */
@@ -455,7 +455,7 @@ public enum PaisType {
     /**
      * Bermuda
      */
-    BMU("Bermuda"),
+    BMU("Bermudas"),
     /**
      * Canadá
      */
@@ -467,7 +467,7 @@ public enum PaisType {
     /**
      * Saint Pierre y Miquelon
      */
-    SPM("Saint Pierre y Miquelon"),
+    SPM("San Pedro y Miquelón"),
     /**
      * Estados Unidos de América
      */
@@ -507,7 +507,7 @@ public enum PaisType {
     /**
      * China, región administrativa especial de Macao
      */
-    MAC("China, región administrativa especial de Macao"),
+    MAC("Macao"),
     /**
      * República Popular Democrática de Corea
      */
@@ -587,7 +587,7 @@ public enum PaisType {
     /**
      * Irán (República Islámica del)
      */
-    IRN("Irán (República Islámica del)"),
+    IRN("Irán (República Islámica de)"),
     /**
      * Maldivas
      */
@@ -659,7 +659,7 @@ public enum PaisType {
     /**
      * Estado de Palestina
      */
-    PSE("Estado de Palestina"),
+    PSE("Palestina, Estado de"),
     /**
      * República Árabe Siria
      */
@@ -719,7 +719,7 @@ public enum PaisType {
     /**
      * Islas Åland
      */
-    ALA("Islas Åland"),
+    ALA("Åland, Islas"),
     /**
      * Guernsey
      */
@@ -771,7 +771,7 @@ public enum PaisType {
     /**
      * Islas Svalbard y Jan Mayen
      */
-    SJM("Islas Svalbard y Jan Mayen"),
+    SJM("Svalbard y Jan Mayen"),
     /**
      * Suecia
      */
@@ -843,7 +843,7 @@ public enum PaisType {
     /**
      * ex República Yugoslava de Macedonia
      */
-    MKD("ex República Yugoslava de Macedonia"),
+    MKD("Macedonia del Norte"),
     /**
      * Austria
      */
@@ -887,7 +887,7 @@ public enum PaisType {
     /**
      * Isla de Navidad
      */
-    CXR("Isla de Navidad"),
+    CXR("Navidad, Isla de"),
     /**
      * Islas Cocos (Keeling)
      */
@@ -903,7 +903,7 @@ public enum PaisType {
     /**
      * Islas Norfolk
      */
-    NFK("Islas Norfolk"),
+    NFK("Norfolk, Isla"),
     /**
      * Fiji
      */
@@ -919,7 +919,7 @@ public enum PaisType {
     /**
      * Islas Salomón
      */
-    SLB("Islas Salomón"),
+    SLB("Salomón, Islas"),
     /**
      * Vanuatu
      */
@@ -995,7 +995,7 @@ public enum PaisType {
     /**
      * Islas Wallis y Futuna
      */
-    WLF("Islas Wallis y Futuna"),
+    WLF("Wallis y Futuna"),
     /**
      * NO EXISTE
      */
