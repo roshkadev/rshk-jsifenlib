@@ -46,8 +46,8 @@ public class TgDatRec extends SifenObjectBase {
             gDatRec.addChildElement("dRucRec").setTextContent(this.dRucRec);
             gDatRec.addChildElement("dDVRec").setTextContent(String.valueOf(this.dDVRec));
         }
-
-        if (this.iNatRec.getVal() == 2 && this.iTiOpe.getVal() != 4) {
+        // && this.iTiOpe.getVal() != 4 - A partir de la nota tecnica 23, es necesario informar aunque se trate de alguien del exterior
+        if (this.iNatRec.getVal() == 2) {
             gDatRec.addChildElement("iTipIDRec").setTextContent(String.valueOf(this.iTipIDRec.getVal()));
             gDatRec.addChildElement("dDTipIDRec").setTextContent(SifenUtil.coalesce(this.iTipIDRec.getDescripcion(), this.dDTipIDRec));
             gDatRec.addChildElement("dNumIDRec").setTextContent(SifenUtil.coalesce(this.dNumIDRec, "0"));
