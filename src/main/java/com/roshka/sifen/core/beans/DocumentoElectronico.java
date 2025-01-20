@@ -387,7 +387,7 @@ public class DocumentoElectronico extends SifenObjectBase {
 
         if (this.getgDatGralOpe().getgDatRec().getiNatRec().getVal() == 1) {
             queryParams.put("dRucRec", this.getgDatGralOpe().getgDatRec().getdRucRec());
-        } else if (this.getgDatGralOpe().getgDatRec().getiTiOpe().getVal() != 4 && this.getgDatGralOpe().getgDatRec().getdNumIDRec() != null) {
+        } else if (this.getgDatGralOpe().getgDatRec().getdNumIDRec() != null) {
             queryParams.put("dNumIDRec", this.getgDatGralOpe().getgDatRec().getdNumIDRec());
         } else {
             queryParams.put("dNumIDRec", "0");
