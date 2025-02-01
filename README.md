@@ -41,7 +41,7 @@ dependencies {
 ## Uso
 
 ***Importante: Leer
-el [Manual Técnico de Sifen](https://ekuatia.set.gov.py/rest/contents/download/collaboration/sites/ekuatia/documents/documentacion/documentacion-tecnica/Manual+T%C3%A9cnico+Versi%C3%B3n+150.pdf)
+el [Manual Técnico de Sifen](https://www.dnit.gov.py/documents/20123/420592/Manual+T%C3%A9cnico+Versi%C3%B3n+150.pdf/e706f7c7-6d93-21d4-b45b-5d22d07b2d22?t=1687351495907)
 y entender el funcionamiento básico antes de continuar con la guía de uso de esta librería.***
 
 ### Configuración
